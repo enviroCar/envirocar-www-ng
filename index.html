@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="enviroCar">
+
+<head>
+    <meta charset="UTF-8">
+    <title>enviroCar WebApp</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <!-- endInject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/app/styles/styles.css">
+    <!-- endInject -->
+</head>
+
+<body ng-controller="AppCtrl">
+    <envirocar-toolbar></envirocar-toolbar>
+
+    <h1> {{ message }}</h1>
+
+    <!-- bower:js -->
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <!-- endInject -->
+    <!-- inject:js -->
+    <script src="/app/app.js"></script>
+    <script src="/app/components/app.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.controller.js"></script>
+    <script src="/app/components/toolbar/toolbar.controller.js"></script>
+    <script src="/app/components/toolbar/toolbar.directive.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

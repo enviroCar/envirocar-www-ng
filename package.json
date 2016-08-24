@@ -1,0 +1,19 @@
+{
+  "name": "envirocar-www-ng",
+  "version": "0.0.1",
+  "description": "AngularJS Webapp for the enviroCar Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arne de Wall",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-inject": "^4.1.0",
+    "gulp-ruby-sass": "^2.1.0",
+    "gulp-sass": "^2.3.2",
+    "main-bower-files": "^2.13.1"
+  }
+}
