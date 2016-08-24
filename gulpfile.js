@@ -8,7 +8,7 @@ var bowerFiles = require('main-bower-files');
 gulp.task('connect', function() {
     connect.server({
         root: '',
-        port: 3000
+        port: 4014
     });
 });
 

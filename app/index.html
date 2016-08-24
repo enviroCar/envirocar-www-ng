@@ -12,10 +12,65 @@
 </head>
 
 <body ng-controller="AppCtrl">
-    <envirocar-toolbar></envirocar-toolbar>
+  
+    <envirocar-toolbar> </envirocar-toolbar>
+    
+    <section layout="row" flex> 
+        
+        <md-sidenav
+            class="md-sidenav-left md-whiteframe-4dp"
+            md-component-id="left">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Sidenav Right</h1>
+            </md-toolbar>
+            <md-content ng-controller="LeftCtrl" layout-padding>
+                <form>
+                    <md-input-container>
+                        <label for="testInput">Test input</label>
+                        <input type="text" id="testInput"
+                        ng-model="data" md-autofocus>
+                    </md-input-container>
+                </form>
+                <md-button ng-click="close()" class="md-primary">
+                    Close Sidenav Left
+                </md-button>
+            </md-content>
+            
+        </md-sidenav>
+      
+    </section>
+  
+    <md-content flex layout-padding>
+      <div layout="column" layout-align="top center">
+        <p>
+        The left sidenav will 'lock open' on a medium (>=960px wide) device.
+        </p>
+        <p>
+        The right sidenav will focus on a specific child element.
+        </p>
+        <div>
+          <md-button ng-click="toggleLeft()"
+            class="md-primary" hide-gt-md>
+            Toggle left
+          </md-button>
+        </div>
+        
+        <h1> {{ message }}</h1>
+    
+        <section ui-view flex> </section>
+        <div>
+          <md-button ng-click="toggleLeft()"
+            ng-hide="isOpenLeft()"
+            class="md-primary">
+            Toggle right
+          </md-button>
+        </div>
+      </div>
+      <div flex></div>
+    </md-content>
 
-    <h1> {{ message }}</h1>
-
+    
+    
     <!-- bower:js -->
     <!-- endInject -->
     <!-- inject:js -->

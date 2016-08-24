@@ -14,22 +14,82 @@
 </head>
 
 <body ng-controller="AppCtrl">
-    <envirocar-toolbar></envirocar-toolbar>
+  
+    <envirocar-toolbar> </envirocar-toolbar>
+    
+    <section layout="row" flex> 
+        
+        <md-sidenav
+            class="md-sidenav-left md-whiteframe-4dp"
+            md-component-id="left">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Sidenav Right</h1>
+            </md-toolbar>
+            <md-content ng-controller="LeftCtrl" layout-padding>
+                <form>
+                    <md-input-container>
+                        <label for="testInput">Test input</label>
+                        <input type="text" id="testInput"
+                        ng-model="data" md-autofocus>
+                    </md-input-container>
+                </form>
+                <md-button ng-click="close()" class="md-primary">
+                    Close Sidenav Left
+                </md-button>
+            </md-content>
+            
+        </md-sidenav>
+      
+    </section>
+  
+    <md-content flex layout-padding>
+      <div layout="column" layout-align="top center">
+        <p>
+        The left sidenav will 'lock open' on a medium (>=960px wide) device.
+        </p>
+        <p>
+        The right sidenav will focus on a specific child element.
+        </p>
+        <div>
+          <md-button ng-click="toggleLeft()"
+            class="md-primary" hide-gt-md>
+            Toggle left
+          </md-button>
+        </div>
+        
+        <h1> {{ message }}</h1>
+    
+        <section ui-view flex> </section>
+        <div>
+          <md-button ng-click="toggleLeft()"
+            ng-hide="isOpenLeft()"
+            class="md-primary">
+            Toggle right
+          </md-button>
+        </div>
+      </div>
+      <div flex></div>
+    </md-content>
 
-    <h1> {{ message }}</h1>
-
+    
+    
     <!-- bower:js -->
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
     <script src="/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/angular-translate/angular-translate.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
     <!-- endInject -->
     <!-- inject:js -->
     <script src="/app/app.js"></script>
     <script src="/app/components/app.controller.js"></script>
+    <script src="/app/components/translationProvider.js"></script>
     <script src="/app/components/dashboard/dashboard.controller.js"></script>
+    <script src="/app/components/login/login.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.directive.js"></script>
     <!-- endinject -->
