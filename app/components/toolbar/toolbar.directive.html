@@ -1,5 +1,23 @@
 <md-toolbar md-scroll-shrink ng-if="true">
     <div class="md-toolbar-tools">
-        <h3><span>{{ 'WEBSITE-TITLE' | translate}}</span></h3>
+        
+        <md-button class="md-icon-button md-accent"
+                   aria-label="Settings"
+                   ng-click = "toggleLeft()">
+            <md-tooltip md-delay="500"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
+            <md-icon material-icon white md-36 md-avatar>menu</md-icon>
+        </md-button>
+        
+        <img class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png" style="width: 180px; height: 50px;">
+          
+        <span flex class="flex"></span>
+        
+        <div language-dropdown></div>
+
+        <a ng-if="loggedIn()" class="white-bg md-button md-36 md-ink-ripple-red" aria-label="Notificiations" ui-sref="login" href="#/login" aria-hidden="false" style="margin-right: 20px !important;" ng-click="logout();">
+            <img ng-src="app/components/assets/button_icons/ic_power_settings_new_white_48dp.png" style="width: 36px; height: 36px;">
+            <md-tooltip md-delay="500"> {{ 'LOGOUT' | translate }} </md-tooltip>
+        </a>
     </div>
+    
 </md-toolbar>

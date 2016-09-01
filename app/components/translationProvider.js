@@ -3,17 +3,48 @@
    for any language that is added to the translationProvider.
 */
 angular.module('translations', [])
+    .constant('LOCALES', {
+        'locales': {
+            'de_DE': 'Deutsch',
+            'en_EN': 'English'
+        },
+        'preferredLocale': 'en_EN'
+    })
     .config(['$translateProvider', function($translateProvider) {
         console.log('translation configuration set up');
         $translateProvider.translations('en', {
             // defaults:
-            'WEBSITE-TITLE' : 'EnviroCar Webapp',
+            'WEBSITE-TITLE'     : 'EnviroCar Webapp',
+            'LANGUAGE'          : 'Language',
+            
+            // Sidenavigation:
+            'OPEN-NAV'              : 'Open Sidenav',
+            'CLOSE-NAV'             : 'Close Sidenav',
+            'TT_SIDENAV-OPEN'       : 'opens the sidenavigation',
+            'TT_SIDENAV-CLOSE'      : 'closes the sidenavigation',
+            'TT_SN_DASHBOARD_OPEN'  : 'opens the dashboard',
+            'TT_SN_TRACKS_OPEN'     : 'opens the trackview',
+            'TT_SN_PROFILE_OPEN'    : 'opens the profileview',
+            'TT_SN_SEGMENT_OPEN'    : 'opens the segmentview',
             
             // Login:
             'USERNAME'  : 'Username',
             'PASSWORD'  : 'Password',
             'REGISTER'  : 'Register',
             'LOGIN'     : 'Login',
+            
+            // Dashboard:
+            'DASHBOARD'             : 'Dashboard',
+            'TT_DB_TRACKS'          : 'amount of your tracks',
+            'TT_DB_FRIENDS'         : 'amount of your friends',
+            'TT_DB_DISTANCE'        : 'not implemented yet',
+            'TT_DB_GROUPS'          : 'number of enviroCar community groups, you are in',
+            'TT_DB_TOTAL_USERS'     : 'number of enviroCar users',
+            'TT_DB_TOTAL_TRACKS'    : 'number of enviroCar tracks',
+            'TT_DB_TOTAL_DISTANCE'  : 'total distance driven by all community members',
+            'TOTAL_USERS'           : 'Users',
+            'TOTAL_TRACKS'          : 'Tracks',
+            'TOTAL_DISTANCE'        : 'Total Distance',
                 
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
@@ -61,7 +92,6 @@ angular.module('translations', [])
             'TRACK_VS_PUBLIC': 'Track Vs Public',
             'LOGOUT': 'Logout',
             'PROFILE': 'Profile',
-            'DASHBOARD': 'Dashboard',
             'TABLE': 'Profile',
             'SEGMENT': 'Segment',
             'SPEED_PIE': 'Speed',
@@ -81,7 +111,6 @@ angular.module('translations', [])
             'BIO': 'Bio',
             'EMAIL_ID': 'Email ID',
             'COUNTRY': 'Country',
-            'LANGUAGE': 'Language',
             'GENDER': 'Gender',
             'TERMS_OF_USE_VERSION': 'Terms of User version',
             'BADGES': 'Badges',
@@ -118,13 +147,38 @@ angular.module('translations', [])
         $translateProvider.translations('de', {
             // defaults:
             'WEBSITE-TITLE' : 'EnviroCar Webapp',
+            'LANGUAGE'          : 'Sprache',
+            
+            // Sidenavigation:
+            'OPEN-NAV'              : 'Öffne Seitenleiste',
+            'CLOSE-NAV'             : 'Schließe Seitenleiste',
+            'TT_SIDENAV-OPEN'       : 'öffnet die Navigation',
+            'TT_SIDENAV-CLOSE'      : 'schließt die Navigation',
+            'TT_SN_DASHBOARD_OPEN'  : 'öffnet das Dashboard',
+            'TT_SN_TRACKS_OPEN'     : 'öffnet die Fahrtansicht',
+            'TT_SN_PROFILE_OPEN'    : 'öffnet deine Profileeinstellungen',
+            'TT_SN_SEGMENT_OPEN'    : 'öffnet die Fahrtabschnittsanalyse',
+
             
             // Login:
             'USERNAME': 'Benutzername',
             'PASSWORD': 'Passwort',
             'REGISTER': 'Registrieren',
             'LOGIN': 'Anmelden',
-
+            
+            // Dashboard:
+            'DASHBOARD'             : 'Dashboard',
+            'TT_DB_TRACKS'          : 'Anzahl deiner gefahrenen Fahrten',
+            'TT_DB_FRIENDS'         : 'Anzahl deiner Freunde',
+            'TT_DB_DISTANCE'        : 'noch nicht implementiert',
+            'TT_DB_GROUPS'          : 'Anzahl der enviroCar Gemeinschaftsgruppen, in der du bist',
+            'TT_DB_TOTAL_USERS'     : 'Anzahl an enviroCar Mitgliedern',
+            'TT_DB_TOTAL_TRACKS'    : 'Anzahl an enviroCar Fahrten',
+            'TT_DB_TOTAL_DISTANCE'  : 'Gesamtdistanz, die von allen enviroCar Mitgliedern gefahren wurde.',
+            'TOTAL_USERS'           : 'Mitglieder',
+            'TOTAL_TRACKS'          : 'Fahrten',
+            'TOTAL_DISTANCE'        : 'Distanz',
+            
 
             'TITLE_TRACKS': 'neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',
@@ -191,7 +245,7 @@ angular.module('translations', [])
             'ENGINE_LOAD' : 'Motorauslastung', 
             'INTAKE_TEMPERATURE' : 'Ansaugtemperatur'
         });
-        $translateProvider.preferredLanguage('de');
+        $translateProvider.preferredLanguage('en');
 
     }
 ]);

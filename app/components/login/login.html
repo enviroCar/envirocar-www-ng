@@ -1,9 +1,9 @@
-<div layout="column" flex id="content" role="main" ng-controller='LoginCtrl'>
+<div layout="column" flex id="content" role="main">
 			<md-content layout="vertical" flex id="content">
 				<div layout="row" layout-align="center center" layout-fill>
 					<md-whiteframe class="md-whiteframe-z1" layout="column" flex="30" layout-padding>
 						<md-content md-theme="default">
-              <div ng-show="error">{{error}}</div>
+                                                    <div ng-show="error">{{error}}</div>
 							<md-input-container md-theme="default">
 								<label>{{'USERNAME' | translate}}</label>
 								<input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- user vs community directive -->
+<div flex="66" style="min-width:32%" layout="column">
+    <md-card style="height:330px;min-width:30%">
+        <md-toolbar style="color:black;background-color:white" >
+            <div class="md-toolbar-tools">
+                <h3 style="color:rgba(0,101,160,0.9)">
+                    <span>{{'User_VS_PUBLIC'| translate}} </span>
+                </h3>
+                <span flex></span>
+                <md-select style="color:rgba(0,101,160,0.9)" ng-model="barchartshowing" >
+                    <md-option ng-model="d" ng-value="d" ng-click="changePhenomenonbar(d)" data-ng-repeat="d in barchartoptions">{{d}}</md-option>
+                </md-select>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <md-progress-circular class="loader_dashboard" ng-if="!onload_user_vs_public" md-diameter="156"></md-progress-circular>
+
+            <nvd3 options="optionsSpeed" data="dataoverall" ng-if="onload_user_vs_public" style="width:300px; height:300px;"></nvd3>
+
+        </md-card-content>
+    </md-card>
+</div>

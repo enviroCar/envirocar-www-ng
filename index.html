@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>enviroCar WebApp</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
@@ -15,63 +16,20 @@
 
 <body ng-controller="AppCtrl">
   
-    <envirocar-toolbar> </envirocar-toolbar>
-    
-    <section layout="row" flex> 
-        
-        <md-sidenav
-            class="md-sidenav-left md-whiteframe-4dp"
-            md-component-id="left">
-            <md-toolbar class="md-theme-light">
-                <h1 class="md-toolbar-tools">Sidenav Right</h1>
-            </md-toolbar>
-            <md-content ng-controller="LeftCtrl" layout-padding>
-                <form>
-                    <md-input-container>
-                        <label for="testInput">Test input</label>
-                        <input type="text" id="testInput"
-                        ng-model="data" md-autofocus>
-                    </md-input-container>
-                </form>
-                <md-button ng-click="close()" class="md-primary">
-                    Close Sidenav Left
-                </md-button>
-            </md-content>
-            
-        </md-sidenav>
+    <envirocar-toolbar> </envirocar-toolbar> <!-- Toolbar -->
       
-    </section>
-  
-    <md-content flex layout-padding>
-      <div layout="column" layout-align="top center">
-        <p>
-        The left sidenav will 'lock open' on a medium (>=960px wide) device.
-        </p>
-        <p>
-        The right sidenav will focus on a specific child element.
-        </p>
-        <div>
-          <md-button ng-click="toggleLeft()"
-            class="md-primary" hide-gt-md>
-            Toggle left
-          </md-button>
-        </div>
+    <div layout="row" >
         
-        <h1> {{ message }}</h1>
-    
-        <section ui-view flex> </section>
-        <div>
-          <md-button ng-click="toggleLeft()"
-            ng-hide="isOpenLeft()"
-            class="md-primary">
-            Toggle right
-          </md-button>
-        </div>
-      </div>
-      <div flex></div>
-    </md-content>
+        <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
 
+        <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
+        
+        </div>
     
+        <md-content ui-view flex="100"> <!-- Contentpage -->
+        </md-content>
+    
+    </div>
     
     <!-- bower:js -->
     <script src="/bower_components/angular/angular.js"></script>
@@ -88,10 +46,24 @@
     <script src="/app/app.js"></script>
     <script src="/app/components/app.controller.js"></script>
     <script src="/app/components/translationProvider.js"></script>
+    <script src="/app/config/config.js"></script>
+    <script src="/app/components/apiservices/api.services.statistics.js"></script>
+    <script src="/app/components/apiservices/api.services.tracks.js"></script>
+    <script src="/app/components/apiservices/api.services.users.js"></script>
     <script src="/app/components/dashboard/dashboard.controller.js"></script>
     <script src="/app/components/login/login.controller.js"></script>
+    <script src="/app/components/login/login.service.js"></script>
+    <script src="/app/components/sidenav/sidenav.controller.js"></script>
+    <script src="/app/components/sidenav/sidenav.directive.js"></script>
+    <script src="/app/components/sidenav/sidenav.service.js"></script>
     <script src="/app/components/toolbar/toolbar.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.directive.js"></script>
+    <script src="/app/components/toolbar/toolbar.partials/language_dropdown.controller.js"></script>
+    <script src="/app/components/toolbar/toolbar.partials/language_dropdown.directive.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.directive.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/user_vs_community/user_vs_community.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/user_vs_community/user_vs_community.directive.js"></script>
     <!-- endinject -->
 </body>
 
