@@ -7,6 +7,7 @@
         'ui.router',
         'pascalprecht.translate',
         'translations',
+        'nvd3',
         'enviroCar.auth',
         'enviroCar.api'])
             .value("ecBaseUrl", "https://enviroCar.org/api/stable")

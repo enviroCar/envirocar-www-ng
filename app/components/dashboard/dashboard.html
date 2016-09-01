@@ -71,10 +71,18 @@
         </div>
     </div>
 </div>
-<div class="ui-view" flex-66> <!-- to be filled with charts -->
-    
-    <user-vs-community-chart flex="66"> </user-vs-community-chart>
 
-    <latest-tracks-chart  flex="30"> </latest-tracks-chart>
+<div class="ui-view" flex> <!-- to be filled with charts -->
+
+    <div layout="row" layout-xs="column" flex>
+        <div flex-gt-xs="50" flex-xs="100">
+            <user-vs-community-chart> </user-vs-community-chart>
+        </div>
+        <div flex-gt-xs="50" flex-xs="100">
+            <user-vs-community-chart> </user-vs-community-chart>
+        </div>
+    </div>
+
+    <latest-tracks-chart> </latest-tracks-chart>
 
 </div>
