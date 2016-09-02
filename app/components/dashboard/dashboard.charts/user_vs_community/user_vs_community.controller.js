@@ -6,16 +6,15 @@
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        var urlredirect = '#/dashboard/chart/';
-        $scope.goToActivity = function (trackid) {
-            console.log("came here");
-            //redirect to the track analytics page.
-            $state.go('home.chart', {
-                'trackid': trackid
-            });
-            console.log("fired");
+        $scope.translations = {
+            'de': {
+                'User_VS_PUBLIC' : 'Du im Vergleich'
+            }, 
+            'en': {
+                'User_VS_PUBLIC' : 'You in comparison'
+            }
         };
-
+        
         $scope.optionsSpeed = {
             chart: {
                 type: 'discreteBarChart',
@@ -27,7 +26,7 @@
                     left: 50
                 },
                 x: function (d) {
-                    return d.label;
+                    return $translate.instant(d.label);
                 },
                 y: function (d) {
                     return d.value;
@@ -38,7 +37,7 @@
                 },
                 duration: 300,
                 xAxis: {
-                    axisLabel: 'User vs Public '
+                    axisLabel: $translate.instant('User_VS_PUBLIC')
                 },
                 yAxis: {
                     axisLabel: 'Speed(km/h)',
@@ -47,7 +46,7 @@
                 tooltip: {
                     contentGenerator: function (d)
                     {
-                        var html = '<h3><b>' + d.data.label + '</b> = ' + d.data.value.toFixed(2) + '</h3>';
+                        var html = '<h3><b>' + $translate.instant(d.data.label) + '</b> = ' + d.data.value.toFixed(2) + '</h3>';
                         return html;
                     }
                 }
@@ -94,10 +93,10 @@
                                 $scope.dataSpeed = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "User",
+                                                "label": "LABEL_USER",
                                                 "value": speed_user
                                             }, {
-                                                "label": "Public",
+                                                "label": "LABEL_PUBLIC",
                                                 "value": speed_public
                                             }]
                                     }]
@@ -127,10 +126,10 @@
                                 $scope.dataConsumption = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "User",
+                                                "label": "LABEL_USER",
                                                 "value": consumption_user
                                             }, {
-                                                "label": "Public",
+                                                "label": "LABEL_PUBLIC",
                                                 "value": consumption_public
                                             }]
                                     }]
@@ -160,10 +159,10 @@
                                 $scope.dataCO2 = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "User",
+                                                "label": "LABEL_USER",
                                                 "value": CO2_user
                                             }, {
-                                                "label": "Public",
+                                                "label": "LABEL_PUBLIC",
                                                 "value": CO2_public
                                             }]
                                     }]
@@ -179,6 +178,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
+        window.dispatchEvent(new Event('resize'));
     }
     ;
     angular.module('enviroCar')

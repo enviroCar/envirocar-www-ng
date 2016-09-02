@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<md-menu>
+    <md-button aria-label="select language" ng-click="$mdOpenMenu($event)">
+        <img ng-src={{currentFlag}} style="height:30px; width: 30px;"></img>
+    </md-button>
+    <md-menu-content width="2">
+        <md-menu-item ng-repeat="item in languages">
+            <md-button ng-click="ctrl.announceClick($index)">
+                <md-icon md-menu-align-target md-svg-icon="call:no-sim"></md-icon>
+                <img ng-src={{item.flag}} style="height:30px; width: 30px;" ></img> {{item.name}}
+            </md-button>
+        </md-menu-item>
+    </md-menu-content>
+</md-menu>

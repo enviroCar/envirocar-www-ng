@@ -46,6 +46,11 @@ angular.module('translations', [])
             'TOTAL_TRACKS'          : 'Tracks',
             'TOTAL_DISTANCE'        : 'Total Distance',
                 
+            // Dashboard_user_vs_community:
+            'LABEL_USER'    : 'You',
+            'LABEL_PUBLIC'  : 'Community',
+            
+            
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
             'MODIFIED': 'Modified',
@@ -179,7 +184,10 @@ angular.module('translations', [])
             'TOTAL_TRACKS'          : 'Fahrten',
             'TOTAL_DISTANCE'        : 'Distanz',
             
-
+            // Dashboard_user_vs_community:
+            'LABEL_USER'    : 'Ich',
+            'LABEL_PUBLIC'  : 'Gemeinschaft',
+            
             'TITLE_TRACKS': 'neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',
             'MODIFIED': 'Geändert',

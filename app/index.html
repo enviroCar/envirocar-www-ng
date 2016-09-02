@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="enviroCar">
 
-<head>
-    <meta charset="UTF-8">
-    <title>enviroCar WebApp</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
-    <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
-    <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
-    <!-- bower:css -->
-    <!-- endInject -->
-    <!-- inject:css -->
-    <!-- endInject -->
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>enviroCar WebApp</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
+        <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+        <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
+        <!-- bower:css -->
+        <!-- endInject -->
+        <!-- inject:css -->
+        <!-- endInject -->
+    </head>
 
-<body ng-controller="AppCtrl">
-  
-    <envirocar-toolbar> </envirocar-toolbar> <!-- Toolbar -->
-      
-    <div layout="row" >
-        
-        <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
+    <body ng-controller="AppCtrl" >
 
-        <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
-        
-        </div>
-    
-        <md-content ui-view flex="100"> <!-- Contentpage -->
-        </md-content>
-    
+    <envirocar-toolbar id="main-toolbar"> </envirocar-toolbar> <!-- Toolbar -->
+
+    <div class="row ui-sortable-placehold" id="placeholder-toolbar"> <!-- Sidenav Placeholder -->
+
     </div>
     
+    <div layout="row" >
+
+        <envirocar-sidenav > </envirocar-sidenav> <!-- Sidenavigation -->
+        
+     
+        <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
+
+        </div>
+
+        <div layout="row" flex>
+            <div id="placeholder-left" flex-gt-sm="2" flex-gt-md="10" flex-gt-lg="20">
+
+            </div>
+
+            <md-content id="contentPane" ui-view flex="100" style="overflow: hidden !important;"> <!-- Contentpage -->
+            </md-content>
+
+            <div id="placeholder-right" flex-gt-sm="2" flex-gt-md="10" flex-gt-lg="20">
+
+            </div>
+
+        </div>
+    </div>
+
     <!-- bower:js -->
     <!-- endInject -->
     <!-- inject:js -->

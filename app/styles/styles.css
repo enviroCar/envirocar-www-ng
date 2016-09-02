@@ -60,7 +60,7 @@ html, body {
 .optionsnvd3 {
   background-color: transparent;
   position: absolute;
-  z-index: 1000;
+  z-index: 100;
   padding-left: 10px;
   padding-top: 10px;
   padding-right: 10px;
@@ -134,46 +134,58 @@ html, body {
   margin-top: 0px;
   margin-left: 37px; }
 
+#main-toolbar {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  max-height: 60px;
+  min-height: 60px;
+  z-index: 100; }
+
 md-toolbar {
   height: 60px;
   max-height: 60px;
   min-height: 60px; }
 
 md-tooltip {
-  font-size: 18px; }
+  font-size: 16px;
+  z-index: 1000; }
 
 .white-bg {
   text-align: center;
   text-transform: uppercase;
   text-decoration: none; }
 
+/**
 img {
-  vertical-align: middle; }
-
+    vertical-align: middle;
+}*/
 .flex {
   -webkit-box-flex: 1;
   flex: 1;
   box-sizing: border-box; }
 
-md-sidenav md-list-item div {
-  padding: 0 0px; }
-
-md-sidenav md-list-item .md-button {
-  padding: 0 0px !important; }
-
-md-sidenav md-list-item .md-no-style {
-  padding: 0 0px !important; }
-
-md-sidenav md-icon {
-  display: block !important;
-  height: auto; }
-
-md-sidenav .logo-icon {
-  margin-left: 15px;
-  vertical-align: middle; }
+md-sidenav {
+  position: fixed !important;
+  z-index: 200; }
+  md-sidenav md-list-item div {
+    padding: 0 0px; }
+  md-sidenav md-list-item .md-button {
+    padding: 0 0px !important; }
+  md-sidenav md-list-item .md-no-style {
+    padding: 0 0px !important; }
+  md-sidenav md-icon {
+    display: block !important;
+    height: auto; }
+  md-sidenav .logo-icon {
+    margin-left: 15px;
+    vertical-align: middle; }
 
 #sidenav-title {
   padding-left: 1.8em; }
+
+#placeholder-right, #placeholder-left {
+  background-color: #e6e6e6; }
 
 .md-button {
   min-width: auto; }
@@ -195,13 +207,15 @@ md-list-item {
 .sidenav-element {
   z-index: 1; }
 
-md-content.page {
-  height: 100%; }
-
 #placeholder {
   display: inline-block;
   width: 60px;
   height: 100%; }
+
+#placeholder-toolbar {
+  display: inline-block;
+  height: 60px;
+  width: 100%; }
 
 .profiletab {
   background-image: url("../components/assets/envCar_Foto06.jpg");

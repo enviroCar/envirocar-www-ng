@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- user vs community directive -->
-    <md-card flex>
+    <md-card flex-100>
         <md-toolbar style="color:black;background-color:white" >
             <div class="md-toolbar-tools">
                 <h3 style="color:rgba(0,101,160,0.9)">
@@ -15,7 +15,7 @@
         <md-card-content flex>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_nvd3_user_vs_public" md-diameter="156"></md-progress-circular>
 
-            <div ng-if="onload_nvd3_user_vs_public" class="containernvd3" style="height:290px;">
+            <div ng-if="onload_nvd3_user_vs_public" class="containernvd3">
 
                 <nvd3 options="optionsSpeed" data="dataoverall"></nvd3>
             </div>
