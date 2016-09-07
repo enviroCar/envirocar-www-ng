@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- user vs community directive -->
+<md-card>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'COMPARISON_CHART_TITLE'| translate}} </b></span>
+        </p>
+    </div >
+    <div layout-gt-md="row" layout-xs="column" layout-gt-xs="column">
+        <div layout-gt-md="row" layout-xs="column" layout-gt-xs="row">
+            <md-card-content flex>
+                <p class='comparison-title'> {{'SPEED' | translate}}</p>
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed" md-diameter="56"></md-progress-circular>
+                <div flex ng-if="onload_speed" layout="row">
+                    <nvd3 options="optionsSpeed" data="dataSpeed" flex></nvd3>
+                </div>
+            </md-card-content>
+            <md-card-content flex>
+                <p class='comparison-title'> {{'CONSUMPTION' | translate}}</p>
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_consumption" md-diameter="56"></md-progress-circular>
+                <div flex ng-if="onload_consumption" layout="row">
+                    <nvd3 options="optionsConsumption" data="dataConsumption" flex></nvd3>
+                </div>
+            </md-card-content>
+        </div>
+        <div layout-gt-md="row" layout-xs="column" layout-gt-xs="row">
+            <md-card-content flex>
+                <p class='comparison-title'> {{'CO2' | translate}}</p>
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2" md-diameter="56"></md-progress-circular>
+                <div flex ng-if="onload_CO2" layout="row">
+                    <nvd3 options="optionsCO2" data="dataCO2" flex></nvd3>
+                </div>
+            </md-card-content>
+            <md-card-content flex>
+                <p class='comparison-title'> {{'ENGINE_LOAD' | translate}}</p>
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_engine" md-diameter="56"></md-progress-circular>
+                <div flex ng-if="onload_engine" layout="row">
+                    <nvd3 options="optionsEngine" data="dataEngine" flex></nvd3>
+                </div>
+            </md-card-content>
+        </div>
+    </div>
+</md-card>

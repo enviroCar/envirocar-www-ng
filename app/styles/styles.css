@@ -34,7 +34,7 @@
 .material-icons {
   vertical-align: middle; }
 
-.material-icons.grey {
+.material-icons.grey leg {
   color: #616161; }
 
 .material-icons.blue {
@@ -46,6 +46,9 @@
 .material-icons.white099 {
   color: rgba(255, 255, 255, 0.9); }
 
+.envirocar-blue {
+  color: #1A80C1; }
+
 html, body {
   height: 100%;
   position: relative; }
@@ -53,10 +56,11 @@ html, body {
 .nvd3.nv-pie .nv-pie-title {
   fill: #444444; }
 
+/**
 .nvd3 {
-  width: 300;
-  height: 450%; }
-
+    width:300;
+    height:450%;
+}*/
 .optionsnvd3 {
   background-color: transparent;
   position: absolute;
@@ -81,7 +85,9 @@ html, body {
     width: 36px !important;
     min-width: 36px !important; }
   .md-toolbar-tools .logo-icon {
-    margin-left: 30px; }
+    margin-left: 30px;
+    width: 90px;
+    height: 25px; }
 
 .streamline .sl-item::after {
   position: absolute;
@@ -130,9 +136,15 @@ html, body {
   box-sizing: border-box; }
 
 .sl-content {
-  padding-bottom: 0px;
-  margin-top: 0px;
   margin-left: 37px; }
+  .sl-content span {
+    color: #black; }
+    .sl-content span i {
+      color: black;
+      height: 28px;
+      width: 28px; }
+  .sl-content .title_span {
+    color: #1A80C1; }
 
 #main-toolbar {
   position: fixed;
@@ -141,11 +153,17 @@ html, body {
   max-height: 60px;
   min-height: 60px;
   z-index: 100; }
+  #main-toolbar #logo-icon {
+    width: 90px;
+    height: 25px; }
 
 md-toolbar {
   height: 60px;
   max-height: 60px;
   min-height: 60px; }
+  md-toolbar md-icon {
+    display: block !important;
+    height: auto; }
 
 md-tooltip {
   font-size: 16px;
@@ -167,7 +185,7 @@ img {
 
 md-sidenav {
   position: fixed !important;
-  z-index: 200; }
+  z-index: 1000; }
   md-sidenav md-list-item div {
     padding: 0 0px; }
   md-sidenav md-list-item .md-button {
@@ -179,7 +197,9 @@ md-sidenav {
     height: auto; }
   md-sidenav .logo-icon {
     margin-left: 15px;
-    vertical-align: middle; }
+    vertical-align: middle;
+    width: 90px;
+    height: 25px; }
 
 #sidenav-title {
   padding-left: 1.8em; }
@@ -314,12 +334,55 @@ md-list-item {
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.88); }
 
+toolbar-card {
+  font-size: 16px; }
+
+.card-title {
+  color: rgba(0, 101, 160, 0.9);
+  margin-left: 20px; }
+
 .card-body {
-  padding-top: 20px;
-  padding-right: 24px;
-  padding-bottom: 20px;
-  padding-left: 44px; }
+  padding-top: 5px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px; }
+
+.comparison-title {
+  color: #1A80C1;
+  font-size: 14px;
+  align: center; }
 
 .trackpreview .md-content {
   width: 480px;
-  height: 380px; }
+  height: 380px;
+  padding: 10px; }
+  .trackpreview .md-content .img {
+    vertical-align: central;
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    background-color: grey; }
+  .trackpreview .md-content .placeholder-p {
+    color: transparent;
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    size: 0px; }
+
+.legend {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  line-height: 18px;
+  border-radius: 5px;
+  color: #555;
+  width: 100px; }
+
+.legend i {
+  color: #777;
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7; }

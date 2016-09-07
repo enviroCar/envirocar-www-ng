@@ -11,7 +11,7 @@
             $scope.login = function() {
                 $scope.dataLoading = true;
                 console.log("logging in attempt with: "+$scope.username+"|"+$scope.password);
-                UserService.getUser($scope.username, $scope.password).then(
+                UserService.getUserStatistics($scope.username, $scope.password).then(
                     function(res){ // success response
                         console.log("getUser success: "+res);
                         // When the right credentials are provided.
@@ -31,6 +31,8 @@
                         // If wrong credentials are procided
                         $scope.error = "Invalid Login Credentials";
                         $scope.dataLoading = false;
+                        UserCredentialsService.clearCredentials();
+                        UserCredentialsService.clearCookies();
                     }
             );
     

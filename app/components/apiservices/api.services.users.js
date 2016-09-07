@@ -19,9 +19,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/statistics/"+phenomenon);
                 return error;
             });
@@ -43,9 +43,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });
@@ -70,7 +70,7 @@
             }).success(function (data, status, headers, config) {
                 var number = headers('Content-Range').split("/");
                 return Number(number[1]);
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/");
                 return error;
             });
@@ -119,9 +119,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error (function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/friends"+ friend);
                 return error;
             });
@@ -144,9 +144,9 @@
                     'X-Token'   : token
                 },
                 data: friends
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error( function (error) {
                 console.log("ResponseError @POST: "+ecBaseUrl+"/users/"+username+"/friends");
                 return error;
             });
@@ -169,6 +169,7 @@
                     'X-Token'   : token
                 }
             }).success(function (data, status, headers, config) {
+                console.log(headers);
                 var number = headers('Content-Range').split("/");
                 return Number(number[1]);
             }, function (error) {
@@ -187,9 +188,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error (function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });
@@ -205,9 +206,10 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
+                console.log(res);
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/groups");
                 return error;
             });
@@ -223,9 +225,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error( function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/friends");
                 return error;
             });
@@ -241,9 +243,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });

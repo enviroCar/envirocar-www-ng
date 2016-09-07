@@ -8,7 +8,6 @@
             template: '' +
                     '<div class="language-select" >' +
                         '<label>' +
-                            '{{"LANGUAGE" | translate}}:' +
                             '<select ng-model="currentLocaleDisplayName"' +
                                 'ng-options="localesDisplayName for localesDisplayName in localesDisplayNames"' +
                                 'ng-change="changeLanguage(currentLocaleDisplayName)">' +

@@ -1,14 +1,17 @@
 <md-toolbar md-scroll-shrink ng-if="true">
     <div class="md-toolbar-tools">
         
-        <md-button class="md-icon-button md-accent"
-                   aria-label="Settings"
-                   ng-click = "toggleLeft()">
-            <md-tooltip md-delay="500"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
-            <md-icon material-icon white md-36 md-avatar>menu</md-icon>
+        <md-button style ="margin-left: 4px; margin-bottom: 8px !important;"  
+                ng-click = "toggleExpand()">
+                
+                <md-tooltip md-delay="500" ng-if="navExpanded"> {{ 'TT_SIDENAV-CLOSE' | translate}} </md-tooltip>
+            
+                <md-tooltip md-delay="500" ng-if="!navExpanded"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
+            
+                <md-icon class="material-icons md-36 white09"  md-font-set="material-icons" >menu</md-icon>
         </md-button>
         
-        <img class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png" style="width: 180px; height: 50px;">
+        <img class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png" >
           
         <span flex class="flex"></span>
         

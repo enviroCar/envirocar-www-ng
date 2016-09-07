@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
+    "jquery": "~2.1.1",
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
     "angular-animate": "^1.5.8",
@@ -24,6 +25,10 @@
     "angular-cookies": "^1.5.0",
     "nvd3": "^1.8.4",
     "d3": "^4.2.2",
-    "angular-nvd3": "^1.0.9"
+    "angular-nvd3": "^1.0.9",
+    "leaflet": "0.7.7",
+    "Leaflet.heat": "*",
+    "heatmap.js-amd": "*",
+    "ui-leaflet": "^1.0.1"
   }
 }

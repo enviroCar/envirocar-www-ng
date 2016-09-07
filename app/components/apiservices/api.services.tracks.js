@@ -20,9 +20,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error (function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics/"+phenomenon);
                 return error;
             });
@@ -45,9 +45,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics");
                 return error;
             });
@@ -70,9 +70,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID);
                 return error;
             });
@@ -95,9 +95,9 @@
                     'X-Token'   : token
                 },
                 data: track
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @POST: "+ecBaseUrl+"/tracks");
                 return error;
             });
@@ -113,9 +113,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/" + username + "/tracks");
                 return error;
             });
@@ -140,7 +140,7 @@
             }).success(function (data, status, headers, config) {
                 var number = headers('Content-Range').split("/");
                 return Number(number[1]);
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/tracks?limit=1");
                 return error;
             });
@@ -165,7 +165,7 @@
             }).success(function (data, status, headers, config) {
                 var number = headers('Content-Range').split("/");
                 return Number(number[1]);
-            }, function (error) {
+            }).error( function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/tracks?limit=1");
                 return error;
             });
@@ -187,9 +187,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).then(function (res) {
+            }).success(function (res) {
                 return res.data;
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks");
                 return error;
             });

@@ -9,9 +9,11 @@
         'translations',
         'nvd3',
         'enviroCar.auth',
-        'enviroCar.api'])
+        'leaflet-directive',
+        'enviroCar.api',
+        'enviroCar.track'])
             .value("ecBaseUrl", "https://enviroCar.org/api/stable")
-            .run(function ($rootScope, $state, $cookieStore, UserCredentialsService) {
+            .run(function ($rootScope, $state, $cookieStore, $mdMedia, UserCredentialsService) {
                     console.log('app started');
                     $rootScope.previewurl = "";
                     UserCredentialsService.clearCredentials();
@@ -24,7 +26,7 @@
                         console.log(credits);
                         console.log(credits2);
                     }
-            
+                    
                     $rootScope.$on("$stateChangeStart", function (event, toState, toParams,
                             fromState, fromParams) {
                         var credits = UserCredentialsService.getCredentials();
@@ -53,6 +55,8 @@
     angular.module('enviroCar.api', []);
 
     angular.module('enviroCar.auth', []);
+    
+    angular.module('enviroCar.track', []);
     
     
 })();

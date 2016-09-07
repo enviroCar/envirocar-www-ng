@@ -62,7 +62,7 @@
         UserService.getUserFriends(username, token).then(
                 function(data){
                     console.log(data);
-                    $scope.friends_number = data.users.length;
+                    $scope.friends_number = data.data.users.length;
                 }, function(data){
                     console.log("Error: "+data);
                 }
@@ -72,7 +72,7 @@
         UserService.getUserEmail(username, token).then(
                 function(data){
                     console.log(data);
-                    $scope.emailId = data.mail;
+                    $scope.emailId = data.data.mail;
                 }, function(data){
                     console.log("Error: "+data);
                 }
@@ -81,7 +81,7 @@
         UserService.getUserGroups(username, token).then(
                 function(data){
                     console.log(data);
-                    $scope.groups_number = data.groups.length;
+                    $scope.groups_number = data.data.groups.length;
                 }, function(data){
                     console.log("Error: "+data);
                 }

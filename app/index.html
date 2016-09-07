@@ -9,6 +9,13 @@
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+        
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        <script src="bower_components/leaflet.heat/dist/leaflet-heat.js"></script>
+        <script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+
         <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
         <!-- bower:css -->
         <!-- endInject -->
@@ -26,11 +33,11 @@
     
     <div layout="row" >
 
-        <envirocar-sidenav > </envirocar-sidenav> <!-- Sidenavigation -->
+        <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
         
      
         <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
-
+                    
         </div>
 
         <div layout="row" flex>

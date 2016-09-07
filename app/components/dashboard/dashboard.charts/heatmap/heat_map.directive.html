@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <md-card flex="100">
-    <md-card-content  >
+    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+        <span><b>{{'TITLE_HEATMAP'| translate}}</b></span>
+    </p>
+    <md-card-content>
         <md-progress-circular class="loader_dashboard" ng-if="!onload_heat_map" md-diameter="156"></md-progress-circular>
         <div ng-if="onload_heat_map">
-            <!--<leaflet lf-center="center" layers="layers" height="560px"></leaflet>-->
+            <leaflet lf-center="center" layers="layers" height="514px" ></leaflet>
         </div>
     </md-card-content>
 </md-card>

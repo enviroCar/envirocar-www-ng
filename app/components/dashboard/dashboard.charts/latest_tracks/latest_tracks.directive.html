@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <!-- latest_tracks directive -->
-<div layout="column" flex="33" >
-    <md-card style="min-height:1000px !important;">
-        <md-toolbar style="color:black;background-color:white" >
-            <div class="md-toolbar-tools">
-                <h3 style="color:rgba(0,101,160,0.9)">
-                    <span>{{'TITLE_TRACKS'| translate}}</span>
-                </h3>
-                <span flex></span>
-            </div>
-        </md-toolbar>
+<div layout="column" flex>
+    <md-card style="min-height:890px !important;">
+        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+            <span><b>{{'TITLE_TRACKS'| translate}}</b></span>
+        </p>
 
         <md-card-content class="text-color nopadding">
             <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
@@ -19,28 +14,37 @@
                         <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
                         </img> -->
                         <div class="sl-content" >
-                            <span>
-                                <span style="color:rgba(0,101,160,0.9);line-height:100%;padding-bottom:30px;margin-left:-10px"><b>{{event.begin| date:'medium'}}</b></span>
-                                <span style="color:rgba(255,255,255,0.8);background-color:rgba(0,101,160,0.9);border-radius: 8px;float:right">&nbsp;{{event.distance}} Km&nbsp;</span>
+                            <span >
+                                <span class="title_span"><b>{{event.begin| date:'medium'}}</b></span>
                             </span>
-                            <div  style="height:40px;padding-top:15px;padding-bottom:15px">
-                                <span style="line-height:70%">
-                                    <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
-                                    {{event.manufacturer}} - {{event.car}}
-                                </span>
-                                <span>
-                                    <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
-                                    {{event.travelTime}}
-                                </span>
-                            </div>
+                            <br>
+                            <span >
+                                <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                                {{event.distance}} km
+                            </span>
+
+                            <br>
+                            <span style="line-height:70%">
+                                <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
+                                {{event.manufacturer}} - {{event.car}}
+                            </span>
+
+                            <br>
+
+                            <span>
+                                <i class="material-icons md-24" style="height:28px;width:28px">timer</i>
+                                {{event.travelTime}}
+                            </span>
+                            <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                <md-content >
+                                    <p class="placeholder-p">.</p>
+
+                                    <img src={{event.url}} style="width:480px;height:376px;"></img>
+
+                                </md-content>
+                            </md-tooltip>
                         </div>
 
-                        <md-tooltip class="trackpreview" md-direction="left">
-                            <md-content>
-                                <p> .</p>
-                                <img ng-src={{event.url}} style="width:480px;height:380px;"></img>
-                            </md-content>
-                        </md-tooltip>
                     </div>
                 </div>
             </div>

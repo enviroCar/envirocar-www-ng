@@ -2,10 +2,10 @@
 
     LanguageDropdownCtrl = function($scope, $translate, $cookieStore) {
         $scope.language = 'en_EN';
-        $scope.localesDisplayNames = {
-            'de_DE': 'Deutsch',
-            'en_EN': 'English'
-        };
+        $scope.localesDisplayNames = [
+            'Deutsch',
+            'English'
+        ];
         $scope.currentLocaleDisplayName = "English";
         
         var language = {

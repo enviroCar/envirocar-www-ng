@@ -1,7 +1,10 @@
 <!-- Dashboard HTML content -->
 <div flex>
 
-    <div class="profiletab" ng-style="{'background-color':'#0065A0'}" style="height:275px">
+    <div class="profiletab" ng-style="{
+                'background-color':
+                '#0065A0'
+            }" style="height:275px">
         <div class="cover">
             <div class="profile-pic absolute" style="height:40%;display:inline-block">
                 <div layout="row">
@@ -79,25 +82,26 @@
     <div layout-gt-sm="row" layout-sm="column" layout-xs="column" flex>
 
         <div layout="column" flex>
-
-            <div layout-gt-sm="row" layout-sm="row" layout-xs="column" flex-gt-xs flex-xs="100">
-                <div flex-gt-xs="50" flex-xs="100">
-                    <user-vs-community-chart> </user-vs-community-chart>
-                </div>
-                <div flex-gt-xs="50" flex-xs="100">
-                    <speed-zones-chart> </speed-zones-chart>
-                </div>
+            <div flex-gt-md="35" flex-gt-xs="50" flex-xs="100">
+                <comparison-chart> </comparison-chart>
             </div>
-
-            <div flex-gt-xs="60" flex-xs="100">
+            <div flex>
                 <heat-map-chart> </heat-map-chart>
             </div>
-
         </div>
-
-        <div flex-gt-sm="50" flex-sm="100">
-            <latest-tracks-chart> </latest-tracks-chart>
+        <div layout="column" flex-gt-sm="35" flex-sm="100">
+            <div>
+                <latest-tracks-chart> </latest-tracks-chart>
+            </div>
+            <div>
+                <speed-zones-chart> </speed-zones-chart>
+            </div>
         </div>
 
     </div>
+
+    <div>
+        <speed-zones-chart> </speed-zones-chart>
+    </div>
 </div>
+

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<!-- speed and time zones directive -->
+<md-card flex>
+
+    <a class='card-title'>
+        <span>{{'SPEED_ZONES'| translate}}</span>
+    </a>
+
+    <md-card-content flex>
+        <md-progress-circular class="loader_dashboard" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
+        <nvd3 ng-if="onloadSpeedZones" options="options_speed" data="dataSpeedZones" flex></nvd3>
+
+    </md-card-content>
+</md-card>

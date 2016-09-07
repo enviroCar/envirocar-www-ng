@@ -46,15 +46,30 @@ angular.module('translations', [])
             'TOTAL_TRACKS'          : 'Tracks',
             'TOTAL_DISTANCE'        : 'Total Distance',
                 
-            // Dashboard_user_vs_community:
-            'LABEL_USER'    : 'You',
-            'LABEL_PUBLIC'  : 'Community',
+            // Dashboard - ComparisonChart:
+            'COMPARISON_CHART_TITLE'    : 'You compared to the enviroCar community',
+            'LABEL_USER'                : 'You',
+            'LABEL_PUBLIC'              : 'enviroCar Ø',
+            'TT_LABEL_USER'             : 'Your average',
+            'TT_LABEL_PUBLIC'           : 'enviroCar community average',
+            'ENGINE_LOAD'               : 'Engine load',
+            'SPEED'                     : 'Speed',
+            
+            // Dashboard - Heatmap:
+            'TITLE_HEATMAP' :   'Your footprints',
+            
+            // Dashboard - SpeedZoneChart:
+            'SPEED_ZONES'   :   'Speedzones',
+            
+            // Track Analysis - Leaflet:
+            'TITLE_TRACK_MAP'       : 'track map',
+            // Track Analysis - Chart:
+            'TITLE_TRACK_CHART'     : 'time series',
             
             
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
             'MODIFIED': 'Modified',
-            'User_VS_PUBLIC': 'User vs Public',
             'FRIENDS_ACTIVITY': 'Friend\'s Activity',
             'LOADING_DATA': 'Loading Data...',
             'SPEED_STATS': 'Speed Zones',
@@ -184,14 +199,30 @@ angular.module('translations', [])
             'TOTAL_TRACKS'          : 'Fahrten',
             'TOTAL_DISTANCE'        : 'Distanz',
             
-            // Dashboard_user_vs_community:
-            'LABEL_USER'    : 'Ich',
-            'LABEL_PUBLIC'  : 'Gemeinschaft',
+            'YOU_VS_PUBLIC'         : 'Ich und enviroCar im Vergleich',
             
-            'TITLE_TRACKS': 'neuste Fahrten',
+            // Dashboard - ComparisonChart:
+            'COMPARISON_CHART_TITLE'    : 'Ich im Vergleich zur enviroCar Gemeinschaft',
+            'LABEL_USER'                : 'Ich',
+            'LABEL_PUBLIC'              : 'enviroCar Ø',
+            'TT_LABEL_USER'             : 'Mein Durchschnittswert',
+            'TT_LABEL_PUBLIC'           : 'enviroCar Durchschnittswert',
+            
+            // Dashboard - Heatmap:
+            'TITLE_HEATMAP' :   'Mein Einflussbereich',
+            
+            // Dashboard - SpeedZoneChart:
+            'SPEED_ZONES'   :   'Geschwindigkeitszonen',
+            
+            // Track Analysis - Leaflet:
+            'TITLE_TRACK_MAP'       : 'Fahrtkarte',
+            // Track Analysis - Chart:
+            'TITLE_TRACK_CHART'     : 'Zeitreihendiagramm',
+            
+            
+            'TITLE_TRACKS': 'Neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',
             'MODIFIED': 'Geändert',
-            'User_VS_PUBLIC': 'Du im Vergleich',
             'FRIENDS_ACTIVITY': 'Aktivitäten von Freunden',
             'LOADING_DATA': 'Lade Daten...',
             'SPEED_STATS': 'Geschwindigkeitszonen',

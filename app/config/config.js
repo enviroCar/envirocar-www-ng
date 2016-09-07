@@ -1,6 +1,6 @@
-(function(){
+(function () {
     'use strict';
-    
+
     function config($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider) {
         console.log('run config');
 
@@ -16,6 +16,17 @@
                     templateUrl: 'app/components/dashboard/dashboard.html',
                     controller: 'DashboardCtrl',
                     authenticate: true
+                })
+                .state('chart', {
+                    url: '/dashboard/track/:trackid',
+                    controller: 'ChartCtrl',
+                    templateUrl: function (stateParams) {
+                        return 'app/components/track_analysis/chart/chart.html?path=' + stateParams.trackid
+                    },
+                    authenticate: true,
+                    data: {
+                        title: 'Chart'
+                    }
                 })
                 .state('tracks', {
                     url: '/tracks',
@@ -74,13 +85,13 @@
                     'default': '500'
                 })
                 .warnPalette('pink');
-        
+
         $httpProvider.defaults.headers.common = {};
         $httpProvider.defaults.headers.post = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
     }
-    
+
     angular.module('enviroCar')
             .config(config);
 })();

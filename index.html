@@ -9,8 +9,16 @@
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+        
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        <script src="bower_components/leaflet.heat/dist/leaflet-heat.js"></script>
+        <script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
+
         <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
         <!-- bower:css -->
+        <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css">
         <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
         <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.css">
         <!-- endInject -->
@@ -29,11 +37,11 @@
     
     <div layout="row" >
 
-        <envirocar-sidenav > </envirocar-sidenav> <!-- Sidenavigation -->
+        <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
         
      
         <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
-
+                    
         </div>
 
         <div layout="row" flex>
@@ -52,6 +60,7 @@
     </div>
 
     <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
@@ -61,9 +70,15 @@
     <script src="/bower_components/angular-translate/angular-translate.js"></script>
     <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
+    <script src="/bower_components/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="/bower_components/heatmap.js-amd/build/heatmap.js"></script>
+    <script src="/bower_components/heatmap.js-amd/plugins/svg-area-heatmap.js"></script>
+    <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
     <script src="/bower_components/nvd3/build/nv.d3.js"></script>
     <script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+    <script src="/bower_components/ui-leaflet/dist/ui-leaflet.js"></script>
     <!-- endInject -->
     <!-- inject:js -->
     <script src="/app/app.js"></script>
@@ -83,14 +98,15 @@
     <script src="/app/components/toolbar/toolbar.directive.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_dropdown.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_dropdown.directive.js"></script>
+    <script src="/app/components/track_analysis/chart/ChartController.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/heatmap/heat_map.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/heatmap/heat_map.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.directive.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/speed_zones/speed_zones.controller.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/speed_zones/speed_zones.directive.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/user_vs_community/user_vs_community.controller.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/user_vs_community/user_vs_community.directive.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/speed_zones_chart/speed_zones.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/speed_zones_chart/speed_zones.directive.js"></script>
     <!-- endinject -->
 </body>
 
