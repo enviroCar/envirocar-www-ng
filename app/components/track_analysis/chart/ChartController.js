@@ -16,6 +16,10 @@
             paths: {},
             bounds: {},
             markers: {
+                ClickedPosition: {
+                },
+                HoveredPosition: {
+                }
             },
             layers: {
                 baselayers: {
@@ -27,7 +31,7 @@
                 }
             },
             legend: {
-                position: 'bottomleft',
+                position: 'bottomright',
                 colors: ['#00ff00', '#75ff00', '#ecff00', '#ff7500', '#ff0000', '#6f0000'],
                 labels: ['  0 km/h', ' 30 km/h', ' 60 km/h', '100 km/h', '130 km/h', '180 km/h']
             },
@@ -54,6 +58,25 @@
         $scope.optionsTrackChart = {
             chart: {
                 type: 'lineWithFocusChart',
+                callback: function (chart) {
+                    chart.dispatch.on('Brush', function (brushExtent) {
+                        console.log(brushExtent);
+                        /* brushExtent is an array with start and finish x coordinates of the focus */
+                    });
+                },
+                dispatch: {
+                    renderEnd: function (e) {
+                        console.log('renderEnd');
+                        console.log(e);
+                    }, stateChange: function (e) {
+                        console.log('stateChange');
+                        console.log(e);
+                    },
+                    changeState: function (e) {
+                        console.log('changeState');
+                        console.log(e);
+                    }
+                },
                 height: 450,
                 margin: {
                     top: 20,
@@ -101,11 +124,15 @@
                         elementMouseout: function (e) {
                             $scope.hoveredXPoint = 0;
                             $scope.removeHoverMarker();
+                        },
+                        onBrush: function (e) {
+                            console.log(e);
                         }
                     }
                 }
             }
         };
+
 
         // toggle Segment analysis:
         $scope.toggleSegmentAnalysis = function () {
@@ -124,6 +151,7 @@
             },
                     100);
         };
+
 
         // Chart data setup for Track Chart:
         $scope.dataTrackChart = [
@@ -152,35 +180,29 @@
         };
 
         $scope.removeCurrentPositionMarker = function () {
-            var marker = {};
-            $scope.markers = marker;
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    50);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    10);
+            $scope.markers.ClickedPosition = {
+                'lat': -1000,
+                'lng': -1000,
+                focus: false,
+                message: ""
+            };
+            /**
+             $timeout(function () {
+             window.dispatchEvent(new Event('resize'))
+             },
+             10);*/
         };
         $scope.removeHoverMarker = function () {
-            var marker = {
-                CurrentPosition: {
-                    lat: $scope.currentClicked.lat,
-                    lng: $scope.currentClicked.lng,
-                    focus: false,
-                    message: "Current Position"
-                }
+            $scope.markers.HoveredPosition = {
+                'lat': -1000,
+                'lng': -1000,
+                focus: false,
+                message: ""
             };
-            $scope.markers = marker;
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
-                    50);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    10);
+                    1);
         };
 
         $scope.showHoveredX = function () {
@@ -189,58 +211,28 @@
                 var lat_coord = data_global.data.features[$scope.hoveredXPoint].geometry.coordinates[1];
                 var lon_coord = data_global.data.features[$scope.hoveredXPoint].geometry.coordinates[0];
 
-                var marker = {
-                    hoverPosition: {
-                        lat: lat_coord,
-                        lng: lon_coord,
-                        focus: false
-                    },
-                    CurrentPosition: {
-                        lat: $scope.currentClicked.lat,
-                        lng: $scope.currentClicked.lng,
-                        focus: false,
-                        message: "Current Position"
-                    }
-                };
-                $scope.markers = marker;
+                $scope.markers.HoveredPosition = {
+                    lat: lat_coord,
+                    lng: lon_coord,
+                    focus: false
+                }
             }
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
-                    50);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    100);
-        };
-        $scope.currentClicked = {
-            lat: 0,
-            lng: 0
+                    1);
         };
         $scope.showMeasurementX = function () {
             // get the lat/lng coordinates:
             if ($scope.clickedXPoint > 0) {
-                $scope.currentClicked.lat = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[1];
-                $scope.currentClicked.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
+                $scope.markers.ClickedPosition.lat = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[1];
+                $scope.markers.ClickedPosition.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
 
-                var marker = {
-                    CurrentPosition: {
-                        lat: $scope.currentClicked.lat,
-                        lng: $scope.currentClicked.lng,
-                        focus: false,
-                        message: "Current Position"
-                    }
-                };
-                $scope.markers = marker;
             }
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
-                    50);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    100);
+                    1);
         };
 
         var data_global = {};
@@ -303,23 +295,24 @@
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'))
                     },
-                            500);
+                            200);
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'))
                     },
-                            1000);
+                            500);
                 }, function (error) {
             console.log(error);
         }
         );
+        
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                200);
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },
                 500);
-        $timeout(function () {
-            window.dispatchEvent(new Event('resize'))
-        },
-                1000);
     }
     ;
     angular.module('enviroCar.track')

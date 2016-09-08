@@ -12,7 +12,7 @@
             username = credits.username;
             token = credits.password;
         } else {
-            console.log("error: did not receive usercredits.");
+            console.log("error: dird not receive usercredits.");
         }
         $scope.name_of_user = username;
         $scope.track_number = 0;

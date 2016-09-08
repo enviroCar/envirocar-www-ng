@@ -3,7 +3,7 @@
     function ComparisonChartCtrl($scope, $timeout, $translate, StatisticsService, UserCredentialsService) {
         console.log("SpeedCtrl started.");
         $scope.onload_all = false;
-        
+
         $scope.onload_speed = false;
         $scope.onload_consumption = false;
         $scope.onload_CO2 = false;
@@ -11,7 +11,7 @@
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        
+
         $scope.optionsSpeed = {
             chart: {
                 type: 'discreteBarChart',
@@ -47,6 +47,30 @@
             }
         };
 
+        $scope.$on('toolbar:language-changed', function (event, args) {
+            console.log("language changed received.");
+            var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
+            $scope.optionsSpeed.chart.yAxis = {
+                axisLabel: axisLabelSpeed,
+                axisLabelDistance: -10
+            };
+            var axisLabelConsumption = $translate.instant('CONSUMPTION') + ' (l/h)';
+            $scope.optionsConsumption.chart.yAxis = {
+                axisLabel: axisLabelConsumption,
+                axisLabelDistance: -10
+            };
+            var axisLabelCO2 = $translate.instant('CO2') + ' (kg/h)';
+            $scope.optionsCO2.chart.yAxis = {
+                axisLabel: axisLabelCO2,
+                axisLabelDistance: -10
+            };
+            var axisLabelEngineLoad = $translate.instant('ENGINE_LOAD') + ' (%)';
+            $scope.optionsEngine.chart.yAxis = {
+                axisLabel: axisLabelEngineLoad,
+                axisLabelDistance: -10
+            };
+        });
+
         $scope.optionsConsumption = {
             chart: {
                 type: 'discreteBarChart',
@@ -69,7 +93,7 @@
                 },
                 duration: 300,
                 yAxis: {
-                    axisLabel: $translate.instant('CONSUMPTION')+' (l/h)',
+                    axisLabel: $translate.instant('CONSUMPTION') + ' (l/h)',
                     axisLabelDistance: -20
                 },
                 tooltip: {
@@ -137,7 +161,7 @@
                 },
                 duration: 300,
                 yAxis: {
-                    axisLabel: $translate.instant('ENGINE_LOAD')+' (%)',
+                    axisLabel: $translate.instant('ENGINE_LOAD') + ' (%)',
                     axisLabelDistance: -20
                 },
                 tooltip: {
@@ -184,7 +208,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
-        
+
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
                 function (data) {
                     console.log(data);
@@ -218,7 +242,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
-        
+
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
                 function (data) {
                     console.log(data);
@@ -252,7 +276,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
-        
+
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
                 function (data) {
                     console.log(data);
@@ -286,7 +310,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
-        
+
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));
         }, 300);

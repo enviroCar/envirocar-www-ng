@@ -1,6 +1,6 @@
 (function () {
 
-    LanguageDropdownCtrl = function($scope, $translate, $cookieStore) {
+    LanguageDropdownCtrl = function($rootScope, $scope, $translate, $cookieStore) {
         $scope.language = 'en_EN';
         $scope.localesDisplayNames = [
             'Deutsch',
@@ -50,6 +50,7 @@
                 $scope.currentLocaleDisplayName = 'Deutsch';
                 $scope.saveLanguageSetting();
             }
+            $rootScope.$broadcast('toolbar:language-changed', $scope.language);
         };
     };
 

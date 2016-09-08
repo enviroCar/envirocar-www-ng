@@ -12,14 +12,14 @@
                 <p class='comparison-title'> {{'SPEED' | translate}}</p>
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed" md-diameter="56"></md-progress-circular>
                 <div flex ng-if="onload_speed" layout="row">
-                    <nvd3 options="optionsSpeed" data="dataSpeed" flex></nvd3>
+                    <nvd3 options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
                 </div>
             </md-card-content>
             <md-card-content flex>
                 <p class='comparison-title'> {{'CONSUMPTION' | translate}}</p>
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_consumption" md-diameter="56"></md-progress-circular>
                 <div flex ng-if="onload_consumption" layout="row">
-                    <nvd3 options="optionsConsumption" data="dataConsumption" flex></nvd3>
+                    <nvd3 options="optionsConsumption" data="dataConsumption" api="api" flex></nvd3>
                 </div>
             </md-card-content>
         </div>
@@ -28,14 +28,14 @@
                 <p class='comparison-title'> {{'CO2' | translate}}</p>
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2" md-diameter="56"></md-progress-circular>
                 <div flex ng-if="onload_CO2" layout="row">
-                    <nvd3 options="optionsCO2" data="dataCO2" flex></nvd3>
+                    <nvd3 options="optionsCO2" data="dataCO2" api="api" flex></nvd3>
                 </div>
             </md-card-content>
             <md-card-content flex>
                 <p class='comparison-title'> {{'ENGINE_LOAD' | translate}}</p>
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_engine" md-diameter="56"></md-progress-circular>
                 <div flex ng-if="onload_engine" layout="row">
-                    <nvd3 options="optionsEngine" data="dataEngine" flex></nvd3>
+                    <nvd3 options="optionsEngine" data="dataEngine" api="api" flex></nvd3>
                 </div>
             </md-card-content>
         </div>

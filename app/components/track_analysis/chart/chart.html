@@ -48,11 +48,18 @@
             </p>
             <md-card-content flex>
                 <md-progress-circular class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
-                <div ng-if="onload_track_chart">
+                <div ng-if="segmentActivated && onload_track_chart">
                     <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
+                </div>
+                <div ng-if="!segmentActivated && onload_track_chart">
+                    <line-chart-without-focus flex> </line-chart-without-focus>
                 </div>
             </md-card-content>
         </div>
     </md-card>
+    
+    <div flex>
+            <track-chart flex ></track-chart>
+    </div> 
 
 </div>

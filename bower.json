@@ -23,12 +23,12 @@
     "angular-ui-router": "^0.2.18",
     "angular-translate": "^2.11.0",
     "angular-cookies": "^1.5.0",
-    "nvd3": "^1.8.4",
-    "d3": "^4.2.2",
+    "d3": "^3.5.3",
     "angular-nvd3": "^1.0.9",
     "leaflet": "0.7.7",
     "Leaflet.heat": "*",
     "heatmap.js-amd": "*",
-    "ui-leaflet": "^1.0.1"
+    "ui-leaflet": "^1.0.1",
+    "nvd3": "^1.8.4"
   }
 }
