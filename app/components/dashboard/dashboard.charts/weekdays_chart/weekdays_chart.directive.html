@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <!-- weekdays comparison directive -->
-<md-card>
+<md-card flex>
     <div layout="row" flex="100">
-        <p class='card-title' >
-            <span><b>{{'COMPARISON_CHART_TITLE'| translate}} </b></span>
+        <p class='card-title' flex>
+            <span><b>{{'WEEKDAYS_CHART_TITLE'| translate}} </b></span>
         </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'WEEKDAYS_CHART_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
     </div >
     <div layout-gt-md="row" layout-xs="column" layout-gt-xs="column">
         <md-card-content flex>
-            <p class='comparison-title'> Wochentage</p>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_weekdays" md-diameter="56"></md-progress-circular>
             <div flex ng-if="onload_weekdays" layout="row">
                 <nvd3 options="optionsWeekdays" data="dataWeekdays" api="api" flex></nvd3>

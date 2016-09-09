@@ -2,8 +2,9 @@
 <div flex>
 
     <div class="profiletab" ng-style="{
-                'background-color':
-                '#0065A0'
+                'background-color'
+                :
+                        '#0065A0'
             }" style="height:275px">
         <div class="cover">
             <div class="profile-pic absolute" style="height:40%;display:inline-block">
@@ -82,23 +83,27 @@
     <div layout-gt-sm="row" layout-sm="column" layout-xs="column" flex>
 
         <div layout="column" flex>
-            <div flex-gt-md="35" flex-gt-xs="50" flex-xs="100">
-                <comparison-chart> </comparison-chart>
+            <div flex>
+                <comparison-chart flex> </comparison-chart>
             </div>
             <div flex>
-                <heat-map-chart> </heat-map-chart>
+                <heat-map-chart flex> </heat-map-chart>
+            </div>
+            <div flex>
+                    <weekdays-chart flex></weekdays-chart>
             </div>
         </div>
         <div layout="column" flex-gt-sm="35" flex-sm="100">
-            <div>
-                <latest-tracks-chart> </latest-tracks-chart>
+            <div flex>
+                <latest-tracks-chart flex> </latest-tracks-chart>
+            </div>
+            <div flex>
+                <weekdays-chart flex></weekdays-chart>
             </div>
         </div>
 
     </div>
 
-    <div>
-        <weekdays-chart></weekdays-chart>
-    </div>
+
 </div>
 

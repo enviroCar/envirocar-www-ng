@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- user vs community directive -->
+<md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'COMPARISON_TRACK_CHART_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'COMPARISON_TRACK_CHART_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+    <md-card-content flex layout='row'>
+        <p class='comparison-title'> {{ phenomenon | translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_comparison_track" md-diameter="56"></md-progress-circular>
+        <div flex='100' ng-if="onload_comparison_track" layout="row">
+            <nvd3 options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+
+</md-card>

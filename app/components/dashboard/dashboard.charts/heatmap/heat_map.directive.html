@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <md-card flex="100">
-    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
-        <span><b>{{'TITLE_HEATMAP'| translate}}</b></span>
-    </p>
+    <div layout="row" flex="100">
+        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+            <span><b>{{'TITLE_HEATMAP'| translate}}</b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'HEATMAP_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
     <md-card-content>
         <md-progress-circular class="loader_dashboard" ng-if="!onload_heat_map" md-diameter="156"></md-progress-circular>
         <div ng-if="onload_heat_map">

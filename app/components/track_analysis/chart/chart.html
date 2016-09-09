@@ -1,4 +1,4 @@
-<div>
+<div flex>
     <div class="profiletab" ng-style="{
                 'background-color':
                 '#0065A0'
@@ -30,36 +30,43 @@
             </div>
         </div>
     </div>
-    <md-card flex layout-gt-md="row" layout-md="row" layout-xs="column" layout-gt-xs="column">
-        <div flex-xs="100" flex-gt-xs="50">
-            <p style="color:#1A80C1;background-color:white; margin-left:20px;">
-                <span><b>{{'TITLE_TRACK_MAP'| translate}}</b></span>
-            </p>
-            <md-card-content flex>
-                <md-progress-circular class="loader_dashboard" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
-                <div ng-if="onload_track_map">
-                    <leaflet event-broadcast="events" markers="markers" legend="legend" bounds="bounds" paths="paths" layers="layers" height="500px" ></leaflet>
-                </div>
-            </md-card-content>
+    <div layout = "column">
+        <md-card flex layout-gt-md="row" layout-md="row" layout-xs="column" layout-gt-xs="column">
+            <div flex-xs="100" flex-gt-xs="50">
+                <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                    <span><b>{{'TITLE_TRACK_MAP'| translate}}</b></span>
+                </p>
+                <md-card-content flex>
+                    <md-progress-circular class="loader_dashboard" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
+                    <div ng-if="onload_track_map">
+                        <leaflet event-broadcast="events" markers="markers" legend="legend" bounds="bounds" paths="paths" layers="layers" height="500px" ></leaflet>
+                    </div>
+                </md-card-content>
+            </div>
+            <div flex-xs="100" flex-gt-xs="50">
+                <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                    <span><b>{{'TITLE_TRACK_CHART'| translate}}</b></span>
+                </p>
+                <md-card-content flex>
+                    <md-progress-circular class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
+                    <div ng-if="segmentActivated && onload_track_chart" flex>
+                        <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
+                    </div>
+                    <div ng-if="!segmentActivated && onload_track_chart" flex>
+                        <line-chart-without-focus flex> </line-chart-without-focus>
+                    </div>
+                </md-card-content>
+            </div>
+        </md-card>
+        <!--
+        <div flex>
+                <track-chart flex ></track-chart>
+        </div> -->
+
+        <div flex>
+            <comparison-track-chart flex> </comparison-track-chart>
         </div>
-        <div flex-xs="100" flex-gt-xs="50">
-            <p style="color:#1A80C1;background-color:white; margin-left:20px;">
-                <span><b>{{'TITLE_TRACK_CHART'| translate}}</b></span>
-            </p>
-            <md-card-content flex>
-                <md-progress-circular class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
-                <div ng-if="segmentActivated && onload_track_chart">
-                    <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
-                </div>
-                <div ng-if="!segmentActivated && onload_track_chart">
-                    <line-chart-without-focus flex> </line-chart-without-focus>
-                </div>
-            </md-card-content>
-        </div>
-    </md-card>
-    
-    <div flex>
-            <track-chart flex ></track-chart>
-    </div> 
+
+    </div>
 
 </div>

@@ -11,7 +11,7 @@
         $scope.optionsWeekdays = {
             chart: {
                 type: "discreteBarChart",
-                height: 450,
+                height: 200,
                 margin: {
                     top: 20,
                     right: 20,
@@ -19,13 +19,14 @@
                     left: 45
                 },
                 showValues: true,
-                duration: 500,
+                duration: 200,
                 xAxis: {
-                    axisLabel: "Time (ms)",
-                    showMaxMin: false
+                    axisLabel: $translate.instant("WEEKDAYS"),
+                    showMaxMin: false,
+                    
                 },
-                yAxis1: {
-                    axisLabel: "Distance (km)",
+                yAxis: {
+                    axisLabel: $translate.instant("DISTANCE") + " (km)",
                     axisLabelDistance: -20
                 }
             }
@@ -34,13 +35,23 @@
 
         $scope.$on('toolbar:language-changed', function (event, args) {
             console.log("language changed received.");
-            /**
-             var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
-             $scope.optionsSpeed.chart.yAxis = {
-             axisLabel: axisLabelSpeed,
-             axisLabelDistance: -10
-             };
-             */
+
+            var axisXLabel = $translate.instant("WEEKDAYS");
+            var axisYLabel = $translate.instant("DISTANCE") + " (km)";
+            $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
+            $scope.dataWeekdays[0].values[1].x = $translate.instant('MONDAY');
+            $scope.dataWeekdays[0].values[2].x = $translate.instant('TUESDAY');
+            $scope.dataWeekdays[0].values[3].x = $translate.instant('WEDNESDAY');
+            $scope.dataWeekdays[0].values[4].x = $translate.instant('THURSDAY');
+            $scope.dataWeekdays[0].values[5].x = $translate.instant('FRIDAY');
+            $scope.dataWeekdays[0].values[6].x = $translate.instant('SATURDAY');
+            $scope.optionsWeekdays.chart.xAxis = {
+                axisLabel: axisXLabel
+            };
+            $scope.optionsWeekdays.chart.yAxis = {
+                axisLabel: axisYLabel,
+                axisLabelDistance: -20
+            };
         });
 
         TrackService.getUserTracks($scope.username, $scope.password).then(
@@ -48,39 +59,39 @@
                     console.log(data);
                     var tracks = data.data.tracks;
                     var temp_data = [{
-                        key: "Cumulative Return",
-                        values: [
-                            {
-                                x: "Sunday",
-                                y: 0
-                            }, {
-                                x: "Monday",
-                                y: 0
-                            },
-                            {
-                                x: "Tuesday",
-                                y: 0
-                            },
-                            {
-                                x: "Wednesday",
-                                y: 0
-                            },
-                            {
-                                x: "Thursday",
-                                y: 0
-                            },
-                            {
-                                x: "Friday",
-                                y: 0
-                            },
-                            {
-                                x: "Saturday",
-                                y: 0
-                            }
-                        ],
-                        yAxis: 1,
-                        type: "bar"
-                    }];
+                            key: "Cumulative Return",
+                            values: [
+                                {
+                                    x: $translate.instant('SUNDAY'),
+                                    y: 0
+                                }, {
+                                    x: $translate.instant('MONDAY'),
+                                    y: 0
+                                },
+                                {
+                                    x: $translate.instant('TUESDAY'),
+                                    y: 0
+                                },
+                                {
+                                    x: $translate.instant('WEDNESDAY'),
+                                    y: 0
+                                },
+                                {
+                                    x: $translate.instant('THURSDAY'),
+                                    y: 0
+                                },
+                                {
+                                    x: $translate.instant('FRIDAY'),
+                                    y: 0
+                                },
+                                {
+                                    x: $translate.instant('SATURDAY'),
+                                    y: 0
+                                }
+                            ],
+                            yAxis: 1,
+                            type: "bar"
+                        }];
                     console.log(temp_data);
 
                     for (var index = 0; index < tracks.length; index++) {

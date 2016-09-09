@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function SidenavCtrl($scope, $element, $mdMedia, $mdSidenav, $log, $translate, $q, navService) {
+    function SidenavCtrl($rootScope, $scope, $element, $mdMedia, $mdSidenav, $log, $translate, $q, navService) {
         var vm = this;
         vm.menuItems = [];
         vm.selectItem = selectItem;
@@ -33,6 +33,7 @@
         function selectItem(item) {
             vm.title = item.name;
             vm.collapse();
+            $rootScope.$broadcast('sidenav:item-selected', $scope.language);
         }
 
         function toggleItemsList() {

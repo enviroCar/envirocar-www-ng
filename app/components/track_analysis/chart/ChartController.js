@@ -3,6 +3,7 @@
     function ChartCtrl($scope,
             $stateParams,
             $timeout,
+            $translate,
             TrackService,
             UserCredentialsService,
             leafletBoundsHelpers) {
@@ -214,7 +215,7 @@
                 $scope.markers.HoveredPosition = {
                     lat: lat_coord,
                     lng: lon_coord,
-                    focus: false
+                    focus: true
                 }
             }
             $timeout(function () {

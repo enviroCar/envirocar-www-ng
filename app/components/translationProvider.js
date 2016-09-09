@@ -54,12 +54,31 @@ angular.module('translations', [])
             'TT_LABEL_PUBLIC'           : 'enviroCar community average',
             'ENGINE_LOAD'               : 'Engine load',
             'SPEED'                     : 'Speed',
+            'COMPARISON_CHART_DESCRIPTION'  : 
+                    'Your statistic averages compared to the enviroCar community\'s statstic averages.'+
+                    'Durchschnittswerden, die die enviroCar Gemeinschaft gesammelt hat.',
+            
+            // Dashboard - LatestTracksChart:
+            'LATEST_TRACKS_CHART_DESCRIPTION'   :   'Your latest six tracks are listed here. You can see a summary of the driven distance, your used vehicle, and the duration of the track. Hover over a track to see a map preview of the track. Click on a track to get redirect to the single track analysis page.',
             
             // Dashboard - Heatmap:
-            'TITLE_HEATMAP' :   'Your footprints',
+            'TITLE_HEATMAP'         : 'Your footprints',
+            'HEATMAP_DESCRIPTION'   : 'This map shows where you\'ve been driving.',
             
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'   :   'Speedzones',
+            
+            // Dashboard - WeekdaysChart
+            'WEEKDAYS_CHART_TITLE'          : 'Your weekday distribution',
+            'WEEKDAYS_CHART_DESCRIPTION'    : 'Your driven distance across weekdays',
+            'WEEKDAYS'                      : 'Weekdays',
+            'MONDAY'        : 'Monday',
+            'TUESDAY'       : 'Tuesday',
+            'WEDNESDAY'     : 'Wednesday',
+            'THURSDAY'      : 'Thursday',
+            'FRIDAY'        : 'Friday',
+            'SATURDAY'      : 'Saturday',
+            'SUNDAY'        : 'Sunday',
             
             // Track Analysis - Leaflet:
             'TITLE_TRACK_MAP'       : 'track map',
@@ -207,12 +226,34 @@ angular.module('translations', [])
             'LABEL_PUBLIC'              : 'enviroCar Ø',
             'TT_LABEL_USER'             : 'Mein Durchschnittswert',
             'TT_LABEL_PUBLIC'           : 'enviroCar Durchschnittswert',
+            'COMPARISON_CHART_DESCRIPTION'  : 'Deine Durchschnittswerte im Vergleich mit den Durchschnittswerden, die die enviroCar Gemeinschaft gesammelt hat.',
+            
+            // Dashboard - LatestTracksChart:
+            'LATEST_TRACKS_CHART_DESCRIPTION'   : 
+                    'Deine neusten sechs Fahrten werden hier angezeigt. '+
+'Dir werden das Datum, deine zurückgelegte Distanz, dein Fahrzeug sowie die Fahrtdauer angezeigt. '+
+'Bewege den Mauszeiger über die Fahrt um eine Kartenvorschau zu sehen. '+
+'Klicke auf die Fahrt um zur Einzelfahrtanalyseseite weitergeleitet zu werden.',
             
             // Dashboard - Heatmap:
-            'TITLE_HEATMAP' :   'Mein Einflussbereich',
+            'TITLE_HEATMAP'         : 'Mein Einflussbereich',
+            'HEATMAP_DESCRIPTION'   : 'Diese Karte zeigt dir an, wo du gefahren bist',
             
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'   :   'Geschwindigkeitszonen',
+            
+            // Dashboard - WeekdaysChart
+            'WEEKDAYS_CHART_TITLE'          : 'Meine Wochentagsverteilung',
+            'WEEKDAYS_CHART_DESCRIPTION'    : 'Meine zurückgelegte Distanz verteilt auf Wochentage',
+            'WEEKDAYS'                      : 'Wochentage',
+            'MONDAY'        : 'Montag',
+            'TUESDAY'       : 'Dienstag',
+            'WEDNESDAY'     : 'Mittwoch',
+            'THURSDAY'      : 'Donnerstag',
+            'FRIDAY'        : 'Freitag',
+            'SATURDAY'      : 'Samstag',
+            'SUNDAY'        : 'Sonntag',
+            
             
             // Track Analysis - Leaflet:
             'TITLE_TRACK_MAP'       : 'Fahrtkarte',

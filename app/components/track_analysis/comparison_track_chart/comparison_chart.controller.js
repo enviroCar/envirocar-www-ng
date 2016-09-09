@@ -1,9 +1,10 @@
 (function () {
     'use strict';
-    function ComparisonChartCtrl($scope, $timeout, $translate, StatisticsService, UserCredentialsService) {
+    function ComparisonTrackChartCtrl($scope, $timeout, $translate, StatisticsService, UserCredentialsService) {
         console.log("SpeedCtrl started.");
-        $scope.onload_all = false;
+        $scope.onload_comparison_track = false;
 
+        $scope.phenomenon = 'SPEED';
         $scope.onload_speed = false;
         $scope.onload_consumption = false;
         $scope.onload_CO2 = false;
@@ -212,7 +213,7 @@
                                 $scope.onload_speed = true;
                                 if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_engine) {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_all = true;
+                                    $scope.onload_comparison_track = true;
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
                                     }, 300);
@@ -251,7 +252,7 @@
                                 $scope.onload_consumption = true;
                                 if ($scope.onload_CO2 && $scope.onload_speed && $scope.onload_engine) {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_all = true;
+                                    $scope.onload_comparison_track = true;
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
                                     }, 300);
@@ -290,7 +291,7 @@
                                 $scope.onload_CO2 = true;
                                 if ($scope.onload_speed && $scope.onload_consumption && $scope.onload_engine) {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_all = true;
+                                    $scope.onload_comparison_track = true;
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
                                     }, 300);
@@ -329,7 +330,7 @@
                                 $scope.onload_engine = true;
                                 if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_speed) {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_all = true;
+                                    $scope.onload_comparison_track = true;
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
                                     }, 300);
@@ -353,5 +354,5 @@
     }
     ;
     angular.module('enviroCar')
-            .controller('ComparisonChartCtrl', ComparisonChartCtrl);
+            .controller('ComparisonTrackChartCtrl', ComparisonTrackChartCtrl);
 })();

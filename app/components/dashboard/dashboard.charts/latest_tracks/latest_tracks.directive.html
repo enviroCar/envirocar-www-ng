@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <!-- latest_tracks directive -->
 <div layout="column" flex>
-    <md-card style="min-height:890px !important;">
-        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+    <md-card style="min-height:860px !important;">
+        <div layout="row" flex="100">
+        <p class='card-title' flex>
             <span><b>{{'TITLE_TRACKS'| translate}}</b></span>
         </p>
-
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'LATEST_TRACKS_CHART_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+        </div>
         <md-card-content class="text-color nopadding">
             <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
             <div class="card-body">
