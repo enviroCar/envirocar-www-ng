@@ -10,6 +10,37 @@
         console.log("LineChartWithoutFocusCtrl started.");
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_chart = false;
+        $scope.currentPhenomenon = 'Speed';
+
+        $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
+            console.log("phenomenon changed received.");
+            $scope.currentPhenomenon = args;
+            console.log($scope.currentPhenomenon);
+            console.log($scope.dataTrackChart);
+            switch ($scope.currentPhenomenon) {
+                case 'Speed':
+                    $scope.dataTrackChart[0] = $scope.data_all[0];
+                    $scope.paths = $scope.paths_all[0];
+                    break;
+                case 'Consumption':
+                    $scope.dataTrackChart[0] = $scope.data_all[1];
+                    $scope.paths = $scope.paths_all[1];
+                    break;
+                case 'CO2':
+                    $scope.paths = $scope.paths_all[2];
+                    $scope.dataTrackChart[0] = $scope.data_all[2];
+                    break;
+                case 'RPM':
+                    $scope.dataTrackChart[0] = $scope.data_all[3];
+                    $scope.paths = $scope.paths_all[3];
+                    break;
+                case 'Engine Load':
+                    $scope.dataTrackChart[0] = $scope.data_all[4];
+                    $scope.paths = $scope.paths_all[4];
+                    break;
+            }
+            console.log($scope.dataTrackChart);
+        });
 
         // chart options for the nvd3 line with focus chart:
         $scope.clickedXPoint = 0;
@@ -60,6 +91,35 @@
                 }
             }
         };
+
+        // to be filled with server query:
+        $scope.data_all = [
+            {
+                key: 'Speed',
+                values: [
+                ]
+            },
+            {
+                key: 'Consumption',
+                values: [
+                ]
+            },
+            {
+                key: 'CO2',
+                values: [
+                ]
+            },
+            {
+                key: 'RPM',
+                values: [
+                ]
+            },
+            {
+                key: 'Engine Load',
+                values: [
+                ]
+            }
+        ];
 
         // Chart data setup for Track Chart:
         $scope.dataTrackChart = [
@@ -135,15 +195,31 @@
                     data_global = data;
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
-                   // iterating through each measurement:
+                    // iterating through each measurement:
                     for (var index = 1; index < data_global.data.features.length; index++) {
+                        // save measurements for each phenomenon:
                         var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
-                        $scope.dataTrackChart[0].values.push(speedMeasurement);
+                        if (data_global.data.features[index].properties.phenomenons.Consumption)
+                            var consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
+                        if (data_global.data.features[index].properties.phenomenons.CO2)
+                            var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
+                        var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                        var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+
+                        // save all data:
+                        $scope.data_all[0].values.push(speedMeasurement);
+                        $scope.data_all[1].values.push(consumptionMeasurement);
+                        $scope.data_all[2].values.push(co2Measurement);
+                        $scope.data_all[3].values.push(rpmMeasurement);
+                        $scope.data_all[4].values.push(engineLoadMeasurement);
                     }
+
+                    // save 'speed'-data as default into time series chart 
+                    $scope.dataTrackChart[0] = $scope.data_all[0];
+                    console.log($scope.data_all);
+
                     $scope.onload_track_map = true;
                     // Track Chart:
-
-
                     $scope.onload_track_chart = true;
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'))

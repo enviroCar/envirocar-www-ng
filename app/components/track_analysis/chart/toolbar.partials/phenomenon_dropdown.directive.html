@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<md-input-container>
+    <label ng-model="currentPhenomenonDisplayName">Speed</label>
+    <md-select ng-model="currentPhenomenonDisplayName">
+        <md-option ng-repeat="phenomenonName in phenomenonNames" >
+            {{phenomenonName}}
+        </md-option>
+    </md-select>
+</md-input-container>

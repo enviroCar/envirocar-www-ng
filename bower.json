@@ -29,6 +29,7 @@
     "Leaflet.heat": "*",
     "heatmap.js-amd": "*",
     "ui-leaflet": "^1.0.1",
-    "nvd3": "^1.8.4"
+    "nvd3": "^1.8.4",
+    "angularjs-slider": "^5.5.0"
   }
 }

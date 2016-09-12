@@ -1,8 +1,9 @@
 <div flex>
     <div class="profiletab" ng-style="{
-                'background-color':
-                '#0065A0'
-            }" style="height:275px">
+                'background-color'
+                :
+                        '#0065A0'
+            }" style="height:235px">
         <div class="cover">
             <div class="profile-pic absolute" style="height:40%;display:inline-block">
                 <div layout="row">
@@ -21,16 +22,27 @@
                         <span class="emailIdUserNew">
                             {{'CREATED'| translate}}   - {{created}}
                         </span>
-                        <br>
-                        <span class="emailIdUser">
-                            <md-button md-accent primary ng-click="toggleSegmentAnalysis();"> {{segmentActivated}} </md-button>
-                        </span>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <div layout = "column">
+    <md-toolbar id="track_toolbar" class="track_toolbar" flex>
+        <div class="md-toolbar-tools">
+            <div id="phenom-dropdown" phenomenon-dropdown></div>
+            <md-switch md-accent ng-click="toggleSegmentAnalysis();" aria-label="Segment Analysis">
+                Segment Analysis
+            </md-switch>
+        </div>
+    </md-toolbar>
+    <rzslider id="slider1" ng-if="segmentActivated" rz-slider-model="slider.minValue"
+                      rz-slider-high="slider.maxValue"
+                      rz-slider-options="slider.options" flex></rzslider>
+    <div ng-if="track_toolbar_fixed" component-id="track_toolbar_placeholder">
+
+    </div>
+    <div layout = "column" flex>
         <md-card flex layout-gt-md="row" layout-md="row" layout-xs="column" layout-gt-xs="column">
             <div flex-xs="100" flex-gt-xs="50">
                 <p style="color:#1A80C1;background-color:white; margin-left:20px;">
@@ -63,6 +75,12 @@
                 <track-chart flex ></track-chart>
         </div> -->
 
+        <div flex>
+            <comparison-track-chart flex> </comparison-track-chart>
+        </div>
+        <div flex>
+            <comparison-track-chart flex> </comparison-track-chart>
+        </div>
         <div flex>
             <comparison-track-chart flex> </comparison-track-chart>
         </div>
