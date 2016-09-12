@@ -30,7 +30,7 @@
                     $scope.paths = $scope.paths_all[2];
                     $scope.dataTrackChart[0] = $scope.data_all[2];
                     break;
-                case 'RPM':
+                case 'Rpm':
                     $scope.dataTrackChart[0] = $scope.data_all[3];
                     $scope.paths = $scope.paths_all[3];
                     break;
@@ -110,7 +110,7 @@
                 ]
             },
             {
-                key: 'RPM',
+                key: 'Rpm',
                 values: [
                 ]
             },

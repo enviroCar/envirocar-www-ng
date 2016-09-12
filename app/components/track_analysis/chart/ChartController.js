@@ -1,6 +1,8 @@
 (function () {
 
-    function ChartCtrl($scope,
+    function ChartCtrl(
+            $rootScope,
+            $scope,
             $stateParams,
             $timeout,
             $translate,
@@ -80,7 +82,7 @@
                     ]
                 },
                 {
-                    key: 'RPM',
+                    key: 'Rpm',
                     values: [
                     ]
                 },
@@ -98,8 +100,8 @@
             for (var index = 0; index < 5; index++) {
                 temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start));
             }
-            
-            $scope.dataTrackChart[0] = temp_data_array[0];
+
+            $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
             console.log($scope.dataTrackChart);
             // 2. redraw aller anderen Charts data:
         };
@@ -275,8 +277,10 @@
             }
             if ($scope.segmentActivated) {
                 $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
+                $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
             } else {
                 $scope.changeSelectionRange(0, $scope.slider.options.ceil);
+                $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
         });
 
@@ -349,8 +353,10 @@
             $scope.segmentActivated = !$scope.segmentActivated;
             if ($scope.segmentActivated) {
                 $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
+                $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
             } else {
                 $scope.changeSelectionRange(0, $scope.slider.options.ceil);
+                $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
@@ -380,7 +386,7 @@
                 ]
             },
             {
-                key: 'RPM',
+                key: 'Rpm',
                 values: [
                 ]
             },
@@ -471,8 +477,24 @@
                 function (data) {
                     console.log(data);
                     data_global = data;
+                    // set slider ranges:
                     $scope.slider.maxValue = data_global.data.features.length;
                     $scope.slider.options.ceil = data_global.data.features.length;
+                    // ask for each phenom, if track contains it's data:
+                    var phenomsJSON = {};
+                    if (data_global.data.features[0].properties.phenomenons['Speed'])
+                        phenomsJSON['Speed'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['Consumption'])
+                        phenomsJSON['Consumption'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['CO2'])
+                        phenomsJSON['CO2'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['Rpm'])
+                        phenomsJSON['Rpm'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['Engine Load'])
+                        phenomsJSON['Engine Load'] = true;
+
+                    $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
+
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
                     // max bounds of the track:
@@ -524,7 +546,7 @@
                         pathObjEngine_load['latlngs'] = pathObjSpeed['latlngs'];
 
                         // get the phenomenon's value and interpolate a color value from it:
-                        if (data_global.data.features[index].properties.phenomenons.Speed.value)
+                        if (data_global.data.features[index].properties.phenomenons.Speed)
                             var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
 
                         if (data_global.data.features[index].properties.phenomenons.Consumption)
