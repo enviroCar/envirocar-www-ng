@@ -23,17 +23,17 @@
                 onChange: function (id) {
                     $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 },
-                onEnd: function(id) {
+                onEnd: function (id) {
                     $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
                 }
             }
         };
 
         var max_values = [
-            130,    // speed
-            10,     // consumption
-            20,     // co2
-            2500,   // rpm
+            130, // speed
+            10, // consumption
+            20, // co2
+            2500, // rpm
             100     // engine load
         ];
 
@@ -58,15 +58,49 @@
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
             }
         };
-        
-        $scope.changeChartRange = function(start, end){
-            // 1. redraw der neuen chart data:
-            console.log($scope.data_all[0]);
 
-            var temp_data_array = $scope.data_all[$scope.currentPhenomenonIndex];
-            temp_data_array.values = temp_data_array.values.slice(start, start+(end - start));
-            $scope.dataTrackChart[0] = temp_data_array;
-            console.log($scope.dataTrackChart[0]);
+        $scope.changeChartRange = function (start, end) {
+            // 1. redraw der neuen chart data:
+            console.log($scope.data_all);
+            console.log(start + " , " + end);
+            var temp_data_array = [
+                {
+                    key: 'Speed',
+                    values: [
+                    ]
+                },
+                {
+                    key: 'Consumption',
+                    values: [
+                    ]
+                },
+                {
+                    key: 'CO2',
+                    values: [
+                    ]
+                },
+                {
+                    key: 'RPM',
+                    values: [
+                    ]
+                },
+                {
+                    key: 'Engine Load',
+                    values: [
+                    ]
+                }
+            ];
+            for (var phenomIndex = 0; phenomIndex < 5; phenomIndex++) {
+                for (var index = 0; index < $scope.data_all[phenomIndex].values.length; index++) {
+                    temp_data_array[phenomIndex].values[index] = $scope.data_all[phenomIndex].values[index];
+                }
+            }
+            for (var index = 0; index < 5; index++) {
+                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start));
+            }
+            
+            $scope.dataTrackChart[0] = temp_data_array[0];
+            console.log($scope.dataTrackChart);
             // 2. redraw aller anderen Charts data:
         };
 
