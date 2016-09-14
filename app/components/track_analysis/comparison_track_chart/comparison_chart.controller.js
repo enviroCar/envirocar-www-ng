@@ -1,17 +1,19 @@
 (function () {
     'use strict';
-    function ComparisonTrackChartCtrl($scope, $timeout, $translate, StatisticsService, UserCredentialsService) {
+    function ComparisonTrackChartCtrl($scope, $stateParams, $timeout, $translate, TrackService, StatisticsService, UserCredentialsService) {
         console.log("SpeedCtrl started.");
-        $scope.onload_comparison_track = false;
+        $scope.onload_all = false;
 
-        $scope.phenomenon = 'SPEED';
         $scope.onload_speed = false;
         $scope.onload_consumption = false;
         $scope.onload_CO2 = false;
         $scope.onload_engine = false;
+        $scope.onload_RPM = false;
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
+        $scope.selectedPhenom = 'Speed';
+        $scope.trackid = $stateParams.trackid;
 
         $scope.optionsSpeed = {
             chart: {
@@ -48,17 +50,79 @@
             }
         };
 
-        $scope.$on('sidenav:item-selected', function (event, args) {
-            console.log("sidenav item selected: page refresh");
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'));
-                $timeout(function () {
-                    window.dispatchEvent(new Event('resize'));
-                }, 600);
-            }, 400);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'));
-            }, 500);
+        $scope.changeComparingRange = function(a,b){
+            var sums = {
+                'Speed': 0,
+                'Consumption': 0,
+                'CO2': 0,
+                'Rpm': 0,
+                'Engine Load': 0
+            };
+            
+            var data_exist = {
+                'Speed': false,
+                'Consumption': false,
+                'CO2': false,
+                'Rpm': false,
+                'Engine Load': false
+            };
+            if ($scope.data_all[0].values[0])
+                data_exist['Speed'] = true;
+            if ($scope.data_all[1].values[0])
+                data_exist['Consumption'] = true;
+            if ($scope.data_all[2].values[0])
+                data_exist['CO2'] = true;
+            if ($scope.data_all[3].values[0])
+                data_exist['Rpm'] = true;
+            if ($scope.data_all[4].values[0])
+                data_exist['Engine Load'] = true;
+            
+            // calculate sums for min...max for each phenom:
+            for (var index = a; index <= b; index++) {
+                if (data_exist['Speed'])
+                    sums['Speed'] += $scope.data_all[0].values[index].y;
+                if (data_exist['Consumption'])
+                    sums['Consumption'] += $scope.data_all[1].values[index].y;
+                if (data_exist['CO2'])
+                    sums['CO2'] += $scope.data_all[2].values[index].y;
+                if (data_exist['Rpm'])
+                    sums['Rpm'] += $scope.data_all[3].values[index].y;
+                if (data_exist['Engine Load'])
+                    sums['Engine Load'] += $scope.data_all[4].values[index].y;
+            }
+            
+            // calculate track avg speed:
+            $scope.track_length = b - (a-1);
+            var track_avgs = {};
+            if (sums['Speed']) {
+                track_avgs['Speed'] = sums['Speed'] / $scope.track_length;
+            }
+            if (sums['Consumption']) {
+                track_avgs['Consumption'] = sums['Consumption'] / $scope.track_length;
+            }
+            if (sums['CO2']) {
+                track_avgs['CO2'] = sums['CO2'] / $scope.track_length;
+            }
+            if (sums['Rpm']) {
+                track_avgs['Rpm'] = sums['Rpm'] / $scope.track_length;
+            }
+            if (sums['Engine Load']) {
+                track_avgs['Engine Load'] = sums['Engine Load'] / $scope.track_length;
+            }
+            
+            $scope.dataSpeed[0].values[0].value = track_avgs['Speed'];
+            $scope.dataConsumption[0].values[0].value = track_avgs['Consumption'];
+            $scope.dataCO2[0].values[0].value = track_avgs['CO2'];
+            $scope.dataRPM[0].values[0].value = track_avgs['Rpm'];
+            $scope.dataEngineLoad[0].values[0].value = track_avgs['Engine Load'];
+        };
+
+        $scope.$on('single_track_page:segment-changed', function (event, args) {
+            console.log('single_track_page:segment-changed');
+            console.log(args);
+            $scope.min = args.min;
+            $scope.max = args.max;
+            $scope.changeComparingRange($scope.min, $scope.max);
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
@@ -83,6 +147,41 @@
                 axisLabel: axisLabelEngineLoad,
                 axisLabelDistance: -10
             };
+            var axisLabelRPM = $translate.instant('RPM') + ' (r/min)';
+            $scope.optionsRPM.chart.yAxis = {
+                axisLabel: axisLabelRPM,
+                axisLabelDistance: -10
+            };
+        });
+
+        $scope.$on('single_track_page:segment-activated' ,function(event, args){
+            if (args) {
+                console.log($scope.track_length);
+                if ($scope.min)
+                    $scope.changeComparingRange($scope.min, $scope.max);
+                else
+                    $scope.changeComparingRange(0, $scope.track_length);
+            } else {
+                console.log($scope.track_length);
+                $scope.changeComparingRange(0, $scope.track_length);
+            }
+        });
+
+        $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
+            console.log("phenomenon changed received.");
+            $scope.selectedPhenom = args;
+
+            if ($scope.segmentActivated) {
+                //$scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
+                //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
+                if ($scope.min)
+                    $scope.changeComparingRange($scope.min, $scope.max);
+                else 
+                    $scope.changeComparingRange(0, $scope.track_length);
+            } else {
+                $scope.changeComparingRange(0, $scope.track_length);
+            }
+            console.log(args);
         });
 
         $scope.optionsConsumption = {
@@ -153,6 +252,7 @@
                 }
             }
         };
+
         $scope.optionsEngine = {
             chart: {
                 type: 'discreteBarChart',
@@ -188,162 +288,301 @@
             }
         };
 
-        var dataotherusers = [];
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+        $scope.optionsRPM = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 200,
+                margin: {
+                    top: 10,
+                    right: 0,
+                    bottom: 15,
+                    left: 50
+                },
+                x: function (d) {
+                    return $translate.instant(d.label);
+                },
+                y: function (d) {
+                    return d.value;
+                },
+                showValues: true,
+                valueFormat: function (d) {
+                    return d3.format(',.0f')(d);
+                },
+                duration: 300,
+                yAxis: {
+                    axisLabel: $translate.instant('RPM') + ' (r/min)',
+                    axisLabelDistance: -20
+                },
+                tooltip: {
+                    contentGenerator: function (d)
+                    {
+                        var html = '<h3><b>' + $translate.instant('TT_' + d.data.label) + '</b> = ' + d.data.value.toFixed(0) + 'r/min </h3>';
+                        return html;
+                    }
+                }
+            }
+        };
+
+        // to be filled with server query:
+        $scope.data_all = [
+            {
+                key: 'Speed',
+                values: [
+                ]
+            },
+            {
+                key: 'Consumption',
+                values: [
+                ]
+            },
+            {
+                key: 'CO2',
+                values: [
+                ]
+            },
+            {
+                key: 'Rpm',
+                values: [
+                ]
+            },
+            {
+                key: 'Engine Load',
+                values: [
+                ]
+            }
+        ];
+        var data_global = {};
+        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
                     console.log(data);
-                    var store = data.data;
-                    var speed_user = store.avg;
+                    data_global = data;
+                    var track_length = data_global.data.features.length;
+                    $scope.track_length = track_length;
+                    var sums = {
+                        'Speed': 0,
+                        'Consumption': 0,
+                        'CO2': 0,
+                        'Rpm': 0,
+                        'Engine Load': 0
+                    };
+                    // iterating through each measurement:
+                    for (var index = 1; index < track_length; index++) {
+                        // get the phenomenon's value:
+                        if (data_global.data.features[index].properties.phenomenons.Speed) {
+                            var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
+                            sums['Speed'] += value_speed;
+                        }
+                        if (data_global.data.features[index].properties.phenomenons.Consumption) {
+                            var value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
+                            sums['Consumption'] += value_consumption;
+                        }
+                        if (data_global.data.features[index].properties.phenomenons.CO2) {
+                            var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
+                            sums['CO2'] += value_CO2;
+                        }
+                        if (data_global.data.features[index].properties.phenomenons.Rpm.value) {
+                            var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
+                            sums['Rpm'] += value_RPM;
+                        }
+                        if (data_global.data.features[index].properties.phenomenons["Engine Load"].value) {
+                            var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
+                            sums['Engine Load'] += value_EngineLoad;
+                        }
+
+                        // save measurements for each phenomenon:
+                        var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
+                        if (data_global.data.features[index].properties.phenomenons.Consumption)
+                            var consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
+                        if (data_global.data.features[index].properties.phenomenons.CO2)
+                            var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
+                        var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                        var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        // save all data:
+                        $scope.data_all[0].values.push(speedMeasurement);
+                        $scope.data_all[1].values.push(consumptionMeasurement);
+                        $scope.data_all[2].values.push(co2Measurement);
+                        $scope.data_all[3].values.push(rpmMeasurement);
+                        $scope.data_all[4].values.push(engineLoadMeasurement);
+                    }
+
+                    console.log($scope.data_all);
+
+                    console.log('track sums:');
+                    console.log(sums);
+
+                    // calculate track avg speed:
+                    var track_avgs = {};
+                    if (sums['Speed']) {
+                        track_avgs['Speed'] = sums['Speed'] / track_length;
+                    }
+                    if (sums['Consumption']) {
+                        track_avgs['Consumption'] = sums['Consumption'] / track_length;
+                    }
+                    if (sums['CO2']) {
+                        track_avgs['CO2'] = sums['CO2'] / track_length;
+                    }
+                    if (sums['Rpm']) {
+                        track_avgs['Rpm'] = sums['Rpm'] / track_length;
+                    }
+                    if (sums['Engine Load']) {
+                        track_avgs['Engine Load'] = sums['Engine Load'] / track_length;
+                    }
+                    console.log('track avgs:');
+                    console.log(track_avgs);
+
+                    // ask for enviroCar averages:
+                    var enviroCarStats = [];
+                    // Speed:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
                             function (data) {
                                 console.log(data);
-                                store = data.data;
-                                var speed_public = store.avg;
+                                var store = data.data;
+                                var Speed_public = store.avg;
                                 $scope.dataSpeed = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "LABEL_USER",
-                                                "value": speed_user
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Speed']
                                             }, {
-                                                "label": "LABEL_PUBLIC",
-                                                "value": speed_public
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": Speed_public
                                             }]
-                                    }]
-                                dataotherusers.push(data);
-                                $scope.onload_speed = true;
-                                if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_engine) {
+                                    }];
+                                enviroCarStats.push(data);
+                                $scope.onload_Speed = true;
+                                $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_comparison_track = true;
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 300);
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 500);
-                                }
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
                             }, function (data) {
                         console.log("error " + data);
                     });
-                }, function (data) {
-            console.log("error " + data);
-        });
-
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
-                function (data) {
-                    console.log(data);
-                    var store = data.data;
-                    var consumption_user = store.avg;
+                    // Consumption:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
                             function (data) {
                                 console.log(data);
-                                store = data.data;
-                                var consumption_public = store.avg;
+                                var store = data.data;
+                                var Consumption_public = store.avg;
                                 $scope.dataConsumption = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "LABEL_USER",
-                                                "value": consumption_user
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Consumption']
                                             }, {
-                                                "label": "LABEL_PUBLIC",
-                                                "value": consumption_public
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": Consumption_public
                                             }]
-                                    }]
-                                dataotherusers.push(data);
-                                $scope.onload_consumption = true;
-                                if ($scope.onload_CO2 && $scope.onload_speed && $scope.onload_engine) {
+                                    }];
+                                enviroCarStats.push(data);
+                                $scope.onload_Consumption = true;
+                                $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_comparison_track = true;
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 300);
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 500);
-                                }
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
                             }, function (data) {
                         console.log("error " + data);
                     });
-                }, function (data) {
-            console.log("error " + data);
-        });
-
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
-                function (data) {
-                    console.log(data);
-                    var store = data.data;
-                    var CO2_user = store.avg;
+                    // CO2:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
                             function (data) {
                                 console.log(data);
-                                store = data.data;
+                                var store = data.data;
                                 var CO2_public = store.avg;
                                 $scope.dataCO2 = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "LABEL_USER",
-                                                "value": CO2_user
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['CO2']
                                             }, {
-                                                "label": "LABEL_PUBLIC",
+                                                "label": "TRACK_LABEL_PUBLIC",
                                                 "value": CO2_public
                                             }]
                                     }]
-                                dataotherusers.push(data);
+                                enviroCarStats.push(data);
                                 $scope.onload_CO2 = true;
-                                if ($scope.onload_speed && $scope.onload_consumption && $scope.onload_engine) {
+                                $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_comparison_track = true;
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 300);
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 500);
-                                }
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
                             }, function (data) {
                         console.log("error " + data);
                     });
-                }, function (data) {
-            console.log("error " + data);
-        });
-
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
-                function (data) {
-                    console.log(data);
-                    var store = data.data;
-                    var engine_user = store.avg;
+                    // RPM:
+                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Rpm").then(
+                            function (data) {
+                                console.log(data);
+                                var store = data.data;
+                                var RPM_public = store.avg;
+                                $scope.dataRPM = [{
+                                        key: "Cumulative Return",
+                                        values: [{
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Rpm']
+                                            }, {
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": RPM_public
+                                            }]
+                                    }]
+                                enviroCarStats.push(data);
+                                $scope.onload_RPM = true;
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
+                            }, function (data) {
+                        console.log("error " + data);
+                    });
+                    // Engine Load:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
                             function (data) {
                                 console.log(data);
-                                store = data.data;
-                                var engine_public = store.avg;
-                                $scope.dataEngine = [{
+                                var store = data.data;
+                                var EngineLoad_public = store.avg;
+                                $scope.dataEngineLoad = [{
                                         key: "Cumulative Return",
                                         values: [{
-                                                "label": "LABEL_USER",
-                                                "value": engine_user
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Engine Load']
                                             }, {
-                                                "label": "LABEL_PUBLIC",
-                                                "value": engine_public
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": EngineLoad_public
                                             }]
-                                    }]
-                                dataotherusers.push(data);
-                                $scope.onload_engine = true;
-                                if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_speed) {
+                                    }];
+                                enviroCarStats.push(data);
+                                $scope.onload_EngineLoad = true;
+                                $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
-                                    $scope.onload_comparison_track = true;
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 300);
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 500);
-                                }
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
                             }, function (data) {
                         console.log("error " + data);
                     });
-                }, function (data) {
-            console.log("error " + data);
-        });
+
+                    // calculate track averages:
+
+
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'))
+                    },
+                            200);
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'))
+                    },
+                            500);
+                }, function (error) {
+            console.log(error);
+        }
+        );
 
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));

@@ -23,7 +23,6 @@
                 xAxis: {
                     axisLabel: $translate.instant("WEEKDAYS"),
                     showMaxMin: false,
-                    
                 },
                 yAxis: {
                     axisLabel: $translate.instant("DISTANCE") + " (km)",
@@ -32,6 +31,21 @@
             }
         };
         $scope.dataWeekdays = [];
+
+        $scope.$on('sidenav:item-selected', function (event, args) {
+            console.log("sidenav item selected: page refresh");
+            $scope.dataWeekdays[0].values[0].x = 'Updating chart.';
+            $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+                $timeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                }, 600);
+            }, 400);
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 500);
+        });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
             console.log("language changed received.");

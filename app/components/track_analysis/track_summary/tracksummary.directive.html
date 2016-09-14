@@ -1,0 +1,61 @@
+<md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'TRACK_SUMMARY_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'TRACK_SUMMARY_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+
+    <md-card-content flex="100">
+        <md-list-item class="md-2-line">
+            <div layout="row" flex="50">
+                <i class="md-36 material-icons">timeline</i>
+                <h3>Distance</h3>
+                <p>{{tracksummary['distance']}} km</p>
+            </div>
+
+            <div layout="row" flex>
+                <i class="md-36 material-icons">access_time</i>
+                <h3>Duration</h3>
+                <p>{{tracksummary['timeoftravel']}}</p>
+            </div>
+        </md-list-item>
+        <md-divider ></md-divider>
+        <md-list-item flex>
+            <i class="md-36 material-icons">directions_car</i>
+            <p><b>Vehicle Type</b></p>
+            <p flex="50">{{tracksummary['vehiclemanufacturer']}} - {{tracksummary['vehiclemodel']}}</p>
+
+        </md-list-item>
+        <md-list-item flex>
+            <i class="md-36 material-icons">timer</i>
+            <p><b>Starttime</b></p>
+            <p flex="50">{{tracksummary['starttime']}}</p>
+        </md-list-item>
+        <md-list-item flex>
+            <i class="md-36 material-icons">timer_off</i>
+            <p><b>Endtime</b></p>
+            <p flex="50">{{tracksummary['endtime']}}</p>
+        </md-list-item>
+        <md-list-item flex>
+            <i  class="md-36 material-icons">local_gas_station</i>
+            <p><b>Consumption</b></p>
+            <p flex="50">{{tracksummary['fuel']}} liter/100km</p>
+        </md-list-item>
+        <md-list-item flex>
+            <i class="md-36 material-icons">cloud_queue</i>
+            <p><b>CO2 Emission</b></p>
+            <p flex="50">{{tracksummary['co2emissionperhour']}} g/km</p>
+        </md-list-item>
+
+
+    </md-card-content>
+</md-card>

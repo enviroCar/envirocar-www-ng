@@ -12,7 +12,6 @@
         console.log("ChartCtrl started.");
         var grey = '#737373';
         $scope.track_toolbar_fixed = false;
-
         $scope.slider = {
             minValue: 0,
             maxValue: 100,
@@ -21,30 +20,37 @@
                 ceil: 100,
                 step: 1,
                 draggableRange: true,
+                getSelectionBarColor: function (value) {
+                    return '#8cbf3f';
+                },
+                getPointerColor: function (value) {
+                    return '#8cbf3f';
+                },
+                translate: function (value) {
+                    return '<font color="white">' + value + '</font>';
+                },
                 id: 'slider1',
                 onChange: function (id) {
                     $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 },
                 onEnd: function (id) {
                     $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
+                    $rootScope.$broadcast('single_track_page:segment-changed', {'min': $scope.slider.minValue, 'max': $scope.slider.maxValue});
                 }
             }
         };
-
         var max_values = [
             130, // speed
             10, // consumption
             20, // co2
-            2500, // rpm
+            3000, // rpm
             100     // engine load
         ];
-
         // on Range selection change:
         $scope.changeSelectionRange = function (start, end) {
             console.log(start + " , " + end);
             if (start === 0)
                 start = 1;
-
             // grey-coloring the offranged part of the track:
             var max_value = max_values[$scope.currentPhenomenonIndex];
             for (var index = 1; index < start; index++) {
@@ -60,7 +66,6 @@
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
             }
         };
-
         $scope.changeChartRange = function (start, end) {
             // 1. redraw der neuen chart data:
             console.log($scope.data_all);
@@ -98,14 +103,13 @@
                 }
             }
             for (var index = 0; index < 5; index++) {
-                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start));
+                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start)-1);
             }
 
             $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
             console.log($scope.dataTrackChart);
-            // 2. redraw aller anderen Charts data:
         };
-
+        
         // Scroll-fixing the single track analysis toolbar:
         $(window).scroll(function () {
             if ($(window).scrollTop() > 300) {
@@ -116,14 +120,12 @@
                 $scope.track_toolbar_fixed = false;
             }
         });
-
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_map = false;
         $scope.onload_track_chart = false;
         $scope.segmentActivated = false;
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
-
         // 0% - green; 50% - yellow; 100% - red; above 100% --> dark red
         $scope.percentToRGB = function (percent) {
             var r, g;
@@ -135,7 +137,7 @@
                     r = Math.floor(255 * (percent / 50));
                     g = 255;
                 } else {
-                    if (percent === 100)
+                    if (percent > 99)
                         percent = 99;
                     r = 255;
                     g = Math.floor(255 * ((50 - percent % 50) / 50));
@@ -143,7 +145,6 @@
             }
             return "rgb(" + r + "," + g + ",0)";
         };
-
         // scope: predefined legends:
         legend_all = [
             {
@@ -198,7 +199,6 @@
                 labels: ['  0 %', ' 15 %', ' 35 %', '55 %', '75 %', '100%']
             }
         ];
-
         // scope extension for the leaflet map:
         angular.extend($scope, {
             paths: {},
@@ -231,13 +231,11 @@
                 }
             }
         });
-
         $scope.$on('leafletDirectivePath.click', function (event, path) {
             //path.modelname
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
             $scope.showMeasurementX();
         });
-
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
             console.log("phenomenon changed received.");
             $scope.currentPhenomenon = args;
@@ -283,11 +281,9 @@
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
         });
-
         // chart options for the nvd3 line with focus chart:
         $scope.clickedXPoint = 0;
         $scope.hoveredXPoint = 0;
-
         $scope.optionsTrackChart = {
             chart: {
                 type: 'lineWithFocusChart',
@@ -346,8 +342,6 @@
                 }
             }
         };
-
-
         // toggle Segment analysis:
         $scope.toggleSegmentAnalysis = function () {
             $scope.segmentActivated = !$scope.segmentActivated;
@@ -358,6 +352,8 @@
                 $scope.changeSelectionRange(0, $scope.slider.options.ceil);
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
+            $rootScope.$broadcast('single_track_page:segment-activated', $scope.segmentActivated);
+                    
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             },
@@ -367,7 +363,6 @@
             },
                     100);
         };
-
         // to be filled with server query:
         $scope.data_all = [
             {
@@ -396,7 +391,6 @@
                 ]
             }
         ];
-
         $scope.paths_all = [
             {p1: 0},
             {p1: 0},
@@ -404,7 +398,6 @@
             {p1: 0},
             {p1: 0}
         ];
-
         // Chart data setup for Track Chart:
         $scope.dataTrackChart = [
             {
@@ -413,7 +406,6 @@
                 ]
             }
         ];
-
         $scope.removeCurrentPositionMarker = function () {
             $scope.markers.ClickedPosition = {
                 'lat': -1000,
@@ -439,13 +431,11 @@
             },
                     1);
         };
-
         $scope.showHoveredX = function () {
             // get the lat/lng coordinates:
             if ($scope.hoveredXPoint > 0) {
                 var lat_coord = data_global.data.features[$scope.hoveredXPoint].geometry.coordinates[1];
                 var lon_coord = data_global.data.features[$scope.hoveredXPoint].geometry.coordinates[0];
-
                 $scope.markers.HoveredPosition = {
                     lat: lat_coord,
                     lng: lon_coord,
@@ -462,14 +452,12 @@
             if ($scope.clickedXPoint > 0) {
                 $scope.markers.ClickedPosition.lat = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[1];
                 $scope.markers.ClickedPosition.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
-
             }
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
                     1);
         };
-
         var data_global = {};
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
@@ -492,9 +480,7 @@
                         phenomsJSON['Rpm'] = true;
                     if (data_global.data.features[0].properties.phenomenons['Engine Load'])
                         phenomsJSON['Engine Load'] = true;
-
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
-
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
                     // max bounds of the track:
@@ -524,14 +510,12 @@
                             southwest.lat = lat_coord;
                         if (southwest.lng < lon_coord)
                             southwest.lng = lon_coord;
-
                         // path width:
                         pathObjSpeed['weight'] = 8;
                         pathObjConsumption['weight'] = 8;
                         pathObjCO2['weight'] = 8;
                         pathObjRPM['weight'] = 8;
                         pathObjEngine_load['weight'] = 8;
-
                         // path coordinates:
                         pathObjSpeed['latlngs'] = [{
                                 'lat': data_global.data.features[index - 1].geometry.coordinates[1],
@@ -544,24 +528,17 @@
                         pathObjCO2['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjRPM['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjEngine_load['latlngs'] = pathObjSpeed['latlngs'];
-
                         // get the phenomenon's value and interpolate a color value from it:
                         if (data_global.data.features[index].properties.phenomenons.Speed)
                             var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
-
                         if (data_global.data.features[index].properties.phenomenons.Consumption)
                             var value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
-
                         if (data_global.data.features[index].properties.phenomenons.CO2)
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
-
                         if (data_global.data.features[index].properties.phenomenons.Rpm.value)
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
-
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"].value)
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
-
-
                         // interpolate color:
                         pathObjSpeed['color'] = $scope.percentToRGB(100 * value_speed / max_values[0]); // 130km/h = 100%; more information at percentToRGB().
                         pathObjConsumption['color'] = $scope.percentToRGB(100 * value_consumption / max_values[1]); // 130km/h = 100%; more information at percentToRGB().
@@ -575,10 +552,8 @@
                         $scope.paths_all[2]['p' + (index)] = pathObjCO2;
                         $scope.paths_all[3]['p' + (index)] = pathObjRPM;
                         $scope.paths_all[4]['p' + (index)] = pathObjEngine_load;
-
                         // add 'speed'-path as default overlay to leaflet map:
                         $scope.paths['p' + (index)] = pathObjSpeed;
-
                         // save measurements for each phenomenon:
                         var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
                         if (data_global.data.features[index].properties.phenomenons.Consumption)
@@ -587,7 +562,6 @@
                             var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
                         var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
-
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);
@@ -599,13 +573,11 @@
                     // save 'speed'-data as default into time series chart 
                     $scope.dataTrackChart[0] = $scope.data_all[0];
                     console.log($scope.data_all);
-
                     // zoom map to track:
                     $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([
                         [northeast.lat, northeast.lng],
                         [southwest.lat, southwest.lng]
                     ]);
-
                     $scope.onload_track_map = true;
                     // Track Chart:
                     $scope.onload_track_chart = true;
@@ -621,7 +593,6 @@
             console.log(error);
         }
         );
-
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },

@@ -46,14 +46,19 @@ angular.module('translations', [])
             'TOTAL_TRACKS'          : 'Tracks',
             'TOTAL_DISTANCE'        : 'Total Distance',
                 
+            // Phenomenon:
+            'ENGINE_LOAD'               : 'Engine load',
+            'SPEED'                     : 'Speed',
+            'RPM'                       : 'Rounds per minute',
+            'CO2'                       : 'CO2 emissions',
+            'CONSUMPTION'               : ' Consumption',
+            
             // Dashboard - ComparisonChart:
             'COMPARISON_CHART_TITLE'    : 'You compared to the enviroCar community',
             'LABEL_USER'                : 'You',
             'LABEL_PUBLIC'              : 'enviroCar Ø',
             'TT_LABEL_USER'             : 'Your average',
             'TT_LABEL_PUBLIC'           : 'enviroCar community average',
-            'ENGINE_LOAD'               : 'Engine load',
-            'SPEED'                     : 'Speed',
             'COMPARISON_CHART_DESCRIPTION'  : 
                     'Your statistic averages compared to the enviroCar community\'s statstic averages.'+
                     'Durchschnittswerden, die die enviroCar Gemeinschaft gesammelt hat.',
@@ -85,6 +90,18 @@ angular.module('translations', [])
             // Track Analysis - Chart:
             'TITLE_TRACK_CHART'     : 'time series',
             
+            // Track Analysis - Comparison Chart:
+            'COMPARISON_TRACK_CHART_TITLE'          : 'Your track compared to the enviroCar community',
+            'COMPARISON_TRACK_CHART_DESCRIPTION'    : 
+                    'Your track\'s statistic averages compared to the enviroCar community\'s statstic averages.',
+            'TRACK_LABEL_USER'                : 'this track',
+            'TRACK_LABEL_PUBLIC'              : 'enviroCar Ø',
+            'TT_TRACK_LABEL_USER'             : 'track\'s average',
+            'TT_TRACK_LABEL_PUBLIC'           : 'enviroCar community average',
+            
+            // Track Analysis - Track Summary:
+            'TRACK_SUMMARY_TITLE'       : 'Track Summary',
+            'TRACK_SUMMARY_DESCRIPTION' : 'Your track\'s phenomenons summary',
             
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
@@ -103,7 +120,6 @@ angular.module('translations', [])
             'VEHICLE_TYPE': 'VEHICLE_TYPE',
             'TOTAL_TIME': 'TOTAL_TIME',
             'START_FINISH': 'Start Finish Time',
-            'CONSUMPTION': ' Consumption',
             'CONSUMPTION_HOUR': 'Consumption/Hr',
             'CO2_EMISSION': 'CO2 Emission',
             'CO2_EMISSION_HOUR': 'CO2 Emission/Hr',
@@ -217,8 +233,14 @@ angular.module('translations', [])
             'TOTAL_USERS'           : 'Mitglieder',
             'TOTAL_TRACKS'          : 'Fahrten',
             'TOTAL_DISTANCE'        : 'Distanz',
-            
             'YOU_VS_PUBLIC'         : 'Ich und enviroCar im Vergleich',
+            
+            // Phenomenon:
+            'ENGINE_LOAD'               : 'Motorauslastung',
+            'SPEED'                     : 'Geschwindigkeit',
+            'RPM'                       : 'Umdrehungen pro Minute',
+            'CO2'                       : 'CO2 Emissionen',
+            'CONSUMPTION'               : 'Treibstoffverbrauch',
             
             // Dashboard - ComparisonChart:
             'COMPARISON_CHART_TITLE'    : 'Ich im Vergleich zur enviroCar Gemeinschaft',
@@ -254,12 +276,24 @@ angular.module('translations', [])
             'SATURDAY'      : 'Samstag',
             'SUNDAY'        : 'Sonntag',
             
-            
             // Track Analysis - Leaflet:
             'TITLE_TRACK_MAP'       : 'Fahrtkarte',
+            
             // Track Analysis - Chart:
             'TITLE_TRACK_CHART'     : 'Zeitreihendiagramm',
             
+            // Track Analysis - Comparison Chart:
+            'COMPARISON_TRACK_CHART_TITLE'          : 'Meine Fahrt im Vergleich mit enviroCar',
+            'COMPARISON_TRACK_CHART_DESCRIPTION'    : 
+                    'Durchschnittswerte dieser Fahrt im Vergleich mit den Durschschnittwerten, die die enviroCar-Gemeinschaft gesammelt hat.',
+            'TRACK_LABEL_USER'                : 'Meine Fahrt',
+            'TRACK_LABEL_PUBLIC'              : 'enviroCar Ø',
+            'TT_TRACK_LABEL_USER'             : 'Fahrtdurchschnittswert',
+            'TT_TRACK_LABEL_PUBLIC'           : 'enviroCar Durchschnittswert',
+            
+            // Track Analysis - Track Summary:
+            'TRACK_SUMMARY_TITLE'       : 'Fahrtüberblick',
+            'TRACK_SUMMARY_DESCRIPTION' : 'Zusammenfassung der Daten deiner Fahrt',
             
             'TITLE_TRACKS': 'Neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',
@@ -278,7 +312,6 @@ angular.module('translations', [])
             'VEHICLE_TYPE': 'FEHRZEUG_TYP',
             'TOTAL_TIME': 'GESAMT_ZEIT',
             'START_FINISH': 'Start Ziel Zeit',
-            'CONSUMPTION': ' Verbrauch',
             'CONSUMPTION_HOUR': 'Verbrauch/Stunde',
             'CO2_EMISSION': 'CO2 Emission',
             'CO2_EMISSION_HOUR': 'CO2 Emission/Stunde',
@@ -301,7 +334,6 @@ angular.module('translations', [])
             'CAR:': 'Fahrzeug:',
             'START:': 'Start:',
             'END:': 'Ende:',
-            'CONSUMPTION:': 'Verbrauch:',
             'CO2_EMISSION:': 'CO2 Emission:',
             'LOGOUT': 'Abmelden',
             'PROFILE': 'Profil',
@@ -315,14 +347,11 @@ angular.module('translations', [])
             'TRACK_VS_PUBLIC': 'Fahrt im Vergleich',
             'TRACK_VS_PUBLIC_X_AXIS' : 'Fahrt und allgemeiner Durschnittswert',
             'TRACK_VS_PUBLIC_Y_AXIS' : 'Geschwindigkeit (km/h)',
-            'SPEED' : 'Geschwindigkeit',
-            'CO2' : 'CO2 Emission',
             'TRACK_VS_PUBLIC_User' : 'Fahrt',
             'TRACK_VS_PUBLIC_Public' : 'Allgemeiner Durchschnitt',
             'TRACK_VS_PUBLIC_UserAvg' : 'Dein Fahrtendurchschnitt',
             // SINGLE_TRACK_PAGE: PIECHART:
             'CALCULATED_MAF' : 'Berechnete MAF',
-            'ENGINE_LOAD' : 'Motorauslastung', 
             'INTAKE_TEMPERATURE' : 'Ansaugtemperatur'
         });
         $translateProvider.preferredLanguage('en');

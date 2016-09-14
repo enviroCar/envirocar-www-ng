@@ -1,3 +1,4 @@
+
 <div flex>
     <div class="profiletab" ng-style="{
                 'background-color'
@@ -26,24 +27,26 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <md-toolbar id="track_toolbar" class="track_toolbar" flex>
+    <md-toolbar id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">
         <div class="md-toolbar-tools">
             <div id="phenom-dropdown" phenomenon-dropdown></div>
             <md-switch md-accent ng-click="toggleSegmentAnalysis();" aria-label="Segment Analysis">
                 Segment Analysis
             </md-switch>
         </div>
-    </md-toolbar>
-    <rzslider id="slider1" ng-if="segmentActivated" rz-slider-model="slider.minValue"
+        <div layout="row">
+            <span flex-xs="5" flex-sm="7" flex-md="10" flex-gt="15" flex-gt-md="20" class="flex"></span>
+            <rzslider ng-if="segmentActivated" id="slider1" rz-slider-model="slider.minValue"
                       rz-slider-high="slider.maxValue"
-                      rz-slider-options="slider.options" flex></rzslider>
-    <div ng-if="track_toolbar_fixed" component-id="track_toolbar_placeholder">
+                      rz-slider-options="slider.options" flex="100"></rzslider>
+            <span flex-xs="5" flex-sm="7" flex-md="10" flex-gt="15" flex-gt-md="20" class="flex"></span>
+        </div>
+    </md-toolbar>
 
-    </div>
     <div layout = "column" flex>
         <md-card flex layout-gt-md="row" layout-md="row" layout-xs="column" layout-gt-xs="column">
+
             <div flex-xs="100" flex-gt-xs="50">
                 <p style="color:#1A80C1;background-color:white; margin-left:20px;">
                     <span><b>{{'TITLE_TRACK_MAP'| translate}}</b></span>
@@ -74,17 +77,14 @@
         <div flex>
                 <track-chart flex ></track-chart>
         </div> -->
-
-        <div flex>
-            <comparison-track-chart flex> </comparison-track-chart>
-        </div>
-        <div flex>
-            <comparison-track-chart flex> </comparison-track-chart>
-        </div>
-        <div flex>
-            <comparison-track-chart flex> </comparison-track-chart>
+        <div layout-gt-xs = "row" layout-xs="column" flex>
+            <div flex-xs="100" flex-gt-xs="50">
+                <comparison-track-chart flex> </comparison-track-chart>
+            </div>
+            <div flex-xs="100" flex-gt-xs="50">
+                <track-summary flex></track-summary>
+            </div>
         </div>
 
     </div>
-
 </div>

@@ -79,12 +79,13 @@ html, body{
 .track_toolbar {
     position: relative;
     z-index:2000;
+    height: 130px;
+    min-height: 130px;
     md-switch {
         padding-left: 20px;
     }
     rzslider {
-        padding-left: 20px;
-        color: red;
+        padding-left: 40px;
     }
 }
 .stuck_top {
@@ -92,8 +93,13 @@ html, body{
     z-index:2000;
     top: 0px;
 }
-#track_toolbar_placeholder {
-    height: 60px;
+
+
+
+.track_toolbar_placeholder {
+    height: 200px !important;
+    min-height: 200px !important;
+    color: red;
 }
 #phenom-dropdown {
     padding-left: 20px;
@@ -173,7 +179,7 @@ html, body{
     height: 60px;
     max-height: 60px;
     min-height: 60px;
-    z-index: 100;
+    z-index: 1900;
     #logo-icon{
         width: 90px; 
         height: 25px;
@@ -193,7 +199,7 @@ md-toolbar {
 
 md-tooltip {
     font-size: 16px;
-    z-index: 1000;
+    z-index: 2500;
 }
 
 .white-bg {
@@ -215,7 +221,7 @@ img {
     box-sizing: border-box;
 }
 
-md-sidenav { 
+md-sidenav {
     position: fixed !important;
     z-index:2200;
     md-list-item{
@@ -463,10 +469,10 @@ toolbar-card {
 }
 
 .legend i   {
-        color: #777;
-        width: 18px;
-        height: 18px;
-        float: left;
-        margin-right: 8px;
-        opacity: 0.7;
+    color: #777;
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
 }

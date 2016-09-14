@@ -15,12 +15,49 @@
             </md-button>
         </div>
     </div>
-    <md-card-content flex layout='row'>
-        <p class='comparison-title'> {{ phenomenon | translate}}</p>
-        <md-progress-circular class="loader_dashboard2" ng-if="!onload_comparison_track" md-diameter="56"></md-progress-circular>
-        <div flex='100' ng-if="onload_comparison_track" layout="row">
+    
+    <!-- on Speed Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Speed'">
+        <p class='comparison-title'> {{'SPEED'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_Speed" md-diameter="56"></md-progress-circular>
+        <div flex='100' ng-if="onload_Speed" layout="row">
             <nvd3 options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
         </div>
     </md-card-content>
-
+    
+    <!-- on Consumption Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Consumption'">
+        <p class='comparison-title'> {{'CONSUMPTION'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_Consumption" md-diameter="56"></md-progress-circular>
+        <div flex ng-if="onload_Consumption" layout="row">
+            <nvd3 options="optionsConsumption" data="dataConsumption" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on CO2 Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='CO2'">
+        <p class='comparison-title'> {{'CO2'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2" md-diameter="56"></md-progress-circular>
+        <div flex ng-if="onload_CO2" layout="row">
+            <nvd3 options="optionsCO2" data="dataCO2" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on Engine Load Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Engine Load'">
+        <p class='comparison-title'> {{'ENGINE_LOAD'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_EngineLoad" md-diameter="56"></md-progress-circular>
+        <div flex ng-if="onload_EngineLoad" layout="row">
+            <nvd3 options="optionsEngine" data="dataEngineLoad" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on Engine Load Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Rpm'">
+        <p class='comparison-title'> {{'RPM'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_RPM" md-diameter="56"></md-progress-circular>
+        <div flex ng-if="onload_RPM" layout="row">
+            <nvd3 options="optionsRPM" data="dataRPM" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
 </md-card>
