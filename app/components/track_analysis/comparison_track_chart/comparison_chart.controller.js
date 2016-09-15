@@ -50,7 +50,7 @@
             }
         };
 
-        $scope.changeComparingRange = function(a,b){
+        $scope.changeComparingRange = function (a, b) {
             var sums = {
                 'Speed': 0,
                 'Consumption': 0,
@@ -58,7 +58,7 @@
                 'Rpm': 0,
                 'Engine Load': 0
             };
-            
+
             var data_exist = {
                 'Speed': false,
                 'Consumption': false,
@@ -76,7 +76,7 @@
                 data_exist['Rpm'] = true;
             if ($scope.data_all[4].values[0])
                 data_exist['Engine Load'] = true;
-            
+
             // calculate sums for min...max for each phenom:
             for (var index = a; index <= b; index++) {
                 if (data_exist['Speed'])
@@ -90,26 +90,26 @@
                 if (data_exist['Engine Load'])
                     sums['Engine Load'] += $scope.data_all[4].values[index].y;
             }
-            
+
             // calculate track avg speed:
-            $scope.track_length = b - (a-1);
+            var length_of_n = b - a ;
             var track_avgs = {};
             if (sums['Speed']) {
-                track_avgs['Speed'] = sums['Speed'] / $scope.track_length;
+                track_avgs['Speed'] = sums['Speed'] / length_of_n;
             }
             if (sums['Consumption']) {
-                track_avgs['Consumption'] = sums['Consumption'] / $scope.track_length;
+                track_avgs['Consumption'] = sums['Consumption'] / length_of_n;
             }
             if (sums['CO2']) {
-                track_avgs['CO2'] = sums['CO2'] / $scope.track_length;
+                track_avgs['CO2'] = sums['CO2'] / length_of_n;
             }
             if (sums['Rpm']) {
-                track_avgs['Rpm'] = sums['Rpm'] / $scope.track_length;
+                track_avgs['Rpm'] = sums['Rpm'] / length_of_n;
             }
             if (sums['Engine Load']) {
-                track_avgs['Engine Load'] = sums['Engine Load'] / $scope.track_length;
+                track_avgs['Engine Load'] = sums['Engine Load'] / length_of_n;
             }
-            
+
             $scope.dataSpeed[0].values[0].value = track_avgs['Speed'];
             $scope.dataConsumption[0].values[0].value = track_avgs['Consumption'];
             $scope.dataCO2[0].values[0].value = track_avgs['CO2'];
@@ -118,15 +118,14 @@
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
-            console.log('single_track_page:segment-changed');
-            console.log(args);
+            
             $scope.min = args.min;
             $scope.max = args.max;
             $scope.changeComparingRange($scope.min, $scope.max);
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received.");
+            
             var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
             $scope.optionsSpeed.chart.yAxis = {
                 axisLabel: axisLabelSpeed,
@@ -154,21 +153,20 @@
             };
         });
 
-        $scope.$on('single_track_page:segment-activated' ,function(event, args){
+        $scope.$on('single_track_page:segment-activated', function (event, args) {
             if (args) {
-                console.log($scope.track_length);
-                if ($scope.min)
-                    $scope.changeComparingRange($scope.min, $scope.max);
-                else
-                    $scope.changeComparingRange(0, $scope.track_length);
+                if (!$scope.min) 
+                    $scope.min = 0;
+                if (!$scope.max)
+                    $scope.max = $scope.track_length;
+                $scope.changeComparingRange($scope.min, $scope.max);
             } else {
-                console.log($scope.track_length);
                 $scope.changeComparingRange(0, $scope.track_length);
             }
         });
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            console.log("phenomenon changed received.");
+            
             $scope.selectedPhenom = args;
 
             if ($scope.segmentActivated) {
@@ -176,12 +174,11 @@
                 //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
                 if ($scope.min)
                     $scope.changeComparingRange($scope.min, $scope.max);
-                else 
+                else
                     $scope.changeComparingRange(0, $scope.track_length);
             } else {
                 $scope.changeComparingRange(0, $scope.track_length);
             }
-            console.log(args);
         });
 
         $scope.optionsConsumption = {
@@ -354,7 +351,6 @@
         var data_global = {};
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     data_global = data;
                     var track_length = data_global.data.features.length;
                     $scope.track_length = track_length;
@@ -405,11 +401,6 @@
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                     }
 
-                    console.log($scope.data_all);
-
-                    console.log('track sums:');
-                    console.log(sums);
-
                     // calculate track avg speed:
                     var track_avgs = {};
                     if (sums['Speed']) {
@@ -427,15 +418,11 @@
                     if (sums['Engine Load']) {
                         track_avgs['Engine Load'] = sums['Engine Load'] / track_length;
                     }
-                    console.log('track avgs:');
-                    console.log(track_avgs);
-
                     // ask for enviroCar averages:
                     var enviroCarStats = [];
                     // Speed:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
                             function (data) {
-                                console.log(data);
                                 var store = data.data;
                                 var Speed_public = store.avg;
                                 $scope.dataSpeed = [{
@@ -462,7 +449,6 @@
                     // Consumption:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
                             function (data) {
-                                console.log(data);
                                 var store = data.data;
                                 var Consumption_public = store.avg;
                                 $scope.dataConsumption = [{
@@ -489,7 +475,6 @@
                     // CO2:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
                             function (data) {
-                                console.log(data);
                                 var store = data.data;
                                 var CO2_public = store.avg;
                                 $scope.dataCO2 = [{
@@ -516,7 +501,6 @@
                     // RPM:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Rpm").then(
                             function (data) {
-                                console.log(data);
                                 var store = data.data;
                                 var RPM_public = store.avg;
                                 $scope.dataRPM = [{
@@ -543,7 +527,6 @@
                     // Engine Load:
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
                             function (data) {
-                                console.log(data);
                                 var store = data.data;
                                 var EngineLoad_public = store.avg;
                                 $scope.dataEngineLoad = [{

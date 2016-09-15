@@ -28,8 +28,8 @@
 
     <envirocar-toolbar id="main-toolbar"> </envirocar-toolbar> <!-- Toolbar -->
 
-    <div class="row ui-sortable-placehold" id="placeholder-toolbar"> <!-- Sidenav Placeholder -->
-
+    <div class="row ui-sortable-placehold" id="placeholder-toolbar" > <!-- Toolbar Placeholder -->
+        
     </div>
     
     <div layout="row" >
@@ -37,7 +37,7 @@
         <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
         
      
-        <div class="column ui-sortable-placehold" id="placeholder"> <!-- Sidenav Placeholder -->
+        <div ng-if="!screenIsSmall"  class="column ui-sortable-placehold" id="placeholder" > <!-- Sidenav Placeholder -->
                     
         </div>
 

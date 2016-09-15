@@ -86,21 +86,16 @@ html, body{
     }
     rzslider {
         padding-left: 40px;
+        padding-right: 40px;
     }
 }
 .stuck_top {
     position: fixed;
     z-index:2000;
     top: 0px;
+    left : 0px;
 }
 
-
-
-.track_toolbar_placeholder {
-    height: 200px !important;
-    min-height: 200px !important;
-    color: red;
-}
 #phenom-dropdown {
     padding-left: 20px;
 }
@@ -296,6 +291,11 @@ md-list-item {
     height: 60px;
     width: 100%;
 }
+#placeholder-toolbar-stp {
+    display:inline-block;
+    height: 1px;
+    width: 100%;
+}
 
 .profiletab {
     background-image: url('../components/assets/envCar_Foto06.jpg');
@@ -475,4 +475,8 @@ toolbar-card {
     float: left;
     margin-right: 8px;
     opacity: 0.7;
+}
+
+.range-chart {
+    max-height: 200px !important;
 }

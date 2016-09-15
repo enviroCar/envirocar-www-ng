@@ -5,25 +5,13 @@
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
         $scope.trackid = $stateParams.trackid;
-        var Co2sum = 0;
-        var fuelSum = 0;
         var distance = 0;
         var vehiclemodel;
         var vehicletype;
         var vehiclemanufacturer;
-        var timeoftravel = 0;
-        var units = {};
-        var keys;
         var starttimeg;
         var endtimeg;
-        var len_data;
-        var keys_second;
         var date_hh_mm_ss;
-        var consumption_avg;
-        var consumption100Km;
-        var co2gKm;
-        var co2_avg;
-        var break_cons = true;
         $scope.track_summary_startIndex = 0;
         $scope.track_summary_endIndex = 0;
         $scope.track_summary_track_length = 0;
@@ -64,7 +52,6 @@
         };
 
         $scope.changeSummaryRange = function (min, max) {
-            console.log("MIN:" + min + " ; MAX:" + max)
             // fill data with each measurement point:
             // calculating stuff:
             var sums = {
@@ -72,7 +59,7 @@
                 fuel: 0,
                 co2: 0
             };
-            for (var i = min + 1; i < max; i++) {
+            for (var i = min+1; i < max; i++) {
                 // calculating distance:
                 var lat_now = $scope.data_track[3].values[i];
                 var lng_now = $scope.data_track[4].values[i];
@@ -82,19 +69,26 @@
                 sums.distance += distance_i;
 
                 // calculating fuel consumption:
-                var fuel_now = $scope.data_track[0].values[i];
+                var fuel_now = $scope.data_track[0].values[i - 1];
                 sums.fuel += fuel_now;
 
                 // calculating co2 emission:
-                var co2_now = $scope.data_track[1].values[i];
+                var co2_now = $scope.data_track[1].values[i - 1];
                 sums.co2 += co2_now;
             }
+            // calculating fuel consumption:
+            var fuel_now = $scope.data_track[0].values[max-1];
+            sums.fuel += fuel_now;
+
+            // calculating co2 emission:
+            var co2_now = $scope.data_track[1].values[max-1];
+            sums.co2 += co2_now;
 
             distance = sums.distance;
 
             // get timestamps:
             var time1 = $scope.data_track[2].values[min];
-            var time2 = $scope.data_track[2].values[max - 1];
+            var time2 = $scope.data_track[2].values[max];
             var seconds_passed = new Date(time2).getTime() -
                     new Date(time1).getTime();
             var seconds = seconds_passed / 1000;
@@ -109,7 +103,6 @@
 
             // fuel_avg:
             var fuel_avg = sums.fuel / (max - min);
-            console.log("fuel AVG:" + fuel_avg);
             // fuel_avg*delta time:
             var fuelPerTime = fuel_avg * (seconds_passed / (1000 * 60 * 60));
             // 100* fuelPerTime / delta distance:
@@ -139,26 +132,23 @@
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
-            console.log('single_track_page:segment-changed');
-            console.log(args);
+            
             $scope.track_summary_startIndex = args.min;
             $scope.track_summary_endIndex = args.max;
             $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex);
         });
 
         $scope.$on('single_track_page:segment-activated', function (event, args) {
-            console.log(args);
-            console.log($scope.track_summary_startIndex);
+            
             if (args) {
-                $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex);
+                $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex+1);
             } else {
-                $scope.changeSummaryRange(0, $scope.track_summary_track_length - 1);
+                $scope.changeSummaryRange(0, $scope.track_summary_track_length);
             }
         });
 
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     var data_global = data;
                     var track_data = data.data;
                     // car data:
@@ -210,19 +200,26 @@
                         sums.distance += distance_i;
 
                         // calculating fuel consumption:
-                        var fuel_now = $scope.data_track[0].values[i];
+                        var fuel_now = $scope.data_track[0].values[i - 1];
                         sums.fuel += fuel_now;
 
                         // calculating co2 emission:
-                        var co2_now = $scope.data_track[1].values[i];
+                        var co2_now = $scope.data_track[1].values[i - 1];
                         sums.co2 += co2_now;
                     }
+                    // calculating fuel consumption:
+                    var fuel_now = $scope.data_track[0].values[$scope.track_summary_endIndex - 1];
+                    sums.fuel += fuel_now;
+
+                    // calculating co2 emission:
+                    var co2_now = $scope.data_track[1].values[$scope.track_summary_endIndex - 1];
+                    sums.co2 += co2_now;
                     distance = sums.distance;
-                    console.log(sums);
 
                     // get timestamps:
                     var time1 = $scope.data_track[2].values[$scope.track_summary_startIndex];
                     var time2 = $scope.data_track[2].values[$scope.track_summary_endIndex - 1];
+                    
                     var seconds_passed = new Date(time2).getTime() -
                             new Date(time1).getTime();
                     var seconds = seconds_passed / 1000;
@@ -237,7 +234,7 @@
 
                     // fuel_avg:
                     var fuel_avg = sums.fuel / ($scope.track_summary_endIndex - $scope.track_summary_startIndex);
-                    console.log("fuel AVG:" + fuel_avg);
+                    
                     // fuel_avg*delta time:
                     var fuelPerTime = fuel_avg * (seconds_passed / (1000 * 60 * 60));
                     // 100* fuelPerTime / delta distance:
@@ -249,7 +246,7 @@
                     var co2PerTime = co2_avg * (seconds_passed / (1000 * 60 * 60));
                     // 1000* co2PerTime / delta distance:
                     var co2gKm = 1000 * co2PerTime / distance; // (g/km)
-                    console.log(co2gKm);
+                    
 
                     $scope.tracksummary = {
                         distance: distance.toFixed(2),

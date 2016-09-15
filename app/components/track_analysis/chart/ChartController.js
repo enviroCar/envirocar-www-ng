@@ -6,12 +6,13 @@
             $stateParams,
             $timeout,
             $translate,
+            $element,
             TrackService,
             UserCredentialsService,
             leafletBoundsHelpers) {
         console.log("ChartCtrl started.");
         var grey = '#737373';
-        $scope.track_toolbar_fixed = false;
+        $rootScope.track_toolbar_fixed = false;
         $scope.slider = {
             minValue: 0,
             maxValue: 100,
@@ -103,21 +104,37 @@
                 }
             }
             for (var index = 0; index < 5; index++) {
-                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start)-1);
+                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) - 1);
             }
 
             $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
             console.log($scope.dataTrackChart);
         };
-        
+
         // Scroll-fixing the single track analysis toolbar:
         $(window).scroll(function () {
+            var placeholder = angular.element($element[0].querySelector('#placeholder-toolbar-stp'));
+
             if ($(window).scrollTop() > 300) {
-                $('#track_toolbar').addClass('stuck_top');
-                $scope.track_toolbar_fixed = true;
+                if (!$rootScope.track_toolbar_fixed) {
+                    $('#track_toolbar').addClass('stuck_top');
+                    placeholder.css("min-height", "130px");
+                    placeholder.css("height", "130px");
+                    placeholder.css("max-height", "130px");
+                }
+                $rootScope.track_toolbar_fixed = true;
+                console.log("toolbar fixed");
+
             } else {
-                $('#track_toolbar').removeClass('stuck_top');
-                $scope.track_toolbar_fixed = false;
+                if (!$rootScope.track_toolbar_fixed) {
+                    $('#track_toolbar').removeClass('stuck_top');
+                    placeholder.css("min-height", "1px");
+                    placeholder.css("height", "1px");
+                    placeholder.css("max-height", "1px");
+                }
+                $rootScope.track_toolbar_fixed = false;
+
+                console.log("toolbar freed");
             }
         });
         $scope.trackid = $stateParams.trackid;
@@ -186,7 +203,7 @@
                     $scope.percentToRGB(2000 / 2500 * 100),
                     $scope.percentToRGB(2500 / 2500 * 100),
                     $scope.percentToRGB(4000 / 2500 * 100)],
-                labels: ['   0 r/min', '1000 r/min', '1500 r/min', '2000 r/min', '2500 r/min', '4000 r/min']
+                labels: ['   0 r/min', '1000 r/min', '1500 r/min', '2000 r/min', '3000 r/min', '4000 r/min']
             }, {
                 // Engine Load:
                 position: 'bottomright',
@@ -353,7 +370,7 @@
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
             $rootScope.$broadcast('single_track_page:segment-activated', $scope.segmentActivated);
-                    
+
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             },

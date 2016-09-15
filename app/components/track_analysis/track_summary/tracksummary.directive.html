@@ -15,45 +15,46 @@
     </div>
 
     <md-card-content flex="100">
-        <md-list-item class="md-2-line">
+        <md-list-item flex>
             <div layout="row" flex="50">
-                <i class="md-36 material-icons">timeline</i>
-                <h3>Distance</h3>
-                <p>{{tracksummary['distance']}} km</p>
+                <i class="md-24 material-icons">timeline</i>
+                <p><b>{{ 'DISTANCE' | translate }}</b></p>
+                <p flex>{{tracksummary['distance']}} km</p>
             </div>
-
+        </md-list-item>
+        <md-list-item flex>
             <div layout="row" flex>
-                <i class="md-36 material-icons">access_time</i>
-                <h3>Duration</h3>
-                <p>{{tracksummary['timeoftravel']}}</p>
+                <i class="md-24 material-icons">access_time</i>
+                <p><b>{{ 'DURATION' | translate }}</b></p>
+                <p flex>{{tracksummary['timeoftravel']}}</p>
             </div>
         </md-list-item>
         <md-divider ></md-divider>
         <md-list-item flex>
-            <i class="md-36 material-icons">directions_car</i>
-            <p><b>Vehicle Type</b></p>
-            <p flex="50">{{tracksummary['vehiclemanufacturer']}} - {{tracksummary['vehiclemodel']}}</p>
+            <i class="md-24 material-icons">directions_car</i>
+            <p><b>{{'VEHICLE_TYPE' | translate}}</b></p>
+            <p flex>{{tracksummary['vehiclemanufacturer']}} - {{tracksummary['vehiclemodel']}}</p>
 
         </md-list-item>
         <md-list-item flex>
-            <i class="md-36 material-icons">timer</i>
-            <p><b>Starttime</b></p>
-            <p flex="50">{{tracksummary['starttime']}}</p>
+            <i class="md-24 material-icons">timer</i>
+            <p><b>{{ 'START_TIME' | translate }}</b></p>
+            <p flex>{{tracksummary['starttime']}}</p>
         </md-list-item>
         <md-list-item flex>
-            <i class="md-36 material-icons">timer_off</i>
-            <p><b>Endtime</b></p>
-            <p flex="50">{{tracksummary['endtime']}}</p>
+            <i class="md-24 material-icons">timer_off</i>
+            <p><b> {{ 'END_TIME' | translate }} </b></p>
+            <p flex>{{tracksummary['endtime']}}</p>
         </md-list-item>
         <md-list-item flex>
-            <i  class="md-36 material-icons">local_gas_station</i>
-            <p><b>Consumption</b></p>
-            <p flex="50">{{tracksummary['fuel']}} liter/100km</p>
+            <i  class="md-24 material-icons">local_gas_station</i>
+            <p><b> {{ 'CONSUMPTION' | translate }} </b></p>
+            <p flex>{{tracksummary['fuel']}} liter/100km</p>
         </md-list-item>
         <md-list-item flex>
-            <i class="md-36 material-icons">cloud_queue</i>
-            <p><b>CO2 Emission</b></p>
-            <p flex="50">{{tracksummary['co2emissionperhour']}} g/km</p>
+            <i class="md-24 material-icons">cloud_queue</i>
+            <p><b> {{ 'CO2EMISSION' | translate}} </b></p>
+            <p flex>{{tracksummary['co2emissionperhour']}} g/km</p>
         </md-list-item>
 
 

@@ -85,13 +85,18 @@ angular.module('translations', [])
             'SATURDAY'      : 'Saturday',
             'SUNDAY'        : 'Sunday',
             
+            
+            // Track Analysis - Toolbar:
+            'SEGMENT_ANALYSIS'  : 'Segment analysis',
+            
             // Track Analysis - Leaflet:
             'TITLE_TRACK_MAP'       : 'track map',
+            
             // Track Analysis - Chart:
             'TITLE_TRACK_CHART'     : 'time series',
             
             // Track Analysis - Comparison Chart:
-            'COMPARISON_TRACK_CHART_TITLE'          : 'Your track compared to the enviroCar community',
+            'COMPARISON_TRACK_CHART_TITLE'          : 'compared to enviroCar',
             'COMPARISON_TRACK_CHART_DESCRIPTION'    : 
                     'Your track\'s statistic averages compared to the enviroCar community\'s statstic averages.',
             'TRACK_LABEL_USER'                : 'this track',
@@ -102,6 +107,14 @@ angular.module('translations', [])
             // Track Analysis - Track Summary:
             'TRACK_SUMMARY_TITLE'       : 'Track Summary',
             'TRACK_SUMMARY_DESCRIPTION' : 'Your track\'s phenomenons summary',
+            'VEHICLE_TYPE'              : 'vehicle type',
+            'START_TIME'                : 'starttime',
+            'END_TIME'                  : 'finishtime',
+            'CO2EMISSION'               : 'CO2 emission',
+            
+            // Track Analysis - Speed Ranges Chart:
+            'SPEED_RANGES_CHART_TITLE'          : 'In intervals',
+            'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval?',
             
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
@@ -238,7 +251,7 @@ angular.module('translations', [])
             // Phenomenon:
             'ENGINE_LOAD'               : 'Motorauslastung',
             'SPEED'                     : 'Geschwindigkeit',
-            'RPM'                       : 'Umdrehungen pro Minute',
+            'RPM'                       : 'Umdrehungen',
             'CO2'                       : 'CO2 Emissionen',
             'CONSUMPTION'               : 'Treibstoffverbrauch',
             
@@ -276,6 +289,9 @@ angular.module('translations', [])
             'SATURDAY'      : 'Samstag',
             'SUNDAY'        : 'Sonntag',
             
+            // Track Analysis - Toolbar:
+            'SEGMENT_ANALYSIS'  : 'Segmentanalyse',
+            
             // Track Analysis - Leaflet:
             'TITLE_TRACK_MAP'       : 'Fahrtkarte',
             
@@ -283,7 +299,7 @@ angular.module('translations', [])
             'TITLE_TRACK_CHART'     : 'Zeitreihendiagramm',
             
             // Track Analysis - Comparison Chart:
-            'COMPARISON_TRACK_CHART_TITLE'          : 'Meine Fahrt im Vergleich mit enviroCar',
+            'COMPARISON_TRACK_CHART_TITLE'          : 'Vergleich mit enviroCar',
             'COMPARISON_TRACK_CHART_DESCRIPTION'    : 
                     'Durchschnittswerte dieser Fahrt im Vergleich mit den Durschschnittwerten, die die enviroCar-Gemeinschaft gesammelt hat.',
             'TRACK_LABEL_USER'                : 'Meine Fahrt',
@@ -294,6 +310,17 @@ angular.module('translations', [])
             // Track Analysis - Track Summary:
             'TRACK_SUMMARY_TITLE'       : 'Fahrtüberblick',
             'TRACK_SUMMARY_DESCRIPTION' : 'Zusammenfassung der Daten deiner Fahrt',
+            'VEHICLE_TYPE'              : 'Fahrzeugtyp',
+            'START_TIME'                : 'Startzeit',
+            'END_TIME'                  : 'Endzeit',
+            'TOTAL_TIME'                : 'GESAMT_ZEIT',
+            'CO2EMISSION'               : 'CO2 Emission',
+            'DURATION'                  : 'Fahrtdauer',
+            
+            // Track Analysis - Speed Ranges Chart:
+            'SPEED_RANGES_CHART_TITLE'          : 'In Intervallen',
+            'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht?',
+            
             
             'TITLE_TRACKS': 'Neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',
@@ -309,8 +336,6 @@ angular.module('translations', [])
             'PIE_CHART': 'Tortendiagramm',
             'TRACK_SUMMARY': 'Fahrtübersicht',
             'DISTANCE': 'Distanz',
-            'VEHICLE_TYPE': 'FEHRZEUG_TYP',
-            'TOTAL_TIME': 'GESAMT_ZEIT',
             'START_FINISH': 'Start Ziel Zeit',
             'CONSUMPTION_HOUR': 'Verbrauch/Stunde',
             'CO2_EMISSION': 'CO2 Emission',
@@ -330,14 +355,12 @@ angular.module('translations', [])
             'NAME': 'Name',
             'CREATED': 'Erstellt am',
             'TIME_SERIES': 'Zeitreihenanalyse',
-            'DURATION': 'Fahrtzeit',
             'CAR:': 'Fahrzeug:',
             'START:': 'Start:',
             'END:': 'Ende:',
             'CO2_EMISSION:': 'CO2 Emission:',
             'LOGOUT': 'Abmelden',
             'PROFILE': 'Profil',
-            'DASHBOARD': 'Dashboard',
             'TABLE': 'Profil',
             'SEGMENT': 'Abschnitt',
             'SPEED_PIE': 'Geschwindigkeit',

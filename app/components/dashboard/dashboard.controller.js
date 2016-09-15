@@ -1,7 +1,7 @@
 (function() {
     'use strict';
      
-    function DashboardCtrl($scope, UserCredentialsService, UserService, TrackService, StatisticsService) {
+    function DashboardCtrl($scope, UserCredentialsService, UserService, TrackService) {
         console.log('DashboardCtrl started.');
         
         var username;

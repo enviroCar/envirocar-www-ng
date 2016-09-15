@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- user vs community directive -->
+<md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'SPEED_RANGES_CHART_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'SPEED_RANGES_CHART_DESCRIPTION'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+    
+    <!-- on Speed Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Speed'">
+        <p class='comparison-title'> {{'SPEED'| translate}} (km/h)</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex='100' ng-if="onload_speed_Range" layout="row" >
+            <nvd3 options="optionsSpeedRange" data="dataSpeedRange" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on Consumption Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Consumption'">
+        <p class='comparison-title'> {{'CONSUMPTION'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_consumption_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex ng-if="onload_consumption_Range" layout="row">
+            <nvd3 options="optionsConsumptionRange" data="dataConsumptionRange" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on CO2 Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='CO2'">
+        <p class='comparison-title'> {{'CO2'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex ng-if="onload_CO2_Range" layout="row">
+            <nvd3 options="optionsCO2Range" data="dataCO2Range" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on Engine Load Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Engine Load'">
+        <p class='comparison-title'> {{'ENGINE_LOAD'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_EngineLoad_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex ng-if="onload_EngineLoad_Range" layout="row">
+            <nvd3 options="optionsEngineRange" data="dataEngineLoadRange" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+    
+    <!-- on Rpm Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Rpm'">
+        <p class='comparison-title'> {{'RPM'| translate}}</p>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_RPM_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex ng-if="onload_RPM_Range" layout="row">
+            <nvd3 options="optionsRPMRange" data="dataRPMRange" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
+</md-card>

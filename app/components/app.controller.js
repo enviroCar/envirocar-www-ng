@@ -1,21 +1,32 @@
-(function() {
+(function () {
     'use strict';
 
-    function AppCtrl($scope, $translate, UserCredentialsService) {
+    function AppCtrl($rootScope, $scope, $mdMedia, UserCredentialsService) {
         $scope.message = 'Initial Setup';
-        $scope.loggedIn = UserCredentialsService.getCredentials().username!=="";
+        $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
+        $scope.screenIsSmall = false;
         
-        $scope.logout = function(){
+        $scope.$watch(function () {
+            return $mdMedia('xs');
+        }, function (big) {
+            console.log("screen is small:" + big);
+            $scope.screenIsSmall = big;
+        });
+
+        $scope.logout = function () {
             UserCredentialsService.clearCredentials();
             UserCredentialsService.clearCookies();
         };
-        
-        $scope.loggedIn = function(){
+
+        $scope.loggedIn = function () {
             return $scope.loggedIn;
         };
-        
-    };
-   
+
+        //$rootScope.screenIsSmall = $mdMedia('sm');
+
+    }
+    ;
+
     angular.module('enviroCar')
-        .controller('AppCtrl', AppCtrl)
+            .controller('AppCtrl', AppCtrl)
 })();
