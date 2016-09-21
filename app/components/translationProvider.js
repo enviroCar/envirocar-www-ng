@@ -14,8 +14,9 @@ angular.module('translations', [])
         console.log('translation configuration set up');
         $translateProvider.translations('en', {
             // defaults:
-            'WEBSITE-TITLE'     : 'EnviroCar Webapp',
-            'LANGUAGE'          : 'Language',
+            'WEBSITE-TITLE'         : 'EnviroCar Webapp',
+            'LANGUAGE'              : 'Language',
+            'CLICK_FOR_MORE_INFO'   : 'click for more information...',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Open Sidenav',
@@ -60,8 +61,7 @@ angular.module('translations', [])
             'TT_LABEL_USER'             : 'Your average',
             'TT_LABEL_PUBLIC'           : 'enviroCar community average',
             'COMPARISON_CHART_DESCRIPTION'  : 
-                    'Your statistic averages compared to the enviroCar community\'s statstic averages.'+
-                    'Durchschnittswerden, die die enviroCar Gemeinschaft gesammelt hat.',
+                    'Your statistic averages compared to the enviroCar community\'s statistic averages.',
             
             // Dashboard - LatestTracksChart:
             'LATEST_TRACKS_CHART_DESCRIPTION'   :   'Your latest six tracks are listed here. You can see a summary of the driven distance, your used vehicle, and the duration of the track. Hover over a track to see a map preview of the track. Click on a track to get redirect to the single track analysis page.',
@@ -90,10 +90,12 @@ angular.module('translations', [])
             'SEGMENT_ANALYSIS'  : 'Segment analysis',
             
             // Track Analysis - Leaflet:
-            'TITLE_TRACK_MAP'       : 'track map',
+            'TRACK_MAP_TITLE'       : 'track map',
+            'TRACK_MAP_DESCRIPTION' : 'this map visualizes the selected track. Change phenomenom or select a segment of the track in the toolbar above.',
             
             // Track Analysis - Chart:
-            'TITLE_TRACK_CHART'     : 'time series',
+            'TRACK_CHART_TITLE'         : 'time series',
+            'TRACK_CHART_DESCRIPTION'   : 'this chart shows the selected phenomenon from start to end of the selected track. Change phenomenon or select a segment of the track in the toolbar above.',
             
             // Track Analysis - Comparison Chart:
             'COMPARISON_TRACK_CHART_TITLE'          : 'compared to enviroCar',
@@ -116,6 +118,20 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_TITLE'          : 'In intervals',
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval?',
             
+            // Tracks Page - All Tracks Tab:
+            'JAN': 'JANUARY',
+            'FEB': 'FEBRUARY',
+            'MAR': 'MARCH',
+            'APR': 'APRIL',
+            'MAY': 'MAY',
+            'JUN': 'JUNE',
+            'JUL': 'JULY',
+            'AUG': 'AUGUST',
+            'SEP': 'SEPTEMBER',
+            'OCT': 'OCTOBER',
+            'NOV': 'NOVEMBER',
+            'DEZ': 'DECEMBER',
+            
             'TITLE_TRACKS': 'Latest Tracks',
             'TRACK_ID': 'Track ID',
             'MODIFIED': 'Modified',
@@ -130,7 +146,6 @@ angular.module('translations', [])
             'PIE_CHART': 'Pie Chart',
             'TRACK_SUMMARY': 'Track Summary',
             'DISTANCE': 'Distance',
-            'VEHICLE_TYPE': 'VEHICLE_TYPE',
             'TOTAL_TIME': 'TOTAL_TIME',
             'START_FINISH': 'Start Finish Time',
             'CONSUMPTION_HOUR': 'Consumption/Hr',
@@ -214,8 +229,9 @@ angular.module('translations', [])
         });
         $translateProvider.translations('de', {
             // defaults:
-            'WEBSITE-TITLE' : 'EnviroCar Webapp',
-            'LANGUAGE'          : 'Sprache',
+            'WEBSITE-TITLE'         : 'EnviroCar Webapp',
+            'LANGUAGE'              : 'Sprache',
+            'CLICK_FOR_MORE_INFO'   : 'Klick für weitere Informationen...',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Öffne Seitenleiste',
@@ -261,7 +277,7 @@ angular.module('translations', [])
             'LABEL_PUBLIC'              : 'enviroCar Ø',
             'TT_LABEL_USER'             : 'Mein Durchschnittswert',
             'TT_LABEL_PUBLIC'           : 'enviroCar Durchschnittswert',
-            'COMPARISON_CHART_DESCRIPTION'  : 'Deine Durchschnittswerte im Vergleich mit den Durchschnittswerden, die die enviroCar Gemeinschaft gesammelt hat.',
+            'COMPARISON_CHART_DESCRIPTION'  : 'Deine Durchschnittswerte im Vergleich mit den Durchschnittswerten, die die enviroCar Gemeinschaft gesammelt hat.',
             
             // Dashboard - LatestTracksChart:
             'LATEST_TRACKS_CHART_DESCRIPTION'   : 
@@ -293,10 +309,12 @@ angular.module('translations', [])
             'SEGMENT_ANALYSIS'  : 'Segmentanalyse',
             
             // Track Analysis - Leaflet:
-            'TITLE_TRACK_MAP'       : 'Fahrtkarte',
+            'TRACK_MAP_TITLE'       : 'Fahrtkarte',
+            'TRACK_MAP_DESCRIPTION' : 'Diese Karte zeigt deine gewählte Strecke. Wähle ein anderes Phänomen aus oder betrachte einen Teil der Strecke in der obigen Werkzeugleiste.',
             
             // Track Analysis - Chart:
-            'TITLE_TRACK_CHART'     : 'Zeitreihendiagramm',
+            'TRACK_CHART_TITLE'         : 'Zeitreihendiagramm',
+            'TRACK_CHART_DESCRIPTION' : 'Dieses Diagramm zeigt das ausgewählte Phänomen deiner Fahrt über eine Zeitachse an. Wähle ein anderes Phänomen aus oder betrachte einen Teil der Strecke in der obigen Werkzeugleiste.',
             
             // Track Analysis - Comparison Chart:
             'COMPARISON_TRACK_CHART_TITLE'          : 'Vergleich mit enviroCar',
@@ -321,6 +339,19 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_TITLE'          : 'In Intervallen',
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht?',
             
+            // Tracks Page - All Tracks Tab:
+            'JAN': 'JANUAR',
+            'FEB': 'FEBRUAR',
+            'MAR': 'MÄRZ',
+            'APR': 'APRIL',
+            'MAY': 'MAI',
+            'JUN': 'JUNI',
+            'JUL': 'JULI',
+            'AUG': 'AUGUST',
+            'SEP': 'SEPTEMBER',
+            'OCT': 'OKTOBER',
+            'NOV': 'NOVEMBER',
+            'DEZ': 'DEZEMBER',
             
             'TITLE_TRACKS': 'Neuste Fahrten',
             'TRACK_ID': 'Fahrt ID',

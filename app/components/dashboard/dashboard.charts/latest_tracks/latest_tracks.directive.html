@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <!-- latest_tracks directive -->
 <div layout="column" flex>
-    <md-card style="min-height:860px !important;">
+    <md-card style="min-height:860px !important; height:860px !important; max-height:860px !important;">
         <div layout="row" flex="100">
         <p class='card-title' flex>
             <span><b>{{'TITLE_TRACKS'| translate}}</b></span>
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event,'TITLE_TRACKS','LATEST_TRACKS_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
-                    {{'LATEST_TRACKS_CHART_DESCRIPTION'| translate}}
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
         </div>
@@ -49,7 +49,7 @@
                                 <md-content >
                                     <p class="placeholder-p">.</p>
 
-                                    <img src={{event.url}} style="width:480px;height:376px;"></img>
+                                    <img src={{event.url}} style="width:280px;height:180px;"></img>
 
                                 </md-content>
                             </md-tooltip>

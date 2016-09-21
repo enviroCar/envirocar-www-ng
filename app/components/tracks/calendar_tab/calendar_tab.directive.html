@@ -1,0 +1,153 @@
+<md-tab label="{{'CALENDAR_OF_TRACKS_TAB'| translate}}">
+    <md-progress-circular  ng-if="!onload_calendar" md-diameter="156"></md-progress-circular>
+    <div ng-if="onload_calendar" layout-gt-xs="row">
+        <md-card flex class="card card-4-50" >
+            <md-card-content class="nopadding" >
+
+                <md-content >
+                    <div >
+                        <calendar-md flex layout layout-fill
+
+
+                                     on-prev-month="prevMonth"
+                                     on-next-month="nextMonth"
+                                     data-start-month="{{start_month}}"
+                                     data-start-year="{{start_year}}"
+                                     on-day-click="dayClick"
+                                     >
+                            <!--        calendar-direction="direction"
+                                        day-format="'d'"
+                                        tooltips="tooltips"
+                                        title-format="'MMMM y'"
+                                        ng-model='selectedDate'
+                                        day-label-format="'EEE'"
+                                        day-label-tooltip-format="'EEEE'"
+                                        day-tooltip-format="'fullDate'"
+                                        week-starts-on="1"
+                                        disable-future-selection="true"> -->
+
+                        </calendar-md>
+                    </div>
+                    <div style="width:100%">
+                        <md-button ng-click="buttonClickCurrentDate()">Go to current date</md-button>
+                        <div style="width:100%;text-align:center">
+                            <h3 style="color:rgba(0,0,0,0.7)">{{'MONTHLY_OVERVIEW'| translate}}</h3>
+                        </div>
+                    </div>
+                    <div layout-gt-xs="row" ng-if="!nostatistics">
+                        <div style="width:33.33%;text-align:center">
+                            <h3 style="color:#0065A0">{{total_time}}</h3>
+                            <p style="font-size:13px;">{{'DURATION'| translate}}</p>
+                        </div>
+                        <div style="width:33.33%;text-align:center">
+                            <h3 style="color:#0065A0">{{total_distance}} Km</h3>
+                            <p style="font-size:13px;">{{'DISTANCE'| translate}}</p>
+                        </div>
+                        <div style="width:33.33%;text-align:center">
+                            <h3 style="color:#0065A0">{{total_tracks}}</h3>
+                            <p style="font-size:13px;">{{'TRACKS'| translate}}</p>
+                        </div>
+
+                    </div>
+                    <div layout-gt-xs="row" ng-if="nostatistics">
+                        <div style="width:100%;text-align:center">
+                            <p>{{'NO_MONTHLY_STATISTICS'| translate}}</p>
+                        </div>
+                    </div>
+                </md-content>
+            </md-card-content>
+
+        </md-card>
+        <!--
+        <md-card class="card card-4-50 fade" flex>
+            <md-content id="track_list_calendar_tab" style="height: {{tablistcalendarheight}}px;" >
+                <section ng-repeat="months in monthsWithTracks" ng-if="months.month === selectedMonth && months.year === selectedYear">
+                    <md-subheader class="envirocar-green"><b> {{constants.months[months.month]}} , {{months.year}}</b></md-subheader>
+                    <md-list id="calendar-list" >
+                        <md-list-item class="divider-list-item fade" ng-repeat='event in tracks' ng-if="months.year === event.year && months.month === event.month" ng-click="goToActivity(event.id)">
+
+                            <div class="sl-content" layout="column">
+
+                                <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+
+                                <span>
+                                    <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                                    {{'DISTANCE'| translate}}: {{event.length}} km
+                                </span>
+                                <span>
+                                    <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                                    {{'VEHICLE_TYPE'| translate}}: {{event.manufacturer}} - {{event.car}}
+                                </span>
+                                <span>
+                                    <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                    <md-content >
+                                        <p class="placeholder-p">.</p>
+
+                                        <img src={{event.url}} style="width:280px;height:176px;"></img>
+
+                                    </md-content>
+                                </md-tooltip>timer</i>
+                                    {{'DURATION'| translate}}: {{event.travelTime}}
+                                </span>
+
+                                <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                    <md-content>
+                                        <p class="placeholder-p">.</p>
+
+                                        <img src={{event.url}} style="width:250px;height:156px;"></img>
+
+                                    </md-content>
+                                </md-tooltip>
+
+                            </div>
+                        </md-list-item>
+
+                    </md-list>
+                </section>
+            </md-content>
+        </md-card>
+        -->
+        <md-card>
+            <cl-paging flex cl-pages="paging.total" cl-steps="6" cl-page-changed="paging.onPageChanged()" cl-align="start start" cl-current-page="paging.current"></cl-paging>
+                <md-list id="calendar-list" >
+                    <md-list-item class="divider-list-item fade" ng-repeat='event in currentPageTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
+                        <div class="sl-content" layout="column">
+
+                            <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                                {{'DISTANCE'| translate}}: {{event.length}} km
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                                {{'VEHICLE_TYPE'| translate}}: {{event.manufacturer}} - {{event.car}}
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                        <md-content >
+                                            <p class="placeholder-p">.</p>
+
+                                            <img src={{event.url}} style="width:280px;height:176px;"></img>
+
+                                        </md-content>
+                                    </md-tooltip>timer</i>
+                                {{'DURATION'| translate}}: {{event.travelTime}}
+                            </span>
+
+                            <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                <md-content>
+                                    <p class="placeholder-p">.</p>
+
+                                    <img src={{event.url}} style="width:250px;height:156px;"></img>
+
+                                </md-content>
+                            </md-tooltip>
+
+                        </div>
+                    </md-list-item>
+
+                </md-list>
+        </md-card>
+    </div>
+</md-tab>

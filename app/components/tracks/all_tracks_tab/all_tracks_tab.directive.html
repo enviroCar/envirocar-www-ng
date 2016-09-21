@@ -1,0 +1,49 @@
+<md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_all_tracks" md-diameter="156"></md-progress-circular>
+    <md-content ng-if="onload_all_tracks" id="track_list_tab" style="height: {{tablistheight}}px;">
+        <section  ng-repeat="months in monthsWithTracks">
+            <md-subheader style="color: {{constants.colors[months.month]}}"><b> {{constants.months[months.month]}} , {{months.year}}</b></md-subheader>
+            <md-list>
+                <md-list-item class="divider-list-item" ng-repeat='event in tracks' ng-if="months.year === event.year && months.month === event.month" ng-click="goToActivity(event.id)">
+
+                    <div layout="column">
+
+                        <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                            {{'DISTANCE'| translate}}: {{event.length}} km
+                        </span>
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                            {{'VEHICLE_TYPE'| translate}}: {{event.manufacturer}} - {{event.car}}
+                        </span>
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;">timer</i>
+                            {{'DURATION'| translate}}: {{event.travelTime}}
+                        </span>
+
+
+                    </div>
+                    <md-tooltip class="trackpreview" md-direction="right">
+                        <md-content >
+                            <p>Track preview</p>
+                            <img src={{event.url}} style="width:480px;height:380px;"></img>
+                        </md-content>
+                    </md-tooltip>
+                </md-list-item>
+
+            </md-list>
+        </section>
+    </md-content>
+</md-tab>
+<!--
+
+
+                        <md-tooltip class="trackpreview" md-direction="right">
+                            <md-content >
+                                <p>Track preview</p>
+                                <img src={{event.url}} style="width:480px;height:380px;"></img>
+                            </md-content>
+                        </md-tooltip>
+-->

@@ -30,6 +30,7 @@
                 })
                 .state('tracks', {
                     url: '/tracks',
+                    controller: 'TrackListCtrl',
                     templateUrl: 'app/components/tracks/tracks.html',
                     authenticate: true
                 });

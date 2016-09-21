@@ -7,10 +7,10 @@
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event, 'SPEED_RANGES_CHART_TITLE', 'SPEED_RANGES_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
-                    {{'SPEED_RANGES_CHART_DESCRIPTION'| translate}}
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
         </div>

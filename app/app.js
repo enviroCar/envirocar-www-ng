@@ -3,6 +3,7 @@
 
     angular.module('enviroCar', [
         'ngMaterial',
+        'ngAnimate',
         'ngCookies',
         'ui.router',
         'pascalprecht.translate',
@@ -12,9 +13,12 @@
         'leaflet-directive',
         'enviroCar.api',
         'enviroCar.track',
+        'enviroCar.tracks',
+        'materialCalendar',
+        'cl.paging',
         'rzModule'])
             .value("ecBaseUrl", "https://enviroCar.org/api/stable")
-            .run(function ($rootScope, $state, $cookieStore, $mdMedia, UserCredentialsService) {
+            .run(function ($rootScope, $state, $cookieStore, UserCredentialsService) {
                 console.log('app started');
                 $rootScope.previewurl = "";
                 UserCredentialsService.clearCredentials();
@@ -59,5 +63,6 @@
 
     angular.module('enviroCar.track', []);
 
+    angular.module('enviroCar.tracks', []);
 
 })();

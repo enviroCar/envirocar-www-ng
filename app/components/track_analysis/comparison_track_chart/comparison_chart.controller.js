@@ -78,7 +78,7 @@
                 data_exist['Engine Load'] = true;
 
             // calculate sums for min...max for each phenom:
-            for (var index = a; index <= b; index++) {
+            for (var index = a; index < b; index++) {
                 if (data_exist['Speed'])
                     sums['Speed'] += $scope.data_all[0].values[index].y;
                 if (data_exist['Consumption'])

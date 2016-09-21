@@ -7,11 +7,11 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/d3/d3.js"></script>
-        <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
         <script src="bower_components/leaflet/dist/leaflet.js"></script>
         <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
         <script src="bower_components/angularjs-slider/master/dist/rzslider.js"></script>
+        <script src="bower_components/material-angular-paging/build/dist.min.js"></script>
         
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="bower_components/leaflet.heat/dist/leaflet-heat.js"></script>
@@ -79,9 +79,12 @@
     <script src="/bower_components/heatmap.js-amd/plugins/svg-area-heatmap.js"></script>
     <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="/bower_components/angularjs-slider/dist/rzslider.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/material-angular-paging/gulpfile.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
     <script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
     <script src="/bower_components/ui-leaflet/dist/ui-leaflet.js"></script>
+    <script src="/bower_components/material-calendar/dist/angular-material-calendar.js"></script>
     <!-- endInject -->
     <!-- inject:js -->
     <script src="/app/app.js"></script>
@@ -99,8 +102,11 @@
     <script src="/app/components/sidenav/sidenav.service.js"></script>
     <script src="/app/components/toolbar/toolbar.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.directive.js"></script>
-    <script src="/app/components/toolbar/toolbar.partials/language_dropdown.controller.js"></script>
-    <script src="/app/components/toolbar/toolbar.partials/language_dropdown.directive.js"></script>
+    <script src="/app/components/tracks/CalendarController.js"></script>
+    <script src="/app/components/tracks/all_tracks_tab/all_tracks_tab.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_tab/all_tracks_tab.directive.js"></script>
+    <script src="/app/components/tracks/calendar_tab/calendar_tab.controller.js"></script>
+    <script src="/app/components/tracks/calendar_tab/calendar_tab.directive.js"></script>
     <script src="/app/components/track_analysis/chart/ChartController.js"></script>
     <script src="/app/components/track_analysis/comparison_track_chart/comparison_chart.controller.js"></script>
     <script src="/app/components/track_analysis/comparison_track_chart/comparison_chart.directive.js"></script>
@@ -120,6 +126,8 @@
     <script src="/app/components/dashboard/dashboard.charts/speed_zones_chart/speed_zones.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.directive.js"></script>
+    <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.controller.js"></script>
+    <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.directive.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.controller.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.directive.js"></script>
     <!-- endinject -->

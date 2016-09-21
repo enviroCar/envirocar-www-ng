@@ -1,3 +1,26 @@
+/* Animations */
+/* The starting CSS styles for the enter animation */
+.fade.ng-enter {
+    transition:0.5s linear all;
+    opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.fade.ng-enter.ng-enter-active {
+    opacity:1;
+}
+/**
+.animate-enter {
+        -webkit-transition: 1s linear all; 
+        transition: 1s linear all;
+        opacity: 0;
+}
+ 
+.animate-enter.animate-enter-active {
+        opacity: 1;
+}
+*/
+
 /* Rules for sizing the icon. */
 .material-icons.md-10 {font-size: 10px; }
 .material-icons.md-18 { font-size: 18px; }
@@ -25,6 +48,10 @@
 
 .envirocar-blue {
     color: #1A80C1;
+}
+
+.envirocar-green {
+    color: #8CBF3F;
 }
 
 html, body{
@@ -76,11 +103,12 @@ html, body{
     }
 }
 
+
 .track_toolbar {
     position: relative;
     z-index:2000;
-    height: 130px;
-    min-height: 130px;
+    height: 60px;
+    min-height: 60px;
     md-switch {
         padding-left: 20px;
     }
@@ -93,7 +121,6 @@ html, body{
     position: fixed;
     z-index:2000;
     top: 0px;
-    left : 0px;
 }
 
 #phenom-dropdown {
@@ -179,6 +206,13 @@ html, body{
         width: 90px; 
         height: 25px;
     }
+    language-menu{
+        margin-bottom: 8px;
+    }
+    img {
+        padding-bottom: 2px;
+    }
+
 }
 
 md-toolbar {
@@ -219,7 +253,11 @@ img {
 md-sidenav {
     position: fixed !important;
     z-index:2200;
+
     md-list-item{
+        min-height: 80px;
+        height: 80px;
+        max-height: 80px;
         div {
             padding: 0 0px;
         }
@@ -259,12 +297,6 @@ md-sidenav {
     min-width : auto;
 }
 
-md-list-item {
-    min-height: 80px;
-    height: 80px;
-    max-height: 80px;
-}
-
 .material-icons.md-avatar {
     margin-left: 10px;
 }
@@ -288,13 +320,17 @@ md-list-item {
 }
 #placeholder-toolbar {
     display:inline-block;
-    height: 60px;
+    height: 61px;
     width: 100%;
 }
 #placeholder-toolbar-stp {
     display:inline-block;
     height: 1px;
     width: 100%;
+}
+
+.md-dialog-container {
+    z-index: 3000;
 }
 
 .profiletab {
@@ -434,26 +470,36 @@ toolbar-card {
     align: center;
 }
 
-.trackpreview .md-content {
-    width:480px;
-    height:380px;
-    padding: 10px;
+.trackpreview {
 
+    width:300px;
+    height:190px;
+
+    .md-content {
+        width:280px;
+        height:186px;
+        padding: 4px;
+        background-color: grey;
+    }
     .img{
         vertical-align: central;
         position: absolute;
-        top:0em;
+        top:2em;
         left:0em;
         background-color: grey;
+        border-bottom: 4px solid grey
     }
 
     .placeholder-p {
         //margin-top: -40px;
         color: transparent;
+        background-color: transparent;
         position: absolute;
-        top:0em;
-        left:0em;
-        size: 0px
+        top:-20em;
+        left:-20em;
+        size: 0px !important;
+        font-size: 0px !important;
+        z-index: -100;
     }
 }
 
@@ -479,4 +525,8 @@ toolbar-card {
 
 .range-chart {
     max-height: 200px !important;
+}
+
+.divider-list-item {
+    border-bottom: 1px solid #8CBF3F
 }

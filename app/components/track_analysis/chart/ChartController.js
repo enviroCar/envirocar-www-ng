@@ -7,10 +7,13 @@
             $timeout,
             $translate,
             $element,
+            $mdDialog,
+            $mdMedia,
             TrackService,
             UserCredentialsService,
             leafletBoundsHelpers) {
         console.log("ChartCtrl started.");
+        $scope.$mdMedia = $mdMedia;
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
         $scope.slider = {
@@ -111,28 +114,76 @@
             console.log($scope.dataTrackChart);
         };
 
+        $scope.showAlert = function (ev, title, description) {
+            var dialog_title = $translate.instant(title);
+            var dialog_desc = $translate.instant(description);
+            $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title(dialog_title)
+                    .textContent(dialog_desc)
+                    .ariaLabel('Popover')
+                    .ok('Okay!')
+                    .targetEvent(ev)
+                    .fullscreen(true)
+                    );
+        };
+
         // Scroll-fixing the single track analysis toolbar:
+        var placeholder = angular.element($element[0].querySelector('#placeholder-toolbar-stp'));
+        var ctrlPlaceholder = angular.element($element[0].querySelector('#toolbar-ctrl-placeholder'));
         $(window).scroll(function () {
-            var placeholder = angular.element($element[0].querySelector('#placeholder-toolbar-stp'));
 
             if ($(window).scrollTop() > 300) {
                 if (!$rootScope.track_toolbar_fixed) {
                     $('#track_toolbar').addClass('stuck_top');
-                    placeholder.css("min-height", "130px");
-                    placeholder.css("height", "130px");
-                    placeholder.css("max-height", "130px");
+                    placeholder.css("min-height", "61px");
+                    placeholder.css("height", "61px");
+                    placeholder.css("max-height", "61px");
+                    $rootScope.track_toolbar_fixed = true;
+                    var width = document.getElementById('placeholder-left').offsetWidth;
+                    var balance = 0;
+                    if (width===0) {
+                        balance = 120;
+                        ctrlPlaceholder.css("min-width","0px");
+                        ctrlPlaceholder.css("width","0px");
+                        ctrlPlaceholder.css("max-width","0px");
+                    }
+                    // TODO: remove after sidenav button include:
+                    if ($mdMedia('xs'))
+                        balance = balance - 60;
+                        
+                    var innerWidth = window.innerWidth;
+                    var tb_width = innerWidth - 2*width - balance - 76;
+                    $('#track_toolbar').css("width", tb_width+"px");
+                    
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'))
+                    },
+                            1);
                 }
-                $rootScope.track_toolbar_fixed = true;
                 console.log("toolbar fixed");
 
             } else {
-                if (!$rootScope.track_toolbar_fixed) {
+                if ($rootScope.track_toolbar_fixed) {
                     $('#track_toolbar').removeClass('stuck_top');
                     placeholder.css("min-height", "1px");
                     placeholder.css("height", "1px");
                     placeholder.css("max-height", "1px");
+                    $rootScope.track_toolbar_fixed = false;
+                    var width = document.getElementById('placeholder-left').offsetWidth;
+                    if (width===0) {
+                        ctrlPlaceholder.css("max-width","120px");
+                        ctrlPlaceholder.css("width","120px");
+                        ctrlPlaceholder.css("min-width","120px");
+                    }
+                    $('#track_toolbar').css("width", "100%");
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'))
+                    },
+                            1);
                 }
-                $rootScope.track_toolbar_fixed = false;
 
                 console.log("toolbar freed");
             }
@@ -359,8 +410,9 @@
                 }
             }
         };
+        
         // toggle Segment analysis:
-        $scope.toggleSegmentAnalysis = function () {
+        $scope.toggleSegmentAnalysis = function (model) {
             $scope.segmentActivated = !$scope.segmentActivated;
             if ($scope.segmentActivated) {
                 $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);

@@ -5,58 +5,84 @@
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event,'TRACK_SUMMARY_TITLE','TRACK_SUMMARY_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
-                    {{'TRACK_SUMMARY_DESCRIPTION'| translate}}
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
         </div>
     </div>
+    <md-card-content>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onload_summary" md-diameter="156"></md-progress-circular>
 
-    <md-card-content flex="100">
-        <md-list-item flex>
-            <div layout="row" flex="50">
-                <i class="md-24 material-icons">timeline</i>
-                <p><b>{{ 'DISTANCE' | translate }}</b></p>
-                <p flex>{{tracksummary['distance']}} km</p>
+        <div ng-if="onload_summary">
+            <div layout-gt-xs="row">
+                <div style="width:50%;text-align:center">
+                    <h3 style="color:#0065A0">{{tracksummary['timeoftravel']}}</h3>
+                    <p style="font-size:13px;">{{'DURATION'| translate}}</p>
+                </div>
+                <div style="width:50%;text-align:center">
+                    <h3 style="color:#0065A0">{{tracksummary['distance']}} Km</h3>
+                    <p style="font-size:13px;">{{'DISTANCE'| translate}}</p>
+                </div>
             </div>
-        </md-list-item>
-        <md-list-item flex>
-            <div layout="row" flex>
-                <i class="md-24 material-icons">access_time</i>
-                <p><b>{{ 'DURATION' | translate }}</b></p>
-                <p flex>{{tracksummary['timeoftravel']}}</p>
-            </div>
-        </md-list-item>
-        <md-divider ></md-divider>
-        <md-list-item flex>
-            <i class="md-24 material-icons">directions_car</i>
-            <p><b>{{'VEHICLE_TYPE' | translate}}</b></p>
-            <p flex>{{tracksummary['vehiclemanufacturer']}} - {{tracksummary['vehiclemodel']}}</p>
+            <md-divider ></md-divider>
+            <md-list-item  layout="row">
+                <i class="material-icons md-avatar grey md-36">directions_car</i>
+                <div class="md-list-item-text">
+                    <p>{{'VEHICLE_TYPE'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['vehiclemanufacturer']}}, {{tracksummary.vehiclemodel}}</p>
+                </div>
+            </md-list-item>
 
-        </md-list-item>
-        <md-list-item flex>
-            <i class="md-24 material-icons">timer</i>
-            <p><b>{{ 'START_TIME' | translate }}</b></p>
-            <p flex>{{tracksummary['starttime']}}</p>
-        </md-list-item>
-        <md-list-item flex>
-            <i class="md-24 material-icons">timer_off</i>
-            <p><b> {{ 'END_TIME' | translate }} </b></p>
-            <p flex>{{tracksummary['endtime']}}</p>
-        </md-list-item>
-        <md-list-item flex>
-            <i  class="md-24 material-icons">local_gas_station</i>
-            <p><b> {{ 'CONSUMPTION' | translate }} </b></p>
-            <p flex>{{tracksummary['fuel']}} liter/100km</p>
-        </md-list-item>
-        <md-list-item flex>
-            <i class="md-24 material-icons">cloud_queue</i>
-            <p><b> {{ 'CO2EMISSION' | translate}} </b></p>
-            <p flex>{{tracksummary['co2emissionperhour']}} g/km</p>
-        </md-list-item>
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">timer</i>
+                <div class="md-list-item-text">
+                    <p>{{'START_TIME'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['starttime']}}</p>
+                </div>
+            </md-list-item>
 
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">timer_off</i>
+                <div class="md-list-item-text">
+                    <p>{{'END_TIME'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['endtime']}}</p>
+                </div>
+            </md-list-item>
 
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">local_gas_station</i>
+                <div class="md-list-item-text">
+                    <p>{{'CONSUMPTION'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['fuel']}} liter/100km</p>
+                </div>
+            </md-list-item>
+
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">cloud_circle</i>
+                <div class="md-list-item-text">
+                    <p>{{'CO2_EMISSION'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['co2emissionperhour']}} g/km</p>
+                </div>
+            </md-list-item>
+
+        </div>
     </md-card-content>
 </md-card>

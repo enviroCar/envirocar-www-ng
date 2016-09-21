@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($rootScope, $scope, $mdMedia, UserCredentialsService) {
+    function AppCtrl($scope, $mdMedia, UserCredentialsService) {
         $scope.message = 'Initial Setup';
         $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
         $scope.screenIsSmall = false;

@@ -1,10 +1,11 @@
 (function(){
     'use strict';
 
-    function ToolbarCtrl($scope, ecBaseUrl){
+    function ToolbarCtrl($rootScope, $scope, ecBaseUrl){
         
         console.log('ToolbarCtrl started.' + ecBaseUrl);
         $scope.title = 'enviroCar Webapp';
+        
     };
 
 

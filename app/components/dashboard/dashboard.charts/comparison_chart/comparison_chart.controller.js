@@ -1,6 +1,12 @@
 (function () {
     'use strict';
-    function ComparisonChartCtrl($scope, $timeout, $translate, StatisticsService, UserCredentialsService) {
+    function ComparisonChartCtrl(
+            $scope, 
+            $timeout, 
+            $translate, 
+            $mdDialog, 
+            StatisticsService, 
+            UserCredentialsService) {
         console.log("SpeedCtrl started.");
         $scope.onload_all = false;
 
@@ -45,6 +51,22 @@
                     }
                 }
             }
+        };
+
+        $scope.showAlert = function (ev, title, description) {
+            var dialog_title = $translate.instant(title);
+            var dialog_desc = $translate.instant(description);
+            $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title(dialog_title)
+                    .textContent(dialog_desc)
+                    .ariaLabel('Popover')
+                    .ok('Okay!')
+                    .targetEvent(ev)
+                    .fullscreen(true)
+                    );
         };
 
         $scope.$on('sidenav:item-selected', function (event, args) {

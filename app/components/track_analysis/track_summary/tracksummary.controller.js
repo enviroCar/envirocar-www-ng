@@ -2,6 +2,7 @@
     'use strict';
     function TrackSummaryCtrl($scope, $stateParams, UserCredentialsService, TrackService) {
 
+        $scope.onload_summary = false;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
         $scope.trackid = $stateParams.trackid;
@@ -88,7 +89,7 @@
 
             // get timestamps:
             var time1 = $scope.data_track[2].values[min];
-            var time2 = $scope.data_track[2].values[max];
+            var time2 = $scope.data_track[2].values[max-1];
             var seconds_passed = new Date(time2).getTime() -
                     new Date(time1).getTime();
             var seconds = seconds_passed / 1000;
@@ -139,8 +140,11 @@
         });
 
         $scope.$on('single_track_page:segment-activated', function (event, args) {
-            
             if (args) {
+                if (!$scope.track_summary_startIndex)
+                    $scope.track_summary_startIndex = 0;
+                if (!$scope.track_summary_endIndex)
+                    $scope.track_summary_endIndex = $scope.track_length;
                 $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex+1);
             } else {
                 $scope.changeSummaryRange(0, $scope.track_summary_track_length);
@@ -262,6 +266,9 @@
                         starttime: new Date(starttimeg).toLocaleString(),
                         endtime: new Date(endtimeg).toLocaleString()
                     };
+                    
+                    
+                    $scope.onload_summary = true;
                 },
                 function (error) {
                     console.log(error);
