@@ -1,0 +1,28 @@
+<md-dialog style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 style="color:rgba(255,255,255,0.8)">{{'DATE_FILTERS_HEADING'| translate}}</h2>
+                <span flex class="flex"></span>
+                <md-button ng-click="cancel()" class="md-icon-button md-warn" aria-label="close-dialog">
+                    <md-icon class="material-icons md-24">close</md-icon>
+                    <md-tooltip>
+                        {{'CLOSE_DIALOG'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="padding-top:5%">
+            <div layout-padding ng-cloak>
+                <md-datepicker ng-change="startDateChange()" ng-model="filters.date.params.min" md-placeholder="Start date"></md-datepicker>
+                <md-datepicker ng-change="endDateChange()" ng-model="filters.date.params.max" md-placeholder="End date"></md-datepicker>
+                <p ng-if="errorOverlap">{{'DATE_OVERLAP_ERROR'| translate}}</p>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="hide()" class="md-primary">
+                {{'CONTINUE'| translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

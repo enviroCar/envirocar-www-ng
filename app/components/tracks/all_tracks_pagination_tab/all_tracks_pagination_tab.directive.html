@@ -1,0 +1,128 @@
+<md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="156"></md-progress-circular>
+    <div layout-gt-sm="row">
+        <md-card flex-gt-sm="35" >
+            <md-content>
+                <div layout="row" flex="100">
+                    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                        <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
+                    </p>
+                    <div layout="row" flex>
+                        <span flex class="flex"></span>
+                        <md-button ng-click="showAlert($event, 'ALL_TRACKS_FILTER_TITLE', 'ALL_TRACKS_FILTER_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                            <md-icon class="material-icons  md-24">info</md-icon>
+                            <md-tooltip>
+                                {{'CLICK_FOR_MORE_INFO'| translate}}
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <div layout-gt-md="row" layout="column">
+                    <div style="text-align:center">
+                        <md-menu>
+                            <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
+                                <i class="material-icons white099">add_box</i>
+                                <span style="color:rgba(255,255,255,0.9)">Filter</span>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-repeat="item in filters" ng-if="!item.inUse">
+                                    <md-button ng-click="addFilter(item)">{{item.label}}</md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                    <!--  <div style="text-align:center">
+                
+                        <md-button class="md-raised"  ng-if="$root.distanceShow" ng-click="addFilter(0)"><span>Distance</span></md-button>
+                        <md-button class="md-raised"  ng-if="$root.dateShow" ng-click="addFilter(1)">Date</md-button>
+                        <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
+                        <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
+                      </div> -->
+                    <md-chips md-on-add="add($chip)" ng-model="$root.selectedFilters" md-autocomplete-snap
+                              md-transform-chip="transformChip($chip)"
+                              md-require-match="autocompleteDemoRequireMatch"
+                              md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
+                        <md-autocomplete flex
+                                         md-selected-item="selectedItem"
+                                         md-search-text="searchText"
+                                         md-items="item in querySearch(searchText)"
+                                         md-item-text="item.name"
+                                         placeholder="Type filters or Click left">
+                            <span md-highlight-text="searchText">{{item.name}}</span>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span>
+                                <strong>{{$chip.name}}</strong>
+                            </span>
+                        </md-chip-template>
+
+                    </md-chips>
+                </div>
+                <div>
+                    <filter-distance-card ng-if="filters.distance.inUse"></filter-distance-card>
+                </div>
+                
+            </md-content>
+        </md-card>
+
+        <md-card ng-if="onload_pagination_tab" flex>
+
+            <div layout="row" flex="100">
+                <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                    <span><b>{{'ALL_TRACKS_OVERVIEW_TITLE'| translate}}</b></span>
+                </p>
+                <div layout="row" flex>
+                    <span flex class="flex"></span>
+                    <md-button ng-click="showAlert($event, 'ALL_TRACKS_OVERVIEW_TITLE', 'ALL_TRACKS_OVERVIEW_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                        <md-icon class="material-icons  md-24">info</md-icon>
+                        <md-tooltip>
+                            {{'CLICK_FOR_MORE_INFO'| translate}}
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+            <md-list id="calendar-list">
+                <md-list-item layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
+                    <div layout="column" layout-align="center start">
+
+                        <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                            {{'DISTANCE'| translate}}: {{event.length}} km
+                        </span>
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                            {{event.manufacturer}} - {{event.car}}
+                        </span>
+                        <span>
+                            <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                    <md-content >
+                                        <p class="placeholder-p">.</p>
+
+                                        <img src={{event.url}} style="width:280px;height:176px;"></img>
+
+                                    </md-content>
+                                </md-tooltip>timer</i>
+                            {{'DURATION'| translate}}: {{event.travelTime}}
+                        </span>
+                    </div>
+                </md-list-item>
+
+            </md-list>
+            <span layout-align="center center"> Seite {{pagingTab.current}} von {{Math.max(pagingTab.current, pagingTab.total)}} mit Fahrten {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 4 - 3)}} bis {{Math.min(pagingTab.current * 4, currentPaginationTracks.currentSelectedTracks.length)}} von {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
+            <cl-paging cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+
+        </md-card>
+    </div>
+</md-tab>
+<!--
+
+
+                        <md-tooltip class="trackpreview" md-direction="right">
+                            <md-content >
+                                <p>Track preview</p>
+                                <img src={{event.url}} style="width:480px;height:380px;"></img>
+                            </md-content>
+                        </md-tooltip>
+-->

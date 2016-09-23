@@ -118,6 +118,20 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_TITLE'          : 'In intervals',
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval?',
             
+            // Tracks Page - Calendar Tab:
+            'DAILY_OVERVIEW'                : 'Daily overview',
+            'MONTHLY_OVERVIEW'              : 'Monthly overview',
+            'SELECTION_OVERVIEW'            : 'Selection overview',
+            'CALENDAR_TITLE'                : 'Calendar of your tracks',
+            'CALENDAR_DESCRIPTION'          : 'The calendar shows you the number of tracks for each day. An overview of the monthly tracks is displayd at the bottom. You can select a single day by clicking on it. You can select a range of days by clicking on the start and end day. The statistics overview at the bottom is matches your selection. The pagination list on the right also matches your selection.',
+            'CALENDAR_OVERVIEW_DESCRIPTION' : 'This pagination list shows all tracks of the selected day range. The tracks are ordered by upload date. You can navigate through the pages via the controls on the bottom. If you click on one of the tracks, you will be moved to the single track analysis page.',
+            
+            // Tracks Page - All Tracks Pagination Tab:
+            'ALL_TRACKS_OVERVIEW_TITLE'         : 'All tracks',
+            'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'This pagination list shows all filtered tracks. The tracks are ordered by upload date. You can navigate through the pages via the controls on the bottom. If you click on one of the tracks, you will be moved to the single track analysis page.',
+            'FILTER_DISTANCE'                   : 'distance',
+            
+            
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUARY',
             'FEB': 'FEBRUARY',
@@ -338,6 +352,18 @@ angular.module('translations', [])
             // Track Analysis - Speed Ranges Chart:
             'SPEED_RANGES_CHART_TITLE'          : 'In Intervallen',
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht?',
+            
+            // Tracks Page - Calendar Tab:
+            'DAILY_OVERVIEW'                : 'Tagesübersicht',
+            'MONTHLY_OVERVIEW'              : 'Monatsübersicht',
+            'SELECTION_OVERVIEW'            : 'Übersicht ausgewählter Tage',
+            'CALENDAR_TITLE'                : 'Kalendar deiner Fahrten',
+            'CALENDAR_DESCRIPTION'          : 'Dieser Kalendar zeigt dir zu jedem Tag die Anzahl der Fahrten an. Unten siehst du eine Übersicht der Fahrten im Monat. Du kannst einen einzelnen Tag durch Klicken auswählen, oder ein Interval von Tagen durch Klicken auf dem Start- und End-tag auswählen. Die unten aufgeführte Statistik passt sich der Selektion an. Die Seitenliste rechts passt sich ebenfalls deiner Tagesauswahl an.',
+            'CALENDAR_OVERVIEW_DESCRIPTION' : 'Diese Seitenansicht zeigt dir alle Fahrten aus dem ausgewählten Zeitraum an. Die Fahrten sind nach dem Datum des Uploads sortiert. Unten kannst du zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
+            
+            // Tracks Page - All Tracks Pagination Tab:
+            'ALL_TRACKS_OVERVIEW_TITLE'         : 'Alle Fahrten',
+            'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'Diese Seitenansicht zeigt dir alle gefilterten Fahrten an. Die Fahrten sind nach dem Datum des Uploads sortiert. Unten kannst du zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUAR',

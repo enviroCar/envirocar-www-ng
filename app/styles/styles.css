@@ -452,5 +452,17 @@ toolbar-card {
 .range-chart {
   max-height: 200px !important; }
 
+calendar-md {
+  min-height: 400px !important;
+  height: 400px !important;
+  max-height: 400px !important; }
+
+/**
+#calendar-list {
+    height: 590px;
+}*/
 .divider-list-item {
   border-bottom: 1px solid #8CBF3F; }
+
+cl-paging {
+  padding-bottom: 10px; }
