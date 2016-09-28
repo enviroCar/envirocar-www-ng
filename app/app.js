@@ -10,7 +10,7 @@
         'translations',
         'nvd3',
         'enviroCar.auth',
-        'leaflet-directive',
+        'ui-leaflet',
         'enviroCar.api',
         'enviroCar.track',
         'enviroCar.tracks',

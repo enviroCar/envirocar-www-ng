@@ -2,24 +2,24 @@
 <md-card flex="100">
     <div layout="row" flex="100">
         <p style="color:#1A80C1;background-color:white; margin-left:20px;">
-            <span>{{'FILTER_DISTANCE_TITLE'| translate}}</span>
+            <span>{{'FILTER_SPATIAL_TITLE'| translate}}</span>
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button ng-click="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event,'FILTER_SPATIAL_TITLE','FILTER_SPATIAL_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="commonDialog(filters.distance)" class="md-icon-button md-accent" aria-label="edit">
+            <md-button ng-click="commonDialog(filters.spatial)" class="md-icon-button md-accent" aria-label="edit">
                 <md-icon class="material-icons md-24">build</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="filters.distance.inUse=false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
-                <md-icon class="material-icons  md-24">delete_forever</md-icon>
+            <md-button ng-click="filters.spatial.inUse=false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
+                <md-icon class="material-icons md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}
                 </md-tooltip>
@@ -27,8 +27,7 @@
         </div>
     </div>
     <md-card-content>
-        {{'DISTANCE_LONGER_THAN' | translate}}: {{filters.distance.params.min}}<br>
-        {{'DISTANCE_SHORTER_THAN' | translate}}: {{filters.distance.params.max}}
+        <leaflet bounds="map2.spatial_bounds_card" layers="map2.layers_card" geojson="map2.geojson" height="200px" defaults="map2.defaults"></leaflet>
         
     </md-card-content>
 </md-card>

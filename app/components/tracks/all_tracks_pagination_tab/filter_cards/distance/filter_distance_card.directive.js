@@ -8,6 +8,6 @@
         };
     };
 
-    angular.module('enviroCar')
+    angular.module('enviroCar.tracks')
         .directive('filterDistanceCard', filterDistanceCard);
 })();

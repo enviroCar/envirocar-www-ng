@@ -22,7 +22,9 @@
         <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.css">
         <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css">
         <link rel="stylesheet" href="/bower_components/angularjs-slider/dist/rzslider.css">
+        <link rel="stylesheet" href="/bower_components/leaflet-dist/leaflet.css">
         <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+        <link rel="stylesheet" href="/bower_components/leaflet-draw/dist/leaflet.draw.css">
         <!-- endInject -->
         <!-- inject:css -->
         <link rel="stylesheet" href="/app/styles/styles.css">
@@ -81,10 +83,13 @@
     <script src="/bower_components/angularjs-slider/dist/rzslider.js"></script>
     <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="/bower_components/material-angular-paging/gulpfile.js"></script>
+    <script src="/bower_components/leaflet-dist/leaflet.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
     <script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
     <script src="/bower_components/ui-leaflet/dist/ui-leaflet.js"></script>
     <script src="/bower_components/material-calendar/dist/angular-material-calendar.js"></script>
+    <script src="/bower_components/leaflet-draw/dist/leaflet.draw-src.js"></script>
+    <script src="/bower_components/ui-leaflet-draw/dist/ui-leaflet-draw.js"></script>
     <!-- endInject -->
     <!-- inject:js -->
     <script src="/app/app.js"></script>
@@ -130,12 +135,25 @@
     <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.directive.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/filter-card.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.controller.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/filter_distance_card.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/date/filter_date_card.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/date/filter_date_card.directive.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/distance/filter_distance_card.controller.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/distance/filter_distance_card.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/duration/filter_duration_card.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/duration/filter_duration_card.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/spatial/filter_spatial_card.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/spatial/filter_spatial_card.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/vehicle/filter_vehicle_card.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/vehicle/filter_vehicle_card.directive.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/date/date_filter_dialog.controller.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/duration/duration_filter_dialog.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/spatial/spatial_filter_dialog.controller.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/vehicle/vehicle_filter_dialog.controller.js"></script>
     <!-- endinject -->
 </body>
 

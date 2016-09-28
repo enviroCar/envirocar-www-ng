@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    function FilterDistanceCardCtrl($scope) {
+    function FilterVehicleCardCtrl($scope) {
            console.log($scope.filters);
     }
     ;
 
     angular.module('enviroCar.tracks')
-            .controller('FilterDistanceCardCtrl', FilterDistanceCardCtrl);
+            .controller('FilterVehicleCardCtrl', FilterVehicleCardCtrl);
 })();

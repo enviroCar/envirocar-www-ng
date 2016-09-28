@@ -228,7 +228,7 @@ md-toolbar {
 
 md-tooltip {
     font-size: 16px;
-    z-index: 2500;
+    z-index: 3600;
 }
 
 .white-bg {
@@ -331,6 +331,13 @@ md-sidenav {
 
 .md-dialog-container {
     z-index: 3000;
+}
+
+.md-datepicker-calendar-pane {
+    z-index: 3500;
+}
+.md-select-menu-container {
+    z-index: 3500;
 }
 
 .profiletab {

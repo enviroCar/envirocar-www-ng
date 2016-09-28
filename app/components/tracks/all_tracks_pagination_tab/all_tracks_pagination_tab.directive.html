@@ -23,6 +23,9 @@
                             <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
                                 <i class="material-icons white099">add_box</i>
                                 <span style="color:rgba(255,255,255,0.9)">Filter</span>
+                                <md-tooltip>
+                                    {{'TT_ADD_FILTER_BUTTON'| translate}}
+                                </md-tooltip>
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item ng-repeat="item in filters" ng-if="!item.inUse">
@@ -31,37 +34,25 @@
                             </md-menu-content>
                         </md-menu>
                     </div>
-                    <!--  <div style="text-align:center">
-                
-                        <md-button class="md-raised"  ng-if="$root.distanceShow" ng-click="addFilter(0)"><span>Distance</span></md-button>
-                        <md-button class="md-raised"  ng-if="$root.dateShow" ng-click="addFilter(1)">Date</md-button>
-                        <md-button class="md-raised"  ng-if="$root.durationShow" ng-click="addFilter(2)">Duration of Travel</md-button>
-                        <md-button class="md-raised"  ng-if="$root.vehicleShow" ng-click="addFilter(3)">Vehicle</md-button>
-                      </div> -->
-                    <md-chips md-on-add="add($chip)" ng-model="$root.selectedFilters" md-autocomplete-snap
-                              md-transform-chip="transformChip($chip)"
-                              md-require-match="autocompleteDemoRequireMatch"
-                              md-on-select="getChipInfo($chip)" md-on-remove="removeChip($chip)">
-                        <md-autocomplete flex
-                                         md-selected-item="selectedItem"
-                                         md-search-text="searchText"
-                                         md-items="item in querySearch(searchText)"
-                                         md-item-text="item.name"
-                                         placeholder="Type filters or Click left">
-                            <span md-highlight-text="searchText">{{item.name}}</span>
-                        </md-autocomplete>
-                        <md-chip-template>
-                            <span>
-                                <strong>{{$chip.name}}</strong>
-                            </span>
-                        </md-chip-template>
-
-                    </md-chips>
                 </div>
                 <div>
+                    <!--<filter-card    flex 
+                                    title="FILTER_DISTANCE_TITLE" 
+                                    description="FILTER_DISTANCE_DESCRIPTION"
+                                    btn_help="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')"
+                                    btn_edit="commonDialog(filters.distance)"
+                                    btn_close="filters.distance.inUse=false;"
+                                    template="app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/distance.template.html"
+                                    >
+                                    
+                    </filter-card>-->
                     <filter-distance-card ng-if="filters.distance.inUse"></filter-distance-card>
+                    <filter-date-card ng-if="filters.date.inUse"></filter-date-card>
+                    <filter-duration-card ng-if="filters.duration.inUse"></filter-duration-card>
+                    <filter-vehicle-card ng-if="filters.vehicle.inUse"></filter-vehicle-card>
+                    <filter-spatial-card ng-if="filters.spatial.inUse"></filter-spatial-card>
                 </div>
-                
+
             </md-content>
         </md-card>
 

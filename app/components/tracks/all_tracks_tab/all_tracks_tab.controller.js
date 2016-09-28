@@ -23,8 +23,6 @@
         $scope.tablistheight = window.innerHeight - 135;
 
         $(window).resize(function () {
-            console.log(window.innerHeight);
-
             $scope.$apply(function () {
                 $scope.tablistheight = window.innerHeight - 135;
             });
@@ -56,7 +54,6 @@
                 ['JAN', 'FEB', 'MAR', 'APR',
                     'MAY', 'JUN', 'JUL', 'AUG',
                     'SEP', 'OCT', 'NOV', 'DEZ']).then(function (translations) {
-            console.log(translations);
             $scope.constants.months[0] = translations['JAN'];
             $scope.constants.months[1] = translations['FEB'];
             $scope.constants.months[2] = translations['MAR'];
@@ -152,7 +149,6 @@
                     $scope.start_month = date_max.getUTCMonth(); //months from 0-11
                     $scope.start_year = date_max.getUTCFullYear(); //year
 
-                    console.log($scope.monthsWithTracks);
                     $scope.onload_all_tracks = true;
                     $rootScope.$broadcast('trackspage:all_tracks_tab-loaded');
                     window.dispatchEvent(new Event('resize'));

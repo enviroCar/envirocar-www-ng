@@ -2,23 +2,23 @@
 <md-card flex="100">
     <div layout="row" flex="100">
         <p style="color:#1A80C1;background-color:white; margin-left:20px;">
-            <span>{{'FILTER_DISTANCE_TITLE'| translate}}</span>
+            <span>{{'FILTER_DURATION_TITLE'| translate}}</span>
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button ng-click="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event,'FILTER_DURATION_TITLE','FILTER_DURATION_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="commonDialog(filters.distance)" class="md-icon-button md-accent" aria-label="edit">
+            <md-button ng-click="commonDialog(filters.duration)" class="md-icon-button md-accent" aria-label="edit">
                 <md-icon class="material-icons md-24">build</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="filters.distance.inUse=false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
+            <md-button ng-click="filters.duration.inUse=false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
                 <md-icon class="material-icons  md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}
@@ -27,8 +27,7 @@
         </div>
     </div>
     <md-card-content>
-        {{'DISTANCE_LONGER_THAN' | translate}}: {{filters.distance.params.min}}<br>
-        {{'DISTANCE_SHORTER_THAN' | translate}}: {{filters.distance.params.max}}
+        {{filters.duration.params.min}} <= Duration < {{filters.duration.params.max}}
         
     </md-card-content>
 </md-card>

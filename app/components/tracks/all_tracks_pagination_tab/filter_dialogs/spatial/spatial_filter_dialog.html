@@ -1,8 +1,8 @@
-<md-dialog style="width:420px" ng-cloak>
+<md-dialog md-is-locked-open="valid" style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 style="color:rgba(255,255,255,0.8)">{{'FILTER_DATE_HEADING'| translate}}</h2>
+                <h2 style="color:rgba(255,255,255,0.8)">{{'FILTER_SPATIAL_HEADING'| translate}}</h2>
                 <span flex class="flex"></span>
                 <md-button ng-click="cancel()" class="md-icon-button md-warn" aria-label="close-dialog">
                     <md-icon class="material-icons md-24">close</md-icon>
@@ -14,16 +14,9 @@
         </md-toolbar>
         <md-dialog-content style="padding-top:5%">
             <div layout-padding ng-cloak>
-                <md-input-container>
-                    <label>{{ 'DATE_MIN_DATE' | translate}}</label>
-                    <md-datepicker ng-model="dateStartCustom" md-placeholder="Start date">/md-datepicker>
-                </md-input-container>
-                <md-input-container>
-                    <label>{{ 'DATE_MAX_DATE' | translate}}</label>
-                    <md-datepicker ng-model="dateEndCustom" md-placeholder="End date"></md-datepicker>
-                </md-input-container>
-
-                <p ng-if="errorOverlap">{{'DATE_OVERLAP_ERROR'| translate}}</p>
+                <leaflet bounds="map3.spatial_bounds_dialog" lf-draw="map3.drawOptions" layers="map3.layers" height="400px" ></leaflet>
+                <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
+                <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
             </div>
         </md-dialog-content>
         <md-dialog-actions>

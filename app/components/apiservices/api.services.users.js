@@ -2,6 +2,24 @@
 
     function UserService($http, ecBaseUrl) {
         
+        this.getUserTracksBBox = function(username, token, minx, miny, maxx, maxy){
+            return $http({
+                method: 'GET',
+                url: ecBaseUrl + '/users/' + username + '/tracks?bbox='+minx+","+miny+","+maxx+","+maxy,
+                cache: true,
+                headers : {
+                    'Content-Type' : 'application/JSON',
+                    'X-User'    : username,
+                    'X-Token'   : token
+                }
+            }).success(function(res) {
+                return res.data;
+            }).error(function(error) {
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/" + username + "/tracks?bbox="+minx+","+miny+","+maxx+","+maxy);
+                return error;
+            });
+        };
+        
         /**
          * Gets the statistic of a certain user of a certain phenomenon
          * @param {String} username - username of the user

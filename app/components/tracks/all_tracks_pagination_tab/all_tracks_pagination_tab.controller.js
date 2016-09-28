@@ -4,15 +4,13 @@
  1) We have made use of the calendar directive to achieve this.
  2) There are 4 important functions of this controller(PrevMonth,NextMonth,DateClicked,Populating the calendar)
  */
+
 (function () {
     'use strict';
     function AllTracksPaginationTabCtrl(
             $rootScope,
             $scope,
-            $state,
             $translate,
-            $timeout,
-            $element,
             $mdMedia,
             $mdDialog,
             TrackService,
@@ -74,9 +72,12 @@
                     northeast: {
                         lat: undefined,
                         lng: undefined
-                    }
+                    },
+                    track_ids: [
+                    ]
                 },
-                inUse: false
+                inUse: false,
+                layer : 0
             }
         };
 
@@ -90,7 +91,7 @@
             }
         };
 
-        $scope.commonDialog = function(filter)
+        $scope.commonDialog = function (filter)
         {
             var showObject = {};
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
@@ -100,6 +101,7 @@
                 showObject = {
                     controller: 'DistanceDialogCtrl',
                     templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.html',
+                    //templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.html',
                     parent: angular.element(document.body),
                     scope: $scope.$new(),
                     clickOutsideToClose: false,
@@ -175,9 +177,10 @@
             var filterByDuration = $scope.filters.duration.inUse;
             var filterByDate = $scope.filters.date.inUse;
             var filterByVehicle = $scope.filters.vehicle.inUse;
+            var filterBySpatial = $scope.filters.spatial.inUse;
 
             var resultTracks = [];
-            
+
             for (var i = 0; i < amount_of_user_tracks; i++) {
 
                 var currTrack = $scope.currentPaginationTracks.tracks[i];
@@ -196,12 +199,79 @@
                     }
                 }
 
+                // filter by date:
+                if (filterByDate) {
+                    var currDate = currTrack.begin;
+                    if (($scope.filters.date.params.min === undefined)
+                            && ($scope.filters.date.params.max !== undefined)) {
+                        if (!(currDate <= $scope.filters.date.params.max)) {
+                            continue;
+                        }
+                    } else if (($scope.filters.date.params.max === undefined)
+                            && ($scope.filters.date.params.min !== undefined)) {
+                        if (!(currDate >= $scope.filters.date.params.min)) {
+                            continue;
+                        }
+                    } else
+                    if ((!(currDate <= $scope.filters.date.params.max))
+                            || (!(currDate >= $scope.filters.date.params.min))) {
+                        continue;
+                    }
+                }
+
+                // filter by duration:
+                if (filterByDuration) {
+                    var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
+                    var seconds = seconds_passed / 1000;
+                    var currTravelTime = seconds / 60;
+
+                    if (($scope.filters.duration.params.min === undefined)
+                            && ($scope.filters.duration.params.max !== undefined)) {
+                        if (!(currTravelTime < $scope.filters.duration.params.max)) {
+                            continue;
+                        }
+                    } else if (($scope.filters.duration.params.max === undefined)
+                            && ($scope.filters.duration.params.min !== undefined)) {
+                        if (!(currTravelTime >= $scope.filters.duration.params.min)) {
+                            continue;
+                        }
+                    } else
+                    if ((!(currTravelTime < $scope.filters.duration.params.max))
+                            || (!(currTravelTime >= $scope.filters.duration.params.min))) {
+                        continue;
+                    }
+                }
+
+                // filter by vehicle:
+                if (filterByVehicle) {
+                    var car = currTrack.car;
+                    var manu = currTrack.manufacturer;
+                    var carCombo = {
+                        car: car,
+                        manufacturer: manu
+                    };
+                    if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_set, carCombo)) {
+                        continue;
+                    }
+                }
+
+                // filter by spatial:
+                if (filterBySpatial) {
+                    var currID = currTrack.id;
+                    
+                    var found = $scope.filters.spatial.params.track_ids.filter(function(id){
+                        return currID === id;
+                    })[0];
+                    if (!found)
+                        continue;
+                }
+
                 // if all filters passed, add to resultTracks:
                 resultTracks.push(currTrack);
             }
 
             $scope.currentPaginationTracks.currentSelectedTracks = resultTracks;
-            
+
             // calculate pagination:
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
             $scope.currentPaginationTracks.currentMonthTracks = [];
@@ -211,7 +281,11 @@
             for (var i = 0; i < 4 && i < number_monthly_tracks; i++) {
                 $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
             }
+            $scope.pagingTab.current = 1;
+            loadPages();
             
+            
+            $rootScope.$broadcast('filter:spatial-filter-changed');
         };
 
         // pagination:
@@ -244,14 +318,25 @@
 
         $scope.tracksPagination = [];
 
+        $scope.containsVehicle = function (array, car) {
+            var indexLooper = array.length;
+            while (indexLooper--) {
+                if (array[indexLooper].car === car.car && array[indexLooper].manufacturer === car.manufacturer) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         // tracks holen:
         TrackService.getUserTracks($scope.username, $scope.password).then(
                 function (data) {
+                    console.log(data);
                     // Erstelle eine Tagestabelle
                     var date_count = [];
                     var tracks = data.data.tracks;
-                    var date_min = new Date(tracks[0].begin);
-                    var date_max = new Date(tracks[0].begin);
+                    $scope.date_min = new Date(tracks[0].begin);
+                    $scope.date_max = new Date(tracks[0].begin);
                     var contains = function (array, obj) {
                         var i = array.length;
                         while (i--) {
@@ -261,6 +346,7 @@
                         }
                         return false;
                     };
+
                     $scope.tracksPagination = [];
                     for (var i = 0; i < tracks.length; i++) {
                         var currTrack = tracks[i];
@@ -278,11 +364,11 @@
                         // get track begin date:
                         var currDate = new Date(currTrack.begin);
                         // update date_min and date_max:
-                        if (currDate < date_min) {
-                            date_min = new Date(currDate.getTime());
+                        if (currDate < $scope.date_min) {
+                            $scope.date_min = new Date(currDate.getTime());
                         }
-                        if (currDate > date_max) {
-                            date_max = new Date(currDate.getTime());
+                        if (currDate > $scope.date_max) {
+                            $scope.date_max = new Date(currDate.getTime());
                         }
 
                         // get current Track's month:
@@ -304,18 +390,32 @@
                         // convert to the right format. of hh:mm:ss;
                         var date_for_seconds = new Date(null);
                         date_for_seconds.setSeconds(seconds);
-                        var date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8)
+                        var date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8);
 
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
                         var travelDistance = currTrack['length'].toFixed(1);
+
+                        var carType = currTrack.sensor.properties.model;
+                        var carManu = currTrack.sensor.properties.manufacturer;
+                        var carCombo = {
+                            car: carType,
+                            manufacturer: carManu,
+                            checked: false
+                        };
+
+                        if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_all, carCombo)) {
+                            $scope.filters.vehicle.params.cars_all.push(carCombo);
+                        }
+                        ;
+
                         var resultTrack = {
                             year: year,
                             month: month,
                             day: day,
-                            car: currTrack.sensor.properties.model,
-                            manufacturer: currTrack.sensor.properties.manufacturer,
+                            car: carType,
+                            manufacturer: carManu,
                             id: currTrack.id,
                             url: ecBaseUrl + '/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
@@ -347,6 +447,7 @@
                     for (var i = 0; i < 4 && i < number_monthly_tracks; i++) {
                         $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.tracks[i]);
                     }
+
                     $scope.onload_pagination_tab = true;
                     $rootScope.$broadcast('trackspage:pagination_tab-loaded');
                     window.dispatchEvent(new Event('resize'));

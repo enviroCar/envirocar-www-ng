@@ -129,8 +129,54 @@ angular.module('translations', [])
             // Tracks Page - All Tracks Pagination Tab:
             'ALL_TRACKS_OVERVIEW_TITLE'         : 'All tracks',
             'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'This pagination list shows all filtered tracks. The tracks are ordered by upload date. You can navigate through the pages via the controls on the bottom. If you click on one of the tracks, you will be moved to the single track analysis page.',
-            'FILTER_DISTANCE'                   : 'distance',
             
+            // Tracks Page - All Tracks Pagination Tab - Filter:
+            'ALL_TRACKS_FILTER_TITLE'                   : 'Filter options',
+            'ALL_TRACKS_FILTER_DESCRIPTION'             : 'In this card you can set filter options for the tracks in the pagination list. You can create distance, duration, date, vehicle and location filters by clicking on the \'+Filter\'-button. The tracks in the pagination list will be automatically filtered by your filters.',
+            'TT_ADD_FILTER_BUTTON'                      : 'Click to create a new filter',
+            'CHANGE_FILTER_OPTION'                      : 'Edit',
+            'CLICK_TO_CHANGE_FILTER_OPTION'             : 'Click to edit filter options',
+            'CLICK_TO_REMOVE'                           : 'Click to remove this filter',
+            'FILTER_OKAY'                               : 'Okay',
+            'CLOSE_DIALOG'                              : 'Click to cancel',
+            'ERROR_NEGATIVE'                            : 'You can not enter negative numbers',
+            'ERROR_NO_INPUT'                            : 'You must enter at least one input. Click the trash buttom on the top right to cancel.',
+            
+            'FILTER_DISTANCE_TITLE'                     : 'Distance filter',
+            'FILTER_DISTANCE_DESCRIPTION'               : 'The distance filter filters your tracks by their length. You can specify a minimum length and/or a maximum length.',
+            'FILTER_DISTANCE_HEADING'                   : 'Distance filter options',
+            'FILTER_DISTANCE'                           : 'Distance',
+            'DISTANCE_LONGER_THAN'                      : 'Minimum length (km)',
+            'DISTANCE_SHORTER_THAN'                     : 'Maximum length (km)',
+            'DISTANCE_OVERLAP_ERROR'                    : 'The maximum field must be bigger than or at least equal to the minimum field.',
+            'DISTANCE_ERROR_NOINPUT'                    : 'You must specify at least one of the fields. Click the trash buttom on the top right to cancel.',
+            
+            'FILTER_DATE_TITLE'                         : 'Date filter',
+            'FILTER_DATE_DESCRIPTION'                   : 'The date filter filters your tracks by their date. You can specify a minimum date and/or a maximum date.',
+            'FILTER_DATE_HEADING'                       : 'Date filter options',
+            'FILTER_DATE'                               : 'Date',
+            'DATE_MIN_DATE'                             : 'minimum date',
+            'DATE_MAX_DATE'                             : 'maximum date',
+            'DATE_OVERLAP_ERROR'                        : 'The maximum date must be later than or at least equal to the minimum date.',
+            
+            'FILTER_DURATION_TITLE'                     : 'Duration filter',
+            'FILTER_DURATION_DESCRIPTION'               : 'The duration filter filters your tracks by their duration. You can specify a minimum duration and/or a maximum duration.',
+            'FILTER_DURATION_HEADING'                   : 'Duration filter options',
+            'FILTER_DURATION'                           : 'Duration',
+            'DURATION_MIN'                              : 'minimum duration (in minutes)',
+            'DURATION_MAX'                              : 'maximum duration (in minutes)',
+            'DURATION_OVERLAP_ERROR'                    : 'The maximum duration must be bigger than or at least equal to the minimum duration.',
+            
+            'FILTER_VEHICLE_TITLE'                      : 'Vehicle filter',
+            'FILTER_VEHICLE_DESCRIPTION'                : 'The duration filter filters your tracks by their vehicle. You can specify a set of vehicles.',
+            'FILTER_VEHICLE_HEADING'                    : 'Vehicle filter options',
+            'FILTER_VEHICLE'                            : 'Vehicle',
+            'SELECT_VEHICLES'                           : 'Select Vehicles',
+            
+            'FILTER_SPATIAL_TITLE'                      : 'Location filter',
+            'FILTER_SPATIAL_DESCRIPTION'                : 'The location filter filters your tracks by their location. You can specify a bounding box on the map. The resulting tracks have at least one point within the bounding box.',
+            'FILTER_SPATIAL_HEADING'                    : 'Location filter options',
+            'FILTER_SPATIAL'                            : 'Location',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUARY',
@@ -364,6 +410,54 @@ angular.module('translations', [])
             // Tracks Page - All Tracks Pagination Tab:
             'ALL_TRACKS_OVERVIEW_TITLE'         : 'Alle Fahrten',
             'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'Diese Seitenansicht zeigt dir alle gefilterten Fahrten an. Die Fahrten sind nach dem Datum des Uploads sortiert. Unten kannst du zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
+            
+            // Tracks Page - All Tracks Pagination Tab - Filter:
+            'ALL_TRACKS_FILTER_TITLE'                   : 'Filteroptionen',
+            'ALL_TRACKS_FILTER_DESCRIPTION'             : 'Hier kannst du filteroptionen für die aufgelisteten Fahrten einstellen. Du kannst Filter für die gefahrene Distanz, die Fahrtdauer, das Fahrtdatum, den Fahrzeugtyp und/oder den Ort erstellen, indem du auf den \'+Filter\'-Knopf drückst. Die Fahrten in der Seitenliste passen sich den Filtereinstellungen automatisch an.',
+            'TT_ADD_FILTER_BUTTON'                      : 'Klick um einen neuen Filter zu erstellen',
+            'CHANGE_FILTER_OPTION'                      : 'Bearbeiten',
+            'CLICK_TO_CHANGE_FILTER_OPTION'             : 'Klick um die Filteroptionen zu bearbeiten',
+            'CLICK_TO_REMOVE'                           : 'Klick um diesen Filter zu entfernen',
+            'FILTER_OKAY'                               : 'Okay',
+            'CLOSE_DIALOG'                              : 'Klick um abzubrechen',
+            'ERROR_NEGATIVE'                            : 'Keine negativen Einträge erlaubt!',
+            'ERROR_NO_INPUT'                            : 'Du musst mindestens eine Eingabe machen. Klicke auf den Mülleimer-Knopf oben rechts um abzubrechen.',
+           
+            'FILTER_DISTANCE_TITLE'                     : 'Distanzfilter',
+            'FILTER_DISTANCE_DESCRIPTION'               : 'Der Distanzfilter filtert die Fahrten nach ihrer Länge. Du kannst eine Minimallänge und/oder eine Maximallänge angeben.',
+            'FILTER_DISTANCE_HEADING'                   : 'Distanzfilteroptionen',
+            'FILTER_DISTANCE'                           : 'Distanz',
+            'DISTANCE_LONGER_THAN'                      : 'Mindestlänge (km)',
+            'DISTANCE_SHORTER_THAN'                     : 'Höchstlänge (km)',
+            'DISTANCE_OVERLAP_ERROR'                    : 'Das \'größer als\'-Feld muss mindestens so groß sein, wie das \'kleiner als\'-Feld',
+            'DISTANCE_ERROR_NOINPUT'                    : 'Du must mindestens eine Eingabe machen. Klicke auf den Mülleimer-Knopf oben rechts um abzubrechen.',
+            
+            'FILTER_DATE_TITLE'                         : 'Datumsfilter',
+            'FILTER_DATE_DESCRIPTION'                   : 'Der Datumsfilter filtert die Fahrten nach ihrem Datum. Du kannst ein Minimumdatum und/oder ein Maximumdatum angeben.',
+            'FILTER_DATE_HEADING'                       : 'Datumsfilteroptionen',
+            'FILTER_DATE'                               : 'Datum',
+            'DATE_MIN_DATE'                             : 'Mindestdatum',
+            'DATE_MAX_DATE'                             : 'Höchstdatum',
+            'DATE_OVERLAP_ERROR'                        : 'Das zweite Datum muss zeitlich nach dem ersten Datum kommen. Klicke auf den Mülleimer-Knopf oben rechts um abzubrechen.',
+            
+            'FILTER_DURATION_TITLE'                     : 'Fahrtdauerfilter',
+            'FILTER_DURATION_DESCRIPTION'               : 'Der Fahrtdauerfilter filtert die Fahrten nach ihrem Fahrtdauer. Du kannst eine Minimumdauer und/oder eine Maximumdauer angeben.',
+            'FILTER_DURATION_HEADING'                   : 'Fahrtdauerfilteroptionen',
+            'FILTER_DURATION'                           : 'Fahrtdauer',
+            'DURATION_MIN'                              : 'Mindestfahrtdauer (in Minuten)',
+            'DURATION_MAX'                              : 'Höchstfahrtdauer (in Minuten)',
+            'DURATION_OVERLAP_ERROR'                    : 'Die Höchstfahrtdauert muss größer als oder mindestens genauso groß sein wie die Mindestfahrtdauert.',
+            
+            'FILTER_VEHICLE_TITLE'                      : 'Fahrzeugtypfilter',
+            'FILTER_VEHICLE_DESCRIPTION'                : 'Der Fahrzeugtypfilter filtert die Fahrten nach ihrem Fahrzeugtyp. Du kannst für jeden deiner Fahrzeuge angeben, ob Fahrten mit diesem Fahrzeug angezeigt werden sollen.',
+            'FILTER_VEHICLE_HEADING'                    : 'Fahrzeugtypfilteroptionen',
+            'FILTER_VEHICLE'                            : 'Fahrzeugtyp',
+            'SELECT_VEHICLES'                           : 'Wähle Fahrzeugtypen',
+            
+            'FILTER_SPATIAL_TITLE'                      : 'Ortsfilter',
+            'FILTER_SPATIAL_DESCRIPTION'                : 'Mit dem Ortsfilter kannst du eine auf einer Karte ein Rechteck ziehen. Der Ortsfilter filtert die Fahrten danach, ob sie Messungen innerhalb deines gezogenen Rechtsecks enthalten.',
+            'FILTER_SPATIAL_HEADING'                    : 'Ortsfilteroptionen',
+            'FILTER_SPATIAL'                            : 'Ort',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUAR',
