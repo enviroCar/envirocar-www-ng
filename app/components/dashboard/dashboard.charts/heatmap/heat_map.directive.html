@@ -16,8 +16,14 @@
     </div>
     <md-card-content>
         <md-progress-circular class="loader_dashboard" ng-if="!onload_heat_map" md-diameter="156"></md-progress-circular>
-        <div ng-if="onload_heat_map">
-            <leaflet lf-center="center" layers="layers" height="514px" ></leaflet>
+        <div ng-if="onload_heat_map && (screenIsMD || screenIsGTMD)">
+            <leaflet lf-center="center2" layers="layers2" height="452px" ></leaflet>
+        </div>
+        <div ng-if="onload_heat_map && screenIsXS">
+            <leaflet lf-center="center2" layers="layers2" height="252px" ></leaflet>
+        </div>
+        <div ng-if="onload_heat_map && screenIsSM">
+            <leaflet lf-center="center2" layers="layers2" height="352px" ></leaflet>
         </div>
     </md-card-content>
 </md-card>

@@ -2,9 +2,9 @@
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 style="color:rgba(255,255,255,0.8)">{{'FILTER_SPATIAL_HEADING'| translate}}</h2>
+                <h2 class="filter_heading" >{{'FILTER_SPATIAL_HEADING'| translate}}</h2>
                 <span flex class="flex"></span>
-                <md-button ng-click="cancel()" class="md-icon-button md-warn" aria-label="close-dialog">
+                <md-button ng-click="cancel()" class="md-icon-button md-light padding-right" aria-label="close-dialog">
                     <md-icon class="material-icons md-24">close</md-icon>
                     <md-tooltip>
                         {{'CLOSE_DIALOG'| translate}}
@@ -14,7 +14,12 @@
         </md-toolbar>
         <md-dialog-content style="padding-top:5%">
             <div layout-padding ng-cloak>
-                <leaflet bounds="map3.spatial_bounds_dialog" lf-draw="map3.drawOptions" layers="map3.layers" height="400px" ></leaflet>
+                <div flex class='center-aligned'>
+                    {{'FILTER_SPATIAL_DESCRIPTION_SHORT_1' | translate}}
+                    <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
+                    {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2' | translate}}
+                </div>
+                <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="400px" ></leaflet>
                 <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
                 <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
             </div>

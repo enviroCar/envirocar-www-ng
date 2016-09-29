@@ -27,8 +27,8 @@
         </div>
     </div>
     <md-card-content>
-        Vehicles: <br>
-        <a ng-repeat="v in filters.vehicle.params.cars_all" ng-if="v.checked">{{v.manufacturer}} - {{v.car}}<br></a>
+        {{'VEHICLES' | translate}}: <br>
+        <a ng-repeat="v in filters.vehicle.params.cars_set">{{v.manufacturer}} - {{v.car}}<br></a>
 
     </md-card-content>
 </md-card>

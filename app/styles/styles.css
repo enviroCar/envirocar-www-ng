@@ -59,13 +59,7 @@
   color: #616161; }
 
 .material-icons.blue {
-  color: rgba(0, 101, 160, 0.9); }
-
-.material-icons.white09 {
-  color: white; }
-
-.material-icons.white099 {
-  color: rgba(255, 255, 255, 0.9); }
+  color: #1A80C1; }
 
 .envirocar-blue {
   color: #1A80C1; }
@@ -78,7 +72,7 @@ html, body {
   position: relative; }
 
 .nvd3.nv-pie .nv-pie-title {
-  fill: #444444; }
+  fill: black; }
 
 /**
 .nvd3 {
@@ -472,3 +466,19 @@ calendar-md {
 
 cl-paging {
   padding-bottom: 10px; }
+
+.center-aligned {
+  margin: auto;
+  text-align: center; }
+
+.leaflet-button {
+  width: 24px;
+  height: 24px;
+  margin-bottom: -6px; }
+
+.filter_heading {
+  padding-left: 16px;
+  color: rgba(255, 255, 255, 0.8); }
+
+.padding-right {
+  padding-right: 16px; }

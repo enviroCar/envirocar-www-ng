@@ -27,7 +27,7 @@
         </div>
     </div>
     <md-card-content>
-        {{filters.duration.params.min}} <= Duration < {{filters.duration.params.max}}
-        
+        <p ng-if="filters.duration.params.min !== undefined && filters.duration.params.min !== null">{{'DURATION_CARD_MIN' | translate}}: {{filters.duration.params.min}} {{'MINUTES' | translate}}</p>
+        <p ng-if="filters.duration.params.max !== undefined && filters.duration.params.max !== null">{{'DURATION_CARD_MAX' | translate}}: {{filters.duration.params.max}} {{'MINUTES' | translate}}</p>
     </md-card-content>
 </md-card>

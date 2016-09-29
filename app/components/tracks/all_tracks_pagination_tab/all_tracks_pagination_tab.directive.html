@@ -4,7 +4,7 @@
         <md-card flex-gt-sm="35" >
             <md-content>
                 <div layout="row" flex="100">
-                    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                    <p style="color:#1A80C1; margin-left:20px;">
                         <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
                     </p>
                     <div layout="row" flex>
@@ -21,7 +21,7 @@
                     <div style="text-align:center">
                         <md-menu>
                             <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
-                                <i class="material-icons white099">add_box</i>
+                                <i class="material-icons">add_box</i>
                                 <span style="color:rgba(255,255,255,0.9)">Filter</span>
                                 <md-tooltip>
                                     {{'TT_ADD_FILTER_BUTTON'| translate}}
@@ -59,7 +59,7 @@
         <md-card ng-if="onload_pagination_tab" flex>
 
             <div layout="row" flex="100">
-                <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                <p style="color:#1A80C1; margin-left:20px;">
                     <span><b>{{'ALL_TRACKS_OVERVIEW_TITLE'| translate}}</b></span>
                 </p>
                 <div layout="row" flex>
@@ -87,23 +87,26 @@
                             {{event.manufacturer}} - {{event.car}}
                         </span>
                         <span>
-                            <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                    <md-content >
-                                        <p class="placeholder-p">.</p>
+                            <i class="material-icons md-24" style="margin-left:10px;">timer</i>
+                            <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                <md-content >
+                                    <p class="placeholder-p">.</p>
 
-                                        <img src={{event.url}} style="width:280px;height:176px;"></img>
+                                    <img src={{event.url}} style="width:280px;height:176px;"/>
 
-                                    </md-content>
-                                </md-tooltip>timer</i>
+                                </md-content>
+                            </md-tooltip>
                             {{'DURATION'| translate}}: {{event.travelTime}}
                         </span>
                     </div>
                 </md-list-item>
 
             </md-list>
-            <span layout-align="center center"> Seite {{pagingTab.current}} von {{Math.max(pagingTab.current, pagingTab.total)}} mit Fahrten {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 4 - 3)}} bis {{Math.min(pagingTab.current * 4, currentPaginationTracks.currentSelectedTracks.length)}} von {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
-            <cl-paging cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
-
+            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * 4, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
+            <cl-paging ng-show="screenIsXS" cl-pages="pagingTab.total" cl-steps="4" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+            <cl-paging ng-show="screenIsSM" cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+            <cl-paging ng-show="!screenIsXS && !screenIsSM" cl-pages="pagingTab.total" cl-steps="10" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+            
         </md-card>
     </div>
 </md-tab>

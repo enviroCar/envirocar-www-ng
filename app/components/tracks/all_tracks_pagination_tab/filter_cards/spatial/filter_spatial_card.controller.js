@@ -10,7 +10,6 @@
         var drawnItems2 = new L.FeatureGroup();
         angular.extend($scope, {
             map2: {
-                //id: "filter_card_map",
                 spatial_bounds_card: {
                 },
                 layers_card: {
@@ -62,12 +61,11 @@
                         ]
                     },
                     style: {
-                        fillColor: '#8CBF3F',
-                        fillOpacity: 0.7,
+                        fillColor: "#1A80C1",
+                        fillOpacity: 0.3,
                         weight: 2,
-                        opacity: 1,
-                        color: "#1A80C1",
-                        dashArray: '3'
+                        opacity: 0.5,
+                        color: "#1A80C1"
                     }
                 },
                 defaults: {
@@ -101,12 +99,11 @@
                         ]
                     },
                     style: {
-                        fillColor: '#8CBF3F',
-                        fillOpacity: 0.7,
+                        fillColor: "#1A80C1",
+                        fillOpacity: 0.3,
                         weight: 2,
-                        opacity: 1,
-                        color: "#1A80C1",
-                        dashArray: '3'
+                        opacity: 0.5,
+                        color: "#1A80C1"
                     }
                 };
                 $scope.map2.spatial_bounds_card = leafletBoundsHelpers.createBoundsFromArray([

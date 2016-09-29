@@ -43,15 +43,14 @@
 
                     </calendar-md>
                 </div>
-                <div style="width:100%">
-                    <md-button ng-click="buttonClickCurrentDate()">Go to current date</md-button>
-                    <div style="width:100%;text-align:center">
+                <div flex>
+                    <div flex style="text-align:center">
                         <h3 ng-if="numberClickedDays === 0" style="color:rgba(0,0,0,0.7)">{{'MONTHLY_OVERVIEW'| translate}}</h3>
                         <h3 ng-if="numberClickedDays === 1" style="color:rgba(0,0,0,0.7)">{{'DAILY_OVERVIEW'| translate}}</h3>
                         <h3 ng-if="numberClickedDays === 2" style="color:rgba(0,0,0,0.7)">{{'SELECTION_OVERVIEW'| translate}}</h3>
                     </div>
                 </div>
-                <div layout-gt-xs="row" ng-if="!nostatistics">
+                <div layout="row" ng-if="!nostatistics">
                     <div style="width:33.33%;text-align:center">
                         <h3 style="color:#0065A0">{{total_time}}</h3>
                         <p style="font-size:13px;">{{'DURATION'| translate}}</p>
@@ -64,65 +63,10 @@
                         <h3 style="color:#0065A0">{{total_tracks}}</h3>
                         <p style="font-size:13px;">{{'TRACKS'| translate}}</p>
                     </div>
-
-                </div>
-                <div layout-gt-xs="row" ng-if="nostatistics">
-                    <div style="width:100%;text-align:center">
-                        <p>{{'NO_MONTHLY_STATISTICS'| translate}}</p>
-                    </div>
                 </div>
             </md-content>
-
         </md-card>
-        <!--
-        <md-card class="card card-4-50 fade" flex>
-            <md-content id="track_list_calendar_tab" style="height: {{tablistcalendarheight}}px;" >
-                <section ng-repeat="months in monthsWithTracks" ng-if="months.month === selectedMonth && months.year === selectedYear">
-                    <md-subheader class="envirocar-green"><b> {{constants.months[months.month]}} , {{months.year}}</b></md-subheader>
-                    <md-list id="calendar-list" >
-                        <md-list-item class="divider-list-item fade" ng-repeat='event in tracks' ng-if="months.year === event.year && months.month === event.month" ng-click="goToActivity(event.id)">
-
-                            <div class="sl-content" layout="column">
-
-                                <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
-
-                                <span>
-                                    <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                                    {{'DISTANCE'| translate}}: {{event.length}} km
-                                </span>
-                                <span>
-                                    <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
-                                    {{'VEHICLE_TYPE'| translate}}: {{event.manufacturer}} - {{event.car}}
-                                </span>
-                                <span>
-                                    <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                    <md-content >
-                                        <p class="placeholder-p">.</p>
-
-                                        <img src={{event.url}} style="width:280px;height:176px;"></img>
-
-                                    </md-content>
-                                </md-tooltip>timer</i>
-                                    {{'DURATION'| translate}}: {{event.travelTime}}
-                                </span>
-
-                                <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                    <md-content>
-                                        <p class="placeholder-p">.</p>
-
-                                        <img src={{event.url}} style="width:250px;height:156px;"></img>
-
-                                    </md-content>
-                                </md-tooltip>
-
-                            </div>
-                        </md-list-item>
-
-                    </md-list>
-                </section>
-            </md-content>
-        </md-card>
-        -->
+        
         <md-card flex>
             <div layout="row">
                 <p style="color:#1A80C1;background-color:white; margin-left:20px;">
@@ -152,6 +96,8 @@
                     </md-button>
                 </div>
             </div>
+            <cl-paging cl-pages="paging.total" cl-steps="4" cl-page-changed="paging.onPageChanged()" cl-align="center end" cl-current-page="paging.current"></cl-paging>
+            <span class="center-aligned"> {{'PAGE'| translate}} {{paging.current}} {{'OF'| translate}} {{Math.max(paging.current, paging.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPageTracks.currentSelectedTracks.length, paging.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(paging.current * 4, currentPageTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{Math.min(paging.total * 4, currentPageTracks.currentSelectedTracks.length)}}  </span>
             <md-list id="calendar-list" flex>
                 <md-list-item layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPageTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
                     <div layout="column" layout-align="center start">
@@ -181,7 +127,7 @@
                 </md-list-item>
 
             </md-list>
-            <span layout-align="center end"> Seite {{paging.current}} von {{Math.max(paging.current, paging.total)}} mit Fahrten {{Math.min(currentPageTracks.currentSelectedTracks.length, paging.current * 4 - 3)}} bis {{Math.min(paging.current * 4, currentPageTracks.currentSelectedTracks.length)}} von {{Math.min(paging.total * 4, currentPageTracks.currentSelectedTracks.length)}}  </span>
+            <span class="center-aligned"> {{'PAGE'| translate}} {{paging.current}} {{'OF'| translate}} {{Math.max(paging.current, paging.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPageTracks.currentSelectedTracks.length, paging.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(paging.current * 4, currentPageTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{Math.min(paging.total * 4, currentPageTracks.currentSelectedTracks.length)}}  </span>
             <cl-paging cl-pages="paging.total" cl-steps="4" cl-page-changed="paging.onPageChanged()" cl-align="center end" cl-current-page="paging.current"></cl-paging>
 
         </md-card>

@@ -19,6 +19,7 @@
 
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
+        
 
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
@@ -77,7 +78,7 @@
                     ]
                 },
                 inUse: false,
-                layer : 0
+                layer: 0
             }
         };
 
@@ -258,8 +259,8 @@
                 // filter by spatial:
                 if (filterBySpatial) {
                     var currID = currTrack.id;
-                    
-                    var found = $scope.filters.spatial.params.track_ids.filter(function(id){
+
+                    var found = $scope.filters.spatial.params.track_ids.filter(function (id) {
                         return currID === id;
                     })[0];
                     if (!found)
@@ -283,10 +284,29 @@
             }
             $scope.pagingTab.current = 1;
             loadPages();
-            
-            
+
+
             $rootScope.$broadcast('filter:spatial-filter-changed');
         };
+
+        $scope.$on('toolbar:language-changed', function (event, args) {
+            console.log("language changed received in AllTracksPaginationCtrl.");
+            // translate filter labels:
+            $translate([
+                'FILTER_DISTANCE',
+                'FILTER_DATE',
+                'FILTER_DURATION',
+                'FILTER_VEHICLE',
+                'FILTER_SPATIAL']).then(
+                    function (translations) {
+                        console.log(translations);
+                        $scope.filters.distance.label = translations['FILTER_DISTANCE'];
+                        $scope.filters.date.label = translations['FILTER_DATE'];
+                        $scope.filters.duration.label = translations['FILTER_DURATION'];
+                        $scope.filters.vehicle.label = translations['FILTER_VEHICLE'];
+                        $scope.filters.spatial.label = translations['FILTER_SPATIAL'];
+                    });
+        });
 
         // pagination:
         $scope.currentPaginationTracks = {

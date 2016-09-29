@@ -27,8 +27,8 @@
         </div>
     </div>
     <md-card-content>
-        {{ 'DATE_MIN_DATE' | translate}}: {{min_date}}<br>
-        {{ 'DATE_MAX_DATE' | translate}}: {{max_date}}
+        <p ng-if="filters.date.params.min !== undefined && filters.date.params.min !== null">{{ 'DATE_MIN_DATE' | translate}}: {{min_date}}</p>
+        <p ng-if="filters.date.params.max !== undefined && filters.date.params.max !== null">{{ 'DATE_MAX_DATE' | translate}}: {{max_date}}</p>
         
     </md-card-content>
 </md-card>

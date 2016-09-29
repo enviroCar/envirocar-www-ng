@@ -27,8 +27,8 @@
         </div>
     </div>
     <md-card-content>
-        {{'DISTANCE_LONGER_THAN' | translate}}: {{filters.distance.params.min}}<br>
-        {{'DISTANCE_SHORTER_THAN' | translate}}: {{filters.distance.params.max}}
+        <p ng-if='filters.distance.params.min !== undefined && filters.distance.params.min !== null'>{{'DISTANCE_CARD_MIN' | translate}}: {{filters.distance.params.min}}km</p>
+        <p ng-if='filters.distance.params.max !== undefined && filters.distance.params.max !== null'>{{'DISTANCE_CARD_MAX' | translate}}: {{filters.distance.params.max}}km</p>
         
     </md-card-content>
 </md-card>

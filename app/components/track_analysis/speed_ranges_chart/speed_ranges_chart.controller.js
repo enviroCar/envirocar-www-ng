@@ -15,14 +15,6 @@
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
 
-        var max_values = [
-            130, // speed
-            10, // consumption
-            20, // co2
-            3000, // rpm
-            100     // engine load
-        ];
-
         $scope.optionsSpeedRange = {
             chart: {
                 type: 'pieChart',
@@ -35,11 +27,11 @@
                     return d.y;
                 },
                 color: ['#00ff00',
-                    $scope.percentToRGB(30 / max_values[0] * 100),
-                    $scope.percentToRGB(60 / max_values[0] * 100),
-                    $scope.percentToRGB(100 / max_values[0] * 100),
-                    $scope.percentToRGB(130 / max_values[0] * 100),
-                    $scope.percentToRGB(180 / max_values[0] * 100)],
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -66,131 +58,131 @@
             $scope.onload_RPM_Range = false;
             $scope.dataSpeedRange = [
                 {
-                    key: "0km/h",
+                    key: '  0 km/h',
                     y: 0
                 },
                 {
-                    key: "0-30km/h",
+                    key: '0-' + $scope.yellow_break[0] / 2 + ' km/h',
                     y: 0
                 },
                 {
-                    key: "30-60km/h",
+                    key: $scope.yellow_break[0] / 2 + '-' + $scope.yellow_break[0] + ' km/h',
                     y: 0
                 },
                 {
-                    key: "60-100km/h",
+                    key: $scope.yellow_break[0] + '-' + ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + ' km/h',
                     y: 0
                 },
                 {
-                    key: "100-130km/h",
+                    key: ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + '-' + $scope.red_break[0] + ' km/h',
                     y: 0
                 },
                 {
-                    key: "> 130km/h",
+                    key: "> " + $scope.red_break[0] + " km/h",
                     y: 0
                 }
             ];
             $scope.dataConsumptionRange = [
                 {
-                    key: "0 l/h",
+                    key: '  0 l/h',
                     y: 0
                 },
                 {
-                    key: "0-3 l/h",
+                    key: '0-' + $scope.yellow_break[1] / 2 + ' l/h',
                     y: 0
                 },
                 {
-                    key: "3-6 l/h",
+                    key: $scope.yellow_break[1] / 2 + '-' + $scope.yellow_break[1] + ' l/h',
                     y: 0
                 },
                 {
-                    key: "6-9 l/h",
+                    key: $scope.yellow_break[1] + '-' + ($scope.yellow_break[1] + $scope.red_break[1]) / 2 + ' l/h',
                     y: 0
                 },
                 {
-                    key: "9-12 l/h",
+                    key: ($scope.yellow_break[1] + $scope.red_break[1]) / 2 + '-' + $scope.red_break[1] + ' l/h',
                     y: 0
                 },
                 {
-                    key: "> 12 l/h",
+                    key: "> " + $scope.red_break[1] + " l/h",
                     y: 0
                 }
             ];
             $scope.dataCO2Range = [
                 {
-                    key: "0 kg/h",
+                    key: '  0 kg/h',
                     y: 0
                 },
                 {
-                    key: "0-5 kg/h",
+                    key: '0-' + $scope.yellow_break[2] / 2 + ' kg/h',
                     y: 0
                 },
                 {
-                    key: "5-10 kg/h",
+                    key: $scope.yellow_break[2] / 2 + '-' + $scope.yellow_break[2] + ' kg/h',
                     y: 0
                 },
                 {
-                    key: "10-15 kg/h",
+                    key: $scope.yellow_break[2] + '-' + ($scope.yellow_break[2] + $scope.red_break[2]) / 2 + ' kg/h',
                     y: 0
                 },
                 {
-                    key: "15-20 kg/h",
+                    key: ($scope.yellow_break[2] + $scope.red_break[2]) / 2 + '-' + $scope.red_break[2] + ' kg/h',
                     y: 0
                 },
                 {
-                    key: "> 20 kg/h",
+                    key: "> " + $scope.red_break[2] + " kg/h",
                     y: 0
                 }
             ];
             $scope.dataRPMRange = [
                 {
-                    key: "0 r/min",
+                    key: '  0 r/min',
                     y: 0
                 },
                 {
-                    key: "0-1k r/min",
+                    key: '0-' + $scope.yellow_break[3] / 2 + ' r/min',
                     y: 0
                 },
                 {
-                    key: "1k-1.5k r/min",
+                    key: $scope.yellow_break[3] / 2 + '-' + $scope.yellow_break[3] + ' r/min',
                     y: 0
                 },
                 {
-                    key: "1.5k-2k r/min",
+                    key: $scope.yellow_break[3] + '-' + ($scope.yellow_break[3] + $scope.red_break[3]) / 2 + ' r/min',
                     y: 0
                 },
                 {
-                    key: "2k-3k r/min",
+                    key: ($scope.yellow_break[3] + $scope.red_break[3]) / 2 + '-' + $scope.red_break[3] + ' r/min',
                     y: 0
                 },
                 {
-                    key: "> 3k r/min",
+                    key: "> " + $scope.red_break[3] + " r/min",
                     y: 0
                 }
             ];
             $scope.dataEngineLoadRange = [
                 {
-                    key: "0 %",
+                    key: '  0 %',
                     y: 0
                 },
                 {
-                    key: "0-15 %",
+                    key: '0-' + $scope.yellow_break[4] / 2 + ' %',
                     y: 0
                 },
                 {
-                    key: "15-35 %",
+                    key: $scope.yellow_break[4] / 2 + '-' + $scope.yellow_break[4] + ' %',
                     y: 0
                 },
                 {
-                    key: "35-55 %",
+                    key: $scope.yellow_break[4] + '-' + ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + ' %',
                     y: 0
                 },
                 {
-                    key: "55-75 %",
+                    key: ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + '-' + $scope.red_break[4] + ' %',
                     y: 0
                 },
                 {
-                    key: "75-100 %",
+                    key: "> " + $scope.red_break[4] + " %",
                     y: 0
                 }
             ];
@@ -203,19 +195,19 @@
                     case (v === 0):
                         $scope.dataSpeedRange[0].y += partOfPercent;
                         break;
-                    case (v < 30):
+                    case (v < $scope.yellow_break[0] / 2):
                         $scope.dataSpeedRange[1].y += partOfPercent;
                         break;
-                    case (v < 60):
+                    case (v < $scope.yellow_break[0]):
                         $scope.dataSpeedRange[2].y += partOfPercent;
                         break;
-                    case (v < 100):
+                    case (v < ($scope.yellow_break[0] + $scope.red_break[0]) / 2):
                         $scope.dataSpeedRange[3].y += partOfPercent;
                         break;
-                    case (v < 130):
+                    case (v < $scope.red_break[0]):
                         $scope.dataSpeedRange[4].y += partOfPercent;
                         break;
-                    case (v >= 130):
+                    case (v >= $scope.red_break[0]):
                         $scope.dataSpeedRange[5].y += partOfPercent;
                         break;
                 }
@@ -229,19 +221,19 @@
                     case (v === 0):
                         $scope.dataConsumptionRange[0].y += partOfPercent;
                         break;
-                    case (v < 3):
+                    case (v < $scope.yellow_break[1] / 2):
                         $scope.dataConsumptionRange[1].y += partOfPercent;
                         break;
-                    case (v < 6):
+                    case (v < $scope.yellow_break[1]):
                         $scope.dataConsumptionRange[2].y += partOfPercent;
                         break;
-                    case (v < 9):
+                    case (v < ($scope.yellow_break[1] + $scope.red_break[1]) / 2):
                         $scope.dataConsumptionRange[3].y += partOfPercent;
                         break;
-                    case (v < 12):
+                    case (v < $scope.red_break[1]):
                         $scope.dataConsumptionRange[4].y += partOfPercent;
                         break;
-                    case (v >= 12):
+                    case (v >= $scope.red_break[1]):
                         $scope.dataConsumptionRange[5].y += partOfPercent;
                         break;
                 }
@@ -255,19 +247,19 @@
                     case (v === 0):
                         $scope.dataCO2Range[0].y += partOfPercent;
                         break;
-                    case (v < 3):
+                    case (v < $scope.yellow_break[2] / 2):
                         $scope.dataCO2Range[1].y += partOfPercent;
                         break;
-                    case (v < 6):
+                    case (v < $scope.yellow_break[2]):
                         $scope.dataCO2Range[2].y += partOfPercent;
                         break;
-                    case (v < 9):
+                    case (v < ($scope.yellow_break[2] + $scope.red_break[2]) / 2):
                         $scope.dataCO2Range[3].y += partOfPercent;
                         break;
-                    case (v < 12):
+                    case (v < $scope.red_break[2]):
                         $scope.dataCO2Range[4].y += partOfPercent;
                         break;
-                    case (v >= 12):
+                    case (v >= $scope.red_break[2]):
                         $scope.dataCO2Range[5].y += partOfPercent;
                         break;
                 }
@@ -281,19 +273,19 @@
                     case (v === 0):
                         $scope.dataRPMRange[0].y += partOfPercent;
                         break;
-                    case (v < 1000):
+                    case (v < $scope.yellow_break[3] / 2):
                         $scope.dataRPMRange[1].y += partOfPercent;
                         break;
-                    case (v < 1500):
+                    case (v < $scope.yellow_break[3]):
                         $scope.dataRPMRange[2].y += partOfPercent;
                         break;
-                    case (v < 2000):
+                    case (v < ($scope.yellow_break[3] + $scope.red_break[3]) / 2):
                         $scope.dataRPMRange[3].y += partOfPercent;
                         break;
-                    case (v < 3000):
+                    case (v < $scope.red_break[3]):
                         $scope.dataRPMRange[4].y += partOfPercent;
                         break;
-                    case (v >= 3000):
+                    case (v >= $scope.red_break[3]):
                         $scope.dataRPMRange[5].y += partOfPercent;
                         break;
                 }
@@ -307,19 +299,19 @@
                     case (v === 0):
                         $scope.dataEngineLoadRange[0].y += partOfPercent;
                         break;
-                    case (v < 15):
+                    case (v < $scope.yellow_break[4] / 2):
                         $scope.dataEngineLoadRange[1].y += partOfPercent;
                         break;
-                    case (v < 35):
+                    case (v < $scope.yellow_break[4]):
                         $scope.dataEngineLoadRange[2].y += partOfPercent;
                         break;
-                    case (v < 55):
+                    case (v < ($scope.yellow_break[4] + $scope.red_break[4]) / 2):
                         $scope.dataEngineLoadRange[3].y += partOfPercent;
                         break;
-                    case (v < 75):
+                    case (v < $scope.red_break[4]):
                         $scope.dataEngineLoadRange[4].y += partOfPercent;
                         break;
-                    case (v >= 75):
+                    case (v >= $scope.red_break[4]):
                         $scope.dataEngineLoadRange[5].y += partOfPercent;
                         break;
                 }
@@ -328,15 +320,12 @@
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
-            console.log('single_track_page:segment-changed');
-            console.log(args);
             $scope.min = args.min;
             $scope.max = args.max;
             $scope.changeRangeRanges($scope.min, $scope.max);
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received.");
 
         });
 
@@ -346,11 +335,8 @@
                     $scope.min = 0;
                 if (!$scope.max)
                     $scope.max = $scope.track_length;
-                console.log($scope.min);
-                console.log($scope.max);
                 $scope.changeRangeRanges($scope.min, $scope.max);
             } else {
-                console.log($scope.track_length);
                 $scope.changeRangeRanges(0, $scope.track_length);
             }
         });
@@ -384,11 +370,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB(3 / max_values[1] * 100),
-                    $scope.percentToRGB(6 / max_values[1] * 100),
-                    $scope.percentToRGB(9 / max_values[1] * 100),
-                    $scope.percentToRGB(12 / max_values[1] * 100),
-                    $scope.percentToRGB(14 / max_values[1] * 100)],
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1]),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1]),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -418,11 +404,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB(5 / max_values[2] * 100),
-                    $scope.percentToRGB(10 / max_values[2] * 100),
-                    $scope.percentToRGB(15 / max_values[2] * 100),
-                    $scope.percentToRGB(20 / max_values[2] * 100),
-                    $scope.percentToRGB(25 / max_values[2] * 100)],
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2]),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2]),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -452,11 +438,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB(15 / max_values[4] * 100),
-                    $scope.percentToRGB(35 / max_values[4] * 100),
-                    $scope.percentToRGB(55 / max_values[4] * 100),
-                    $scope.percentToRGB(75 / max_values[4] * 100),
-                    $scope.percentToRGB(100 / max_values[4] * 100)],
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4]),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4]),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -486,11 +472,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB(1000 / max_values[3] * 100),
-                    $scope.percentToRGB(1500 / max_values[3] * 100),
-                    $scope.percentToRGB(2000 / max_values[3] * 100),
-                    $scope.percentToRGB(3000 / max_values[3] * 100),
-                    $scope.percentToRGB(3700 / max_values[3] * 100)],
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3]),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3]),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -511,131 +497,131 @@
 
         $scope.dataSpeedRange = [
             {
-                key: "0km/h",
+                key: '  0 km/h',
                 y: 0
             },
             {
-                key: "0-30km/h",
+                key: '0-' + $scope.yellow_break[0] / 2 + ' km/h',
                 y: 0
             },
             {
-                key: "30-60km/h",
+                key: $scope.yellow_break[0] / 2 + '-' + $scope.yellow_break[0] + ' km/h',
                 y: 0
             },
             {
-                key: "60-100km/h",
+                key: $scope.yellow_break[0] + '-' + ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + ' km/h',
                 y: 0
             },
             {
-                key: "100-130km/h",
+                key: ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + '-' + $scope.red_break[0] + ' km/h',
                 y: 0
             },
             {
-                key: "> 130km/h",
+                key: "> " + $scope.red_break[0] + " km/h",
                 y: 0
             }
         ];
         $scope.dataConsumptionRange = [
             {
-                key: "0 l/h",
+                key: '  0 l/h',
                 y: 0
             },
             {
-                key: "0-3 l/h",
+                key: '0-' + $scope.yellow_break[1] / 2 + ' l/h',
                 y: 0
             },
             {
-                key: "3-6 l/h",
+                key: $scope.yellow_break[1] / 2 + '-' + $scope.yellow_break[1] + ' l/h',
                 y: 0
             },
             {
-                key: "6-9 l/h",
+                key: $scope.yellow_break[1] + '-' + ($scope.yellow_break[1] + $scope.red_break[1]) / 2 + ' l/h',
                 y: 0
             },
             {
-                key: "9-12 l/h",
+                key: ($scope.yellow_break[1] + $scope.red_break[1]) / 2 + '-' + $scope.red_break[1] + ' l/h',
                 y: 0
             },
             {
-                key: "> 12 l/h",
+                key: "> " + $scope.red_break[1] + " l/h",
                 y: 0
             }
         ];
         $scope.dataCO2Range = [
             {
-                key: "0 kg/h",
+                key: '  0 kg/h',
                 y: 0
             },
             {
-                key: "0-5 kg/h",
+                key: '0-' + $scope.yellow_break[2] / 2 + ' kg/h',
                 y: 0
             },
             {
-                key: "5-10 kg/h",
+                key: $scope.yellow_break[2] / 2 + '-' + $scope.yellow_break[2] + ' kg/h',
                 y: 0
             },
             {
-                key: "10-15 kg/h",
+                key: $scope.yellow_break[2] + '-' + ($scope.yellow_break[2] + $scope.red_break[2]) / 2 + ' kg/h',
                 y: 0
             },
             {
-                key: "15-20 kg/h",
+                key: ($scope.yellow_break[2] + $scope.red_break[2]) / 2 + '-' + $scope.red_break[2] + ' kg/h',
                 y: 0
             },
             {
-                key: "> 20 kg/h",
+                key: "> " + $scope.red_break[2] + " kg/h",
                 y: 0
             }
         ];
         $scope.dataRPMRange = [
             {
-                key: "0 r/min",
+                key: '  0 r/min',
                 y: 0
             },
             {
-                key: "0-1k r/min",
+                key: '0-' + $scope.yellow_break[3] / 2 + ' r/min',
                 y: 0
             },
             {
-                key: "1k-1.5k r/min",
+                key: $scope.yellow_break[3] / 2 + '-' + $scope.yellow_break[3] + ' r/min',
                 y: 0
             },
             {
-                key: "1.5k-2k r/min",
+                key: $scope.yellow_break[3] + '-' + ($scope.yellow_break[3] + $scope.red_break[3]) / 2 + ' r/min',
                 y: 0
             },
             {
-                key: "2k-3k r/min",
+                key: ($scope.yellow_break[3] + $scope.red_break[3]) / 2 + '-' + $scope.red_break[3] + ' r/min',
                 y: 0
             },
             {
-                key: "> 3k r/min",
+                key: "> " + $scope.red_break[3] + " r/min",
                 y: 0
             }
         ];
         $scope.dataEngineLoadRange = [
             {
-                key: "0 %",
+                key: '  0 %',
                 y: 0
             },
             {
-                key: "0-15 %",
+                key: '0-' + $scope.yellow_break[4] / 2 + ' %',
                 y: 0
             },
             {
-                key: "15-35 %",
+                key: $scope.yellow_break[4] / 2 + '-' + $scope.yellow_break[4] + ' %',
                 y: 0
             },
             {
-                key: "35-55 %",
+                key: $scope.yellow_break[4] + '-' + ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + ' %',
                 y: 0
             },
             {
-                key: "55-75 %",
+                key: ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + '-' + $scope.red_break[4] + ' %',
                 y: 0
             },
             {
-                key: "75-100 %",
+                key: "> " + $scope.red_break[4] + " %",
                 y: 0
             }
         ];
@@ -703,19 +689,19 @@
                             case (v === 0):
                                 $scope.dataSpeedRange[0].y += partOfPercent;
                                 break;
-                            case (v < 30):
+                            case (v < $scope.yellow_break[0] / 2):
                                 $scope.dataSpeedRange[1].y += partOfPercent;
                                 break;
-                            case (v < 60):
+                            case (v < $scope.yellow_break[0]):
                                 $scope.dataSpeedRange[2].y += partOfPercent;
                                 break;
-                            case (v < 100):
+                            case (v < ($scope.yellow_break[0] + $scope.red_break[0]) / 2):
                                 $scope.dataSpeedRange[3].y += partOfPercent;
                                 break;
-                            case (v < 130):
+                            case (v < $scope.red_break[0]):
                                 $scope.dataSpeedRange[4].y += partOfPercent;
                                 break;
-                            case (v >= 130):
+                            case (v >= $scope.red_break[0]):
                                 $scope.dataSpeedRange[5].y += partOfPercent;
                                 break;
                         }
@@ -729,19 +715,19 @@
                             case (v === 0):
                                 $scope.dataConsumptionRange[0].y += partOfPercent;
                                 break;
-                            case (v < 3):
+                            case (v < $scope.yellow_break[1] / 2):
                                 $scope.dataConsumptionRange[1].y += partOfPercent;
                                 break;
-                            case (v < 6):
+                            case (v < $scope.yellow_break[1]):
                                 $scope.dataConsumptionRange[2].y += partOfPercent;
                                 break;
-                            case (v < 9):
+                            case (v < ($scope.yellow_break[1] + $scope.red_break[1]) / 2):
                                 $scope.dataConsumptionRange[3].y += partOfPercent;
                                 break;
-                            case (v < 12):
+                            case (v < $scope.red_break[1]):
                                 $scope.dataConsumptionRange[4].y += partOfPercent;
                                 break;
-                            case (v >= 12):
+                            case (v >= $scope.red_break[1]):
                                 $scope.dataConsumptionRange[5].y += partOfPercent;
                                 break;
                         }
@@ -755,19 +741,19 @@
                             case (v === 0):
                                 $scope.dataCO2Range[0].y += partOfPercent;
                                 break;
-                            case (v < 3):
+                            case (v < $scope.yellow_break[2] / 2):
                                 $scope.dataCO2Range[1].y += partOfPercent;
                                 break;
-                            case (v < 6):
+                            case (v < $scope.yellow_break[2]):
                                 $scope.dataCO2Range[2].y += partOfPercent;
                                 break;
-                            case (v < 9):
+                            case (v < ($scope.yellow_break[2] + $scope.red_break[2]) / 2):
                                 $scope.dataCO2Range[3].y += partOfPercent;
                                 break;
-                            case (v < 12):
+                            case (v < $scope.red_break[2]):
                                 $scope.dataCO2Range[4].y += partOfPercent;
                                 break;
-                            case (v >= 12):
+                            case (v >= $scope.red_break[2]):
                                 $scope.dataCO2Range[5].y += partOfPercent;
                                 break;
                         }
@@ -781,19 +767,19 @@
                             case (v === 0):
                                 $scope.dataRPMRange[0].y += partOfPercent;
                                 break;
-                            case (v < 1000):
+                            case (v < $scope.yellow_break[3] / 2):
                                 $scope.dataRPMRange[1].y += partOfPercent;
                                 break;
-                            case (v < 1500):
+                            case (v < $scope.yellow_break[3]):
                                 $scope.dataRPMRange[2].y += partOfPercent;
                                 break;
-                            case (v < 2000):
+                            case (v < ($scope.yellow_break[3] + $scope.red_break[3]) / 2):
                                 $scope.dataRPMRange[3].y += partOfPercent;
                                 break;
-                            case (v < 3000):
+                            case (v < $scope.red_break[3]):
                                 $scope.dataRPMRange[4].y += partOfPercent;
                                 break;
-                            case (v >= 3000):
+                            case (v >= $scope.red_break[3]):
                                 $scope.dataRPMRange[5].y += partOfPercent;
                                 break;
                         }
@@ -807,19 +793,19 @@
                             case (v === 0):
                                 $scope.dataEngineLoadRange[0].y += partOfPercent;
                                 break;
-                            case (v < 15):
+                            case (v < $scope.yellow_break[4] / 2):
                                 $scope.dataEngineLoadRange[1].y += partOfPercent;
                                 break;
-                            case (v < 35):
+                            case (v < $scope.yellow_break[4]):
                                 $scope.dataEngineLoadRange[2].y += partOfPercent;
                                 break;
-                            case (v < 55):
+                            case (v < ($scope.yellow_break[4] + $scope.red_break[4]) / 2):
                                 $scope.dataEngineLoadRange[3].y += partOfPercent;
                                 break;
-                            case (v < 75):
+                            case (v < $scope.red_break[4]):
                                 $scope.dataEngineLoadRange[4].y += partOfPercent;
                                 break;
-                            case (v >= 75):
+                            case (v >= $scope.red_break[4]):
                                 $scope.dataEngineLoadRange[5].y += partOfPercent;
                                 break;
                         }

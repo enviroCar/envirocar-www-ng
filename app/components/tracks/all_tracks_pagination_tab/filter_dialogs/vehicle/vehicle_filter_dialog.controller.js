@@ -15,8 +15,7 @@
         };
 
         $scope.results = [];
-        $scope.filters.vehicle.params.cars_set = [];
-
+        
         // Vehicle list is the object map of all vehicles that was extracted from the list of all tracks that was returned
         if ($scope.filters.vehicle.inUse)
         {
@@ -32,6 +31,7 @@
             if (0 === $scope.results.length) {
                 $scope.errorNothingSelected = true;
             } else {
+                $scope.filters.vehicle.params.cars_set = [];
                 // None of the errors occured! Can successfully set filters
                 for (var i = 0; i < $scope.filters.vehicle.params.cars_all.length; i++) {
                     if ($scope.containsCar($scope.results, $scope.filters.vehicle.params.cars_all[i])) {

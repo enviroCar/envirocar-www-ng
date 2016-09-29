@@ -3,8 +3,8 @@
     function HeatMapCtrl($scope, $http, $state, $translate, TrackService, UserService, UserCredentialsService, ecBaseUrl) {
         $scope.onload_heat_map = false;
         angular.extend($scope, {
-            center: {},
-            layers: {
+            center2: {},
+            layers2: {
                 baselayers: {
                     osm: {
                         name: 'OpenStreetMap',
@@ -33,7 +33,7 @@
         var urlredirect = '#/dashboard/chart/';
         var points = [];
         var mid_point = [0, 0];
-        var dataset = [];
+        var heat_dataset = [];
         var dataset_start = [];
         var dataset_end = [];
         $http({
@@ -74,24 +74,24 @@
                 mid_point[1] += coord_push_end[0];
                 dataset_start.push(coord_push_start);
                 dataset_end.push(coord_push_end);
-                dataset.push(coord_push_start);
-                dataset.push(coord_push_end);
+                heat_dataset.push(coord_push_start);
+                heat_dataset.push(coord_push_end);
             }
-            console.log(dataset);
+            console.log(heat_dataset);
             mid_point[0] = mid_point[0] / (tracksummary.length * 2);
             mid_point[1] = mid_point[1] / (tracksummary.length * 2);
             console.log(mid_point[0]);
             console.log(mid_point[1]);
-            $scope.center = {
+            $scope.center2 = {
                 lat: mid_point[1],
                 lng: mid_point[0],
                 zoom: 6
-            }
-            $scope.layers.overlays = {
+            };
+            $scope.layers2.overlays = {
                 heat: {
                     name: 'Heat Map',
                     type: 'heat',
-                    data: dataset,
+                    data: heat_dataset,
                     layerOptions: {
                         radius: 20,
                         blur: 30,
@@ -101,8 +101,8 @@
                     visible: true
                 }
             };
-            console.log($scope.layers.overlays);
-            console.log($scope.layers);
+            console.log($scope.layers2.overlays);
+            console.log($scope.layers2);
             $scope.onload_heat_map = true;
         }, function (error) {
             console.log(error);

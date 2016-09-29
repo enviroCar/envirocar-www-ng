@@ -1,4 +1,4 @@
-<md-card flex>
+<md-card flex style="height: 640px;">
     <div layout="row" flex="100">
         <p class='card-title' >
             <span><b>{{'TRACK_SUMMARY_TITLE'| translate}} </b></span>
@@ -71,6 +71,16 @@
                     <p>{{tracksummary['fuel']}} liter/100km</p>
                 </div>
             </md-list-item>
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">local_gas_station</i>
+                <div class="md-list-item-text">
+                    <p>{{'CONSUMPTION'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['fuelConsumed']}} liter</p>
+                </div>
+            </md-list-item>
 
             <md-list-item layout="row">
                 <i class="material-icons md-avatar grey md-36">cloud_circle</i>
@@ -82,7 +92,17 @@
                     <p>{{tracksummary['co2emissionperhour']}} g/km</p>
                 </div>
             </md-list-item>
-
+            <md-list-item layout="row">
+                <i class="material-icons md-avatar grey md-36">cloud_circle</i>
+                <div class="md-list-item-text">
+                    <p>{{'CO2_EMISSION'| translate}}:</p>
+                </div>
+                <span flex></span>
+                <div style="right:0px" class="md-list-item-text">
+                    <p>{{tracksummary['co2emissionperhourConsumed']}} g</p>
+                </div>
+            </md-list-item>
+            <span flex class="span-flex flex"> </span>
         </div>
     </md-card-content>
 </md-card>

@@ -3,24 +3,11 @@
     SpatialDialogCtrl = function ($scope, $translate, $mdDialog, $timeout, UserService, leafletData, leafletBoundsHelpers, leafletDrawEvents) {
         console.log("SpatialDialogCtrl started.");
         var drawnItems = new L.FeatureGroup();
-        $scope.updateDialogMap = function() {
-            $timeout(function () {
-                $scope.map3.spatial_bounds_dialog = leafletBoundsHelpers.createBoundsFromArray([
-                    [$scope.filters.spatial.params.northeast.lat, $scope.filters.spatial.params.northeast.lng],
-                    [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng]
-                ]);
-                window.dispatchEvent(new Event('resize'));
-            },
-                    100);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    500);
-        };
-
+        var drawWhite = false;
         angular.extend($scope, {
             map3: {
-                spatial_bounds_dialog: {},
+                center: {
+                },
                 layers: {
                     baselayers: {
                         osm: {
@@ -40,18 +27,123 @@
                             metric: false,
                             showArea: true,
                             shapeOptions: {
-                                color: 'blue'
+                                color: "#1A80C1"
                             }
                         },
                         marker: false
                     },
                     edit: {
                         featureGroup: drawnItems,
-                        remove: true
+                        remove: false
+                    }
+                },
+                geojson: {
+                    data: {
+                        type: "FeatureCollection",
+                        features: [
+                            {
+                                type: "Feature",
+                                geometry: {
+                                    type: "Polygon",
+                                    coordinates: [[
+                                            [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.southwest.lat],
+                                            [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.northeast.lat],
+                                            [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.northeast.lat],
+                                            [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.southwest.lat]
+                                        ]]
+                                },
+                                properties: {name: "Area1"}
+                            }
+                        ]
+                    },
+                    style: {
+                        fillColor: "#1A80C1",
+                        fillOpacity: 0.3,
+                        weight: 2,
+                        opacity: 0.5,
+                        color: "#1A80C1"
                     }
                 }
             }
         });
+        $scope.updateDialogMap = function () {
+            $timeout(function () {
+                if (drawWhite) {
+                    $scope.map3.geojson = {
+                        data: {
+                            type: "FeatureCollection",
+                            features: [
+                                {
+                                    type: "Feature",
+                                    geometry: {
+                                        type: "Polygon",
+                                        coordinates: [[
+                                                [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.southwest.lat],
+                                                [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.northeast.lat],
+                                                [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.northeast.lat],
+                                                [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.southwest.lat]
+                                            ]]
+                                    },
+                                    properties: {name: "Area1"}
+                                }
+                            ]
+                        },
+                        style: {
+                            fillColor: "rgba(255,255,255,0.3)",
+                            fillOpacity: 0.5,
+                            weight: 2,
+                            opacity: 1,
+                            color: "rgba(255,255,255,0.5)"
+                        }
+                    };
+                } else {
+                    $scope.map3.geojson = {
+                        data: {
+                            type: "FeatureCollection",
+                            features: [
+                                {
+                                    type: "Feature",
+                                    geometry: {
+                                        type: "Polygon",
+                                        coordinates: [[
+                                                [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.southwest.lat],
+                                                [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.northeast.lat],
+                                                [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.northeast.lat],
+                                                [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.southwest.lat]
+                                            ]]
+                                    },
+                                    properties: {name: "Area1"}
+                                }
+                            ]
+                        },
+                        style: {
+                        fillColor: "#1A80C1",
+                        fillOpacity: 0.3,
+                        weight: 2,
+                        opacity: 0.5,
+                        color: "#1A80C1"
+                    }
+                    };
+                    drawWhite = true;
+                }
+
+                window.dispatchEvent(new Event('resize'));
+                console.log($scope.map3.spatial_bounds);
+                $timeout(function () {
+                    $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
+                        [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng],
+                        [$scope.filters.spatial.params.northeast.lat, $scope.filters.spatial.params.northeast.lng]
+                    ]);
+                    window.dispatchEvent(new Event('resize'));
+                },
+                        300);
+            },
+                    300);
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            },
+                    300);
+        };
         var handle = {
             created: function (e, leafletEvent, leafletObject, model, modelName) {
                 if ($scope.old !== undefined) {
@@ -69,6 +161,34 @@
                     lng: coords[0].lng
                 };
                 $scope.old = leafletEvent.layer;
+                $scope.map3.geojson = {
+                    data: {
+                        type: "FeatureCollection",
+                        features: [
+                            {
+                                type: "Feature",
+                                geometry: {
+                                    type: "Polygon",
+                                    coordinates: [[
+                                            [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.southwest.lat],
+                                            [$scope.filters.spatial.params.southwest.lng, $scope.filters.spatial.params.northeast.lat],
+                                            [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.northeast.lat],
+                                            [$scope.filters.spatial.params.northeast.lng, $scope.filters.spatial.params.southwest.lat]
+                                        ]]
+                                },
+                                properties: {name: "Area1"}
+                            }
+                        ]
+                    },
+                    style: {
+                        fillColor: "rgb(255,255,255)",
+                        fillOpacity: 0.5,
+                        weight: 2,
+                        opacity: 1,
+                        color: "rgba(255,255,255)"
+                    }
+                };
+
             },
             edited: function (arg) {
                 console.log(arg);
@@ -97,7 +217,6 @@
                 handle[eventName.replace('draw:', '')](e, leafletEvent, leafletObject, model, modelName);
             });
         });
-
         $scope.errorOverlap = false;
         $scope.northEast = {
             lat: undefined,
@@ -107,7 +226,6 @@
             lat: undefined,
             lng: undefined
         };
-
         // if dialog openned for changing values, load previous bounding box coordinates:
         if ($scope.filters.spatial.inUse)
         {
@@ -121,39 +239,23 @@
             if ($scope.filters.spatial.params.northeast.lng !== undefined)
                 $scope.northEast.lng = $scope.filters.spatial.params.northeast.lng;
             // zoom map to track:
-            $timeout(function () {
-                console.log(
-                        [$scope.filters.spatial.params.northeast.lat, $scope.filters.spatial.params.northeast.lng],
-                        [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng]);
-                $scope.map3.spatial_bounds_dialog = leafletBoundsHelpers.createBoundsFromArray([
-                    [$scope.filters.spatial.params.northeast.lat, $scope.filters.spatial.params.northeast.lng],
-                    [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng]
-                ]);
-
-                $scope.updateDialogMap();
-                window.dispatchEvent(new Event('resize'));
-            },
-                    100);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
-            },
-                    500);
             $scope.updateDialogMap();
         } else {
             console.log("not in use.");
             // where to zoom to, if dialog is started first time?
             // TODO: Get userspecific default lat/lng coordinates somehow!
+
+            // 52.2, 8.7    51.68, 7.25
             $timeout(function () {
-                $scope.map3.spatial_bounds_dialog = leafletBoundsHelpers.createBoundsFromArray([
-                    [52.025, 12.13],
-                    [50.007, 10.48]
+                $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
+                    [51.68, 7.25], [52.2, 8.7]
                 ]);
-                console.log($scope.map3.spatial_bounds_dialog);
-                window.dispatchEvent(new Event('resize'))
+                console.log($scope.map3.spatial_bounds);
+                window.dispatchEvent(new Event('resize'));
             },
-                    100);
+                    1000);
             $timeout(function () {
-                window.dispatchEvent(new Event('resize'))
+                window.dispatchEvent(new Event('resize'));
             },
                     500);
         }
@@ -176,12 +278,10 @@
 
                 var spatial_filter_sw = $scope.filters.spatial.params.southwest;
                 var spatial_filter_ne = $scope.filters.spatial.params.northeast;
-
                 spatial_filter_sw.lat = $scope.southWest.lat;
                 spatial_filter_sw.lng = $scope.southWest.lng;
                 spatial_filter_ne.lat = $scope.northEast.lat;
                 spatial_filter_ne.lng = $scope.northEast.lng;
-
                 UserService.getUserTracksBBox($scope.username, $scope.password,
                         $scope.filters.spatial.params.southwest.lng,
                         $scope.filters.spatial.params.southwest.lat,
@@ -196,7 +296,7 @@
                             ;
                             $scope.filters.spatial.inUse = true;
                             console.log("rect selected");
-                            $scope.updateDialogMap();
+                            //$scope.updateDialogMap();
                             $mdDialog.hide();
                             $scope.filtersChanged();
                         }, function (data) {
