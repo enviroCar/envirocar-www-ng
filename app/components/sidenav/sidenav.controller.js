@@ -25,6 +25,10 @@
                                 vm.menuItems[1]['tooltip'] = 'TT_SN_TRACKS_OPEN';
                                 vm.menuItems[2]['tooltip'] = 'TT_SN_PROFILE_OPEN';
                                 vm.menuItems[3]['tooltip'] = 'TT_SN_SEGMENT_OPEN';
+                                vm.menuItems[0]['commingSoon'] = false;
+                                vm.menuItems[1]['commingSoon'] = false;
+                                vm.menuItems[2]['commingSoon'] = true;
+                                vm.menuItems[3]['commingSoon'] = true;
                                 console.log("menuitems:" + vm.menuItems);
                             });
                     vm.collapse();

@@ -12,7 +12,7 @@
         <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
         <script src="bower_components/angularjs-slider/master/dist/rzslider.js"></script>
         <script src="bower_components/material-angular-paging/build/dist.min.js"></script>
-        
+
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="bower_components/leaflet.heat/dist/leaflet-heat.js"></script>
         <script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
@@ -31,21 +31,21 @@
         <!-- endInject -->
     </head>
 
-    <body ng-controller="AppCtrl" >
+    <body ng-controller="AppCtrl">
 
     <envirocar-toolbar id="main-toolbar"> </envirocar-toolbar> <!-- Toolbar -->
 
-    <div class="row ui-sortable-placehold" id="placeholder-toolbar" > <!-- Toolbar Placeholder -->
-        
+    <div class="row ui-sortable-placehold" id="placeholder-toolbar"> <!-- Toolbar Placeholder -->
+
     </div>
-    
-    <div layout="row" >
+
+    <div layout="row">
 
         <envirocar-sidenav> </envirocar-sidenav> <!-- Sidenavigation -->
-        
-     
+
+
         <div ng-if="!screenIsXS"  class="column ui-sortable-placehold" id="placeholder" > <!-- Sidenav Placeholder -->
-                    
+
         </div>
 
         <div layout="row" flex>
@@ -53,8 +53,8 @@
 
             </div>
 
-            <md-content id="contentPane" ui-view flex="100" style="overflow: hidden !important;"> <!-- Contentpage -->
-            </md-content>
+            <div id="contentPane" ui-view flex style="overflow: hidden !important;"> <!-- Contentpage -->
+            </div>
 
             <div id="placeholder-right" flex-gt-sm="2" flex-gt-md="10" flex-gt-lg="20">
 
@@ -149,11 +149,7 @@
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/spatial/filter_spatial_card.directive.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/vehicle/filter_vehicle_card.controller.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/vehicle/filter_vehicle_card.directive.js"></script>
-    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/date/date_filter_dialog.controller.js"></script>
-    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.controller.js"></script>
-    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/duration/duration_filter_dialog.controller.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/spatial/spatial_filter_dialog.controller.js"></script>
-    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_dialogs/vehicle/vehicle_filter_dialog.controller.js"></script>
     <!-- endinject -->
 </body>
 

@@ -7,39 +7,42 @@
     <md-toolbar class="md-theme-light" layout="row">
         <div class="md-toolbar-tools">
             <md-button style ="margin-left: 4px; margin-bottom: 8px !important;"  
-                ng-click = "toggleExpand()">
-                
+                       ng-click = "toggleExpand()">
+
                 <md-tooltip md-delay="500" ng-if="navExpanded"> {{ 'TT_SIDENAV-CLOSE' | translate}} </md-tooltip>
-            
+
                 <md-tooltip md-delay="500" ng-if="!navExpanded"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
-            
+
                 <md-icon class="material-icons md-36 white09"  md-font-set="material-icons" >menu</md-icon>
             </md-button>
-            
+
             <img ng-if="navExpanded" class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png">
-        
+
         </div>
     </md-toolbar>
     <md-content>
         <md-list>
             <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
-                         
+
                 <md-item-content layout="row" layout-align="start center" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
                     <span class="sidenav-element">
-                        <md-tooltip md-delay="500" md-direction="right"> {{item.tooltip | translate}} </md-tooltip>
-                        <md-icon class="material-icons md-avatar md-36 blue"  md-font-set="material-icons"> {{item.icon}} </md-icon>
+                        <md-icon ng-if="!item.commingSoon" class="material-icons md-avatar md-36 blue"  md-font-set="material-icons"> {{item.icon}} </md-icon>
+                        <md-tooltip ng-if="!item.commingSoon" md-delay="500" md-direction="right"> {{item.tooltip| translate}} </md-tooltip>
+                        <md-icon ng-if="item.commingSoon" class="material-icons md-avatar md-36 grey"  md-font-set="material-icons"> {{item.icon}} </md-icon>
+                        <md-tooltip ng-if="item.commingSoon" md-delay="500" md-direction="right"> {{'COMMING_SOON' | translate}} {{item.tooltip| translate}} </md-tooltip>
                     </span>
                     <span class="sidenav-element flex">
-                        <md-tooltip ng-if="navExpanded" md-delay="500" md-direction="right"> {{item.tooltip | translate}} </md-tooltip>
+                        <md-tooltip ng-if="navExpanded" ng-if="!item.commingSoon" md-delay="500" md-direction="right"> {{item.tooltip| translate}} </md-tooltip>
+                        <md-tooltip ng-if="navExpanded" ng-if="item.commingSoon" md-delay="500" md-direction="right"> {{'COMMING_SOON' | translate}} {{item.tooltip| translate}} </md-tooltip>
                         <div ng-if="navExpanded" class="md-list-item-text">
 
-                            <p>{{item.name | translate}}</p>
+                            <p>{{item.name| translate}}</p>
                         </div>
                     </span>
                 </md-item-content>
             </md-list-item>
         </md-list>
-        
+
     </md-content>
-           
+
 </md-sidenav>

@@ -19,7 +19,7 @@
 
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
-        
+        $scope.filterOrder = [];
 
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
@@ -30,7 +30,7 @@
                 name: 'distance',
                 label: $translate.instant('FILTER_DISTANCE'),
                 params: {
-                    min: 0,
+                    min: undefined,
                     max: undefined
                 },
                 inUse: false
@@ -39,7 +39,7 @@
                 name: 'date',
                 label: $translate.instant('FILTER_DATE'),
                 params: {
-                    min: 0,
+                    min: undefined,
                     max: undefined
                 },
                 inUse: false
@@ -48,7 +48,7 @@
                 name: 'duration',
                 label: $translate.instant('FILTER_DURATION'),
                 params: {
-                    min: 0,
+                    min: undefined,
                     max: undefined
                 },
                 inUse: false
@@ -81,14 +81,26 @@
                 layer: 0
             }
         };
+        $scope.filtered_tracks = 0;
 
-        $scope.addFilter = function (filter)
-        {
+        $scope.addFilter = function (filter) {
             // An utility map to replace writing switch cases for each of the filter
             if (!filter.inUse)
             {
-                // open the filter dialog to enter its parameters
-                $scope.commonDialog(filter);
+                filter.inUse = true;
+                if (filter.name === 'spatial') {
+                    filter.inUse = false;
+                    $scope.commonDialog(filter);
+                }
+                $scope.filterOrder.push(filter);
+            }
+            console.log($scope.filterOrder);
+        };
+
+        $scope.removeFilter = function (filter) {
+            var index = $scope.filterOrder.indexOf(filter);
+            if (index > -1) {
+                $scope.filterOrder.splice(index, 1);
             }
         };
 
@@ -174,11 +186,14 @@
         $scope.filtersChanged = function () {
             // filter GO!
             var amount_of_user_tracks = $scope.currentPaginationTracks.tracks.length;
+            $scope.amount_of_user_tracks = amount_of_user_tracks;
             var filterByDistance = $scope.filters.distance.inUse;
             var filterByDuration = $scope.filters.duration.inUse;
             var filterByDate = $scope.filters.date.inUse;
             var filterByVehicle = $scope.filters.vehicle.inUse;
             var filterBySpatial = $scope.filters.spatial.inUse;
+
+            $scope.filtered_tracks = 0; // counts tracks, that are filtered into the result.
 
             var resultTracks = [];
 
@@ -247,10 +262,7 @@
                 if (filterByVehicle) {
                     var car = currTrack.car;
                     var manu = currTrack.manufacturer;
-                    var carCombo = {
-                        car: car,
-                        manufacturer: manu
-                    };
+                    var carCombo = manu + "-" + car;
                     if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_set, carCombo)) {
                         continue;
                     }
@@ -269,6 +281,7 @@
 
                 // if all filters passed, add to resultTracks:
                 resultTracks.push(currTrack);
+                $scope.filtered_tracks++;
             }
 
             $scope.currentPaginationTracks.currentSelectedTracks = resultTracks;
@@ -277,9 +290,9 @@
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
             $scope.currentPaginationTracks.currentMonthTracks = [];
             // number pages:
-            $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 4);
-            // take the first 4:
-            for (var i = 0; i < 4 && i < number_monthly_tracks; i++) {
+            $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 5);
+            // take the first 5:
+            for (var i = 0; i < 5 && i < number_monthly_tracks; i++) {
                 $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
             }
             $scope.pagingTab.current = 1;
@@ -329,9 +342,9 @@
             $scope.currentPaginationTracks.currentMonthTracks = [];
 
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
-            // take the 1-4 from page current and push into currentMonthTracks:
-            for (var i = 4 * ($scope.currentPageTab - 1);
-                    i < 4 * ($scope.currentPageTab) && i < number_monthly_tracks; i++) {
+            // take the 1-5 from page current and push into currentMonthTracks:
+            for (var i = 5 * ($scope.currentPageTab - 1);
+                    i < 5 * ($scope.currentPageTab) && i < number_monthly_tracks; i++) {
                 $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
             }
         }
@@ -341,7 +354,7 @@
         $scope.containsVehicle = function (array, car) {
             var indexLooper = array.length;
             while (indexLooper--) {
-                if (array[indexLooper].car === car.car && array[indexLooper].manufacturer === car.manufacturer) {
+                if (array[indexLooper] === car) {
                     return true;
                 }
             }
@@ -355,8 +368,16 @@
                     // Erstelle eine Tagestabelle
                     var date_count = [];
                     var tracks = data.data.tracks;
+                    // mins and max's for card starting values:
                     $scope.date_min = new Date(tracks[0].begin);
                     $scope.date_max = new Date(tracks[0].begin);
+                    $scope.distance_min = parseFloat(tracks[0]['length'].toFixed(2));
+                    $scope.distance_max = parseFloat(tracks[0]['length'].toFixed(2));
+                    var seconds_passed = new Date(tracks[0].end).getTime() - new Date(tracks[0].begin).getTime();
+                    var minutes = seconds_passed / 60000;
+                    $scope.duration_min = Math.floor(minutes);
+                    $scope.duration_max = Math.ceil(minutes);
+
                     var contains = function (array, obj) {
                         var i = array.length;
                         while (i--) {
@@ -415,15 +436,29 @@
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
-                        var travelDistance = currTrack['length'].toFixed(1);
+                        var travelDistance = parseFloat(currTrack['length'].toFixed(2));
+                        // update distance_min and distance_max:
+                        if (travelDistance < $scope.distance_min) {
+                            $scope.distance_min = travelDistance;
+                        }
+                        if (travelDistance > $scope.distance_max) {
+                            $scope.distance_max = travelDistance;
+                        }
+
+                        var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
+                        var minutes = seconds_passed / 60000;
+                        // update distance_min and distance_max:
+                        if (minutes < $scope.duration_min) {
+                            $scope.duration_min = Math.floor(minutes);
+                        }
+                        if (minutes > $scope.duration_max) {
+                            $scope.duration_max = Math.ceil(minutes);
+                        }
+
 
                         var carType = currTrack.sensor.properties.model;
                         var carManu = currTrack.sensor.properties.manufacturer;
-                        var carCombo = {
-                            car: carType,
-                            manufacturer: carManu,
-                            checked: false
-                        };
+                        var carCombo = carManu + "-" + carType;
 
                         if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_all, carCombo)) {
                             $scope.filters.vehicle.params.cars_all.push(carCombo);
@@ -441,11 +476,12 @@
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,
-                            length: parseFloat(travelDistance)
+                            length: travelDistance
                         };
                         $scope.tracksPagination.push(resultTrack);
-
                     }
+                    $scope.distance_max = Math.ceil($scope.distance_max);
+                    $scope.distance_min = Math.floor($scope.distance_min);
 
                     // get all tracks from current month&year:
                     $scope.currentPaginationTracks = {
@@ -462,9 +498,9 @@
                     // calculate pagination:
                     var number_monthly_tracks = $scope.currentPaginationTracks.tracks.length;
                     // number pages:
-                    $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 4);
-                    // take the first 4:
-                    for (var i = 0; i < 4 && i < number_monthly_tracks; i++) {
+                    $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 5);
+                    // take the first 5:
+                    for (var i = 0; i < 5 && i < number_monthly_tracks; i++) {
                         $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.tracks[i]);
                     }
 

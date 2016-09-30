@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<md-card flex="100">
+<div class="divider" flex="100">
     <div layout="row" flex="100">
-        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+        <p style="color:#1A80C1;margin-left:20px;">
             <span>{{'FILTER_VEHICLE_TITLE'| translate}}</span>
         </p>
         <div layout="row" flex>
@@ -12,13 +12,7 @@
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="commonDialog(filters.vehicle)" class="md-icon-button md-accent" aria-label="edit">
-                <md-icon class="material-icons md-24">build</md-icon>
-                <md-tooltip>
-                    {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="filters.vehicle.inUse = false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
+            <md-button ng-click="removeFilter(filters.vehicle); filters.vehicle.inUse = false; filtersChanged();" class="md-icon-button md-warn" aria-label="close">
                 <md-icon class="material-icons  md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}
@@ -26,9 +20,17 @@
             </md-button>
         </div>
     </div>
-    <md-card-content>
-        {{'VEHICLES' | translate}}: <br>
-        <a ng-repeat="v in filters.vehicle.params.cars_set">{{v.manufacturer}} - {{v.car}}<br></a>
-
-    </md-card-content>
-</md-card>
+    <div layout="column" layout-padding ng-cloak>
+        <fieldset class="standard" >
+            <legend> Select or unselect your cars </legend>
+            <div layout="row" layout-wrap flex>
+                <div flex="50" ng-repeat="item in items">
+                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                        {{ item}}
+                    </md-checkbox>
+                </div>
+            </div>
+            <p ng-if="errorNothingSelected">{{'ERROR_NOSELECTION' | translate}}</p>
+        </fieldset>
+    </div>
+</div>

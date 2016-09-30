@@ -1,61 +1,6 @@
 <md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="156"></md-progress-circular>
     <div layout-gt-sm="row">
-        <md-card flex-gt-sm="35" >
-            <md-content>
-                <div layout="row" flex="100">
-                    <p style="color:#1A80C1; margin-left:20px;">
-                        <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
-                    </p>
-                    <div layout="row" flex>
-                        <span flex class="flex"></span>
-                        <md-button ng-click="showAlert($event, 'ALL_TRACKS_FILTER_TITLE', 'ALL_TRACKS_FILTER_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
-                            <md-icon class="material-icons  md-24">info</md-icon>
-                            <md-tooltip>
-                                {{'CLICK_FOR_MORE_INFO'| translate}}
-                            </md-tooltip>
-                        </md-button>
-                    </div>
-                </div>
-                <div layout-gt-md="row" layout="column">
-                    <div style="text-align:center">
-                        <md-menu>
-                            <md-button class="md-primary md-raised" ng-click="openMenu($mdOpenMenu, $event)">
-                                <i class="material-icons">add_box</i>
-                                <span style="color:rgba(255,255,255,0.9)">Filter</span>
-                                <md-tooltip>
-                                    {{'TT_ADD_FILTER_BUTTON'| translate}}
-                                </md-tooltip>
-                            </md-button>
-                            <md-menu-content width="4">
-                                <md-menu-item ng-repeat="item in filters" ng-if="!item.inUse">
-                                    <md-button ng-click="addFilter(item)">{{item.label}}</md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                    </div>
-                </div>
-                <div>
-                    <!--<filter-card    flex 
-                                    title="FILTER_DISTANCE_TITLE" 
-                                    description="FILTER_DISTANCE_DESCRIPTION"
-                                    btn_help="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')"
-                                    btn_edit="commonDialog(filters.distance)"
-                                    btn_close="filters.distance.inUse=false;"
-                                    template="app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/distance.template.html"
-                                    >
-                                    
-                    </filter-card>-->
-                    <filter-distance-card ng-if="filters.distance.inUse"></filter-distance-card>
-                    <filter-date-card ng-if="filters.date.inUse"></filter-date-card>
-                    <filter-duration-card ng-if="filters.duration.inUse"></filter-duration-card>
-                    <filter-vehicle-card ng-if="filters.vehicle.inUse"></filter-vehicle-card>
-                    <filter-spatial-card ng-if="filters.spatial.inUse"></filter-spatial-card>
-                </div>
-
-            </md-content>
-        </md-card>
-
         <md-card ng-if="onload_pagination_tab" flex>
 
             <div layout="row" flex="100">
@@ -102,11 +47,65 @@
                 </md-list-item>
 
             </md-list>
-            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * 4, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
+            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 5 - 3)}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * 5, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
             <cl-paging ng-show="screenIsXS" cl-pages="pagingTab.total" cl-steps="4" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
             <cl-paging ng-show="screenIsSM" cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
             <cl-paging ng-show="!screenIsXS && !screenIsSM" cl-pages="pagingTab.total" cl-steps="10" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
-            
+        </md-card>
+
+        <md-card flex-gt-sm="35" >
+            <md-content>
+                <div layout="row" flex="100">
+                    <p style="color:#1A80C1; margin-left:20px;">
+                        <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
+                    </p>
+                    <div layout="row" flex>
+                        <span flex class="flex"></span>
+                        <md-button ng-click="showAlert($event, 'ALL_TRACKS_FILTER_TITLE', 'ALL_TRACKS_FILTER_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                            <md-icon class="material-icons  md-24">info</md-icon>
+                            <md-tooltip>
+                                {{'CLICK_FOR_MORE_INFO'| translate}}
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <div>
+                    <!--<filter-card    flex 
+                                    title="FILTER_DISTANCE_TITLE" 
+                                    description="FILTER_DISTANCE_DESCRIPTION"
+                                    btn_help="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')"
+                                    btn_edit="commonDialog(filters.distance)"
+                                    btn_close="filters.distance.inUse=false;"
+                                    template="app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/distance.template.html"
+                                    >
+                                    
+                    </filter-card>-->
+                    <div ng-repeat="item in filterOrder">
+                        <filter-distance-card ng-if="item === filters.distance && filters.distance.inUse"></filter-distance-card>
+                        <filter-date-card ng-if="item === filters.date && filters.date.inUse"></filter-date-card>
+                        <filter-duration-card ng-if="item === filters.duration && filters.duration.inUse"></filter-duration-card>
+                        <filter-vehicle-card ng-if="item === filters.vehicle && filters.vehicle.inUse"></filter-vehicle-card>
+                        <filter-spatial-card ng-if="item === filters.spatial && filters.spatial.inUse"></filter-spatial-card>
+                    </div>
+                </div>
+                <md-menu>
+                    <md-button class="md-primary" ng-click="openMenu($mdOpenMenu, $event)">
+                        <i class="material-icons">add_box</i>
+                        <span enviroCar-blue>add filter</span>
+                        <md-tooltip>
+                            {{'TT_ADD_FILTER_BUTTON'| translate}}
+                        </md-tooltip>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item ng-repeat="item in filters" ng-if="!item.inUse">
+                            <md-button ng-click="addFilter(item)">{{item.label}}</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <div>
+                    <p>{{amount_of_user_tracks - filtered_tracks}}gefilterte tracks</p>
+                </div>
+            </md-content>
         </md-card>
     </div>
 </md-tab>

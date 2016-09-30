@@ -17,6 +17,7 @@ angular.module('translations', [])
             'WEBSITE-TITLE'         : 'EnviroCar Webapp',
             'LANGUAGE'              : 'Language',
             'CLICK_FOR_MORE_INFO'   : 'click for more information...',
+            'COMMING_SOON'          : 'comming soon...',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Open Sidenav',
@@ -33,6 +34,7 @@ angular.module('translations', [])
             'PASSWORD'  : 'Password',
             'REGISTER'  : 'Register',
             'LOGIN'     : 'Login',
+            'FORGOT_PASSWORD' : 'forgot password?',
             
             // Dashboard:
             'DASHBOARD'             : 'Dashboard',
@@ -183,7 +185,7 @@ angular.module('translations', [])
             'FILTER_VEHICLE'                            : 'Vehicle',
             'SELECT_VEHICLES'                           : 'Select Vehicles',
             'VEHICLES'                                  : 'Vehicles',
-            'ERROR_NOSELECTION'                         : 'You must select at least one vehicle. Click on the cross on the top right to cancel.',
+            'ERROR_NOSELECTION'                         : 'You must select at least one vehicle. Click on the cross on the top right to remove this filter.',
             
             'FILTER_SPATIAL_TITLE'                      : 'Location filter',
             'FILTER_SPATIAL_DESCRIPTION'                : 'The location filter filters your tracks by their location. You can specify a bounding box on the map. The resulting tracks have at least one point within the bounding box.',
@@ -305,6 +307,7 @@ angular.module('translations', [])
             'WEBSITE-TITLE'         : 'EnviroCar Webapp',
             'LANGUAGE'              : 'Sprache',
             'CLICK_FOR_MORE_INFO'   : 'Klick für weitere Informationen...',
+            'COMMING_SOON'          : 'Demnächst verfügbar...',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Öffne Seitenleiste',
@@ -322,6 +325,7 @@ angular.module('translations', [])
             'PASSWORD': 'Passwort',
             'REGISTER': 'Registrieren',
             'LOGIN': 'Anmelden',
+            'FORGOT_PASSWORD' : 'Passwort vergessen?',
             
             // Dashboard:
             'DASHBOARD'             : 'Dashboard',
@@ -476,7 +480,7 @@ angular.module('translations', [])
             'FILTER_VEHICLE'                            : 'Fahrzeugtyp',
             'SELECT_VEHICLES'                           : 'Wähle Fahrzeugtypen',
             'VEHICLES'                                  : 'Fahrzeuge',
-            'ERROR_NOSELECTION'                         : 'Du musst mindestens ein Fahrzeugtyp auswählen. Klicke auf das Kreuz oben rechts um abzubrechen.',
+            'ERROR_NOSELECTION'                         : 'Du musst mindestens ein Fahrzeugtyp auswählen. Klicke auf das Kreuz oben rechts um diesen Filter zu entfernen.',
             
             'FILTER_SPATIAL_TITLE'                      : 'Ortsfilter',
             'FILTER_SPATIAL_DESCRIPTION'                : 'Mit dem Ortsfilter kannst du auf einer Karte ein Rechteck ziehen. Der Ortsfilter filtert die Fahrten danach, ob sie Messungen innerhalb deines gezogenen Rechtsecks enthalten.',

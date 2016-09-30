@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $mdMedia, UserCredentialsService) {
+    function AppCtrl($scope, $mdMedia, $element, UserCredentialsService) {
         $scope.message = 'Initial Setup';
         $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
         $scope.screenIsXS = $mdMedia('xs');

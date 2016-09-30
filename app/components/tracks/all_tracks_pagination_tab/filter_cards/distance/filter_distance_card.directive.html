@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<md-card flex="100">
+<div class="divider" flex="100">
     <div layout="row" flex="100">
-        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+        <p style="color:#1A80C1; margin-left:20px;">
             <span>{{'FILTER_DISTANCE_TITLE'| translate}}</span>
-        </p>
+        </p> 
         <div layout="row" flex>
             <span flex class="flex"></span>
-            <md-button ng-click="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+            <md-button ng-click="showAlert($event, 'FILTER_DISTANCE_TITLE', 'FILTER_DISTANCE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                 <md-icon class="material-icons  md-24">info</md-icon>
                 <md-tooltip>
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="commonDialog(filters.distance)" class="md-icon-button md-accent" aria-label="edit">
-                <md-icon class="material-icons md-24">build</md-icon>
-                <md-tooltip>
-                    {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
-                </md-tooltip>
-            </md-button>
-            <md-button ng-click="filters.distance.inUse=false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
+            <md-button ng-click="removeFilter(filters.distance); filters.distance.inUse = false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
                 <md-icon class="material-icons  md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}
@@ -26,9 +20,17 @@
             </md-button>
         </div>
     </div>
-    <md-card-content>
-        <p ng-if='filters.distance.params.min !== undefined && filters.distance.params.min !== null'>{{'DISTANCE_CARD_MIN' | translate}}: {{filters.distance.params.min}}km</p>
-        <p ng-if='filters.distance.params.max !== undefined && filters.distance.params.max !== null'>{{'DISTANCE_CARD_MAX' | translate}}: {{filters.distance.params.max}}km</p>
-        
-    </md-card-content>
-</md-card>
+    <div style="padding-top:5%;width:100%">
+        <div layout="column" layout-padding ng-cloak>
+            <md-input-container>
+                <input type="number" ng-change="hide()" min="{{distance_min}}" max="{{maxDistanceFilter-1}}" ng-model="minDistanceFilter" placeholder="{{ 'DISTANCE_LONGER_THAN' | translate}}" style="width:100%">
+            </md-input-container>
+            <md-input-container>
+                <input type="number" ng-change="hide()" max="{{distance_max}}" min="{{minDistanceFilter+1}}" ng-model="maxDistanceFilter" placeholder="{{ 'DISTANCE_SHORTER_THAN' | translate}}" style="width:100%">
+            </md-input-container>
+            <p ng-if="errorNegative">{{'ERROR_NEGATIVE'| translate}}</p>
+            <p ng-if="errorOverlap">{{'DISTANCE_OVERLAP_ERROR'| translate}}</p>
+            <p ng-if="errorNoInput">{{'DISTANCE_ERROR_NOINPUT'| translate}}</p>
+        </div>
+    </div>
+</div>
