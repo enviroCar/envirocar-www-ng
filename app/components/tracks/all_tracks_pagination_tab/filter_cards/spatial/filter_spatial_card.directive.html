@@ -3,10 +3,11 @@
     <md-tooltip>
         {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
     </md-tooltip>
-    <div layout="row" flex="100">
-        <p style="color:#1A80C1; margin-left:20px;" ng-click="commonDialog(filters.spatial)">
-            <span>{{'FILTER_SPATIAL_TITLE'| translate}}</span>
-        </p>
+    <div class="filter_card" layout="row" flex="100">
+        <p style="color:#1A80C1;" ng-click="commonDialog(filters.spatial)">
+            <span>  <i class="material-icons md-24" style="margin-left:10px;">map</i>
+                {{'FILTER_SPATIAL_TITLE'| translate}}</span>
+        </p> 
         <div layout="row" flex>
             <span flex class="flex"></span>
             <md-button ng-click="showAlert($event,'FILTER_SPATIAL_TITLE','FILTER_SPATIAL_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
@@ -29,7 +30,7 @@
             </md-button>
         </div>
     </div>
-    <div ng-click="commonDialog(filters.spatial)">
+    <div class="filter_card_content"ng-click="commonDialog(filters.spatial)">
         <leaflet bounds="map2.spatial_bounds_card" layers="map2.layers_card" geojson="map2.geojson" defaults="map2.defaults" height="200px"></leaflet>
      </div>
 </div>
