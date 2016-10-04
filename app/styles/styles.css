@@ -24,6 +24,9 @@
 [x-ng-click] {
   cursor: pointer; }
 
+.btn_addfilter {
+  margin: auto; }
+
 /* Rules for sizing the icon. */
 .material-icons.md-10 {
   font-size: 10px; }
@@ -482,7 +485,8 @@ calendar-md {
     height: 590px;
 }*/
 .divider-list-item {
-  border-bottom: 1px solid #8CBF3F; }
+  border-bottom: 1px solid #8CBF3F;
+  padding-left: 24px; }
 
 .divider {
   border-top: 1px solid #8CBF3F; }
@@ -498,6 +502,21 @@ cl-paging {
   width: 24px;
   height: 24px;
   margin-bottom: -6px; }
+
+.filter_card {
+  padding-left: 16px; }
+  .filter_card .md-button {
+    margin-left: 0px !important;
+    margin-right: 0px !important; }
+  .filter_card .md-icon-button {
+    margin-left: 0px !important;
+    margin-right: 0px !important; }
+
+.filter_card_content {
+  padding-left: 24px; }
+  .filter_card_content md-input-container {
+    margin-top: 0px;
+    margin-bottom: 8px; }
 
 .filter_heading {
   padding-left: 16px;

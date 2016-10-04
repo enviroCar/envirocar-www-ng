@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <div class="divider" flex="100">
-    <div layout="row" flex="100">
-        <p style="color:#1A80C1; margin-left:20px;">
-            <span>{{'FILTER_DISTANCE_TITLE'| translate}}</span>
+    <div class="filter_card" layout="row" flex="100">
+        <p style="color:#1A80C1;">
+            <span>  <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                {{'FILTER_DISTANCE_TITLE'| translate}}</span>
         </p> 
+        
         <div layout="row" flex>
             <span flex class="flex"></span>
             <md-button ng-click="showAlert($event, 'FILTER_DISTANCE_TITLE', 'FILTER_DISTANCE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
@@ -20,7 +22,7 @@
             </md-button>
         </div>
     </div>
-    <div style="padding-top:5%;width:100%">
+    <div class="filter_card_content">
         <div layout="column" layout-padding ng-cloak>
             <md-input-container>
                 <input type="number" ng-change="hide()" min="{{distance_min}}" max="{{maxDistanceFilter-1}}" ng-model="minDistanceFilter" placeholder="{{ 'DISTANCE_LONGER_THAN' | translate}}" style="width:100%">

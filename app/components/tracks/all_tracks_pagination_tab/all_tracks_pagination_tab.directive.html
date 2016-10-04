@@ -1,7 +1,7 @@
 <md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="156"></md-progress-circular>
     <div layout-gt-sm="row">
-        <md-card ng-if="onload_pagination_tab" flex>
+        <md-card ng-if="onload_pagination_tab" flex  layout="column">
 
             <div layout="row" flex="100">
                 <div layout="row" flex>
@@ -14,32 +14,37 @@
                     </md-button>
                 </div>
             </div>
-            <md-list id="calendar-list">
+            <md-list layout-align="center start" id="calendar-list">
                 <md-list-item layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
                     <div layout="column" layout-align="center start">
+                        <div layout="row" style="height: 36px;" layout-align="center start">
+                                <svg style="width:36px;height:36px; padding-top: 5px;" viewBox="0 0 36 36">
+                                <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
+                                </svg>
+                                <b style="color:rgba(0,101,160,0.9);">{{event.begin| date:'medium'}}</b>
+                        </div>
+                        <div layout="column" layout-align="center start">
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                                {{'DISTANCE'| translate}}: {{event.length}} km
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                                {{event.manufacturer}} - {{event.car}}
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">timer</i>
+                                <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                    <md-content >
+                                        <p class="placeholder-p">.</p>
 
-                        <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+                                        <img src={{event.url}} style="width:280px;height:176px;"/>
 
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                            {{'DISTANCE'| translate}}: {{event.length}} km
-                        </span>
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
-                            {{event.manufacturer}} - {{event.car}}
-                        </span>
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;">timer</i>
-                            <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                <md-content >
-                                    <p class="placeholder-p">.</p>
-
-                                    <img src={{event.url}} style="width:280px;height:176px;"/>
-
-                                </md-content>
-                            </md-tooltip>
-                            {{'DURATION'| translate}}: {{event.travelTime}}
-                        </span>
+                                    </md-content>
+                                </md-tooltip>
+                                {{'DURATION'| translate}}: {{event.travelTime}}
+                            </span>
+                        </div>
                     </div>
                 </md-list-item>
 
@@ -50,8 +55,8 @@
             <cl-paging ng-show="!screenIsXS && !screenIsSM" cl-pages="pagingTab.total" cl-steps="10" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
         </md-card>
 
-        <md-card flex-gt-sm="35" >
-            <md-content>
+        <md-card flex-gt-sm="35">
+            <md-content layout="column">
                 <div layout="row" flex="100">
                     <p style="color:#1A80C1; margin-left:20px;">
                         <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
@@ -85,10 +90,10 @@
                         <filter-spatial-card ng-if="item === filters.spatial && filters.spatial.inUse"></filter-spatial-card>
                     </div>
                 </div>
-                <md-menu>
+                <md-menu class="btn_addfilter">
                     <md-button class="md-primary" ng-click="openMenu($mdOpenMenu, $event)">
-                        <i class="material-icons">add_box</i>
-                        <span enviroCar-blue>add filter</span>
+                        <i class="material-icons">add</i>
+                        <span enviroCar-blue>{{'BTN_ADD_FILTER'| translate}}</span>
                         <md-tooltip>
                             {{'TT_ADD_FILTER_BUTTON'| translate}}
                         </md-tooltip>

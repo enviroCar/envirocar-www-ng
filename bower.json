@@ -36,6 +36,7 @@
     "ui-leaflet-draw": "^0.0.3"
   },
   "resolutions": {
-    "angular-material": "^1.1.1"
+    "angular-material": "^1.1.1",
+    "angular": "^1.5.8"
   }
 }

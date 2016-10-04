@@ -137,7 +137,6 @@ angular.module('translations', [])
             'FROM_TO'       : 'to',
             'SHOWING'       : 'Showing',
             
-            
             // Tracks Page - All Tracks Pagination Tab - Filter:
             'ALL_TRACKS_FILTER_TITLE'                   : 'Filter options',
             'ALL_TRACKS_FILTER_DESCRIPTION'             : 'In this card you can set filter options for the tracks in the pagination list. You can create distance, duration, date, vehicle and location filters by clicking on the \'+Filter\'-button. The tracks in the pagination list will be automatically filtered by your filters.',
@@ -149,6 +148,7 @@ angular.module('translations', [])
             'CLOSE_DIALOG'                              : 'Click to cancel',
             'ERROR_NEGATIVE'                            : 'You can not enter negative numbers',
             'ERROR_NO_INPUT'                            : 'You must enter at least one input. Click on the cross on the top right to cancel.',
+            'BTN_ADD_FILTER'                            : 'add filter',
             
             'FILTER_DISTANCE_TITLE'                     : 'Distance filter',
             'FILTER_DISTANCE_DESCRIPTION'               : 'The distance filter filters your tracks by their length. You can specify a minimum length and/or a maximum length.',
@@ -445,6 +445,7 @@ angular.module('translations', [])
             'CLOSE_DIALOG'                              : 'Klick um abzubrechen',
             'ERROR_NEGATIVE'                            : 'Keine negativen Einträge erlaubt!',
             'ERROR_NO_INPUT'                            : 'Du musst mindestens eine Eingabe machen. Klicke auf das Kreuz oben rechts um abzubrechen.',
+            'BTN_ADD_FILTER'                            : 'Filter hinzufügen',
            
             'FILTER_DISTANCE_TITLE'                     : 'Distanzfilter',
             'FILTER_DISTANCE_DESCRIPTION'               : 'Der Distanzfilter filtert die Fahrten nach ihrer Länge. Du kannst eine Minimallänge und/oder eine Maximallänge angeben.',

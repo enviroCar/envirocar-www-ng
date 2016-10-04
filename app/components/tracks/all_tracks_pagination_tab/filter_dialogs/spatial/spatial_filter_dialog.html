@@ -19,7 +19,7 @@
                     <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
                     {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2' | translate}}
                 </div>
-                <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="400px" ></leaflet>
+                <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
                 <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
                 <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
             </div>

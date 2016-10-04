@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <div class="divider" flex="100">
-    <div layout="row" flex="100">
-        <p style="color:#1A80C1; margin-left:20px;">
-            <span>{{'FILTER_DATE_TITLE'| translate}}</span>
-        </p>
+    <div class="filter_card" layout="row" flex="100">
+        <p style="color:#1A80C1;">
+            <span>  <i class="material-icons md-24" style="margin-left:10px;">date_range</i>
+                {{'FILTER_DATE_TITLE'| translate}}</span>
+        </p> 
         <div layout="row" flex>
             <span flex class="flex"></span>
             <md-button ng-click="showAlert($event, 'FILTER_DATE_TITLE', 'FILTER_DATE_DESCRIPTION')" class="md-accent" aria-label="Info">
@@ -21,7 +22,7 @@
         </div>
     </div>
     <div>
-        <div layout-padding ng-cloak>
+        <div class="filter_card_content" ng-cloak>
             <md-input-container>
                 <label>{{ 'DATE_MIN_DATE' | translate}}</label>
                 <md-datepicker ng-change="hide()" max="{{dateEndCustom}}" ng-model="dateStartCustom" md-placeholder="Start date"></md-datepicker>

@@ -98,11 +98,6 @@
                 axisLabel: axisLabelCO2,
                 axisLabelDistance: -10
             };
-            var axisLabelEngineLoad = $translate.instant('ENGINE_LOAD') + ' (%)';
-            $scope.optionsEngine.chart.yAxis = {
-                axisLabel: axisLabelEngineLoad,
-                axisLabelDistance: -10
-            };
         });
 
         $scope.optionsConsumption = {

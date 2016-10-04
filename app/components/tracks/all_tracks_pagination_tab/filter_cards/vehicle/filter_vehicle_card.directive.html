@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <div class="divider" flex="100">
-    <div layout="row" flex="100">
-        <p style="color:#1A80C1;margin-left:20px;">
-            <span>{{'FILTER_VEHICLE_TITLE'| translate}}</span>
+    <div class="filter_card" layout="row" flex="100">
+        <p style="color:#1A80C1;">
+            <span>  <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                {{'FILTER_VEHICLE_TITLE'| translate}}</span>
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
@@ -20,17 +21,19 @@
             </md-button>
         </div>
     </div>
-    <div layout="column" layout-padding ng-cloak>
-        <fieldset class="standard" >
-            <legend> Select or unselect your cars </legend>
-            <div layout="row" layout-wrap flex>
-                <div flex="50" ng-repeat="item in items">
-                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
-                        {{ item}}
-                    </md-checkbox>
+    <div class="filter_card_content">
+        <div layout="column" layout-padding ng-cloak>
+            <fieldset class="standard" >
+                <legend> Select or unselect your cars </legend>
+                <div layout="row" layout-wrap flex>
+                    <div flex="50" ng-repeat="item in items">
+                        <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                            {{ item}}
+                        </md-checkbox>
+                    </div>
                 </div>
-            </div>
-            <p ng-if="errorNothingSelected">{{'ERROR_NOSELECTION' | translate}}</p>
-        </fieldset>
+                <p ng-if="errorNothingSelected">{{'ERROR_NOSELECTION'| translate}}</p>
+            </fieldset>
+        </div>
     </div>
 </div>
