@@ -1,43 +1,48 @@
 (function () {
     'use strict';
-    function FilterDateCardCtrl($scope) {
-        $scope.errorOverlap = false;
+    function FilterDateCardCtrl($scope, $timeout) {
         $scope.dateStartCustom = $scope.date_min;
-        $scope.dateStartCustom.setHours(0, 0, 0, 0);
         $scope.dateEndCustom = $scope.date_max;
-        $scope.dateEndCustom.setHours(23, 59, 0, 0);
         $scope.filters.date.params.min = $scope.date_min;
         $scope.filters.date.params.min.setHours(0, 0, 0, 0);
         $scope.filters.date.params.max = $scope.date_max;
         $scope.filters.date.params.max.setHours(23, 59, 0, 0);
 
-        $scope.hide = function () {
-            $scope.errorOverlap = false;
-
-            if ($scope.dateStartCustom.getTime() > $scope.dateEndCustom.getTime())
-            {
-                // If start date occurs after the end date.
-                $scope.errorOverlap = true;
-            } else {
-
-                if ($scope.dateStartCustom !== undefined) {
-                    $scope.filters.date.params.min = $scope.dateStartCustom;
-                    $scope.filters.date.params.min.setHours(0, 0, 0, 0);
-                } else {
-                    $scope.filters.date.params.min = $scope.date_min;
+        $scope.sliderDate = {
+            minValue: $scope.dateStartCustom.getTime(),
+            maxValue: $scope.dateEndCustom.getTime(),
+            options: {
+                floor: $scope.dateStartCustom.getTime(),
+                ceil: $scope.dateEndCustom.getTime(),
+                step: 1,
+                draggableRange: true,
+                getSelectionBarColor: function (value) {
+                    return '#8cbf3f';
+                },
+                getPointerColor: function (value) {
+                    return '#8cbf3f';
+                },
+                translate: function (value) {
+                    var date = new Date(value);
+                    return '<font color="black">' + date.getDate() + "-" +(date.getMonth()+1)+"-"+date.getFullYear() + '</font>';
+                },
+                id: 'sliderDistance',
+                onChange: function (id) {
+                    $scope.changeSelectionRange($scope.sliderDate.minValue, $scope.sliderDate.maxValue);
                 }
-                if ($scope.dateEndCustom !== undefined) {
-                    $scope.filters.date.params.max = $scope.dateEndCustom;
-                    $scope.filters.date.params.max.setHours(23, 59, 0, 0);
-                } else {
-                    $scope.filters.date.params.max = $scope.date_max;
-                }
-
-                $scope.filtersChanged();
             }
         };
 
-        console.log($scope.filters);
+        $scope.changeSelectionRange = function (a, b) {
+            $scope.filters.date.params.min = new Date(a);
+            $scope.filters.date.params.min.setHours(0, 0, 0, 0);
+
+            $scope.filters.date.params.max = new Date(b);
+            $scope.filters.date.params.max.setHours(23, 59, 0, 0);
+
+            $scope.filters.date.inUse = true;
+            $scope.filtersChanged();
+        };
         /**
          var date_min = $scope.filters.date.params.min;
          var date_max = $scope.filters.date.params.max;
@@ -50,6 +55,10 @@
          $scope.min_date = day_min + "." + month_min + "." + year_min;
          $scope.max_date = day_max + "." + month_max + "." + year_max;
          */
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
     }
     ;
 

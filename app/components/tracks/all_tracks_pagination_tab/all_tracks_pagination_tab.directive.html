@@ -3,7 +3,7 @@
     <div layout-gt-sm="row">
         <md-card ng-if="onload_pagination_tab" flex  layout="column">
 
-            <div layout="row" flex="100">
+            <div layout="row">
                 <div layout="row" flex>
                     <p flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
                     <md-button ng-click="showAlert($event, 'ALL_TRACKS_OVERVIEW_TITLE', 'ALL_TRACKS_OVERVIEW_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
@@ -14,42 +14,44 @@
                     </md-button>
                 </div>
             </div>
-            <md-list layout-align="center start" id="calendar-list">
-                <md-list-item layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
-                    <div layout="column" layout-align="center start">
-                        <div layout="row" style="height: 36px;" layout-align="center start">
-                                <svg style="width:36px;height:36px; padding-top: 5px;" viewBox="0 0 36 36">
-                                <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
-                                </svg>
-                                <b style="color:rgba(0,101,160,0.9);">{{event.begin| date:'medium'}}</b>
+            <md-list layout-align="start start" id="calendar-list" flex>
+                <div layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)" flex>
+                    <div layout="column" flex>
+                        <div layout="row" style="height: 36px;">
+                            <svg style="width:36px;height:36px;" viewBox="0 0 36 36">
+                            <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
+                            </svg>
+                            <b>{{event.begin| date:'medium'}}</b>
                         </div>
-                        <div layout="column" layout-align="center start">
-                            <span>
+                        <div class="divider-list-item-content" layout-xs="column" layout-gt-xs="row" flex-gt-xs >
+                            <span flex-gt-xs="30">
                                 <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                                {{'DISTANCE'| translate}}: {{event.length}} km
+                                {{event.length}} km
                             </span>
                             <span>
-                                <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                                <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
+                                {{event.travelTime}}
+                            </span>
+                            <span flex-gt-xs class="flex-gt-xs"></span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">
+                                    directions_car</i>
                                 {{event.manufacturer}} - {{event.car}}
-                            </span>
-                            <span>
-                                <i class="material-icons md-24" style="margin-left:10px;">timer</i>
-                                <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                    <md-content >
-                                        <p class="placeholder-p">.</p>
-
-                                        <img src={{event.url}} style="width:280px;height:176px;"/>
-
-                                    </md-content>
-                                </md-tooltip>
-                                {{'DURATION'| translate}}: {{event.travelTime}}
                             </span>
                         </div>
                     </div>
-                </md-list-item>
+
+                    <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="center">
+                        <md-content>
+                            <p class="placeholder-p">.</p>
+
+                            <img src={{event.url}} style="width:280px;height:180px;"></img>
+                        </md-content>
+                    </md-tooltip>
+                </div>
 
             </md-list>
-            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * 5 - 3)}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * 5, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
+            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * itemsPerPage - (itemsPerPage - 1))}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * itemsPerPage, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
             <cl-paging ng-show="screenIsXS" cl-pages="pagingTab.total" cl-steps="4" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
             <cl-paging ng-show="screenIsSM" cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
             <cl-paging ng-show="!screenIsXS && !screenIsSM" cl-pages="pagingTab.total" cl-steps="10" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>

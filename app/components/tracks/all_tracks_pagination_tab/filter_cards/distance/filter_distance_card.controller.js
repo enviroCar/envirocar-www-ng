@@ -1,38 +1,44 @@
 (function () {
     'use strict';
-    function FilterDistanceCardCtrl($scope) {
-        console.log($scope.filters);
-        $scope.errorNegative = false;
-        $scope.errorOverlap = false;
-        $scope.errorNoInput = false;
-        $scope.minDistanceFilter = $scope.distance_min;
-        $scope.maxDistanceFilter = $scope.distance_max;
+    function FilterDistanceCardCtrl($scope, $timeout) {
         $scope.filters.distance.params.min = $scope.distance_min;
         $scope.filters.distance.params.max = $scope.distance_max;
 
-        $scope.hide = function () {
-            $scope.errorNegative = false;
-            $scope.errorOverlap = false;
-            $scope.errorNoInput = false;
-
-            if ($scope.minDistanceFilter < 0 || $scope.maxDistanceFilter < 0)
-            {
-                // Negative values given for distance.
-                $scope.errorNegative = true;
-            } else if (($scope.minDistanceFilter === undefined) && ($scope.maxDistanceFilter === undefined)) {
-                $scope.errorNoInput = true;
-            } else if ($scope.minDistanceFilter > $scope.maxDistanceFilter)
-            {
-                // If minimum distance value is larger than maximum distance value
-                $scope.errorOverlap = true;
-            } else {
-                // None of the errors occured! Can successfully set filters
-                $scope.filters.distance.params.min = ($scope.minDistanceFilter !== undefined) ? $scope.minDistanceFilter : $scope.distance_min;;
-                $scope.filters.distance.params.max = ($scope.maxDistanceFilter !== undefined || null) ? $scope.maxDistanceFilter : $scope.distance_max;
-                $scope.filters.distance.inUse = true;
-                $scope.filtersChanged();
+        $scope.sliderDistance = {
+            minValue: $scope.distance_min,
+            maxValue: $scope.distance_max,
+            options: {
+                floor: $scope.distance_min,
+                ceil: $scope.distance_max,
+                step: 1,
+                draggableRange: true,
+                getSelectionBarColor: function (value) {
+                    return '#8cbf3f';
+                },
+                getPointerColor: function (value) {
+                    return '#8cbf3f';
+                },
+                translate: function (value) {
+                    return '<font color="black">' + value + 'km</font>';
+                },
+                id: 'sliderDistance',
+                onChange: function (id) {
+                    $scope.changeSelectionRange($scope.sliderDistance.minValue, $scope.sliderDistance.maxValue);
+                }
             }
         };
+
+        $scope.changeSelectionRange = function (a, b) {
+            $scope.filters.distance.params.min = a;
+            ;
+            $scope.filters.distance.params.max = b;
+            $scope.filters.distance.inUse = true;
+            $scope.filtersChanged();
+        };
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
     }
     ;
 

@@ -2,8 +2,8 @@
 <div class="divider" flex="100">
     <div class="filter_card" layout="row" flex="100">
         <p style="color:#1A80C1;">
-            <span>  <i class="material-icons md-24" style="margin-left:10px;">date_range</i>
-                {{'FILTER_DATE_TITLE'| translate}}</span>
+            <span>  <i class="material-icons md-24">date_range</i>
+                <a>{{'FILTER_DATE_TITLE'| translate}}</a></span>
         </p> 
         <div layout="row" flex>
             <span flex class="flex"></span>
@@ -23,16 +23,23 @@
     </div>
     <div>
         <div class="filter_card_content" ng-cloak>
-            <md-input-container>
-                <label>{{ 'DATE_MIN_DATE' | translate}}</label>
-                <md-datepicker ng-change="hide()" max="{{dateEndCustom}}" ng-model="dateStartCustom" md-placeholder="Start date"></md-datepicker>
-            </md-input-container>
-            <md-input-container>
-                <label>{{ 'DATE_MAX_DATE' | translate}}</label>
-                <md-datepicker ng-change="hide()" min="{{dateStartCustom}}" ng-model="dateEndCustom" md-placeholder="End date"></md-datepicker>
-            </md-input-container>
-
-            <p ng-if="errorOverlap">{{'DATE_OVERLAP_ERROR'| translate}}</p>
+            <div layout="column" layout-padding ng-cloak>
+                <!--
+                <md-input-container>
+                    <label>{{ 'DATE_MIN_DATE' | translate}}</label>
+                    <md-datepicker ng-change="hide()" max="{{dateEndCustom}}" ng-model="dateStartCustom" md-placeholder="Start date"></md-datepicker>
+                </md-input-container>
+                <md-input-container>
+                    <label>{{ 'DATE_MAX_DATE' | translate}}</label>
+                    <md-datepicker ng-change="hide()" min="{{dateStartCustom}}" ng-model="dateEndCustom" md-placeholder="End date"></md-datepicker>
+                </md-input-container>
+                -->
+                <div flex>
+                    <rzslider  id="sliderDate" rz-slider-model="sliderDate.minValue"
+                               rz-slider-high="sliderDate.maxValue"
+                               rz-slider-options="sliderDate.options" flex></rzslider>
+                </div>
+            </div>
         </div>
     </div>
 </div>

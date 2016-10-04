@@ -2,8 +2,8 @@
 <div class="divider" flex="100">
     <div class="filter_card" layout="row" flex="100">
         <p style="color:#1A80C1;">
-            <span>  <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
-                {{'FILTER_DURATION_TITLE'| translate}}</span>
+            <span>  <i class="material-icons md-24">timelapse</i>
+                <a>{{'FILTER_DURATION_TITLE'| translate}}</a></span>
         </p>
         <div layout="row" flex>
             <span flex class="flex"></span>
@@ -23,15 +23,19 @@
     </div>
     <div class="filter_card_content">
         <div layout="column" layout-padding ng-cloak>
+            <!--
             <md-input-container >
                 <input type="number" min="{{duration_min}}" max="{{maxDurationFilter - 1}}" ng-change="hide()" ng-model="minDurationFilter" placeholder="{{ 'DURATION_MIN' | translate}}" style="width:100%">
             </md-input-container>
             <md-input-container>
                 <input type="number" max="{{duration_max}}" min="{{minDurationFilter + 1}}" ng-change="hide()" ng-model="maxDurationFilter" placeholder="{{ 'DURATION_MAX' | translate}}" style="width:100%">
             </md-input-container>
-            <p ng-if="errorNegative">{{'ERROR_NEGATIVE'| translate}}</p>
-            <p ng-if="errorNoInput">{{'ERROR_NO_INPUT'| translate}}</p>
-            <p ng-if="errorOverlap">{{'DURATION_OVERLAP_ERROR'| translate}}</p>
+            -->
+            <div flex>
+                <rzslider  id="sliderDuration" rz-slider-model="sliderDuration.minValue"
+                           rz-slider-high="sliderDuration.maxValue"
+                           rz-slider-options="sliderDuration.options" flex></rzslider>
+            </div>
         </div>
     </div>
 </div>

@@ -12,9 +12,6 @@
             $scope.selected.push($scope.filters.vehicle.params.cars_all[i]);
             $scope.filters.vehicle.params.cars_set.push($scope.filters.vehicle.params.cars_all[i]);
         }
-        $scope.items.push("BATMOBIL");
-        $scope.selected.push("BATMOBIL");
-        $scope.filters.vehicle.params.cars_set.push("BATMOBIL");
 
         $scope.hide = function () {
             $scope.errorNothingSelected = false;

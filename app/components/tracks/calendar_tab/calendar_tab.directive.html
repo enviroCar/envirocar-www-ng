@@ -66,7 +66,7 @@
                 </div>
             </md-content>
         </md-card>
-        
+
         <md-card flex>
             <div layout="row">
                 <p style="color:#1A80C1;background-color:white; margin-left:20px;">
@@ -99,32 +99,38 @@
             <cl-paging cl-pages="paging.total" cl-steps="4" cl-page-changed="paging.onPageChanged()" cl-align="center end" cl-current-page="paging.current"></cl-paging>
             <span class="center-aligned"> {{'PAGE'| translate}} {{paging.current}} {{'OF'| translate}} {{Math.max(paging.current, paging.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPageTracks.currentSelectedTracks.length, paging.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(paging.current * 4, currentPageTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{Math.min(paging.total * 4, currentPageTracks.currentSelectedTracks.length)}}  </span>
             <md-list id="calendar-list" flex>
-                <md-list-item layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPageTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
+                <div layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPageTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
                     <div layout="column" layout-align="center start">
+                        <div layout="row" style="height: 36px;" layout-align="center start">
+                            <svg style="width:36px;height:36px; padding-top: 5px;" viewBox="0 0 36 36">
+                            <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
+                            </svg>
+                            <b>{{event.begin| date:'medium'}}</b>
+                        </div>
+                        <div class="divider-list-item-content" layout="column" layout-align="center start">
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                                {{'DISTANCE'| translate}}: {{event.length}} km
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
+                                {{'DURATION'| translate}}: {{event.travelTime}}
+                            </span>
+                            <span>
+                                <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
+                                {{event.manufacturer}} - {{event.car}}
+                            </span>
+                            <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                <md-content >
+                                    <p class="placeholder-p">.</p>
 
-                        <span style="color:rgba(0,101,160,0.9)"><b>{{event.begin| date:'medium'}}</b></span>
+                                    <img src="{{event.url}}" style="width:280px;height:176px;"></img>
 
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                            {{'DISTANCE'| translate}}: {{event.length}} km
-                        </span>
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
-                            {{event.manufacturer}} - {{event.car}}
-                        </span>
-                        <span>
-                            <i class="material-icons md-24" style="margin-left:10px;"><md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
-                                    <md-content >
-                                        <p class="placeholder-p">.</p>
-
-                                        <img src={{event.url}} style="width:280px;height:176px;"></img>
-
-                                    </md-content>
-                                </md-tooltip>timer</i>
-                            {{'DURATION'| translate}}: {{event.travelTime}}
-                        </span>
+                                </md-content>
+                            </md-tooltip>
+                        </div>
                     </div>
-                </md-list-item>
+                </div>
 
             </md-list>
             <span class="center-aligned"> {{'PAGE'| translate}} {{paging.current}} {{'OF'| translate}} {{Math.max(paging.current, paging.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPageTracks.currentSelectedTracks.length, paging.current * 4 - 3)}} {{'FROM_TO'| translate}} {{Math.min(paging.current * 4, currentPageTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{Math.min(paging.total * 4, currentPageTracks.currentSelectedTracks.length)}}  </span>

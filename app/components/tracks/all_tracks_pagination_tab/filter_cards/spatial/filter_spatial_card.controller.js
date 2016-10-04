@@ -32,13 +32,16 @@
                             showArea: true,
                             shapeOptions: {
                                 color: 'blue'
-                            }
+                            },
+                            edit: false
                         },
-                        marker: false
+                        marker: false,
+                        edit: false
                     },
                     edit: {
                         featureGroup: drawnItems2,
-                        remove: false
+                        remove: false,
+                        edit: false
                     }
                 },
                 geojson: {
@@ -106,9 +109,10 @@
                         color: "#1A80C1"
                     }
                 };
+                var paddingLat = ($scope.filters.spatial.params.northeast.lat - $scope.filters.spatial.params.southwest.lat) / 10;
                 $scope.map2.spatial_bounds_card = leafletBoundsHelpers.createBoundsFromArray([
-                    [$scope.filters.spatial.params.northeast.lat, $scope.filters.spatial.params.northeast.lng],
-                    [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng]
+                    [$scope.filters.spatial.params.northeast.lat+paddingLat, $scope.filters.spatial.params.northeast.lng],
+                    [$scope.filters.spatial.params.southwest.lat-paddingLat, $scope.filters.spatial.params.southwest.lng]
                 ]);
                 window.dispatchEvent(new Event('resize'));
             },

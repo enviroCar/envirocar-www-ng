@@ -34,7 +34,7 @@
                     console.log(data);
                     $scope.number = data.data.tracks.length;
                     var limit = 0;
-                    // The latest tracks display shows latest 7 tracks. If the user only has a total of lesser than 7 tracks, then we update that number to avoid exceptions
+                    // The latest tracks display shows latest 6 tracks. If the user only has a total of less than 6 tracks, then we update that number to avoid exceptions
                     if ($scope.number >= 6)
                         limit = 6;
                     else

@@ -21,6 +21,32 @@
         $scope.Math = window.Math;
         $scope.filterOrder = [];
 
+        $scope.itemsPerPage = ($scope.screenIsXS ? 5 : 10);
+        $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
+
+        $(window).resize(function () {
+            $scope.$apply(function () {
+                if (window.innerHeight < 1000) {
+                    $scope.itemsPerPage = 5;
+                } else {
+                    $scope.itemsPerPage = 10;
+                }
+                // calculate pagination:
+                var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
+                $scope.currentPaginationTracks.currentMonthTracks = [];
+                // number pages:
+                $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+                // take the first $scope.itemsPerPage:
+                for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
+                    $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
+                }
+                $scope.pagingTab.current = 1;
+                loadPages();
+            });
+        });
+
+
+
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
 
@@ -290,9 +316,9 @@
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
             $scope.currentPaginationTracks.currentMonthTracks = [];
             // number pages:
-            $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 5);
-            // take the first 5:
-            for (var i = 0; i < 5 && i < number_monthly_tracks; i++) {
+            $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+            // take the first $scope.itemsPerPage:
+            for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
                 $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
             }
             $scope.pagingTab.current = 1;
@@ -335,21 +361,34 @@
             align: 'center start',
             onPageChanged: loadPages
         };
-
         function loadPages() {
             $scope.currentPageTab = $scope.pagingTab.current;
-            // remove the 1-4 tracks from current pagination page:
+            // remove the 1-$scope.itemsPerPage tracks from current pagination page:
             $scope.currentPaginationTracks.currentMonthTracks = [];
 
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
-            // take the 1-5 from page current and push into currentMonthTracks:
-            for (var i = 5 * ($scope.currentPageTab - 1);
-                    i < 5 * ($scope.currentPageTab) && i < number_monthly_tracks; i++) {
+            // take the 1-$scope.itemsPerPage from page current and push into currentMonthTracks:
+            for (var i = $scope.itemsPerPage * ($scope.currentPageTab - 1);
+                    i < $scope.itemsPerPage * ($scope.currentPageTab) && i < number_monthly_tracks; i++) {
                 $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
             }
         }
 
         $scope.tracksPagination = [];
+
+        if (window.innerHeight > 0) {
+            // calculate pagination:
+            var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
+            $scope.currentPaginationTracks.currentMonthTracks = [];
+            // number pages:
+            $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+            // take the first $scope.itemsPerPage:
+            for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
+                $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
+            }
+            $scope.pagingTab.current = 1;
+            loadPages();
+        }
 
         $scope.containsVehicle = function (array, car) {
             var indexLooper = array.length;
@@ -388,6 +427,7 @@
                         return false;
                     };
 
+                    $scope.filtered_tracks = tracks.length;
                     $scope.tracksPagination = [];
                     for (var i = 0; i < tracks.length; i++) {
                         var currTrack = tracks[i];
@@ -498,9 +538,9 @@
                     // calculate pagination:
                     var number_monthly_tracks = $scope.currentPaginationTracks.tracks.length;
                     // number pages:
-                    $scope.pagingTab.total = Math.ceil(number_monthly_tracks / 5);
-                    // take the first 5:
-                    for (var i = 0; i < 5 && i < number_monthly_tracks; i++) {
+                    $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+                    // take the first $scope.itemsPerPage:
+                    for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
                         $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.tracks[i]);
                     }
 

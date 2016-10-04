@@ -17,6 +17,8 @@
             UserCredentialsService,
             ecBaseUrl) {
 
+            console.log(ecBaseUrl);
+
         $scope.onload_all_tracks = false;
         
         var tablist = angular.element($element[0].querySelector('#track_list_tab'));

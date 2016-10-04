@@ -330,7 +330,6 @@ md-sidenav {
     z-index: 1;
 }
 
-
 #placeholder {
     display:inline-block;
     width: 60px;
@@ -572,12 +571,37 @@ calendar-md {
 }*/
 
 .divider-list-item {
-    border-bottom: 1px solid #8CBF3F;
+    //border-bottom: 1px solid #8CBF3F;
+    box-shadow: 0px 32px 5px -32px grey;
     padding-left: 24px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    .divider-list-item-content {
+         padding-left: 40px;
+         padding-right: 24px;
+    }
+    
+    b {
+        color:rgba(0,101,160,0.9);
+        padding-left: 12px;
+        padding-top: 4px;
+    }
+}
+
+.divider-list-item:hover {
+    background-color: lightgrey;
 }
 
 .divider {
-    border-top: 1px solid #8CBF3F;
+    border-right: 1px solid #1A80C1;
+    border-left: 1px solid #1A80C1;
+
+    border-top: 1px solid #1A80C1;
+    border-top-left-radius: 2em;
+
+    border-bottom: 1px solid #1A80C1;
+    border-bottom-left-radius: 2em;
 }
 
 cl-paging {
@@ -596,30 +620,35 @@ cl-paging {
 }
 
 .filter_card {
-    padding-left: 16px;
+    padding-left: 8px;
     .md-button {
         margin-left: 0px !important;
         margin-right: 0px !important;
     }
     .md-icon-button {
-
         margin-left: 0px !important;
         margin-right: 0px !important;
     }
+    a {
+        padding-left: 8px;
+    }
 }
 .filter_card_content{
-    padding-left: 24px;
+    padding-left: 32px;
     md-input-container {
         margin-top: 0px;
         margin-bottom: 8px;
     }
-}
-
-.filter_heading {
-    padding-left: 16px;
-    color:rgba(255,255,255,0.8);
+    rzslider {
+        padding-right: 16px;
+    }
 }
 
 .padding-right {
     padding-right: 16px;
+}
+
+cl-paging {
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
