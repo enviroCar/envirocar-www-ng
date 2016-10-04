@@ -4,11 +4,8 @@
         <md-card ng-if="onload_pagination_tab" flex>
 
             <div layout="row" flex="100">
-                <p style="color:#1A80C1; margin-left:20px;">
-                    <span><b>{{'ALL_TRACKS_OVERVIEW_TITLE'| translate}}</b></span>
-                </p>
                 <div layout="row" flex>
-                    <span flex class="flex"></span>
+                    <p flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
                     <md-button ng-click="showAlert($event, 'ALL_TRACKS_OVERVIEW_TITLE', 'ALL_TRACKS_OVERVIEW_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                         <md-icon class="material-icons  md-24">info</md-icon>
                         <md-tooltip>
@@ -102,9 +99,6 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-                <div>
-                    <p>{{amount_of_user_tracks - filtered_tracks}}gefilterte tracks</p>
-                </div>
             </md-content>
         </md-card>
     </div>

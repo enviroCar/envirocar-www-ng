@@ -135,6 +135,7 @@ angular.module('translations', [])
             'OF'            : 'of',
             'WITH_TRACKS'   : 'with tracks',
             'FROM_TO'       : 'to',
+            'SHOWING'       : 'Showing',
             
             
             // Tracks Page - All Tracks Pagination Tab - Filter:
@@ -180,7 +181,7 @@ angular.module('translations', [])
             'MINUTES'                                   : 'minutes',
             
             'FILTER_VEHICLE_TITLE'                      : 'Vehicle filter',
-            'FILTER_VEHICLE_DESCRIPTION'                : 'The duration filter filters your tracks by their vehicle. You can specify a set of vehicles.',
+            'FILTER_VEHICLE_DESCRIPTION'                : 'The vehicle filter filters your tracks by their vehicle. You can specify a set of vehicles.',
             'FILTER_VEHICLE_HEADING'                    : 'Vehicle filter options',
             'FILTER_VEHICLE'                            : 'Vehicle',
             'SELECT_VEHICLES'                           : 'Select Vehicles',
@@ -431,6 +432,7 @@ angular.module('translations', [])
             'OF'            : 'von',
             'WITH_TRACKS'   : 'mit Fahrten',
             'FROM_TO'       : 'bis',
+            'SHOWING'       : 'Zeige',
             
             // Tracks Page - All Tracks Pagination Tab - Filter:
             'ALL_TRACKS_FILTER_TITLE'                   : 'Filteroptionen',
