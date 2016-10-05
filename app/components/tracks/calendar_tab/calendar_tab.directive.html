@@ -102,23 +102,26 @@
                 <div layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPageTracks.currentMonthTracks' ng-click="goToActivity(event.id)">
                     <div layout="column" layout-align="center start">
                         <div layout="row" style="height: 36px;" layout-align="center start">
-                            <svg style="width:36px;height:36px; padding-top: 5px;" viewBox="0 0 36 36">
+                            <svg style="width:36px;height:36px;" viewBox="0 0 36 36">
                             <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
                             </svg>
                             <b>{{event.begin| date:'medium'}}</b>
                         </div>
                         <div class="divider-list-item-content" layout="column" layout-align="center start">
-                            <span>
+                            <span layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                                {{'DISTANCE'| translate}}: {{event.length}} km
+                                <span flex class="span-flex"></span>
+                                <p>{{event.length}} km</p>
                             </span>
-                            <span>
+                            <span layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
-                                {{'DURATION'| translate}}: {{event.travelTime}}
+                                <span flex class="span-flex"></span>
+                                <p>{{event.travelTime}}</p>
                             </span>
-                            <span>
+                            <span layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">directions_car</i>
-                                {{event.manufacturer}} - {{event.car}}
+                                <span flex class="span-flex"></span>
+                                <p>{{event.manufacturer}} - {{event.car}}</p>
                             </span>
                             <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
                                 <md-content >

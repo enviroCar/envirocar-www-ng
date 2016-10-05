@@ -39,7 +39,12 @@
                 key: 'Lng',
                 values: [
                 ]
-            }
+            },
+            {
+                key: 'Speed',
+                values: [
+                ]
+            },
         ];
 
         // Calculates the distance between 2 points considering the curvature of the earth
@@ -56,7 +61,8 @@
             var sums = {
                 distance: 0,
                 fuel: 0,
-                co2: 0
+                co2: 0,
+                speed: 0
             };
             for (var i = min + 1; i < max; i++) {
                 // calculating distance:
@@ -74,6 +80,10 @@
                 // calculating co2 emission:
                 var co2_now = $scope.data_track[1].values[i - 1];
                 sums.co2 += co2_now;
+
+                // calculating speed:
+                var speed_now = $scope.data_track[5].values[i - 1];
+                sums.speed += speed_now;
             }
             // calculating fuel consumption:
             var fuel_now = $scope.data_track[0].values[max - 1];
@@ -82,6 +92,10 @@
             // calculating co2 emission:
             var co2_now = $scope.data_track[1].values[max - 1];
             sums.co2 += co2_now;
+
+            // calculating speed:
+            var speed_now = $scope.data_track[5].values[max - 1];
+            sums.speed += speed_now;
 
             distance = sums.distance;
 
@@ -111,13 +125,13 @@
             var co2_avg = sums.co2 / (max - min);
             // co2_avg*delta time:
             var co2PerTime = co2_avg * (seconds_passed / (1000 * 60 * 60));
-            // 1000* co2PerTime / delta distance:
-            var co2gKm = 1000 * co2PerTime / distance; // (liter/100km)
+            // 100* co2PerTime / delta distance:
+            var co2kgH = 100 * co2PerTime / distance; // (kg/t_gesamt)
 
             // fuelSum * distance:
             var fuelSumConsumed = fuelSum * distance / 100;
-            // co2gKm * distance:
-            var co2gKmConsumed = co2gKm * distance;
+            // co2PerTime * delta time:
+            var co2kgHConsumed = co2kgH * distance / 100; // (kg/h)
 
             $scope.tracksummary = {
                 distance: distance.toFixed(2),
@@ -130,17 +144,17 @@
                 unitsoftime: "Minutes",
                 fuel: fuelSum.toFixed(2),
                 fuelConsumed: fuelSumConsumed.toFixed(2),
-                co2emissionperhour: co2gKm.toFixed(2),
-                co2emissionperhourConsumed: co2gKmConsumed.toFixed(2),
+                co2emissionperhour: co2kgH.toFixed(2),
+                co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                 starttime: new Date(starttimeg).toLocaleString(),
                 endtime: new Date(endtimeg).toLocaleString()
             };
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
-        $scope.track_summary_startIndex = args.min;
+            $scope.track_summary_startIndex = args.min;
             $scope.track_summary_endIndex = args.max;
-            $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex-1);
+            $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex - 1);
         });
 
         $scope.$on('single_track_page:segment-activated', function (event, args) {
@@ -149,7 +163,7 @@
                     $scope.track_summary_startIndex = 0;
                 if (!$scope.track_summary_endIndex)
                     $scope.track_summary_endIndex = $scope.track_summary_track_length;
-                $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex-1);
+                $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex - 1);
             } else {
                 $scope.changeSummaryRange(0, $scope.track_summary_track_length);
             }
@@ -213,6 +227,7 @@
                         // calculating co2 emission:
                         var co2_now = $scope.data_track[1].values[i - 1];
                         sums.co2 += co2_now;
+
                     }
                     // calculating fuel consumption:
                     var fuel_now = $scope.data_track[0].values[$scope.track_summary_track_length - 1];
@@ -221,6 +236,7 @@
                     // calculating co2 emission:
                     var co2_now = $scope.data_track[1].values[$scope.track_summary_track_length - 1];
                     sums.co2 += co2_now;
+
                     distance = sums.distance;
 
                     // get timestamps:
@@ -248,18 +264,17 @@
                     var fuelSum = 100 * fuelPerTime / distance; // (liter/100km)
 
                     // fuelSum * distance:
-                    var fuelSumConsumed = fuelSum * distance  / 100;
+                    var fuelSumConsumed = fuelSum * distance / 100;
 
                     // co2_avg:
                     var co2_avg = sums.co2 / ($scope.track_summary_track_length - 0);
                     // co2_avg*delta time:
-                    var co2PerTime = co2_avg * (seconds_passed / (1000 * 60 * 60));
-                    // 1000* co2PerTime / delta distance:
-                    var co2gKm = 1000 * co2PerTime / distance; // (g/km)
+                    var co2PerTime = co2_avg * (seconds_passed / (1000 * 60 * 60)); // (kg/t)
+                    // 100* co2PerTime / delta distance:
+                    var co2kgH = 100 * co2PerTime / distance; // (kg/t_gesamt)
 
-                    // co2gKm * distance:
-                    var co2gKmConsumed = co2gKm * distance;
-
+                    // co2PerTime * delta time:
+                    var co2kgHConsumed = co2kgH * distance / 100; // (kg/h)
 
                     $scope.tracksummary = {
                         distance: distance.toFixed(2),
@@ -272,8 +287,8 @@
                         unitsoftime: "Minutes",
                         fuel: fuelSum.toFixed(2),
                         fuelConsumed: fuelSumConsumed.toFixed(2),
-                        co2emissionperhour: co2gKm.toFixed(2),
-                        co2emissionperhourConsumed: co2gKmConsumed.toFixed(2),
+                        co2emissionperhour: co2kgH.toFixed(2),
+                        co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                         starttime: new Date(starttimeg).toLocaleString(),
                         endtime: new Date(endtimeg).toLocaleString()
                     };

@@ -5,41 +5,44 @@
             $scope,
             $stateParams,
             $timeout,
+            $translate,
             TrackService,
             UserCredentialsService) {
-        console.log("LineChartWithoutFocusCtrl started.");
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_chart = false;
         $scope.currentPhenomenon = 'Speed';
+        $scope.currentPhenomenonIndex = 0;
+        console.log($scope.startingPhenom);
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            console.log("phenomenon changed received.");
             $scope.currentPhenomenon = args;
-            console.log($scope.currentPhenomenon);
-            console.log($scope.dataTrackChart);
             switch ($scope.currentPhenomenon) {
                 case 'Speed':
                     $scope.dataTrackChart[0] = $scope.data_all[0];
                     $scope.paths = $scope.paths_all[0];
+                    $scope.currentPhenomenonIndex = 0;
                     break;
                 case 'Consumption':
                     $scope.dataTrackChart[0] = $scope.data_all[1];
                     $scope.paths = $scope.paths_all[1];
+                    $scope.currentPhenomenonIndex = 1;
                     break;
                 case 'CO2':
                     $scope.paths = $scope.paths_all[2];
                     $scope.dataTrackChart[0] = $scope.data_all[2];
+                    $scope.currentPhenomenonIndex = 2;
                     break;
                 case 'Rpm':
                     $scope.dataTrackChart[0] = $scope.data_all[3];
                     $scope.paths = $scope.paths_all[3];
+                    $scope.currentPhenomenonIndex = 3;
                     break;
                 case 'Engine Load':
                     $scope.dataTrackChart[0] = $scope.data_all[4];
                     $scope.paths = $scope.paths_all[4];
+                    $scope.currentPhenomenonIndex = 4;
                     break;
             }
-            console.log($scope.dataTrackChart);
         });
 
         // chart options for the nvd3 line with focus chart:
@@ -95,27 +98,27 @@
         // to be filled with server query:
         $scope.data_all = [
             {
-                key: 'Speed',
+                key: $translate.instant('SPEED'),
                 values: [
                 ]
             },
             {
-                key: 'Consumption',
+                key: $translate.instant('CONSUMPTION'),
                 values: [
                 ]
             },
             {
-                key: 'CO2',
+                key: $translate.instant('CO2'),
                 values: [
                 ]
             },
             {
-                key: 'Rpm',
+                key: $translate.instant('RPM'),
                 values: [
                 ]
             },
             {
-                key: 'Engine Load',
+                key: $translate.instant('ENGINE_LOAD'),
                 values: [
                 ]
             }
@@ -124,11 +127,30 @@
         // Chart data setup for Track Chart:
         $scope.dataTrackChart = [
             {
-                key: 'Speed',
+                key: $translate.instant('SPEED'),
                 values: [
                 ]
             }
         ];
+
+        $scope.$on('toolbar:language-changed', function (event, args) {
+            //1. translate
+            $scope.data_all[0].key = $translate.instant('SPEED');
+            $scope.data_all[1].key = $translate.instant('CONSUMPTION');
+            $scope.data_all[2].key = $translate.instant('CO2');
+            $scope.data_all[3].key = $translate.instant('RPM');
+            $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
+            //2. set previous selected phenomenon
+            $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
+            //3. set previous selected selection range
+            if ($scope.segmentActivated) {
+                $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
+                $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
+            } else {
+                $scope.changeSelectionRange(0, $scope.slider.options.ceil);
+                $scope.changeChartRange(0, $scope.slider.options.ceil);
+            }
+        });
 
         $scope.removeCurrentPositionMarker = function () {
             $scope.markers.ClickedPosition = {
@@ -196,7 +218,7 @@
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
                     // iterating through each measurement:
-                    for (var index = 1; index < data_global.data.features.length; index++) {
+                    for (var index = 0; index < data_global.data.features.length; index++) {
                         // save measurements for each phenomenon:
                         var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
                         if (data_global.data.features[index].properties.phenomenons.Consumption)

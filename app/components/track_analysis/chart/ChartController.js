@@ -12,7 +12,6 @@
             TrackService,
             UserCredentialsService,
             leafletBoundsHelpers) {
-        console.log("ChartCtrl started.");
         $scope.$mdMedia = $mdMedia;
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
@@ -43,31 +42,30 @@
                 }
             }
         };
-        
+
         $scope.yellow_break = [
-            60,     // speed
-            6,      // consumption
-            15,     // co2
-            2000,   // rpm
+            60, // speed
+            6, // consumption
+            15, // co2
+            2000, // rpm
             44      // engine load
         ];
         $scope.red_break = [
-            130,    // speed
-            12,     // consumption
-            30,     // co2
-            3500,   // rpm
+            130, // speed
+            12, // consumption
+            30, // co2
+            3500, // rpm
             80     // engine load
         ];
         $scope.max_values = [
-            255,    // speed
-            25,     // consumption
-            45,     // co2
-            5000,   // rpm
+            255, // speed
+            25, // consumption
+            45, // co2
+            5000, // rpm
             100     // engine load
         ];
         // on Range selection change:
         $scope.changeSelectionRange = function (start, end) {
-            console.log(start + " , " + end);
             if (start === 0)
                 start = 1;
             // grey-coloring the offranged part of the track:
@@ -77,46 +75,43 @@
             }
             for (var index = start; index < end; index++) {
                 var value = data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon].value;
-                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] 
+                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
                         = $scope.percentToRGB(
-                        $scope.yellow_break[$scope.currentPhenomenonIndex],
-                        $scope.red_break[$scope.currentPhenomenonIndex],
-                        $scope.max_values[$scope.currentPhenomenonIndex],
-                        value);
+                                $scope.yellow_break[$scope.currentPhenomenonIndex],
+                                $scope.red_break[$scope.currentPhenomenonIndex],
+                                $scope.max_values[$scope.currentPhenomenonIndex],
+                                value);
             }
             var track_length = data_global.data.features.length - 1;
-            console.log(track_length);
             for (var index = end; index <= track_length; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
             }
         };
         $scope.changeChartRange = function (start, end) {
             // 1. redraw der neuen chart data:
-            console.log($scope.data_all);
-            console.log(start + " , " + end);
             var temp_data_array = [
                 {
-                    key: 'Speed',
+                    key: $translate.instant('SPEED'),
                     values: [
                     ]
                 },
                 {
-                    key: 'Consumption',
+                    key: $translate.instant('CONSUMPTION'),
                     values: [
                     ]
                 },
                 {
-                    key: 'CO2',
+                    key: $translate.instant('CO2'),
                     values: [
                     ]
                 },
                 {
-                    key: 'Rpm',
+                    key: $translate.instant('RPM'),
                     values: [
                     ]
                 },
                 {
-                    key: 'Engine Load',
+                    key: $translate.instant('ENGINE_LOAD'),
                     values: [
                     ]
                 }
@@ -127,11 +122,10 @@
                 }
             }
             for (var index = 0; index < 5; index++) {
-                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) - 1);
+                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start));
             }
 
             $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
-            console.log($scope.dataTrackChart);
         };
 
         $scope.showAlert = function (ev, title, description) {
@@ -151,52 +145,49 @@
         };
 
         // Scroll-fixing the single track analysis toolbar:
-        var placeholder = angular.element($element[0].querySelector('#placeholder-toolbar-stp'));
-        var ctrlPlaceholder = angular.element($element[0].querySelector('#toolbar-ctrl-placeholder'));
         $(window).scroll(function () {
-
+            console.log("Top-Scroll: "+$(window).scrollTop());;
             if ($(window).scrollTop() > 300) {
+                
                 if (!$rootScope.track_toolbar_fixed) {
                     $('#track_toolbar').addClass('stuck_top');
-                    placeholder.css("min-height", "61px");
-                    placeholder.css("height", "61px");
-                    placeholder.css("max-height", "61px");
+                    $("#placeholder-toolbar-stp").css("min-height", "70px");
+                    $("#placeholder-toolbar-stp").css("height", "70px");
+                    $("#placeholder-toolbar-stp").css("max-height", "70px");
                     $rootScope.track_toolbar_fixed = true;
                     var width = document.getElementById('placeholder-left').offsetWidth;
                     var balance = 0;
-                    if (width===0) {
+                    if (width === 0) {
                         balance = 120;
-                        ctrlPlaceholder.css("min-width","0px");
-                        ctrlPlaceholder.css("width","0px");
-                        ctrlPlaceholder.css("max-width","0px");
+                        $("#toolbar-ctrl-placeholder").css("min-width", "0px");
+                        $("#toolbar-ctrl-placeholder").css("width", "0px");
+                        $("#toolbar-ctrl-placeholder").css("max-width", "0px");
                     }
                     // TODO: remove after sidenav button include:
-                    if ($mdMedia('xs'))
+                    if ($scope.screenIsXS)
                         balance = balance - 60;
-                        
+
                     var innerWidth = window.innerWidth;
-                    var tb_width = innerWidth - 2*width - balance - 76;
-                    $('#track_toolbar').css("width", tb_width+"px");
-                    
+                    var tb_width = innerWidth - 2 * width - balance - 76;
+                    $('#track_toolbar').css("width", tb_width + "px");
+
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'))
                     },
                             1);
                 }
-                console.log("toolbar fixed");
-
             } else {
                 if ($rootScope.track_toolbar_fixed) {
                     $('#track_toolbar').removeClass('stuck_top');
-                    placeholder.css("min-height", "1px");
-                    placeholder.css("height", "1px");
-                    placeholder.css("max-height", "1px");
+                    $("#placeholder-toolbar-stp").css("min-height", "1px");
+                    $("#placeholder-toolbar-stp").css("height", "1px");
+                    $("#placeholder-toolbar-stp").css("max-height", "1px");
                     $rootScope.track_toolbar_fixed = false;
                     var width = document.getElementById('placeholder-left').offsetWidth;
-                    if (width===0) {
-                        ctrlPlaceholder.css("max-width","120px");
-                        ctrlPlaceholder.css("width","120px");
-                        ctrlPlaceholder.css("min-width","120px");
+                    if (width === 0) {
+                        $("#toolbar-ctrl-placeholder").css("max-width", "120px");
+                        $("#toolbar-ctrl-placeholder").css("width", "120px");
+                        $("#toolbar-ctrl-placeholder").css("min-width", "120px");
                     }
                     $('#track_toolbar').css("width", "100%");
                     $timeout(function () {
@@ -204,8 +195,6 @@
                     },
                             1);
                 }
-
-                console.log("toolbar freed");
             }
         });
         $scope.trackid = $stateParams.trackid;
@@ -217,16 +206,16 @@
         // 0% - green; 50% - yellow; 100% - red; above 100% --> dark red
         $scope.percentToRGB = function (yellow_break, red_break, max_value, value) {
             var r, g;
-            if (value <= yellow_break){
+            if (value <= yellow_break) {
                 r = Math.floor(255 * (value / yellow_break));
                 g = 255;
-            } else 
+            } else
             if (value <= red_break) {
                 r = 255;
-                g = Math.floor(255 * ((red_break - value)/(red_break - yellow_break)));
+                g = Math.floor(255 * ((red_break - value) / (red_break - yellow_break)));
             } else
             if (value <= max_value) {
-                r = Math.floor(255 * ((max_value - value)/(max_value - red_break)));
+                r = Math.floor(255 * ((max_value - value) / (max_value - red_break)));
                 g = 0;
             }
             return "rgb(" + r + "," + g + ",0)";
@@ -237,77 +226,77 @@
                 // Speed:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.yellow_break[0]/2),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],($scope.yellow_break[0]+$scope.red_break[0])/2),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],($scope.red_break[0]+$scope.max_values[0])/2)],
-                labels: ['  0 km/h', 
-                    ' '+$scope.yellow_break[0]/2+ ' km/h',
-                    ' '+$scope.yellow_break[0]+ ' km/h', 
-                    ' '+($scope.yellow_break[0]+$scope.red_break[0])/2+ ' km/h', 
-                    ' '+$scope.red_break[0]+ ' km/h', 
-                    ' '+($scope.red_break[0]+$scope.max_values[0])/2+ ' km/h']
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                labels: ['  0 km/h',
+                    ' ' + $scope.yellow_break[0] / 2 + ' km/h',
+                    ' ' + $scope.yellow_break[0] + ' km/h',
+                    ' ' + ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + ' km/h',
+                    ' ' + $scope.red_break[0] + ' km/h',
+                    ' ' + ($scope.red_break[0] + $scope.max_values[0]) / 2 + ' km/h']
             }, {
                 // Consumption:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],$scope.yellow_break[1]/2),
-                    $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],$scope.yellow_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],($scope.yellow_break[1]+$scope.red_break[1])/2),
-                    $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],$scope.red_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],($scope.red_break[1]+$scope.max_values[1])/2)],
-                labels: [' 0 l/h', 
-                    ' '+$scope.yellow_break[1]/2+ ' l/h',
-                    ' '+$scope.yellow_break[1]+ ' l/h', 
-                    ' '+($scope.yellow_break[1]+$scope.red_break[1])/2+ ' l/h', 
-                    ' '+$scope.red_break[1]+ ' l/h', 
-                    ' '+($scope.red_break[1]+$scope.max_values[1])/2+ ' l/h']
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1]),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1]),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2)],
+                labels: [' 0 l/h',
+                    ' ' + $scope.yellow_break[1] / 2 + ' l/h',
+                    ' ' + $scope.yellow_break[1] + ' l/h',
+                    ' ' + ($scope.yellow_break[1] + $scope.red_break[1]) / 2 + ' l/h',
+                    ' ' + $scope.red_break[1] + ' l/h',
+                    ' ' + ($scope.red_break[1] + $scope.max_values[1]) / 2 + ' l/h']
             }, {
                 // CO2:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],$scope.yellow_break[2]/2),
-                    $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],$scope.yellow_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],($scope.yellow_break[2]+$scope.red_break[2])/2),
-                    $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],$scope.red_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],($scope.red_break[2]+$scope.max_values[2])/2)],
-                labels: [' 0 kg/h', 
-                    ' '+$scope.yellow_break[2]/2+ ' kg/h',
-                    ' '+$scope.yellow_break[2]+ ' kg/h', 
-                    ' '+($scope.yellow_break[2]+$scope.red_break[2])/2+ ' kg/h', 
-                    ' '+$scope.red_break[2]+ ' kg/h', 
-                    ' '+($scope.red_break[2]+$scope.max_values[2])/2+ ' kg/h']
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2]),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2]),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2)],
+                labels: [' 0 kg/h',
+                    ' ' + $scope.yellow_break[2] / 2 + ' kg/h',
+                    ' ' + $scope.yellow_break[2] + ' kg/h',
+                    ' ' + ($scope.yellow_break[2] + $scope.red_break[2]) / 2 + ' kg/h',
+                    ' ' + $scope.red_break[2] + ' kg/h',
+                    ' ' + ($scope.red_break[2] + $scope.max_values[2]) / 2 + ' kg/h']
             }, {
                 // RPM:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],$scope.yellow_break[3]/2),
-                    $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],$scope.yellow_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],($scope.yellow_break[3]+$scope.red_break[3])/2),
-                    $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],$scope.red_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],($scope.red_break[3]+$scope.max_values[3])/2)],
-                labels: ['   0 r/min', 
-                    ' '+$scope.yellow_break[3]/2+ ' r/min',
-                    ' '+$scope.yellow_break[3]+ ' r/min', 
-                    ' '+($scope.yellow_break[3]+$scope.red_break[3])/2+ ' r/min', 
-                    ' '+$scope.red_break[3]+ ' r/min', 
-                    ' '+($scope.red_break[3]+$scope.max_values[3])/2+ ' r/min']
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3]),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3]),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2)],
+                labels: ['   0 r/min',
+                    ' ' + $scope.yellow_break[3] / 2 + ' r/min',
+                    ' ' + $scope.yellow_break[3] + ' r/min',
+                    ' ' + ($scope.yellow_break[3] + $scope.red_break[3]) / 2 + ' r/min',
+                    ' ' + $scope.red_break[3] + ' r/min',
+                    ' ' + ($scope.red_break[3] + $scope.max_values[3]) / 2 + ' r/min']
             }, {
                 // Engine Load:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],$scope.yellow_break[4]/2),
-                    $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],$scope.yellow_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],($scope.yellow_break[4]+$scope.red_break[4])/2),
-                    $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],$scope.red_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],($scope.red_break[4]+$scope.max_values[4])/2)],
-                labels: ['  0 %', 
-                    ' '+$scope.yellow_break[4]/2+ ' %',
-                    ' '+$scope.yellow_break[4]+ ' %', 
-                    ' '+($scope.yellow_break[4]+$scope.red_break[4])/2+ ' %', 
-                    ' '+$scope.red_break[4]+ ' %', 
-                    ' '+($scope.red_break[4]+$scope.max_values[4])/2+ ' %']
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4]),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4]),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2)],
+                labels: ['  0 %',
+                    ' ' + $scope.yellow_break[4] / 2 + ' %',
+                    ' ' + $scope.yellow_break[4] + ' %',
+                    ' ' + ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + ' %',
+                    ' ' + $scope.red_break[4] + ' %',
+                    ' ' + ($scope.red_break[4] + $scope.max_values[4]) / 2 + ' %']
             }
         ];
         // scope extension for the leaflet map:
@@ -332,17 +321,17 @@
             legend: {// Speed by default:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.yellow_break[0]/2),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],($scope.yellow_break[0]+$scope.red_break[0])/2),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],$scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],($scope.red_break[0]+$scope.max_values[0])/2)],
-                labels: ['  0 km/h', 
-                    ' '+$scope.yellow_break[0]/2+ ' km/h',
-                    ' '+$scope.yellow_break[0]+ ' km/h', 
-                    ' '+($scope.yellow_break[0]+$scope.red_break[0])/2+ ' km/h', 
-                    ' '+$scope.red_break[0]+ ' km/h', 
-                    ' '+($scope.red_break[0]+$scope.max_values[0])/2+ ' km/h']
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                labels: ['  0 km/h',
+                    ' ' + $scope.yellow_break[0] / 2 + ' km/h',
+                    ' ' + $scope.yellow_break[0] + ' km/h',
+                    ' ' + ($scope.yellow_break[0] + $scope.red_break[0]) / 2 + ' km/h',
+                    ' ' + $scope.red_break[0] + ' km/h',
+                    ' ' + ($scope.red_break[0] + $scope.max_values[0]) / 2 + ' km/h']
             },
             events: {
                 paths: {
@@ -351,16 +340,31 @@
                 }
             }
         });
+        $scope.$on('toolbar:language-changed', function (event, args) {
+            //1. translate
+            $scope.data_all[0].key = $translate.instant('SPEED');
+            $scope.data_all[1].key = $translate.instant('CONSUMPTION');
+            $scope.data_all[2].key = $translate.instant('CO2');
+            $scope.data_all[3].key = $translate.instant('RPM');
+            $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
+            //2. set previous selected phenomenon
+            $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
+            //3. set previous selected selection range
+            if ($scope.segmentActivated) {
+                $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
+                $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
+            } else {
+                $scope.changeSelectionRange(0, $scope.slider.options.ceil);
+                $scope.changeChartRange(0, $scope.slider.options.ceil);
+            }
+        });
         $scope.$on('leafletDirectivePath.click', function (event, path) {
             //path.modelname
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
             $scope.showMeasurementX();
         });
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            console.log("phenomenon changed received.");
             $scope.currentPhenomenon = args;
-            console.log($scope.currentPhenomenon);
-            console.log($scope.dataTrackChart);
             switch ($scope.currentPhenomenon) {
                 case 'Speed':
                     $scope.dataTrackChart[0] = $scope.data_all[0];
@@ -462,7 +466,7 @@
                 }
             }
         };
-        
+
         // toggle Segment analysis:
         $scope.toggleSegmentAnalysis = function (model) {
             $scope.segmentActivated = !$scope.segmentActivated;
@@ -487,27 +491,27 @@
         // to be filled with server query:
         $scope.data_all = [
             {
-                key: 'Speed',
+                key: $translate.instant('SPEED'),
                 values: [
                 ]
             },
             {
-                key: 'Consumption',
+                key: $translate.instant('CONSUMPTION'),
                 values: [
                 ]
             },
             {
-                key: 'CO2',
+                key: $translate.instant('CO2'),
                 values: [
                 ]
             },
             {
-                key: 'Rpm',
+                key: $translate.instant('RPM'),
                 values: [
                 ]
             },
             {
-                key: 'Engine Load',
+                key: $translate.instant('ENGINE_LOAD'),
                 values: [
                 ]
             }
@@ -584,7 +588,6 @@
         $scope.password = UserCredentialsService.getCredentials().password;
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     data_global = data;
                     // set slider ranges:
                     $scope.slider.maxValue = data_global.data.features.length;
@@ -614,7 +617,7 @@
                         'lng': -1000
                     };
                     // iterating through each measurement:
-                    for (var index = 1; index < data_global.data.features.length; index++) {
+                    for (var index = 0; index < data_global.data.features.length; index++) {
                         var pathObjSpeed = {};
                         var pathObjConsumption = {};
                         var pathObjCO2 = {};
@@ -638,13 +641,14 @@
                         pathObjRPM['weight'] = 8;
                         pathObjEngine_load['weight'] = 8;
                         // path coordinates:
-                        pathObjSpeed['latlngs'] = [{
-                                'lat': data_global.data.features[index - 1].geometry.coordinates[1],
-                                'lng': data_global.data.features[index - 1].geometry.coordinates[0]
-                            }, {
-                                'lat': lat_coord,
-                                'lng': lon_coord
-                            }];
+                        if (index > 0)
+                            pathObjSpeed['latlngs'] = [{
+                                    'lat': data_global.data.features[index - 1].geometry.coordinates[1],
+                                    'lng': data_global.data.features[index - 1].geometry.coordinates[0]
+                                }, {
+                                    'lat': lat_coord,
+                                    'lng': lon_coord
+                                }];
                         pathObjConsumption['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjCO2['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjRPM['latlngs'] = pathObjSpeed['latlngs'];
@@ -661,20 +665,22 @@
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"].value)
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                         // interpolate color:
-                        pathObjSpeed['color'] = $scope.percentToRGB($scope.yellow_break[0],$scope.red_break[0],$scope.max_values[0],value_speed);               //more information at percentToRGB().
-                        pathObjConsumption['color'] = $scope.percentToRGB($scope.yellow_break[1],$scope.red_break[1],$scope.max_values[1],value_consumption);   //more information at percentToRGB().
-                        pathObjCO2['color'] = $scope.percentToRGB($scope.yellow_break[2],$scope.red_break[2],$scope.max_values[2],value_CO2);                   //more information at percentToRGB().
-                        pathObjRPM['color'] = $scope.percentToRGB($scope.yellow_break[3],$scope.red_break[3],$scope.max_values[3],value_RPM);                   //more information at percentToRGB().
-                        pathObjEngine_load['color'] = $scope.percentToRGB($scope.yellow_break[4],$scope.red_break[4],$scope.max_values[4],value_EngineLoad);    //more information at percentToRGB().
+                        pathObjSpeed['color'] = $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], value_speed);               //more information at percentToRGB().
+                        pathObjConsumption['color'] = $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], value_consumption);   //more information at percentToRGB().
+                        pathObjCO2['color'] = $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], value_CO2);                   //more information at percentToRGB().
+                        pathObjRPM['color'] = $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], value_RPM);                   //more information at percentToRGB().
+                        pathObjEngine_load['color'] = $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], value_EngineLoad);    //more information at percentToRGB().
 
                         // enqueue pathObjects for each phenomenon to phenomPath:
-                        $scope.paths_all[0]['p' + (index)] = pathObjSpeed;
-                        $scope.paths_all[1]['p' + (index)] = pathObjConsumption;
-                        $scope.paths_all[2]['p' + (index)] = pathObjCO2;
-                        $scope.paths_all[3]['p' + (index)] = pathObjRPM;
-                        $scope.paths_all[4]['p' + (index)] = pathObjEngine_load;
-                        // add 'speed'-path as default overlay to leaflet map:
-                        $scope.paths['p' + (index)] = pathObjSpeed;
+                        if (index > 0) {
+                            $scope.paths_all[0]['p' + (index)] = pathObjSpeed;
+                            $scope.paths_all[1]['p' + (index)] = pathObjConsumption;
+                            $scope.paths_all[2]['p' + (index)] = pathObjCO2;
+                            $scope.paths_all[3]['p' + (index)] = pathObjRPM;
+                            $scope.paths_all[4]['p' + (index)] = pathObjEngine_load;
+                            // add 'speed'-path as default overlay to leaflet map:
+                            $scope.paths['p' + (index)] = pathObjSpeed;
+                        }
                         // save measurements for each phenomenon:
                         var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
                         if (data_global.data.features[index].properties.phenomenons.Consumption)
@@ -693,7 +699,6 @@
 
                     // save 'speed'-data as default into time series chart 
                     $scope.dataTrackChart[0] = $scope.data_all[0];
-                    console.log($scope.data_all);
                     // zoom map to track:
                     $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([
                         [northeast.lat, northeast.lng],

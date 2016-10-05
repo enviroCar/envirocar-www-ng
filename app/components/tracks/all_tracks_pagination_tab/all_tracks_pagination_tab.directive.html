@@ -4,8 +4,12 @@
         <md-card ng-if="onload_pagination_tab" flex  layout="column">
 
             <div layout="row">
+                <p style="color:#1A80C1; margin-left:20px;">
+                    <span><b>{{'ALL_TRACKS_OVERVIEW_TITLE'| translate}}</b></span>
+                </p>
                 <div layout="row" flex>
-                    <p flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
+                    <p ng-if="!screenIsXS" flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
+                    <span ng-if="screenIsXS" flex class="span-flex"></span>
                     <md-button ng-click="showAlert($event, 'ALL_TRACKS_OVERVIEW_TITLE', 'ALL_TRACKS_OVERVIEW_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
                         <md-icon class="material-icons  md-24">info</md-icon>
                         <md-tooltip>
@@ -14,6 +18,7 @@
                     </md-button>
                 </div>
             </div>
+            <p ng-if="screenIsXS" flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
             <md-list layout-align="start start" id="calendar-list" flex>
                 <div layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)" flex>
                     <div layout="column" flex>
@@ -24,19 +29,19 @@
                             <b>{{event.begin| date:'medium'}}</b>
                         </div>
                         <div class="divider-list-item-content" layout-xs="column" layout-gt-xs="row" flex-gt-xs >
-                            <span flex-gt-xs="30">
+                            <span flex-gt-xs="30" layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
-                                {{event.length}} km
+                                <p class="no-padding">{{event.length}} km</p>
                             </span>
-                            <span>
+                            <span layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
-                                {{event.travelTime}}
+                                <p class="no-padding">{{event.travelTime}}</p>
                             </span>
                             <span flex-gt-xs class="flex-gt-xs"></span>
-                            <span>
+                            <span layout="row">
                                 <i class="material-icons md-24" style="margin-left:10px;">
                                     directions_car</i>
-                                {{event.manufacturer}} - {{event.car}}
+                                <p class="no-padding">{{event.manufacturer}} - {{event.car}}</p>
                             </span>
                         </div>
                     </div>

@@ -115,6 +115,9 @@ angular.module('translations', [])
             'START_TIME'                : 'starttime',
             'END_TIME'                  : 'finishtime',
             'CO2EMISSION'               : 'CO2 emission',
+            'PER_HOUR'                  : 'per hour',
+            'PER_100_KM'                : 'per 100km',
+            'ON_SEGMENT'                : 'on segment',
             
             // Track Analysis - Speed Ranges Chart:
             'SPEED_RANGES_CHART_TITLE'          : 'In intervals',
@@ -129,7 +132,7 @@ angular.module('translations', [])
             'CALENDAR_OVERVIEW_DESCRIPTION' : 'This pagination list shows all tracks of the selected day range. The tracks are ordered by upload date. You can navigate through the pages via the controls. If you click on one of the tracks, you will be moved to the single track analysis page.',
             
             // Tracks Page - All Tracks Pagination Tab:
-            'ALL_TRACKS_OVERVIEW_TITLE'         : 'All tracks',
+            'ALL_TRACKS_OVERVIEW_TITLE'         : 'List of tracks',
             'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'This pagination list shows all filtered tracks. The tracks are ordered by upload date. You can navigate through the pages via the controls on the bottom. If you click on one of the tracks, you will be moved to the single track analysis page.',
             'PAGE'          : 'Page',
             'OF'            : 'of',
@@ -412,6 +415,9 @@ angular.module('translations', [])
             'TOTAL_TIME'                : 'GESAMT_ZEIT',
             'CO2EMISSION'               : 'CO2 Emission',
             'DURATION'                  : 'Fahrtdauer',
+            'PER_HOUR'                  : 'pro Stunde',
+            'PER_100_KM'                : 'pro 100km',
+            'ON_SEGMENT'                : 'auf Segment',
             
             // Track Analysis - Speed Ranges Chart:
             'SPEED_RANGES_CHART_TITLE'          : 'In Intervallen',
@@ -426,7 +432,7 @@ angular.module('translations', [])
             'CALENDAR_OVERVIEW_DESCRIPTION' : 'Diese Seitenansicht zeigt dir alle Fahrten aus dem ausgewählten Zeitraum an. Die Fahrten sind nach dem Datum des Uploads sortiert. Du kannst zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
             
             // Tracks Page - All Tracks Pagination Tab:
-            'ALL_TRACKS_OVERVIEW_TITLE'         : 'Alle Fahrten',
+            'ALL_TRACKS_OVERVIEW_TITLE'         : 'Liste aller Fahrten',
             'ALL_TRACKS_OVERVIEW_DESCRIPTION'   : 'Diese Seitenansicht zeigt dir alle gefilterten Fahrten an. Die Fahrten sind nach dem Datum des Uploads sortiert. Unten kannst du zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
             'PAGE'          : 'Seite',
             'OF'            : 'von',

@@ -12,17 +12,11 @@
                         <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
                     </div>
                     <div style="width:70%;padding-left:25px;padding-top:10px" layout="column">
-                        <span class="emailIdUserNew" >
-                            {{'TRACK_ID'| translate}}  - {{trackid}}
-                        </span>
-                        <br>
-                        <span class="emailIdUserNew" >
-                            {{'NAME'| translate}}      - {{name}}
-                        </span>
-                        <br>
-                        <span class="emailIdUserNew">
-                            {{'CREATED'| translate}}   - {{created}}
-                        </span>
+                        <div class="container_header">
+                            <p class="title"><b>{{'TRACK_ID'| translate}}:</b>  <br> {{trackid}}</p>
+                            <p class="title"><b>{{'NAME'| translate}}:</b>      <br> {{name}}</p>
+                            <p class="title"><b>{{'CREATED'| translate}}:</b>   <br> {{created| date:'medium'}}</p>
+                        </div>
                     </div>
                 </div>
             </div>

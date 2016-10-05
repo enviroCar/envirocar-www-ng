@@ -310,7 +310,6 @@ md-sidenav {
     background-color: #e6e6e6;
 }
 
-
 .md-button {
     min-width : auto;
 }
@@ -472,6 +471,10 @@ md-sidenav {
     color: rgba(255,255,255,0.88);
 }
 
+.container_header {
+    color: #ffffff;
+}
+
 toolbar-card {
     font-size: 16px;
 }
@@ -565,10 +568,10 @@ calendar-md {
     max-height: 400px !important;
 }
 
-/**
+
 #calendar-list {
-    height: 590px;
-}*/
+    padding-top: 0px;
+}
 
 .divider-list-item {
     //border-bottom: 1px solid #8CBF3F;
@@ -578,15 +581,34 @@ calendar-md {
     padding-top: 8px;
     padding-bottom: 8px;
     .divider-list-item-content {
-         padding-left: 40px;
-         padding-right: 24px;
+        padding-left: 40px;
+        padding-right: 24px;
     }
-    
+
     b {
         color:rgba(0,101,160,0.9);
         padding-left: 12px;
         padding-top: 4px;
     }
+
+    p {
+        margin-top: 4px;
+        margin-bottom: 0px;
+        padding-left: 24px;
+        padding-bottom: 8px;
+    }
+
+    p.no-padding {
+        margin-top: 4px;
+        margin-bottom: 0px;
+        padding-left: 8px;
+        padding-bottom: 8px;
+    }
+
+}
+
+.no-padding {
+    padding: 0 0 0 0;
 }
 
 .divider-list-item:hover {
@@ -651,4 +673,8 @@ cl-paging {
 cl-paging {
     padding-top: 8px;
     padding-bottom: 8px;
+}
+
+.padding-8 {
+    padding: 8 8 8 8;
 }
