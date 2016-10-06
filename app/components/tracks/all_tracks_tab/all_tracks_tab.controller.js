@@ -18,10 +18,9 @@
             ecBaseUrl) {
 
             console.log(ecBaseUrl);
-
+            /**
         $scope.onload_all_tracks = false;
         
-        var tablist = angular.element($element[0].querySelector('#track_list_tab'));
         $scope.tablistheight = window.innerHeight - 135;
 
         $(window).resize(function () {
@@ -157,7 +156,7 @@
                 }, function (data) {
             console.log("error " + data)
         }
-        );
+        );*/
     }
     ;
     angular.module('enviroCar.tracks')

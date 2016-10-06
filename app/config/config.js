@@ -21,7 +21,7 @@
                     url: '/dashboard/track/:trackid',
                     controller: 'ChartCtrl',
                     templateUrl: function (stateParams) {
-                        return 'app/components/track_analysis/chart/chart.html?path=' + stateParams.trackid
+                        return 'app/components/track_analysis/chart/chart.html?path=' + stateParams.trackid;
                     },
                     authenticate: true,
                     data: {
@@ -32,6 +32,28 @@
                     url: '/tracks',
                     controller: 'TrackListCtrl',
                     templateUrl: 'app/components/tracks/tracks.html',
+                    data: {
+                        filterOrder : [],
+                        distance : {
+                            inUse: false,
+                            min: undefined,
+                            max: undefined
+                        },
+                        date : {
+                            inUse: false,
+                            min: undefined,
+                            max: undefined
+                        },
+                        duration : {
+                            inUse: false,
+                            min: undefined,
+                            max: undefined
+                        },
+                        vehicle : {
+                            all : [],
+                            set : []
+                        }
+                    },
                     authenticate: true
                 });
 

@@ -1,17 +1,37 @@
 (function () {
     'use strict';
-    function FilterVehicleCardCtrl($scope) {
+    function FilterVehicleCardCtrl($scope, $state) {
+
+        // load state values:
+        var state = $state.current.data;
+        console.log(state);
+
         $scope.errorNothingSelected = false;
         $scope.items = [];
         $scope.selected = [];
-        $scope.filters.vehicle.params.cars_set = [];
 
-        // default: check all:
-        for (var i = 0; i < $scope.filters.vehicle.params.cars_all.length; i++) {
-            $scope.items.push($scope.filters.vehicle.params.cars_all[i]);
-            $scope.selected.push($scope.filters.vehicle.params.cars_all[i]);
-            $scope.filters.vehicle.params.cars_set.push($scope.filters.vehicle.params.cars_all[i]);
+        $scope.filters.vehicle.params.cars_set = (state.vehicle.set ? state.vehicle.set : []);
+        $scope.filters.vehicle.params.cars_all = (state.vehicle.all ? state.vehicle.all : []);
+
+        if ($scope.filters.vehicle.params.cars_set.length > 0) {
+            for (var i = 0; i < $scope.filters.vehicle.params.cars_set.length; i++) {
+                $scope.selected.push($scope.filters.vehicle.params.cars_set[i]);
+            }
+            // check only previous state checked cars:
+            $scope.filters.vehicle.params.cars_set = [];
+            for (var i = 0; i < $scope.filters.vehicle.params.cars_all.length; i++) {
+                $scope.items.push($scope.filters.vehicle.params.cars_all[i]);
+                $scope.filters.vehicle.params.cars_set.push($scope.filters.vehicle.params.cars_all[i]);
+            }
+        } else {
+            // default: check all:
+            for (var i = 0; i < $scope.filters.vehicle.params.cars_all.length; i++) {
+                $scope.items.push($scope.filters.vehicle.params.cars_all[i]);
+                $scope.selected.push($scope.filters.vehicle.params.cars_all[i]);
+                $scope.filters.vehicle.params.cars_set.push($scope.filters.vehicle.params.cars_all[i]);
+            }
         }
+        state.vehicle.set = $scope.filters.vehicle.params.cars_set;
 
         $scope.hide = function () {
             $scope.errorNothingSelected = false;
@@ -21,6 +41,9 @@
                 // check status of each checkbox
                 $scope.filters.vehicle.inUse = true;
                 $scope.filtersChanged();
+                state.vehicle.set = $scope.filters.vehicle.params.cars_set;
+                state.vehicle.all = $scope.filters.vehicle.params.cars_all;
+                state.vehicle.inUse = true;
             }
         };
 

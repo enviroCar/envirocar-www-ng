@@ -10,6 +10,7 @@
     function AllTracksPaginationTabCtrl(
             $rootScope,
             $scope,
+            $state,
             $translate,
             $mdMedia,
             $mdDialog,
@@ -19,7 +20,7 @@
 
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
-        $scope.filterOrder = [];
+        $scope.filterOrder = $state.current.data.filterOrder;
 
         $scope.itemsPerPage = ($scope.screenIsXS ? 5 : 10);
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
@@ -45,10 +46,12 @@
             });
         });
 
-
-
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
+
+        var params = $state.current.data;
+        console.log(params);
+        
 
         // Filters:
         $scope.filters = {
@@ -56,37 +59,37 @@
                 name: 'distance',
                 label: $translate.instant('FILTER_DISTANCE'),
                 params: {
-                    min: undefined,
-                    max: undefined
+                    min: params.distance.min,
+                    max: params.distance.max
                 },
-                inUse: false
+                inUse: params.distance.inUse
             },
             date: {
                 name: 'date',
                 label: $translate.instant('FILTER_DATE'),
                 params: {
-                    min: undefined,
-                    max: undefined
+                    min: params.date.min,
+                    max: params.date.max
                 },
-                inUse: false
+                inUse: params.date.inUse
             },
             duration: {
                 name: 'duration',
                 label: $translate.instant('FILTER_DURATION'),
                 params: {
-                    min: undefined,
-                    max: undefined
+                    min: params.duration.min,
+                    max: params.duration.max
                 },
-                inUse: false
+                inUse: params.duration.inUse
             },
             vehicle: {
                 name: 'vehicle',
                 label: $translate.instant('FILTER_VEHICLE'),
                 params: {
-                    cars_all: [],
-                    cars_set: []
+                    cars_all: params.vehicle.all,
+                    cars_set: params.vehicle.set
                 },
-                inUse: false
+                inUse: params.vehicle.inUse
             },
             spatial: {
                 name: 'spatial',
@@ -107,6 +110,8 @@
                 layer: 0
             }
         };
+        
+
         $scope.filtered_tracks = 0;
 
         $scope.addFilter = function (filter) {
@@ -119,14 +124,15 @@
                     $scope.commonDialog(filter);
                 }
                 $scope.filterOrder.push(filter);
+                $state.current.data.filterOrder = $scope.filterOrder;
             }
-            console.log($scope.filterOrder);
         };
 
         $scope.removeFilter = function (filter) {
             var index = $scope.filterOrder.indexOf(filter);
             if (index > -1) {
                 $scope.filterOrder.splice(index, 1);
+                $state.current.data.filterOrder.splice(index, 1);
             }
         };
 
@@ -135,48 +141,7 @@
             var showObject = {};
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
 
-            if (filter.name === "distance")
-            {
-                showObject = {
-                    controller: 'DistanceDialogCtrl',
-                    templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.html',
-                    //templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/distance/distance_filter_dialog.html',
-                    parent: angular.element(document.body),
-                    scope: $scope.$new(),
-                    clickOutsideToClose: false,
-                    fullscreen: useFullScreen
-                }
-            } else if (filter.name === "date")
-            {
-                showObject = {
-                    controller: 'DateDialogCtrl',
-                    templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/date/date_filter_dialog.html',
-                    parent: angular.element(document.body),
-                    scope: $scope.$new(),
-                    clickOutsideToClose: false,
-                    fullscreen: useFullScreen
-                }
-            } else if (filter.name === "duration")
-            {
-                showObject = {
-                    controller: 'DurationDialogCtrl',
-                    templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/duration/duration_filter_dialog.html',
-                    parent: angular.element(document.body),
-                    scope: $scope.$new(),
-                    clickOutsideToClose: false,
-                    fullscreen: useFullScreen
-                }
-            } else if (filter.name === "vehicle")
-            {
-                showObject = {
-                    controller: 'VehicleDialogCtrl',
-                    templateUrl: 'app/components/tracks/all_tracks_pagination_tab/filter_dialogs/vehicle/vehicle_filter_dialog.html',
-                    parent: angular.element(document.body),
-                    scope: $scope.$new(),
-                    clickOutsideToClose: false,
-                    fullscreen: useFullScreen
-                }
-            } else if (filter.name === "spatial")
+            if (filter.name === "spatial")
             {
                 showObject = {
                     controller: 'SpatialDialogCtrl',
@@ -185,7 +150,7 @@
                     scope: $scope.$new(),
                     clickOutsideToClose: false,
                     fullscreen: useFullScreen
-                }
+                };
             }
 
             $mdDialog.show(showObject)
@@ -201,7 +166,7 @@
             }, function (wantsFullScreen) {
                 $scope.customFullscreen = (wantsFullScreen === true);
             });
-        }
+        };
 
         var originatorEv;
         $scope.openMenu = function ($mdOpenMenu, ev) {
@@ -323,7 +288,6 @@
             }
             $scope.pagingTab.current = 1;
             loadPages();
-
 
             $rootScope.$broadcast('filter:spatial-filter-changed');
         };
@@ -546,12 +510,15 @@
 
                     $scope.onload_pagination_tab = true;
                     $rootScope.$broadcast('trackspage:pagination_tab-loaded');
+                    if ($scope.filterOrder.length > 0)
+                        $scope.filtersChanged();   
                     window.dispatchEvent(new Event('resize'));
 
                 }, function (data) {
             console.log("error " + data)
         }
         );
+         
     }
     ;
     angular.module('enviroCar.tracks')

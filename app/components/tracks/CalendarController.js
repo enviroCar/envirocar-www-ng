@@ -2,9 +2,9 @@
 (function () {
     'use strict';
 
-    function TrackListCtrl($scope, $timeout, $mdDialog, $translate) {
+    function TrackListCtrl($scope, $state, $stateParams, $timeout, $mdDialog, $translate) {
         $scope.onload_all_tracks_page = false;
-        var tab_a = false;
+        var tab_a = true;
         var tab_b = false;
         var tab_c = false;
         

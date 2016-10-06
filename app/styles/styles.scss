@@ -208,6 +208,31 @@ html, body{
     }
 }
 
+#track-summary  {
+    md-card-content {
+        md-list-item {
+            padding: 0 0 0 0;
+        }
+    }
+}
+
+md-tabs {
+    background-color: #e6e6e6;
+    md-tab-item {
+        border: silver 1px solid;
+        background-color: white;
+    }
+    md-tab-item.md-active {
+        background-color: white;
+    }
+    md-tabs-wrapper {
+        background-color: white;
+    }
+    md-tab {
+        // TODO: elevation.
+    }
+}
+
 #main-toolbar {
     position:fixed;
     width : 100%;
@@ -291,7 +316,6 @@ md-sidenav {
         width: 90px; 
         height: 25px;
     }
-
 }
 
 #sidenav-title {
@@ -511,10 +535,11 @@ md-content {
     height:190px;
 
     .md-content {
-        width:280px;
-        height:186px;
+        width:290px;
+        height:180px;
         padding: 4px;
         background-color: grey;
+        border-bottom: 4px solid grey
     }
     .img{
         vertical-align: central;

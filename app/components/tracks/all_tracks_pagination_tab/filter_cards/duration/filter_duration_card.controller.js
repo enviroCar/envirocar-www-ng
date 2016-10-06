@@ -1,12 +1,16 @@
 (function () {
     'use strict';
-    function FilterDurationCardCtrl($scope, $timeout) {
-        $scope.filters.duration.params.min = $scope.duration_min;
-        $scope.filters.duration.params.max = $scope.duration_max;
+    function FilterDurationCardCtrl($scope, $state, $timeout) {
+        
+        // load state values:
+        var state = $state.current.data;
+        
+        $scope.filters.duration.params.min = (state.duration.min? state.duration.min : $scope.duration_min);
+        $scope.filters.duration.params.max = (state.duration.max? state.duration.max : $scope.duration_max);
 
         $scope.sliderDuration = {
-            minValue: $scope.duration_min,
-            maxValue: $scope.duration_max,
+            minValue: (state.duration.min? state.duration.min : $scope.duration_min),
+            maxValue: (state.duration.max? state.duration.max : $scope.duration_max),
             options: {
                 floor: $scope.duration_min,
                 ceil: $scope.duration_max,
@@ -31,6 +35,10 @@
         $scope.changeSelectionRange = function (a, b) {
             $scope.filters.duration.params.min = a;
             $scope.filters.duration.params.max = b;
+            $state.current.data.duration.inUse = true;
+            $state.current.data.duration.min = a;
+            $state.current.data.duration.max = b;
+            
             $scope.filters.duration.inUse = true;
             $scope.filtersChanged();
         };

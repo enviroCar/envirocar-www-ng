@@ -196,6 +196,19 @@ html, body {
   .sl-content .title_span {
     color: #1A80C1; }
 
+#track-summary md-card-content md-list-item {
+  padding: 0 0 0 0; }
+
+md-tabs {
+  background-color: #e6e6e6; }
+  md-tabs md-tab-item {
+    border: silver 1px solid;
+    background-color: white; }
+  md-tabs md-tab-item.md-active {
+    background-color: white; }
+  md-tabs md-tabs-wrapper {
+    background-color: white; }
+
 #main-toolbar {
   position: fixed;
   width: 100%;
@@ -436,10 +449,11 @@ md-content {
   width: 300px;
   height: 190px; }
   .trackpreview .md-content {
-    width: 280px;
-    height: 186px;
+    width: 290px;
+    height: 180px;
     padding: 4px;
-    background-color: grey; }
+    background-color: grey;
+    border-bottom: 4px solid grey; }
   .trackpreview .img {
     vertical-align: central;
     position: absolute;

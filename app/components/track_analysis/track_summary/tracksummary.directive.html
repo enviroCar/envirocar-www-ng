@@ -1,5 +1,5 @@
-<md-card flex style="height: 640px;">
-    <div layout="row" flex="100">
+<md-card id="track-summary" flex style="height: 640px;">
+    <div layout="row">
         <p class='card-title' >
             <span><b>{{'TRACK_SUMMARY_TITLE'| translate}} </b></span>
         </p>
@@ -13,10 +13,10 @@
             </md-button>
         </div>
     </div>
-    <md-card-content>
+    <md-card-content layout="column" flex>
         <md-progress-circular layout-align="center center" class="loader_dashboard2" ng-if="!onload_summary" md-diameter="56"></md-progress-circular>
 
-        <div ng-if="onload_summary">
+        <div ng-if="onload_summary" layout="column" flex>
             <div layout-gt-xs="row">
                 <div style="width:50%;text-align:center">
                     <h3 style="color:#0065A0">{{tracksummary['timeoftravel']}}</h3>
@@ -27,8 +27,14 @@
                     <p style="font-size:13px;">{{'DISTANCE'| translate}}</p>
                 </div>
             </div>
+            
+            <span flex class="span-flex"></span>
+            
             <md-divider ></md-divider>
-            <md-list-item  layout="row">
+            
+            <span flex class="span-flex"></span>
+            
+            <md-list-item layout="row">
                 <i class="material-icons md-avatar grey md-36">directions_car</i>
                 <div class="md-list-item-text">
                     <p>{{'VEHICLE_TYPE'| translate}}:</p>
@@ -38,7 +44,9 @@
                     <p>{{tracksummary['vehiclemanufacturer']}}, {{tracksummary.vehiclemodel}}</p>
                 </div>
             </md-list-item>
-
+            
+            <span flex class="span-flex"></span>
+            
             <md-list-item layout="row">
                 <i class="material-icons md-avatar grey md-36">timer</i>
                 <div class="md-list-item-text">
@@ -49,6 +57,8 @@
                     <p>{{tracksummary['starttime']}}</p>
                 </div>
             </md-list-item>
+            
+            <span flex class="span-flex"></span>
 
             <md-list-item layout="row">
                 <i class="material-icons md-avatar grey md-36">timer_off</i>
@@ -60,41 +70,45 @@
                     <p>{{tracksummary['endtime']}}</p>
                 </div>
             </md-list-item>
+            
+            <span flex class="span-flex"></span>
 
             <md-list-item layout="row">
-                <i class="material-icons md-avatar grey md-36">local_gas_station</i>
+                <i style="margin-bottom: 0px;" class="material-icons md-avatar grey md-36">local_gas_station</i>
                 <div class="md-list-item-text">
-                    <p>{{'CONSUMPTION'| translate}}:</p>
+                    <p style="margin-bottom: 14px;">{{'CONSUMPTION'| translate}}:</p>
                 </div>
             </md-list-item>
 
             <div layout="row">
-                <span flex="30"></span>
+                <span style="width: 90px;"></span>
                 <div layout="column" >
                     <span style="padding-bottom: 8px;">{{'PER_100_KM' | translate}}:</span>
                     <span>{{'ON_SEGMENT' | translate}}:</span>
                 </div>
                 <span flex></span>
-                <div layout="column" style="padding-right: 16px; text-align: right;">
+                <div layout="column" style="text-align: right;">
                     <span flex style="padding-bottom: 8px;"> {{tracksummary['fuel']}} liter/100km</span>
                     <span flex> {{tracksummary['fuelConsumed']}} liter</span>
                 </div>
             </div>
+            
+            <span flex class="span-flex"></span>
 
             <md-list-item layout="row">
-                <i class="material-icons md-avatar grey md-36">cloud_circle</i>
+                <i style="margin-bottom: 0px;" class="material-icons md-avatar grey md-36">cloud_circle</i>
                 <div class="md-list-item-text">
-                    <p>{{'CO2_EMISSION'| translate}}:</p>
+                    <p style="margin-bottom: 14px;">{{'CO2_EMISSION'| translate}}:</p>
                 </div>
             </md-list-item>
             <div layout="row">
-                <span flex="30"></span>
+                <span style="width: 90px;"></span>
                 <div layout="column" >
                     <span style="padding-bottom: 8px;">{{'PER_100_KM' | translate}}:</span>
                     <span>{{'ON_SEGMENT' | translate}}:</span>
                 </div>
                 <span flex></span>
-                <div layout="column" style="padding-right: 16px; text-align: right;">
+                <div layout="column" style="text-align: right;">
                     <span flex style="padding-bottom: 8px;"> {{tracksummary['co2emissionperhour']}} kg/100km</span>
                     <span flex> {{tracksummary['co2emissionperhourConsumed']}} kg</span>
                 </div>

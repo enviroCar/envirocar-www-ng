@@ -1,4 +1,5 @@
-<md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
+
+<md-tab label="{{'TRACKS_LIST'| translate}}"><!--
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_all_tracks" md-diameter="156"></md-progress-circular>
     <md-content ng-if="onload_all_tracks" id="track_list_tab" style="height: {{tablistheight}}px;">
         <section  ng-repeat="months in monthsWithTracks">

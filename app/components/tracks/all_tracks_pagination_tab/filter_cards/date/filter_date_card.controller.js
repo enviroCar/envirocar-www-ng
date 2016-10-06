@@ -1,16 +1,20 @@
 (function () {
     'use strict';
-    function FilterDateCardCtrl($scope, $timeout) {
+    function FilterDateCardCtrl($scope, $state, $timeout) {
+        
+        // load state values:
+        var state = $state.current.data;
+        
         $scope.dateStartCustom = $scope.date_min;
         $scope.dateEndCustom = $scope.date_max;
-        $scope.filters.date.params.min = $scope.date_min;
+        $scope.filters.date.params.min = (state.date.min? state.date.min : $scope.date_min);
         $scope.filters.date.params.min.setHours(0, 0, 0, 0);
-        $scope.filters.date.params.max = $scope.date_max;
+        $scope.filters.date.params.max = (state.date.max? state.date.max : $scope.date_max);
         $scope.filters.date.params.max.setHours(23, 59, 0, 0);
 
         $scope.sliderDate = {
-            minValue: $scope.dateStartCustom.getTime(),
-            maxValue: $scope.dateEndCustom.getTime(),
+            minValue: (state.date.min? state.date.min : $scope.date_min),
+            maxValue: (state.date.max? state.date.max : $scope.date_max),
             options: {
                 floor: $scope.dateStartCustom.getTime(),
                 ceil: $scope.dateEndCustom.getTime(),
@@ -39,6 +43,12 @@
 
             $scope.filters.date.params.max = new Date(b);
             $scope.filters.date.params.max.setHours(23, 59, 0, 0);
+            
+            $state.current.data.date.inUse = true;
+            $state.current.data.date.min = new Date(a);
+            $state.current.data.date.min.setHours(0, 0, 0, 0);
+            $state.current.data.date.max = new Date(b);
+            $state.current.data.date.max.setHours(23, 59, 0, 0);
 
             $scope.filters.date.inUse = true;
             $scope.filtersChanged();

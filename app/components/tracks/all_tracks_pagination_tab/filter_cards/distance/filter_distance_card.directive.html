@@ -13,7 +13,7 @@
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="removeFilter(filters.distance); filters.distance.inUse = false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
+            <md-button ng-click="removeFilter(filters.distance); $state.current.data.distance.inUse = false; filters.distance.inUse = false; filtersChanged()" class="md-icon-button md-warn" aria-label="close">
                 <md-icon class="material-icons  md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}
