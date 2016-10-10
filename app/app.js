@@ -11,6 +11,7 @@
         'nvd3',
         'enviroCar.auth',
         'ui-leaflet',
+        //'leaflet-directive',
         'enviroCar.api',
         'enviroCar.track',
         'enviroCar.tracks',
@@ -38,8 +39,8 @@
                         console.log("gehe zur tracks page!");
                     }
                    
-                    
                     var credits = UserCredentialsService.getCredentials();
+                    console.log(credits);
                     if (toState.authenticate && (!credits.username)) {
                         $state.transitionTo("login");
                         event.preventDefault();

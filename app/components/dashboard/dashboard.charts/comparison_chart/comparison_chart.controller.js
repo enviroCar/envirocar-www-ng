@@ -7,7 +7,6 @@
             $mdDialog, 
             StatisticsService, 
             UserCredentialsService) {
-        console.log("SpeedCtrl started.");
         $scope.onload_all = false;
 
         $scope.onload_speed = false;
@@ -69,7 +68,6 @@
         };
 
         $scope.$on('sidenav:item-selected', function (event, args) {
-            console.log("sidenav item selected: page refresh");
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
@@ -82,7 +80,6 @@
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received.");
             var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
             $scope.optionsSpeed.chart.yAxis = {
                 axisLabel: axisLabelSpeed,
@@ -172,12 +169,10 @@
         var dataotherusers = [];
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
                 function (data) {
-                    console.log(data);
                     var store = data.data;
                     var speed_user = store.avg;
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
                             function (data) {
-                                console.log(data);
                                 store = data.data;
                                 var speed_public = store.avg;
                                 $scope.dataSpeed = [{
@@ -211,12 +206,10 @@
 
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
                 function (data) {
-                    console.log(data);
                     var store = data.data;
                     var consumption_user = store.avg;
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
                             function (data) {
-                                console.log(data);
                                 store = data.data;
                                 var consumption_public = store.avg;
                                 $scope.dataConsumption = [{
@@ -250,12 +243,10 @@
 
         StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
                 function (data) {
-                    console.log(data);
                     var store = data.data;
                     var CO2_user = store.avg;
                     StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
                             function (data) {
-                                console.log(data);
                                 store = data.data;
                                 var CO2_public = store.avg;
                                 $scope.dataCO2 = [{

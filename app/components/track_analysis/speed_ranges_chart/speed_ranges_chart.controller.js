@@ -1,6 +1,14 @@
 (function () {
     'use strict';
-    function SpeedRangesChartCtrl($scope, $stateParams, $timeout, $translate, TrackService, StatisticsService, UserCredentialsService) {
+    function SpeedRangesChartCtrl(
+            $scope, 
+            $stateParams, 
+            $timeout, 
+            $translate, 
+            TrackService,
+            StatisticsService, 
+            UserCredentialsService,
+            trackAnalysisSettings) {
         console.log("SpeedRangesChartCtrl started.");
         $scope.onload_all = false;
 

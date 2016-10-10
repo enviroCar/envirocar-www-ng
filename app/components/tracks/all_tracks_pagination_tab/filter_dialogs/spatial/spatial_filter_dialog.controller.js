@@ -1,7 +1,6 @@
 (function () {
 
-    SpatialDialogCtrl = function ($scope, $translate, $mdDialog, $timeout, UserService, leafletData, leafletBoundsHelpers, leafletDrawEvents) {
-        console.log("SpatialDialogCtrl started.");
+    SpatialDialogCtrl = function ($scope, $state, $translate, $mdDialog, $timeout, UserService, leafletData, leafletBoundsHelpers, leafletDrawEvents) {
         var drawnItems = new L.FeatureGroup();
         var drawWhite = false;
         angular.extend($scope, {
@@ -128,7 +127,6 @@
                 }
 
                 window.dispatchEvent(new Event('resize'));
-                console.log($scope.map3.spatial_bounds);
                 $timeout(function () {
                     $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
                         [$scope.filters.spatial.params.southwest.lat, $scope.filters.spatial.params.southwest.lng],
@@ -191,10 +189,8 @@
 
             },
             edited: function (arg) {
-                console.log(arg);
             },
             deleted: function (arg) {
-                console.log(arg);
                 var layers;
                 layers = arg.layers;
                 drawnItems.removeLayer(layers);
@@ -209,7 +205,6 @@
         var drawEvents = leafletDrawEvents.getAvailableEvents();
         drawEvents.forEach(function (eventName) {
             $scope.$on('leafletDirectiveDraw.' + eventName, function (e, payload) {
-                console.log(eventName, e, payload);
                 //{leafletEvent, leafletObject, model, modelName} = payload
                 var leafletEvent, leafletObject, model, modelName; //destructuring not supported by chrome yet :(
                 leafletEvent = payload.leafletEvent, leafletObject = payload.leafletObject, model = payload.model,
@@ -229,7 +224,6 @@
         // if dialog openned for changing values, load previous bounding box coordinates:
         if ($scope.filters.spatial.inUse)
         {
-            console.log("in use.");
             if ($scope.filters.spatial.params.southwest.lat !== undefined)
                 $scope.southWest.lat = $scope.filters.spatial.params.southwest.lat;
             if ($scope.filters.spatial.params.southwest.lng !== undefined)
@@ -241,7 +235,6 @@
             // zoom map to track:
             $scope.updateDialogMap();
         } else {
-            console.log("not in use.");
             // where to zoom to, if dialog is started first time?
             // TODO: Get userspecific default lat/lng coordinates somehow!
 
@@ -250,7 +243,6 @@
                 $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
                     [51.68, 7.25], [52.2, 8.7]
                 ]);
-                console.log($scope.map3.spatial_bounds);
                 window.dispatchEvent(new Event('resize'));
             },
                     1000);
@@ -295,7 +287,14 @@
                             }
                             ;
                             $scope.filters.spatial.inUse = true;
-                            console.log("rect selected");
+                            var params = $state.current.data.spatial;
+                            params.inUse = true;
+                            params.southwest.lat = spatial_filter_sw.lat;
+                            params.southwest.lng = spatial_filter_sw.lng;
+                            params.northeast.lat = spatial_filter_ne.lat;
+                            params.northeast.lng = spatial_filter_ne.lng;
+                            params.track_ids = $scope.filters.spatial.params.track_ids;
+                            
                             //$scope.updateDialogMap();
                             $mdDialog.hide();
                             $scope.filtersChanged();
@@ -309,7 +308,6 @@
             $mdDialog.cancel();
         };
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received in DistanceDialogCtrl.");
         });
     };
     angular.module('enviroCar.tracks')

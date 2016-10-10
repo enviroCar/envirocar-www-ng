@@ -4,6 +4,7 @@
             $rootScope,
             $scope,
             $timeout,
+            $state,
             leafletData,
             leafletBoundsHelpers,
             leafletDrawEvents) {
@@ -117,6 +118,7 @@
                 window.dispatchEvent(new Event('resize'));
             },
                     100);
+            
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
@@ -130,9 +132,20 @@
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received.");
             $scope.updateMap();
         });
+        
+        $scope.filtersChanged();
+
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
+        
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
     }
     ;
     angular.module('enviroCar.tracks')

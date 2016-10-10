@@ -22,7 +22,6 @@
         UserService.getTotalUserTracks($scope.username, $scope.password).then(
                 function(data){
                     $scope.track_number = data.headers('Content-Range').split("/")[1];
-                    console.log($scope.track_number);
                 }, function(data){
                     console.log("error " + data)
                 }
@@ -31,7 +30,6 @@
         // tracks holen:
         TrackService.getUserTracks($scope.username, $scope.password). then(
                 function(data){
-                    console.log(data);
                     $scope.number = data.data.tracks.length;
                     var limit = 0;
                     // The latest tracks display shows latest 6 tracks. If the user only has a total of less than 6 tracks, then we update that number to avoid exceptions
@@ -44,13 +42,11 @@
 
                             var helper_events = {};
                             helper_events['car'] = data.data.tracks[cntr].sensor.properties.model;
-                            console.log(data.data.tracks[cntr].sensor.properties.model);
                             helper_events['manufacturer'] = data.data.tracks[cntr].sensor.properties.manufacturer;
                             helper_events['id'] = data.data.tracks[cntr].id;
                             helper_events['title'] = data.data.tracks[cntr].name;
                             helper_events['urlredirect'] = urlredirect + data.data.tracks[cntr].id;
                             helper_events['url'] = ecBaseUrl + '/tracks/'+ data.data.tracks[cntr].id + "/preview";
-                            console.log(helper_events['url']);
                             var seconds_passed = new Date(data.data.tracks[cntr].end).getTime() - new Date(data.data.tracks[cntr].begin).getTime();
                             var seconds = seconds_passed / 1000;
                             var timeoftravel = seconds / 60;

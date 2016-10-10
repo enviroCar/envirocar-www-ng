@@ -213,6 +213,11 @@ html, body{
         md-list-item {
             padding: 0 0 0 0;
         }
+        .md-list-item-text {
+            p {
+                font-weight: bold;
+            }
+        }
     }
 }
 
@@ -649,6 +654,11 @@ calendar-md {
 
     border-bottom: 1px solid #1A80C1;
     border-bottom-left-radius: 2em;
+    
+    margin-bottom: 8px;
+    md-checkbox {
+        margin-bottom: 0px;
+    }
 }
 
 cl-paging {

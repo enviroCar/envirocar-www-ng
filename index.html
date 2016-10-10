@@ -9,15 +9,18 @@
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
         <script src="bower_components/leaflet/dist/leaflet.js"></script>
-        <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
-        <script src="bower_components/angularjs-slider/master/dist/rzslider.js"></script>
+        <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+        <script src="bower_components/Leaflet.heat/dist/leaflet-heat.js"></script>
         <script src="bower_components/material-angular-paging/build/dist.min.js"></script>
+        <script src="bower_components/ui-leaflet/dist/ui-leaflet.js"></script>
 
-        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-        <script src="bower_components/leaflet.heat/dist/leaflet-heat.js"></script>
-        <script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
-
-        <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
+        
+        <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.css">
+        <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css">
+        <link rel="stylesheet" href="/bower_components/angularjs-slider/dist/rzslider.css">
+        <link rel="stylesheet" href="/bower_components/leaflet-dist/leaflet.css">
+        <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+        <link rel="stylesheet" href="/bower_components/leaflet-draw/dist/leaflet.draw.css">
         <!-- bower:css -->
         <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.css">
         <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css">
@@ -31,7 +34,14 @@
         <!-- endInject -->
     </head>
 
+    <!--[if lt IE 10]>
+      <p>You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a>
+        to improve your experience.</p>
+    <![endif]-->
+
     <body ng-controller="AppCtrl">
+
 
     <envirocar-toolbar id="main-toolbar"> </envirocar-toolbar> <!-- Toolbar -->
 
@@ -108,6 +118,7 @@
     <script src="/app/components/toolbar/toolbar.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.directive.js"></script>
     <script src="/app/components/tracks/CalendarController.js"></script>
+    <script src="/app/components/track_analysis/track_analysis_settings.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/all_tracks_pagination_tab.controller.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/all_tracks_pagination_tab.directive.js"></script>
     <script src="/app/components/tracks/all_tracks_tab/all_tracks_tab.controller.js"></script>
@@ -119,23 +130,24 @@
     <script src="/app/components/track_analysis/comparison_track_chart/comparison_chart.directive.js"></script>
     <script src="/app/components/track_analysis/line_chart/line_chart_without_focus.controller.js"></script>
     <script src="/app/components/track_analysis/line_chart/line_chart_without_focus.directive.js"></script>
+    <script src="/app/components/track_analysis/phenom_service/phenom.service.js"></script>
     <script src="/app/components/track_analysis/speed_ranges_chart/speed_ranges_chart.controller.js"></script>
     <script src="/app/components/track_analysis/speed_ranges_chart/speed_ranges_chart.directive.js"></script>
     <script src="/app/components/track_analysis/track_summary/tracksummary.controller.js"></script>
     <script src="/app/components/track_analysis/track_summary/tracksummary.directive.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.controller.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/heatmap/heat_map.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/heatmap/heat_map.directive.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/comparison_chart/comparison_chart.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/latest_tracks/latest_tracks.directive.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/speed_zones_chart/speed_zones.controller.js"></script>
     <script src="/app/components/dashboard/dashboard.charts/speed_zones_chart/speed_zones.directive.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.controller.js"></script>
-    <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.directive.js"></script>
+    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/filter-card.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.controller.js"></script>
     <script src="/app/components/toolbar/toolbar.partials/language_menu/language_menu.directive.js"></script>
-    <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/filter-card.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.controller.js"></script>
+    <script src="/app/components/dashboard/dashboard.charts/weekdays_chart/weekdays_chart.directive.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.controller.js"></script>
     <script src="/app/components/track_analysis/chart/toolbar.partials/phenomenon_dropdown.directive.js"></script>
     <script src="/app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/filter_distance_card.controller.js"></script>

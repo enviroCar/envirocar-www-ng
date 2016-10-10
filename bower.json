@@ -33,7 +33,9 @@
     "angularjs-slider": "^5.5.0",
     "material-calendar": "^0.2.14",
     "material-angular-paging": "*",
-    "ui-leaflet-draw": "^0.0.3"
+    "ui-leaflet-draw": "^0.0.3",
+    "heatmap.js": "^0.0.1",
+    "angular-simple-logger": "^0.1.7"
   },
   "resolutions": {
     "angular-material": "^1.1.1",

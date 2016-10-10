@@ -17,7 +17,7 @@
             UserCredentialsService,
             ecBaseUrl) {
 
-            console.log(ecBaseUrl);
+
             /**
         $scope.onload_all_tracks = false;
         

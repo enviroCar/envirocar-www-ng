@@ -1,16 +1,19 @@
 (function () {
     'use strict';
     function FilterDistanceCardCtrl($scope, $state, $timeout) {
-        
+
         // load state values:
         var state = $state.current.data;
-        
-        $scope.filters.distance.params.min = (state.distance.min? state.distance.min : $scope.distance_min);
-        $scope.filters.distance.params.max = (state.distance.max? state.distance.max : $scope.distance_max);
-        
+
+        $scope.filters.distance.params.min = (state.distance.min ? state.distance.min : $scope.distance_min);
+        $scope.filters.distance.params.max = (state.distance.max ? state.distance.max : $scope.distance_max);
+
+        console.log($scope.filters.distance.params.min);
+        console.log($scope.filters.distance.params.max);
+
         $scope.sliderDistance = {
-            minValue: (state.distance.min? state.distance.min : $scope.distance_min),
-            maxValue: (state.distance.max? state.distance.max : $scope.distance_max),
+            minValue: (state.distance.min ? state.distance.min : $scope.distance_min),
+            maxValue: (state.distance.max ? state.distance.max : $scope.distance_max),
             options: {
                 floor: $scope.distance_min,
                 ceil: $scope.distance_max,
@@ -32,20 +35,31 @@
             }
         };
 
+
+        $scope.filtersChanged();
+
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
+
         $scope.changeSelectionRange = function (a, b) {
             $scope.filters.distance.params.min = a;
             $scope.filters.distance.params.max = b;
             $state.current.data.distance.inUse = true;
             $state.current.data.distance.min = a;
             $state.current.data.distance.max = b;
-            
+
             $scope.filters.distance.inUse = true;
             $scope.filtersChanged();
         };
+
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },
                 50);
+
+
     }
     ;
 

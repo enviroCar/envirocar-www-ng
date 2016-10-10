@@ -15,5 +15,9 @@
     "gulp-ruby-sass": "^2.1.0",
     "gulp-sass": "^2.3.2",
     "main-bower-files": "^2.13.1"
+  },
+  "dependencies": {
+    "leaflet.heat": "^0.2.0",
+    "requirejs": "^2.3.2"
   }
 }

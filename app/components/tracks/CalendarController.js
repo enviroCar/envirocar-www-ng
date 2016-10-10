@@ -7,7 +7,9 @@
         var tab_a = true;
         var tab_b = false;
         var tab_c = false;
-        
+
+        $scope.selectedTab = "0";
+
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);
             var dialog_desc = $translate.instant(description);
@@ -23,41 +25,48 @@
                     .fullscreen(true)
                     );
         };
-        
+
+        $scope.goToActivity = function (trackid) {
+            //redirect to the track analytics page.
+            $state.go('chart', {
+                'trackid': trackid
+            });
+        };
+
         $scope.$on('trackspage:all_tracks_tab-loaded', function (event, args) {
-            console.log("all_tracks_tab loaded");
             tab_a = true;
             if (tab_a && tab_b && tab_c) {
                 $scope.onload_all_tracks_page = true;
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
+                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);
             }
         });
         $scope.$on('trackspage:pagination_tab-loaded', function (event, args) {
-            console.log("all_tracks_tab loaded");
             tab_b = true;
             if (tab_a && tab_b && tab_c) {
                 $scope.onload_all_tracks_page = true;
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
+                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);
             }
         });
         $scope.$on('trackspage:calendar_tab-loaded', function (event, args) {
-            console.log("calendar_tab loaded");
             tab_c = true;
             if (tab_a && tab_b && tab_c) {
                 $scope.onload_all_tracks_page = true;
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
+                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);

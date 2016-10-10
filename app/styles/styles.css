@@ -199,6 +199,9 @@ html, body {
 #track-summary md-card-content md-list-item {
   padding: 0 0 0 0; }
 
+#track-summary md-card-content .md-list-item-text p {
+  font-weight: bold; }
+
 md-tabs {
   background-color: #e6e6e6; }
   md-tabs md-tab-item {
@@ -536,7 +539,10 @@ calendar-md {
   border-top: 1px solid #1A80C1;
   border-top-left-radius: 2em;
   border-bottom: 1px solid #1A80C1;
-  border-bottom-left-radius: 2em; }
+  border-bottom-left-radius: 2em;
+  margin-bottom: 8px; }
+  .divider md-checkbox {
+    margin-bottom: 0px; }
 
 cl-paging {
   padding-bottom: 10px; }

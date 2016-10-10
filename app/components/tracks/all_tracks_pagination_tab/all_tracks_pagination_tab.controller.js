@@ -21,7 +21,6 @@
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
         $scope.filterOrder = $state.current.data.filterOrder;
-
         $scope.itemsPerPage = ($scope.screenIsXS ? 5 : 10);
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
 
@@ -32,7 +31,6 @@
                 } else {
                     $scope.itemsPerPage = 10;
                 }
-                // calculate pagination:
                 var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
                 $scope.currentPaginationTracks.currentMonthTracks = [];
                 // number pages:
@@ -48,11 +46,7 @@
 
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-
         var params = $state.current.data;
-        console.log(params);
-        
-
         // Filters:
         $scope.filters = {
             distance: {
@@ -96,24 +90,20 @@
                 label: $translate.instant('FILTER_SPATIAL'),
                 params: {
                     southwest: {
-                        lat: undefined,
-                        lng: undefined
+                        lat: params.spatial.southwest.lat,
+                        lng: params.spatial.southwest.lng
                     },
                     northeast: {
-                        lat: undefined,
-                        lng: undefined
+                        lat: params.spatial.northeast.lat,
+                        lng: params.spatial.northeast.lng
                     },
-                    track_ids: [
-                    ]
+                    track_ids: params.spatial.track_ids
                 },
-                inUse: false,
+                inUse: params.spatial.inUse,
                 layer: 0
             }
         };
-        
-
         $scope.filtered_tracks = 0;
-
         $scope.addFilter = function (filter) {
             // An utility map to replace writing switch cases for each of the filter
             if (!filter.inUse)
@@ -127,20 +117,64 @@
                 $state.current.data.filterOrder = $scope.filterOrder;
             }
         };
-
         $scope.removeFilter = function (filter) {
-            var index = $scope.filterOrder.indexOf(filter);
-            if (index > -1) {
-                $scope.filterOrder.splice(index, 1);
-                $state.current.data.filterOrder.splice(index, 1);
+            // delete all scope filters with name of removed filter:}*/
+            var i = $scope.filterOrder.length - 1;
+            while (i >= 0) {
+                if ($scope.filterOrder[i].name === filter.name) {
+                    $scope.filterOrder.splice(i, 1);
+                }
+                i--;
             }
-        };
 
+            var params = $state.current.data;
+            // delete all state filters with name of removed filter:
+            var i = params.filterOrder.length - 1;
+            while (i >= 0) {
+                if (params.filterOrder[i].name === filter.name) {
+                    // before deletion: set values to default:
+                    switch (filter.name) {
+                        case 'distance':
+                            params.distance.inUse = false;
+                            params.distance.min = undefined;
+                            params.distance.max = undefined;
+                            break;
+                        case 'date':
+                            params.date.inUse = false;
+                            params.date.min = undefined;
+                            params.date.max = undefined;
+                            break;
+                        case 'duration':
+                            params.duration.inUse = false;
+                            params.duration.min = undefined;
+                            params.duration.max = undefined;
+                            break;
+                        case 'vehicle':
+                            params.vehicle.inUse = false;
+                            params.vehicle.all = [];
+                            params.vehicle.set = [];
+                            break;
+                        case 'spatial':
+                            params.spatial.inUse = false;
+                            params.spatial.southwest.lat = undefined;
+                            params.spatial.southwest.lng = undefined;
+                            params.spatial.northeast.lat = undefined;
+                            params.spatial.northeast.lng = undefined;
+                            params.spatial.track_ids = [];
+                            break;
+                    }
+                    // finally delete it:
+                    params.filterOrder.splice(i, 1);
+                }
+                i--;
+            }
+        }
+
+        $state.current.data.filterOrder = $scope.filterOrder;
         $scope.commonDialog = function (filter)
         {
             var showObject = {};
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-
             if (filter.name === "spatial")
             {
                 showObject = {
@@ -167,13 +201,11 @@
                 $scope.customFullscreen = (wantsFullScreen === true);
             });
         };
-
         var originatorEv;
         $scope.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
         };
-
         $scope.filtersChanged = function () {
             // filter GO!
             var amount_of_user_tracks = $scope.currentPaginationTracks.tracks.length;
@@ -183,11 +215,9 @@
             var filterByDate = $scope.filters.date.inUse;
             var filterByVehicle = $scope.filters.vehicle.inUse;
             var filterBySpatial = $scope.filters.spatial.inUse;
-
             $scope.filtered_tracks = 0; // counts tracks, that are filtered into the result.
-
             var resultTracks = [];
-
+            console.log($scope.filters.spatial.params.track_ids);
             for (var i = 0; i < amount_of_user_tracks; i++) {
 
                 var currTrack = $scope.currentPaginationTracks.tracks[i];
@@ -196,11 +226,13 @@
                     var currDistance = currTrack.length;
                     if ($scope.filters.distance.params.max === undefined) {
                         if (!(currDistance >= $scope.filters.distance.params.min)) {
+                            console.log("filtered by dist1");
                             continue;
                         }
                     } else {
                         if (!((currDistance >= $scope.filters.distance.params.min) &&
                                 (currDistance <= $scope.filters.distance.params.max))) {
+                            console.log("filtered by dist2");
                             continue;
                         }
                     }
@@ -212,16 +244,19 @@
                     if (($scope.filters.date.params.min === undefined)
                             && ($scope.filters.date.params.max !== undefined)) {
                         if (!(currDate <= $scope.filters.date.params.max)) {
+                            console.log("filtered by date");
                             continue;
                         }
                     } else if (($scope.filters.date.params.max === undefined)
                             && ($scope.filters.date.params.min !== undefined)) {
                         if (!(currDate >= $scope.filters.date.params.min)) {
+                            console.log("filtered by date");
                             continue;
                         }
                     } else
                     if ((!(currDate <= $scope.filters.date.params.max))
                             || (!(currDate >= $scope.filters.date.params.min))) {
+                        console.log("filtered by date");
                         continue;
                     }
                 }
@@ -231,20 +266,22 @@
                     var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
                     var seconds = seconds_passed / 1000;
                     var currTravelTime = seconds / 60;
-
                     if (($scope.filters.duration.params.min === undefined)
                             && ($scope.filters.duration.params.max !== undefined)) {
                         if (!(currTravelTime < $scope.filters.duration.params.max)) {
+                            console.log("filtered by dura");
                             continue;
                         }
                     } else if (($scope.filters.duration.params.max === undefined)
                             && ($scope.filters.duration.params.min !== undefined)) {
                         if (!(currTravelTime >= $scope.filters.duration.params.min)) {
+                            console.log("filtered by dura");
                             continue;
                         }
                     } else
                     if ((!(currTravelTime < $scope.filters.duration.params.max))
                             || (!(currTravelTime >= $scope.filters.duration.params.min))) {
+                        console.log("filtered by dura");
                         continue;
                     }
                 }
@@ -255,6 +292,7 @@
                     var manu = currTrack.manufacturer;
                     var carCombo = manu + "-" + car;
                     if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_set, carCombo)) {
+                        console.log("filtered by cars");
                         continue;
                     }
                 }
@@ -262,21 +300,22 @@
                 // filter by spatial:
                 if (filterBySpatial) {
                     var currID = currTrack.id;
-
                     var found = $scope.filters.spatial.params.track_ids.filter(function (id) {
                         return currID === id;
                     })[0];
-                    if (!found)
+                    if (!found) {
+                        console.log("filtered by spat");
                         continue;
+                    }
                 }
 
                 // if all filters passed, add to resultTracks:
                 resultTracks.push(currTrack);
                 $scope.filtered_tracks++;
             }
+            console.log(resultTracks);
 
             $scope.currentPaginationTracks.currentSelectedTracks = resultTracks;
-
             // calculate pagination:
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
             $scope.currentPaginationTracks.currentMonthTracks = [];
@@ -288,12 +327,9 @@
             }
             $scope.pagingTab.current = 1;
             loadPages();
-
             $rootScope.$broadcast('filter:spatial-filter-changed');
         };
-
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received in AllTracksPaginationCtrl.");
             // translate filter labels:
             $translate([
                 'FILTER_DISTANCE',
@@ -302,7 +338,6 @@
                 'FILTER_VEHICLE',
                 'FILTER_SPATIAL']).then(
                     function (translations) {
-                        console.log(translations);
                         $scope.filters.distance.label = translations['FILTER_DISTANCE'];
                         $scope.filters.date.label = translations['FILTER_DATE'];
                         $scope.filters.duration.label = translations['FILTER_DURATION'];
@@ -310,14 +345,12 @@
                         $scope.filters.spatial.label = translations['FILTER_SPATIAL'];
                     });
         });
-
         // pagination:
         $scope.currentPaginationTracks = {
             currentMonthTracks: [], // all tracks currently shown in current pagination page.
             currentSelectedTracks: [], // all tracks from this month in the current selection.
             tracks: []                  // all tracks
         };
-
         $scope.currentPageTab = 0;
         $scope.pagingTab = {
             total: 5,
@@ -329,7 +362,6 @@
             $scope.currentPageTab = $scope.pagingTab.current;
             // remove the 1-$scope.itemsPerPage tracks from current pagination page:
             $scope.currentPaginationTracks.currentMonthTracks = [];
-
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
             // take the 1-$scope.itemsPerPage from page current and push into currentMonthTracks:
             for (var i = $scope.itemsPerPage * ($scope.currentPageTab - 1);
@@ -339,7 +371,6 @@
         }
 
         $scope.tracksPagination = [];
-
         if (window.innerHeight > 0) {
             // calculate pagination:
             var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
@@ -363,11 +394,9 @@
             }
             return false;
         };
-
         // tracks holen:
         TrackService.getUserTracks($scope.username, $scope.password).then(
                 function (data) {
-                    console.log(data);
                     // Erstelle eine Tagestabelle
                     var date_count = [];
                     var tracks = data.data.tracks;
@@ -380,7 +409,6 @@
                     var minutes = seconds_passed / 60000;
                     $scope.duration_min = Math.floor(minutes);
                     $scope.duration_max = Math.ceil(minutes);
-
                     var contains = function (array, obj) {
                         var i = array.length;
                         while (i--) {
@@ -390,7 +418,6 @@
                         }
                         return false;
                     };
-
                     $scope.filtered_tracks = tracks.length;
                     $scope.tracksPagination = [];
                     for (var i = 0; i < tracks.length; i++) {
@@ -419,7 +446,7 @@
                         // get current Track's month:
                         var month = currDate.getUTCMonth(); //months from 0-11
                         var year = currDate.getUTCFullYear(); //year
-                        var day = currDate.getDate();       // days from 1-31
+                        var day = currDate.getDate(); // days from 1-31
                         var month_year = {
                             'year': year,
                             'month': month,
@@ -436,7 +463,6 @@
                         var date_for_seconds = new Date(null);
                         date_for_seconds.setSeconds(seconds);
                         var date_hh_mm_ss = date_for_seconds.toISOString().substr(11, 8);
-
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
@@ -463,12 +489,10 @@
                         var carType = currTrack.sensor.properties.model;
                         var carManu = currTrack.sensor.properties.manufacturer;
                         var carCombo = carManu + "-" + carType;
-
                         if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_all, carCombo)) {
                             $scope.filters.vehicle.params.cars_all.push(carCombo);
                         }
                         ;
-
                         var resultTrack = {
                             year: year,
                             month: month,
@@ -486,7 +510,6 @@
                     }
                     $scope.distance_max = Math.ceil($scope.distance_max);
                     $scope.distance_min = Math.floor($scope.distance_min);
-
                     // get all tracks from current month&year:
                     $scope.currentPaginationTracks = {
                         currentMonthTracks: [],
@@ -511,16 +534,18 @@
                     $scope.onload_pagination_tab = true;
                     $rootScope.$broadcast('trackspage:pagination_tab-loaded');
                     if ($scope.filterOrder.length > 0)
-                        $scope.filtersChanged();   
+                        if ($scope.filters.spatial.inUse && $scope.filterOrder.length > 1) {
+                            $scope.filtersChanged();
+                        } else if (!$scope.filters.spatial.inUse)
+                            $scope.filtersChanged();
                     window.dispatchEvent(new Event('resize'));
-
                 }, function (data) {
             console.log("error " + data)
         }
         );
-         
     }
     ;
+
     angular.module('enviroCar.tracks')
             .controller('AllTracksPaginationTabCtrl', AllTracksPaginationTabCtrl);
 })()

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     function SpeedZonesChartCtrl($scope, $timeout, $translate, TrackService, UserService, StatisticsService, UserCredentialsService, ecBaseUrl) {
-        console.log("SpeedZonesChartCtrl started.");
+        
         $scope.onloadSpeedZones = false;
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;

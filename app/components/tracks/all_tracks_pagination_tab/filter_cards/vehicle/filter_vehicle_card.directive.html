@@ -23,12 +23,10 @@
     </div>
     <div class="filter_card_content">
         <div layout="column" layout-padding ng-cloak>
-            <div layout="row" layout-wrap flex>
-                <div flex="50" ng-repeat="item in items">
-                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
-                        {{ item}}
-                    </md-checkbox>
-                </div>
+            <div ng-repeat="item in items">
+                <md-checkbox flex ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                    {{ item}}
+                </md-checkbox>
             </div>
             <p ng-if="errorNothingSelected">{{'ERROR_NOSELECTION'| translate}}</p>
         </div>

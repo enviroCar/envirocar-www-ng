@@ -11,7 +11,9 @@
             $mdMedia,
             TrackService,
             UserCredentialsService,
-            leafletBoundsHelpers) {
+            PhenomenonService,
+            leafletBoundsHelpers,
+            trackAnalysisSettings) {
         $scope.$mdMedia = $mdMedia;
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
@@ -43,36 +45,20 @@
             }
         };
 
-        $scope.yellow_break = [
-            60, // speed
-            6, // consumption
-            15, // co2
-            2000, // rpm
-            44      // engine load
-        ];
-        $scope.red_break = [
-            130, // speed
-            12, // consumption
-            30, // co2
-            3500, // rpm
-            80     // engine load
-        ];
-        $scope.max_values = [
-            255, // speed
-            25, // consumption
-            45, // co2
-            5000, // rpm
-            100     // engine load
-        ];
+        $scope.yellow_break = trackAnalysisSettings.yellow_break;
+        $scope.red_break = trackAnalysisSettings.red_break;
+        $scope.max_values = trackAnalysisSettings.max_values;
+
         // on Range selection change:
         $scope.changeSelectionRange = function (start, end) {
             if (start === 0)
                 start = 1;
-            // grey-coloring the offranged part of the track:
+            // grey-coloring the offrange part of the track:
             var max_value = $scope.red_break[$scope.currentPhenomenonIndex];
             for (var index = 1; index < start; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
             }
+            // coloring the inrange part of the track:
             for (var index = start; index < end; index++) {
                 var value = data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon].value;
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
@@ -82,13 +68,27 @@
                                 $scope.max_values[$scope.currentPhenomenonIndex],
                                 value);
             }
+            // grey-coloring the offrange part of the track:
             var track_length = data_global.data.features.length - 1;
             for (var index = end; index <= track_length; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
             }
         };
+
+        $scope.measure = function (lat1, lon1, lat2, lon2) {  // generally used geo measurement function
+            var R = 6378.137; // Radius of earth in KM
+            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            return d * 1000; // meters
+        }
+
         $scope.changeChartRange = function (start, end) {
-            // 1. redraw der neuen chart data:
+            // 1. redraw the new chart data:
             var temp_data_array = [
                 {
                     key: $translate.instant('SPEED'),
@@ -126,6 +126,42 @@
             }
 
             $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
+
+            // 2. zoom to new selected track segment:
+            if (start === 0)
+                start = 1;
+            var northeast = {
+                lat: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lat,
+                lng: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lng,
+            };
+            var southwest = {
+                lat: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lat,
+                lng: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lng,
+            };
+
+            for (var index = start + 1; index < end; index++) {
+                var current_lat = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['latlngs'][0].lat;
+                if (current_lat > northeast.lat) {
+                    northeast.lat = current_lat;
+                }
+                if (current_lat < southwest.lat) {
+                    southwest.lat = current_lat;
+                }
+                var current_lng = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['latlngs'][0].lng;
+                if (current_lng > northeast.lng) {
+                    northeast.lng = current_lng;
+                }
+                if (current_lng < southwest.lng) {
+                    southwest.lng = current_lng;
+                }
+            }
+            ;
+
+            // zoom zo track segment:
+            $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([
+                [northeast.lat, northeast.lng],
+                [southwest.lat, southwest.lng]
+            ]);
         };
 
         $scope.showAlert = function (ev, title, description) {
@@ -146,9 +182,10 @@
 
         // Scroll-fixing the single track analysis toolbar:
         $(window).scroll(function () {
-            console.log("Top-Scroll: "+$(window).scrollTop());;
+            console.log("Top-Scroll: " + $(window).scrollTop());
+            ;
             if ($(window).scrollTop() > 300) {
-                
+
                 if (!$rootScope.track_toolbar_fixed) {
                     $('#track_toolbar').addClass('stuck_top');
                     $("#placeholder-toolbar-stp").css("min-height", "70px");
@@ -203,7 +240,7 @@
         $scope.segmentActivated = false;
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
-        // 0% - green; 50% - yellow; 100% - red; above 100% --> dark red
+        // 0 - green; yellow_break - yellow; red_break - red; max_value --> black
         $scope.percentToRGB = function (yellow_break, red_break, max_value, value) {
             var r, g;
             if (value <= yellow_break) {
@@ -303,6 +340,7 @@
         angular.extend($scope, {
             paths: {},
             bounds: {},
+            maxbounds: {},
             markers: {
                 ClickedPosition: {
                 },
@@ -315,6 +353,10 @@
                         name: 'OpenStreetMap',
                         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz'
+                        ,
+                        layerParams: {
+                            minZoom: 5
+                        }
                     }
                 }
             },
@@ -371,30 +413,35 @@
                     $scope.paths = $scope.paths_all[0];
                     $scope.legend = legend_all[0];
                     $scope.currentPhenomenonIndex = 0;
+                    PhenomenonService.setPhenomenon('Speed', 0);
                     break;
                 case 'Consumption':
                     $scope.dataTrackChart[0] = $scope.data_all[1];
                     $scope.paths = $scope.paths_all[1];
                     $scope.legend = legend_all[1];
                     $scope.currentPhenomenonIndex = 1;
+                    PhenomenonService.setPhenomenon('Consumption', 1);
                     break;
                 case 'CO2':
                     $scope.paths = $scope.paths_all[2];
                     $scope.dataTrackChart[0] = $scope.data_all[2];
                     $scope.legend = legend_all[2];
                     $scope.currentPhenomenonIndex = 2;
+                    PhenomenonService.setPhenomenon('CO2', 2);
                     break;
                 case 'Rpm':
                     $scope.dataTrackChart[0] = $scope.data_all[3];
                     $scope.paths = $scope.paths_all[3];
                     $scope.legend = legend_all[3];
                     $scope.currentPhenomenonIndex = 3;
+                    PhenomenonService.setPhenomenon('Rpm', 3);
                     break;
                 case 'Engine Load':
                     $scope.dataTrackChart[0] = $scope.data_all[4];
                     $scope.paths = $scope.paths_all[4];
                     $scope.legend = legend_all[4];
                     $scope.currentPhenomenonIndex = 4;
+                    PhenomenonService.setPhenomenon('Engine Load', 4);
                     break;
             }
             if ($scope.segmentActivated) {
@@ -434,7 +481,13 @@
                 yAxis: {
                     axisLabel: 'Y Axis',
                     tickFormat: function (d) {
-                        return d3.format(',.2f')(d);
+                        var y;
+                        if ($scope.currentPhenomenonIndex === 3) {
+                            y = d.toFixed(0);
+                        } else {
+                            y = d3.format(',.2f')(d);
+                        }
+                        return y;
                     },
                     rotateYLabel: false
                 },
@@ -704,6 +757,16 @@
                         [northeast.lat, northeast.lng],
                         [southwest.lat, southwest.lng]
                     ]);
+                    // restrict panning with padding:
+                    var delta_lat = Math.abs(northeast.lat - southwest.lat) / 2;
+                    var delta_lng = Math.abs(northeast.lng - southwest.lng) / 2;
+
+                    $scope.maxBounds = leafletBoundsHelpers.createBoundsFromArray([
+                        [northeast.lat + delta_lat, northeast.lng - delta_lng],
+                        [southwest.lat - delta_lat, southwest.lng + delta_lng]
+                    ]);
+                    
+                    
                     $scope.onload_track_map = true;
                     // Track Chart:
                     $scope.onload_track_chart = true;

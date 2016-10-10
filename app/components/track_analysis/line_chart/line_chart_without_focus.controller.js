@@ -7,12 +7,17 @@
             $timeout,
             $translate,
             TrackService,
-            UserCredentialsService) {
+            UserCredentialsService,
+            PhenomenonService) {
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_chart = false;
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
-        console.log($scope.startingPhenom);
+        var phenom = PhenomenonService.getPhenomenon();
+        console.log(phenom);
+
+        $scope.currentPhenomenon = phenom.name;
+        $scope.currentPhenomenonIndex = phenom.index;
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
             $scope.currentPhenomenon = args;
@@ -70,7 +75,13 @@
                 yAxis: {
                     axisLabel: 'Y Axis',
                     tickFormat: function (d) {
-                        return d3.format(',.2f')(d);
+                        var y;
+                        if ($scope.currentPhenomenonIndex === 3) {
+                            y = d.toFixed(0);
+                        } else {
+                            y = d3.format(',.2f')(d);
+                        }
+                        return y;
                     },
                     rotateYLabel: false
                 },
@@ -124,10 +135,30 @@
             }
         ];
 
+
         // Chart data setup for Track Chart:
+        var label;
+        switch ($scope.currentPhenomenonIndex) {
+            case 0:
+                label = $translate.instant('SPEED');
+                break;
+            case 1:
+                label = $translate.instant('CONSUMPTION');
+                break;
+            case 2:
+                label = $translate.instant('CO2');
+                break;
+            case 3:
+                label = $translate.instant('RPM');
+                break;
+            case 4:
+                label = $translate.instant('ENGINE_LOAD');
+                break;
+        }
+        ;
         $scope.dataTrackChart = [
             {
-                key: $translate.instant('SPEED'),
+                key: label,
                 values: [
                 ]
             }
@@ -140,7 +171,12 @@
             $scope.data_all[2].key = $translate.instant('CO2');
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
-            //2. set previous selected phenomenon
+
+            //2. set to current selected phenomenon
+            var phenom = PhenomenonService.getPhenomenon();
+            console.log(phenom);
+            $scope.currentPhenomenon = phenom.name;
+            $scope.currentPhenomenonIndex = phenom.index;
             $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
             //3. set previous selected selection range
             if ($scope.segmentActivated) {
@@ -236,8 +272,13 @@
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                     }
 
+
+                    var phenom = PhenomenonService.getPhenomenon();
+                    console.log(phenom);
+                    $scope.currentPhenomenon = phenom.name;
+                    $scope.currentPhenomenonIndex = phenom.index;
                     // save 'speed'-data as default into time series chart 
-                    $scope.dataTrackChart[0] = $scope.data_all[0];
+                    $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
                     console.log($scope.data_all);
 
                     $scope.onload_track_map = true;

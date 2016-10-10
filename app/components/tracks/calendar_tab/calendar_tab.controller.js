@@ -203,7 +203,6 @@
             $scope.currentPageTracks.currentMonthTracks = [];
             $scope.currentPageTracks.currentSelectedTracks = []; // all tracks from this month in the current selection.
 
-            console.log($scope.currentPageTracks.tracks);
 
             // 2. load tracks within selection into currentSelectedTracks:
             for (var i = 0; i < $scope.currentPageTracks.tracks.length; i++) {
@@ -216,8 +215,6 @@
                     $scope.currentPageTracks.currentSelectedTracks.push(currTrack);
                 }
             }
-            console.log($scope.currentPageTracks.currentSelectedTracks);
-            console.log($scope.currentPageTracks.currentMonthTracks);
             // 3. calculate pagination:
             var number_selected_tracks = $scope.currentPageTracks.currentSelectedTracks.length;
             $scope.paging.total = Math.ceil(number_selected_tracks / 4);

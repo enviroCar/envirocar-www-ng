@@ -65,6 +65,13 @@
          $scope.min_date = day_min + "." + month_min + "." + year_min;
          $scope.max_date = day_max + "." + month_max + "." + year_max;
          */
+        $scope.filtersChanged();
+
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
+        
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },

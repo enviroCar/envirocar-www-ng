@@ -1,7 +1,6 @@
 (function () {
     'use strict';
     function WeekdaysChartCtrl($scope, $timeout, $translate, TrackService, UserCredentialsService) {
-        console.log("WeekdaysChartCtrl started.");
         $scope.onload_weekdays = false;
         $scope.loading = true;
 
@@ -11,7 +10,7 @@
         $scope.optionsWeekdays = {
             chart: {
                 type: "discreteBarChart",
-                height: 200,
+                height: 240,
                 margin: {
                     top: 20,
                     right: 20,
@@ -21,19 +20,24 @@
                 showValues: true,
                 duration: 200,
                 xAxis: {
-                    axisLabel: $translate.instant("WEEKDAYS"),
-                    showMaxMin: false,
+                    showMaxMin: false
                 },
                 yAxis: {
-                    axisLabel: $translate.instant("DISTANCE") + " (km)",
+                    axisLabel: "km",
                     axisLabelDistance: -20
+                },
+                tooltip: {
+                    contentGenerator: function (d)
+                    {
+                        var html = '<h3><b>' + d.data.x + '</b> = ' + d.data.y.toFixed(1) + 'km </h3>';
+                        return html;
+                    }
                 }
             }
         };
         $scope.dataWeekdays = [];
 
         $scope.$on('sidenav:item-selected', function (event, args) {
-            console.log("sidenav item selected: page refresh");
             $scope.dataWeekdays[0].values[0].x = 'Updating chart.';
             $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
             $timeout(function () {
@@ -48,10 +52,8 @@
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            console.log("language changed received.");
 
-            var axisXLabel = $translate.instant("WEEKDAYS");
-            var axisYLabel = $translate.instant("DISTANCE") + " (km)";
+            var axisYLabel = "km";
             $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
             $scope.dataWeekdays[0].values[1].x = $translate.instant('MONDAY');
             $scope.dataWeekdays[0].values[2].x = $translate.instant('TUESDAY');
@@ -59,9 +61,6 @@
             $scope.dataWeekdays[0].values[4].x = $translate.instant('THURSDAY');
             $scope.dataWeekdays[0].values[5].x = $translate.instant('FRIDAY');
             $scope.dataWeekdays[0].values[6].x = $translate.instant('SATURDAY');
-            $scope.optionsWeekdays.chart.xAxis = {
-                axisLabel: axisXLabel
-            };
             $scope.optionsWeekdays.chart.yAxis = {
                 axisLabel: axisYLabel,
                 axisLabelDistance: -20
@@ -70,7 +69,6 @@
 
         TrackService.getUserTracks($scope.username, $scope.password).then(
                 function (data) {
-                    console.log(data);
                     var tracks = data.data.tracks;
                     var temp_data = [{
                             key: "Cumulative Return",
@@ -106,7 +104,6 @@
                             yAxis: 1,
                             type: "bar"
                         }];
-                    console.log(temp_data);
 
                     for (var index = 0; index < tracks.length; index++) {
                         var track = tracks[index];

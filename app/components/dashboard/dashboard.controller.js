@@ -2,7 +2,6 @@
     'use strict';
      
     function DashboardCtrl($scope, UserCredentialsService, UserService, TrackService) {
-        console.log('DashboardCtrl started.');
         
         var username;
         var token;
@@ -11,9 +10,7 @@
         if (credits){
             username = credits.username;
             token = credits.password;
-        } else {
-            console.log("error: did not receive usercredits.");
-        }
+        } 
         $scope.name_of_user = username;
         $scope.track_number = 0;
         $scope.friends_number = 0;
@@ -32,7 +29,6 @@
         TrackService.getTotalTracks(username, token).then(
                function(data){
                     $scope.total_tracks = data.headers('Content-Range').split("/")[1];
-                    console.log("number users: " + data.headers('Content-Range').split("/")[1]);
                 }, function(data){
                     console.log("error " + data);
                 } 
@@ -42,7 +38,6 @@
         UserService.getTotalUsers(username, token).then(
                 function(data){
                     $scope.total_users = data.headers('Content-Range').split("/")[1];
-                    console.log("number users: " + data.headers('Content-Range').split("/")[1]);
                 }, function(data){
                     console.log("error " + data);
                 }
@@ -52,7 +47,6 @@
         UserService.getTotalUserTracks(username, token).then(
                 function(data){
                     $scope.track_number = data.headers('Content-Range').split("/")[1];
-                    console.log($scope.track_number);
                 }, function(data){
                     console.log("error " + data)
                 }
@@ -61,7 +55,6 @@
         // ask server for number of friends:
         UserService.getUserFriends(username, token).then(
                 function(data){
-                    console.log(data);
                     $scope.friends_number = data.data.users.length;
                 }, function(data){
                     console.log("Error: "+data);
@@ -71,7 +64,6 @@
         // ask server user email:
         UserService.getUserEmail(username, token).then(
                 function(data){
-                    console.log(data);
                     $scope.emailId = data.data.mail;
                 }, function(data){
                     console.log("Error: "+data);
@@ -80,7 +72,6 @@
 
         UserService.getUserGroups(username, token).then(
                 function(data){
-                    console.log(data);
                     $scope.groups_number = data.data.groups.length;
                 }, function(data){
                     console.log("Error: "+data);

@@ -1,6 +1,15 @@
 (function () {
     'use strict';
-    function HeatMapCtrl($scope, $http, $state, $translate, TrackService, UserService, UserCredentialsService, ecBaseUrl) {
+    function HeatMapCtrl(
+            $scope,
+            $http,
+            $state,
+            $translate,
+            $timeout,
+            TrackService,
+            UserService,
+            UserCredentialsService,
+            ecBaseUrl) {
         $scope.onload_heat_map = false;
         angular.extend($scope, {
             center2: {},
@@ -28,8 +37,8 @@
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
 
-        //$scope.layers = {};
-        //$scope.layers.overlays = {};
+        //$scope.layers2 = {};
+        //$scope.layers2.overlays = {};
         var urlredirect = '#/dashboard/chart/';
         var points = [];
         var mid_point = [0, 0];
@@ -43,10 +52,8 @@
                 'Content-Type': "application/json",
             }
         }).then(function (data) {
-            console.log(data);
             // create new json array for trackArray:
             var tracksummary = data.data.trackSummaries;
-            console.log(tracksummary);
             for (var i = 0; i < tracksummary.length; i++) {
                 var coord_push_start = [];
                 var coord_push_end = [];
@@ -77,11 +84,8 @@
                 heat_dataset.push(coord_push_start);
                 heat_dataset.push(coord_push_end);
             }
-            console.log(heat_dataset);
             mid_point[0] = mid_point[0] / (tracksummary.length * 2);
             mid_point[1] = mid_point[1] / (tracksummary.length * 2);
-            console.log(mid_point[0]);
-            console.log(mid_point[1]);
             $scope.center2 = {
                 lat: mid_point[1],
                 lng: mid_point[0],
@@ -95,15 +99,22 @@
                     layerOptions: {
                         radius: 20,
                         blur: 30,
-                        minopacity: 0,
-                        maxZoom: 8
+                        minopacity: 0
                     },
                     visible: true
                 }
             };
-            console.log($scope.layers2.overlays);
-            console.log($scope.layers2);
             $scope.onload_heat_map = true;
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+                $timeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                }, 600);
+            }, 400);
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 500);
+            console.log($scope.layers2.overlays.heat);
         }, function (error) {
             console.log(error);
         });

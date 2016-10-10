@@ -42,6 +42,13 @@
             $scope.filters.duration.inUse = true;
             $scope.filtersChanged();
         };
+        $scope.filtersChanged();
+
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        },
+                50);
+        
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },
