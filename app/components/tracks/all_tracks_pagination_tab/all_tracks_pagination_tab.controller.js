@@ -217,7 +217,6 @@
             var filterBySpatial = $scope.filters.spatial.inUse;
             $scope.filtered_tracks = 0; // counts tracks, that are filtered into the result.
             var resultTracks = [];
-            console.log($scope.filters.spatial.params.track_ids);
             for (var i = 0; i < amount_of_user_tracks; i++) {
 
                 var currTrack = $scope.currentPaginationTracks.tracks[i];
@@ -226,13 +225,11 @@
                     var currDistance = currTrack.length;
                     if ($scope.filters.distance.params.max === undefined) {
                         if (!(currDistance >= $scope.filters.distance.params.min)) {
-                            console.log("filtered by dist1");
                             continue;
                         }
                     } else {
                         if (!((currDistance >= $scope.filters.distance.params.min) &&
                                 (currDistance <= $scope.filters.distance.params.max))) {
-                            console.log("filtered by dist2");
                             continue;
                         }
                     }
@@ -244,19 +241,16 @@
                     if (($scope.filters.date.params.min === undefined)
                             && ($scope.filters.date.params.max !== undefined)) {
                         if (!(currDate <= $scope.filters.date.params.max)) {
-                            console.log("filtered by date");
                             continue;
                         }
                     } else if (($scope.filters.date.params.max === undefined)
                             && ($scope.filters.date.params.min !== undefined)) {
                         if (!(currDate >= $scope.filters.date.params.min)) {
-                            console.log("filtered by date");
                             continue;
                         }
                     } else
                     if ((!(currDate <= $scope.filters.date.params.max))
                             || (!(currDate >= $scope.filters.date.params.min))) {
-                        console.log("filtered by date");
                         continue;
                     }
                 }
@@ -269,19 +263,16 @@
                     if (($scope.filters.duration.params.min === undefined)
                             && ($scope.filters.duration.params.max !== undefined)) {
                         if (!(currTravelTime < $scope.filters.duration.params.max)) {
-                            console.log("filtered by dura");
                             continue;
                         }
                     } else if (($scope.filters.duration.params.max === undefined)
                             && ($scope.filters.duration.params.min !== undefined)) {
                         if (!(currTravelTime >= $scope.filters.duration.params.min)) {
-                            console.log("filtered by dura");
                             continue;
                         }
                     } else
                     if ((!(currTravelTime < $scope.filters.duration.params.max))
                             || (!(currTravelTime >= $scope.filters.duration.params.min))) {
-                        console.log("filtered by dura");
                         continue;
                     }
                 }
@@ -292,7 +283,6 @@
                     var manu = currTrack.manufacturer;
                     var carCombo = manu + "-" + car;
                     if (!$scope.containsVehicle($scope.filters.vehicle.params.cars_set, carCombo)) {
-                        console.log("filtered by cars");
                         continue;
                     }
                 }
@@ -304,16 +294,15 @@
                         return currID === id;
                     })[0];
                     if (!found) {
-                        console.log("filtered by spat");
                         continue;
                     }
                 }
 
                 // if all filters passed, add to resultTracks:
                 resultTracks.push(currTrack);
+                
                 $scope.filtered_tracks++;
             }
-            console.log(resultTracks);
 
             $scope.currentPaginationTracks.currentSelectedTracks = resultTracks;
             // calculate pagination:

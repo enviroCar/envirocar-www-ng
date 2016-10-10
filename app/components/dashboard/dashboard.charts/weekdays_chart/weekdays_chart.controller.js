@@ -20,12 +20,14 @@
                 showValues: true,
                 duration: 200,
                 xAxis: {
-                    showMaxMin: false
+                    showMaxMin: false,
+                    staggerLabels: true
                 },
                 yAxis: {
                     axisLabel: "km",
                     axisLabelDistance: -20
                 },
+                staggerLabels: true,
                 tooltip: {
                     contentGenerator: function (d)
                     {

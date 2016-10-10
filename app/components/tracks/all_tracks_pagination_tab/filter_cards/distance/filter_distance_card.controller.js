@@ -8,9 +8,6 @@
         $scope.filters.distance.params.min = (state.distance.min ? state.distance.min : $scope.distance_min);
         $scope.filters.distance.params.max = (state.distance.max ? state.distance.max : $scope.distance_max);
 
-        console.log($scope.filters.distance.params.min);
-        console.log($scope.filters.distance.params.max);
-
         $scope.sliderDistance = {
             minValue: (state.distance.min ? state.distance.min : $scope.distance_min),
             maxValue: (state.distance.max ? state.distance.max : $scope.distance_max),
