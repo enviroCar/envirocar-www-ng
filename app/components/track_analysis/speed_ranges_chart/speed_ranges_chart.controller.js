@@ -676,7 +676,7 @@
                         if (data_global.data.features[index].properties.phenomenons.Rpm.value) {
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                         }
-                        if (data_global.data.features[index].properties.phenomenons["Engine Load"].value) {
+                        if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                         }
 

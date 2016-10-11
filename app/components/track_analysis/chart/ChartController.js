@@ -75,18 +75,6 @@
             }
         };
 
-        $scope.measure = function (lat1, lon1, lat2, lon2) {  // generally used geo measurement function
-            var R = 6378.137; // Radius of earth in KM
-            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;
-            return d * 1000; // meters
-        }
-
         $scope.changeChartRange = function (start, end) {
             // 1. redraw the new chart data:
             var temp_data_array = [
@@ -182,7 +170,7 @@
 
         // Scroll-fixing the single track analysis toolbar:
         $(window).scroll(function () {
-            console.log("Top-Scroll: " + $(window).scrollTop());
+            //console.log("Top-Scroll: " + $(window).scrollTop());
             ;
             if ($(window).scrollTop() > 300) {
 
@@ -715,7 +703,7 @@
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                         if (data_global.data.features[index].properties.phenomenons.Rpm.value)
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
-                        if (data_global.data.features[index].properties.phenomenons["Engine Load"].value)
+                        if (data_global.data.features[index].properties.phenomenons["Engine Load"])
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                         // interpolate color:
                         pathObjSpeed['color'] = $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], value_speed);               //more information at percentToRGB().
@@ -741,7 +729,8 @@
                         if (data_global.data.features[index].properties.phenomenons.CO2)
                             var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
-                        var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
+                            var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);

@@ -116,12 +116,12 @@
                             ]
                         },
                         style: {
-                        fillColor: "#1A80C1",
-                        fillOpacity: 0.3,
-                        weight: 2,
-                        opacity: 0.5,
-                        color: "#1A80C1"
-                    }
+                            fillColor: "#1A80C1",
+                            fillOpacity: 0.3,
+                            weight: 2,
+                            opacity: 0.5,
+                            color: "#1A80C1"
+                        }
                     };
                     drawWhite = true;
                 }
@@ -235,21 +235,35 @@
             // zoom map to track:
             $scope.updateDialogMap();
         } else {
-            // where to zoom to, if dialog is started first time?
-            // TODO: Get userspecific default lat/lng coordinates somehow!
+            console.log($state.current.data.spatial.northeast.lat);
+            if ($state.current.data.spatial.northeast.lat !== undefined) {
+                if ($scope.filters.spatial.params.southwest.lat !== undefined)
+                    $scope.southWest.lat = $scope.filters.spatial.params.southwest.lat;
+                if ($scope.filters.spatial.params.southwest.lng !== undefined)
+                    $scope.southWest.lng = $scope.filters.spatial.params.southwest.lng;
+                if ($scope.filters.spatial.params.northeast.lat !== undefined)
+                    $scope.northEast.lat = $scope.filters.spatial.params.northeast.lat;
+                if ($scope.filters.spatial.params.northeast.lng !== undefined)
+                    $scope.northEast.lng = $scope.filters.spatial.params.northeast.lng;
+                // zoom map to track:
+                $scope.updateDialogMap();
+            } else {
+                // where to zoom to, if dialog is started first time?
+                // TODO: Get userspecific default lat/lng coordinates somehow!
 
-            // 52.2, 8.7    51.68, 7.25
-            $timeout(function () {
-                $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
-                    [51.68, 7.25], [52.2, 8.7]
-                ]);
-                window.dispatchEvent(new Event('resize'));
-            },
-                    1000);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'));
-            },
-                    500);
+                // 52.2, 8.7    51.68, 7.25
+                $timeout(function () {
+                    $scope.map3.spatial_bounds = leafletBoundsHelpers.createBoundsFromArray([
+                        [51.68, 7.25], [52.2, 8.7]
+                    ]);
+                    window.dispatchEvent(new Event('resize'));
+                },
+                        1000);
+                $timeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                },
+                        500);
+            }
         }
         ;
         // if dialog closes on success button
@@ -294,7 +308,7 @@
                             params.northeast.lat = spatial_filter_ne.lat;
                             params.northeast.lng = spatial_filter_ne.lng;
                             params.track_ids = $scope.filters.spatial.params.track_ids;
-                            
+
                             //$scope.updateDialogMap();
                             $mdDialog.hide();
                             $scope.filtersChanged();

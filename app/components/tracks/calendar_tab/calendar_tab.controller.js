@@ -1,9 +1,3 @@
-/* CalendarController:
- This controller handles the calendar functionality in the tracks page. The tracks.html file makes
- use of this calendar controller
- 1) We have made use of the calendar directive to achieve this.
- 2) There are 4 important functions of this controller(PrevMonth,NextMonth,DateClicked,Populating the calendar)
- */
 (function () {
     'use strict';
     function CalendarTabCtrl(
@@ -22,7 +16,7 @@
         $scope.onload_calendar = false;
         $scope.nostatistics = true;
         $scope.Math = window.Math;
-        
+
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
 
@@ -30,7 +24,7 @@
         $scope.currentPageTracks = {
             currentMonthTracks: [], // all tracks currently shown in current pagination page.
             currentSelectedTracks: [], // all tracks from this month in the current selection.
-            tracks: []              // all tracks in current selected month, year
+            tracks: []                  // all tracks in current selected month, year
         };
         $scope.currentPage = 0;
         $scope.paging = {
@@ -81,6 +75,7 @@
 
 
         // calendar:
+        $scope.monthDivs = [];
         var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
         // a and b are javascript Date objects
@@ -123,6 +118,7 @@
         };
 
         $scope.numberClickedDays = 0;
+
         $scope.dayClick = function (date) {
             if ($scope.numberClickedDays === 0) {          // if no day is selected:
                 // select clicked Day:
@@ -177,10 +173,10 @@
                     $scope.rangeEndDate = new Date($scope.rangeStartDate.getFullYear(), $scope.rangeStartDate.getMonth(), $scope.rangeStartDate.getDate());
                     $scope.numberClickedDays = 1;
                 } else {
+                    // else i.e. click is inside current selected range:
                     $scope.rangeEndDate = new Date(date.getFullYear(),
                             date.getMonth(),
                             date.getDate());
-                    // else (e.g. click is inside current selected range) : do nothing yet
                 }
             }
 
@@ -279,6 +275,20 @@
             $scope.paging.current = 1;
             removeDayHighlighting();
             loadStatistics();
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+                var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+                var lastDay = fullMonth.getDate();
+                console.log(fullMonth);
+                console.log(lastDay);
+                for (var i = 1; i <= lastDay; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", "transparent");
+                    $(clickedDayDiv).mouseenter(handler);
+                    $(clickedDayDiv).mouseleave(handler2);
+                }
+            },
+                    500);
         };
 
         $scope.nextMonth = function (data) {
@@ -314,7 +324,7 @@
             }
             $scope.numberClickedDays = 0;
             $scope.paging.current = 1;
-            
+
             // calculate pagination:
             var number_monthly_tracks = $scope.currentPageTracks.tracks.length;
             // number pages:
@@ -325,7 +335,140 @@
             }
             removeDayHighlighting();
             loadStatistics();
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+                var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+                var lastDay = fullMonth.getDate();
+                console.log(fullMonth);
+                console.log(lastDay);
+                for (var i = 1; i <= lastDay; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", "transparent");
+                    $(clickedDayDiv).mouseenter(handler);
+                    $(clickedDayDiv).mouseleave(handler2);
+                }
+            },
+                    500);
         };
+        /**
+         $scope.setIDs = function () {
+         // 1. find all divs:
+         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+         var lastDay = fullMonth.getDate();
+         console.log("setting IDs for:");
+         console.log(fullMonth);
+         console.log(lastDay);
+         for (var i = 1; i <= lastDay; i++) {
+         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+         clickedDayDiv.css("background-color", "red");
+         console.log(clickedDayDiv);
+         }
+         };
+         
+         $scope.removeIDs = function () {
+         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+         var lastDay = fullMonth.getDate();
+         console.log("removing IDs for:");
+         console.log(fullMonth);
+         console.log(lastDay);
+         for (var i = 1; i <= lastDay; i++) {
+         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+         clickedDayDiv.css("background-color", "blue");
+         console.log(clickedDayDiv);
+         }
+         };*/
+        $scope.hoveredTabItem = undefined;
+        var hoverhight = "#bad88b";
+        var SelectedNoHover = "#dcebc5";
+        var SelectedAndHoverHighlight = "#8CBF3F";
+
+        $scope.updateHoverHighlight = function (start, end, hovered, bool) {
+
+            if ($scope.numberClickedDays === 0) {
+                var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+                var lastDay = fullMonth.getDate();
+                // remove highlight from all days:
+                for (var i = 1; i <= lastDay; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", "transparent");
+                }
+                // add highlight to single day:
+                if (!bool) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + hovered + '"]'));
+                    clickedDayDiv.css("background-color", hoverhight);
+                }
+            } else {
+                var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+                var lastDay = fullMonth.getDate();
+                // remove highlight from first unselected part:
+                for (var i = 1; i < start; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+
+                    clickedDayDiv.css("background-color", "transparent");
+                }
+                // add highlight to selected part:
+                for (var i = start; i <= end; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                }
+                // remove highlight from 2nd unselected part:
+                for (var i = end + 1; i <= lastDay; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", "transparent");
+                }
+                // add highlight for days [hovered, start]:
+                for (var i = hovered; i < start; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", hoverhight);
+
+                }
+                // add highlight for days [end, hovered]:
+                for (var i = end + 1; i <= hovered; i++) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                    clickedDayDiv.css("background-color", hoverhight);
+                }
+                if ((start < hovered) && (hovered < end)) {
+                    // add highlight for days [end, hovered]:
+                    for (var i = (parseInt(hovered) + 1); i <= end; i++) {
+                        var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        clickedDayDiv.css("background-color", SelectedNoHover);
+                    }
+                }
+                if (((parseInt(hovered) === end) || (start === (parseInt(hovered)))) && (!bool)) {
+                    for (var i = start + 1; i <= end; i++) {
+                        console.log(i);
+                        var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        clickedDayDiv.css("background-color", SelectedNoHover);
+                    }
+                }
+            }
+        };
+
+        function handler(ev) {
+            $scope.target = $(ev.target);
+            var elId = $scope.target.attr('tabindex');
+            console.log("hovered: " + elId);
+            if (elId !== undefined) {
+                $scope.hoveredTabItem = elId;
+                $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), elId, false);
+            }
+        }
+        ;
+
+        function handler2(ev) {
+            $scope.target = $(ev.target);
+            var elId = $scope.target.attr('tabindex');
+            console.log("hovered: " + elId);
+            if (elId !== undefined) {
+                $scope.hoveredTabItem = elId;
+                $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), $scope.rangeEndDate.getDate(), true);
+            }
+        }
+        ;
+
+        $scope.$on('toolbar:language-changed', function (event, args) {
+            // TODO: translate
+        });
 
         $scope.tracksCalendar = [
         ];
@@ -460,7 +603,24 @@
                     $scope.onload_calendar = true;
                     $rootScope.$broadcast('trackspage:calendar_tab-loaded');
                     window.dispatchEvent(new Event('resize'));
-
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    },
+                            200);
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'));
+                        var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
+                        var lastDay = fullMonth.getDate();
+                        console.log(fullMonth);
+                        console.log(lastDay);
+                        for (var i = 1; i <= lastDay; i++) {
+                            var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                            clickedDayDiv.css("background-color", "transparent");
+                            $(clickedDayDiv).mouseenter(handler);
+                            $(clickedDayDiv).mouseleave(handler2);
+                        }
+                    },
+                            500);
                 }, function (data) {
             console.log("error " + data)
         }

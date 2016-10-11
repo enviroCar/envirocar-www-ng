@@ -8,8 +8,6 @@
         var tab_b = false;
         var tab_c = false;
 
-        $scope.selectedTab = "0";
-
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);
             var dialog_desc = $translate.instant(description);
@@ -40,7 +38,6 @@
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
-                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);
@@ -53,7 +50,6 @@
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
-                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);
@@ -66,7 +62,6 @@
                 $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
                     $timeout(function () {
-                        $scope.selectedTab = $state.current.data.selectedTab;
                         window.dispatchEvent(new Event('resize'));
                     }, 600);
                 }, 400);

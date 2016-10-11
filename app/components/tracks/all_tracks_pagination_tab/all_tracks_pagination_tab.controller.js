@@ -21,6 +21,7 @@
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
         $scope.filterOrder = $state.current.data.filterOrder;
+        console.log($scope.filterOrder);
         $scope.itemsPerPage = ($scope.screenIsXS ? 5 : 10);
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
 
@@ -441,9 +442,10 @@
                             'month': month,
                             'day': day
                         };
+                        /**
                         if (!contains($scope.monthsWithTracksCalendar, month_year)) {
                             $scope.monthsWithTracksCalendar.push(month_year);
-                        }
+                        }*/
 
                         var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
                         var seconds = seconds_passed / 1000;

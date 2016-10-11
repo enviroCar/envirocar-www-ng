@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     function ComparisonChartCtrl(
-            $scope, 
-            $timeout, 
-            $translate, 
-            $mdDialog, 
-            StatisticsService, 
+            $scope,
+            $timeout,
+            $translate,
+            $mdDialog,
+            StatisticsService,
             UserCredentialsService) {
         $scope.onload_all = false;
 
@@ -15,7 +15,7 @@
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        
+
         $scope.optionsSpeed = {
             chart: {
                 type: 'discreteBarChart',
@@ -277,7 +277,7 @@
                 }, function (data) {
             console.log("error " + data);
         });
-         $timeout(function () {
+        $timeout(function () {
             window.dispatchEvent(new Event('resize'));
         }, 300);
         $timeout(function () {

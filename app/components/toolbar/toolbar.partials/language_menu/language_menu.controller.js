@@ -67,7 +67,7 @@
             $scope.saveLanguageSetting();
             $translate.use($scope.currOption.shortcut);
             $rootScope.$broadcast('toolbar:language-changed', $scope.language);
-        }
+        };
     };
 
     angular.module('enviroCar')

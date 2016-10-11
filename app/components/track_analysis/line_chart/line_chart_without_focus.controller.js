@@ -14,7 +14,6 @@
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
         var phenom = PhenomenonService.getPhenomenon();
-        console.log(phenom);
 
         $scope.currentPhenomenon = phenom.name;
         $scope.currentPhenomenonIndex = phenom.index;
@@ -174,7 +173,6 @@
 
             //2. set to current selected phenomenon
             var phenom = PhenomenonService.getPhenomenon();
-            console.log(phenom);
             $scope.currentPhenomenon = phenom.name;
             $scope.currentPhenomenonIndex = phenom.index;
             $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
@@ -249,7 +247,6 @@
         $scope.password = UserCredentialsService.getCredentials().password;
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     data_global = data;
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
@@ -262,7 +259,8 @@
                         if (data_global.data.features[index].properties.phenomenons.CO2)
                             var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
-                        var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
+                            var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
 
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
@@ -274,22 +272,20 @@
 
 
                     var phenom = PhenomenonService.getPhenomenon();
-                    console.log(phenom);
                     $scope.currentPhenomenon = phenom.name;
                     $scope.currentPhenomenonIndex = phenom.index;
                     // save 'speed'-data as default into time series chart 
                     $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
-                    console.log($scope.data_all);
 
                     $scope.onload_track_map = true;
                     // Track Chart:
                     $scope.onload_track_chart = true;
                     $timeout(function () {
-                        window.dispatchEvent(new Event('resize'))
+                        window.dispatchEvent(new Event('resize'));
                     },
                             200);
                     $timeout(function () {
-                        window.dispatchEvent(new Event('resize'))
+                        window.dispatchEvent(new Event('resize'));
                     },
                             500);
                 }, function (error) {
@@ -298,11 +294,11 @@
         );
 
         $timeout(function () {
-            window.dispatchEvent(new Event('resize'))
+            window.dispatchEvent(new Event('resize'));
         },
                 200);
         $timeout(function () {
-            window.dispatchEvent(new Event('resize'))
+            window.dispatchEvent(new Event('resize'));
         },
                 500);
     }

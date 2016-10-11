@@ -380,7 +380,7 @@
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                             sums['Rpm'] += value_RPM;
                         }
-                        if (data_global.data.features[index].properties.phenomenons["Engine Load"].value) {
+                        if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                             sums['Engine Load'] += value_EngineLoad;
                         }
@@ -392,7 +392,8 @@
                         if (data_global.data.features[index].properties.phenomenons.CO2)
                             var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
-                        var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
+                            var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);

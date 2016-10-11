@@ -92,15 +92,15 @@ angular.module('translations', [])
             'SEGMENT_ANALYSIS'  : 'Segment analysis',
             
             // Track Analysis - Leaflet:
-            'TRACK_MAP_TITLE'       : 'track map',
+            'TRACK_MAP_TITLE'       : 'Track map',
             'TRACK_MAP_DESCRIPTION' : 'this map visualizes the selected track. Change phenomenom or select a segment of the track in the toolbar above.',
             
             // Track Analysis - Chart:
-            'TRACK_CHART_TITLE'         : 'time series',
+            'TRACK_CHART_TITLE'         : 'Time series',
             'TRACK_CHART_DESCRIPTION'   : 'this chart shows the selected phenomenon from start to end of the selected track. Change phenomenon or select a segment of the track in the toolbar above.',
             
             // Track Analysis - Comparison Chart:
-            'COMPARISON_TRACK_CHART_TITLE'          : 'compared to enviroCar',
+            'COMPARISON_TRACK_CHART_TITLE'          : 'Compared to enviroCar',
             'COMPARISON_TRACK_CHART_DESCRIPTION'    : 
                     'Your track\'s statistic averages compared to the enviroCar community\'s statstic averages.',
             'TRACK_LABEL_USER'                : 'this track',
@@ -111,9 +111,9 @@ angular.module('translations', [])
             // Track Analysis - Track Summary:
             'TRACK_SUMMARY_TITLE'       : 'Track Summary',
             'TRACK_SUMMARY_DESCRIPTION' : 'Your track\'s phenomenons summary',
-            'VEHICLE_TYPE'              : 'vehicle type',
-            'START_TIME'                : 'starttime',
-            'END_TIME'                  : 'finishtime',
+            'VEHICLE_TYPE'              : 'Vehicle type',
+            'START_TIME'                : 'Starttime',
+            'END_TIME'                  : 'Finishtime',
             'CO2EMISSION'               : 'CO2 emission',
             'PER_HOUR'                  : 'per hour',
             'PER_100_KM'                : 'per 100km',
@@ -197,6 +197,7 @@ angular.module('translations', [])
             'FILTER_SPATIAL'                            : 'Location',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Select the ',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_2'        : '-button to draw a rectangle.',
+            'SPATIAL_INPUT_MISSING_ERROR'               : 'You must specify a bounding box before you can use this filter. Click on the X on the top right to cancel this filter.',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUARY',
@@ -413,7 +414,7 @@ angular.module('translations', [])
             'START_TIME'                : 'Startzeit',
             'END_TIME'                  : 'Endzeit',
             'TOTAL_TIME'                : 'GESAMT_ZEIT',
-            'CO2EMISSION'               : 'CO2 Emission',
+            'CO2EMISSION'               : 'CO2 Emissionen',
             'DURATION'                  : 'Fahrtdauer',
             'PER_HOUR'                  : 'pro Stunde',
             'PER_100_KM'                : 'pro 100km',
@@ -497,6 +498,8 @@ angular.module('translations', [])
             'FILTER_SPATIAL'                            : 'Ort',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Klicke auf den ',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_2'        : '-Knopf um ein Rechteck zu zeichnen.',
+            'SPATIAL_INPUT_MISSING_ERROR'               : 'Du musst ein Begrenzungsrechteck eingeben bevor du diesen Filter nutzen kannst. Klicke auf das X oben rechts, um diesen Filter abzubrechen.',
+      
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUAR',

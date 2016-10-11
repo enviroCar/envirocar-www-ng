@@ -9,6 +9,17 @@
             leafletBoundsHelpers,
             leafletDrawEvents) {
         var drawnItems2 = new L.FeatureGroup();
+
+        $scope.onEachFeature = function(feature, layer) {
+            layer.on({
+                mouseover: function(){return;},
+                mouseout: function(){return;},
+                click: function() {
+                    $scope.commonDialog($scope.filters.spatial);
+                }
+            });
+        };
+
         angular.extend($scope, {
             map2: {
                 spatial_bounds_card: {
@@ -70,7 +81,8 @@
                         weight: 2,
                         opacity: 0.5,
                         color: "#1A80C1"
-                    }
+                    },
+                    onEachFeature: $scope.onEachFeature
                 },
                 defaults: {
                     scrollWheelZoom: false,
@@ -108,17 +120,18 @@
                         weight: 2,
                         opacity: 0.5,
                         color: "#1A80C1"
-                    }
+                    },
+                    onEachFeature: $scope.onEachFeature
                 };
                 var paddingLat = ($scope.filters.spatial.params.northeast.lat - $scope.filters.spatial.params.southwest.lat) / 10;
                 $scope.map2.spatial_bounds_card = leafletBoundsHelpers.createBoundsFromArray([
-                    [$scope.filters.spatial.params.northeast.lat+paddingLat, $scope.filters.spatial.params.northeast.lng],
-                    [$scope.filters.spatial.params.southwest.lat-paddingLat, $scope.filters.spatial.params.southwest.lng]
+                    [$scope.filters.spatial.params.northeast.lat + paddingLat, $scope.filters.spatial.params.northeast.lng],
+                    [$scope.filters.spatial.params.southwest.lat - paddingLat, $scope.filters.spatial.params.southwest.lng]
                 ]);
                 window.dispatchEvent(new Event('resize'));
             },
                     100);
-            
+
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
@@ -134,14 +147,14 @@
         $scope.$on('toolbar:language-changed', function (event, args) {
             $scope.updateMap();
         });
-        
+
         $scope.filtersChanged();
 
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },
                 50);
-        
+
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },
