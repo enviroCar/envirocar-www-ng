@@ -112,7 +112,10 @@
             if ($scope.numberClickedDays > 0) {
                 for (var i = start; i <= end; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-                    clickedDayDiv.css("background-color", "#8CBF3F");
+                    if ((i === start) || (i === end)) {
+                        clickedDayDiv.css("background-color", intervalEnds);
+                    } else
+                        clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
                 }
             }
         };
@@ -378,9 +381,10 @@
          }
          };*/
         $scope.hoveredTabItem = undefined;
-        var hoverhight = "#bad88b";
-        var SelectedNoHover = "#dcebc5";
-        var SelectedAndHoverHighlight = "#8CBF3F";
+        var hoverhight = "#e8f2f8";
+        var SelectedAndHoverHighlight = "#a3cce6";
+        var SelectedNoHover = "#e8f2f8";
+        var intervalEnds = "#8cbfe0";
 
         $scope.updateHoverHighlight = function (start, end, hovered, bool) {
 
@@ -409,37 +413,54 @@
                 // add highlight to selected part:
                 for (var i = start; i <= end; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-                    clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                    if ((i === start) || (i === end)) {
+                        clickedDayDiv.css("background-color", intervalEnds);
+                    } else
+                        clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
                 }
                 // remove highlight from 2nd unselected part:
                 for (var i = end + 1; i <= lastDay; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", "transparent");
                 }
-                // add highlight for days [hovered, start]:
+                // add highlight for days [hovered, start[ :
                 for (var i = hovered; i < start; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", hoverhight);
 
                 }
-                // add highlight for days [end, hovered]:
+                // add highlight for days ]end, hovered]:
                 for (var i = end + 1; i <= hovered; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", hoverhight);
                 }
                 if ((start < hovered) && (hovered < end)) {
-                    // add highlight for days [end, hovered]:
-                    for (var i = (parseInt(hovered) + 1); i <= end; i++) {
+                    // add highlight for days [hovered+1, end]:
+                    for (var i = (parseInt(hovered) + 1); i < end; i++) {
                         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                         clickedDayDiv.css("background-color", SelectedNoHover);
                     }
                 }
                 if (((parseInt(hovered) === end) || (start === (parseInt(hovered)))) && (!bool)) {
-                    for (var i = start + 1; i <= end; i++) {
+                    // add hightlight for selected days [start+1, end[ :
+                    for (var i = start + 1; i < end; i++) {
                         console.log(i);
                         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                         clickedDayDiv.css("background-color", SelectedNoHover);
                     }
+                }
+                // add highlight for start and end day:
+                var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + start + '"]'));
+                clickedDayDiv.css("background-color", intervalEnds);
+                if (parseInt(hovered) > end) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + end + '"]'));
+                    clickedDayDiv.css("background-color", intervalEnds);
+                } else if (parseInt(hovered) <= end && parseInt(hovered) >= start && !bool) {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + end + '"]'));
+                    clickedDayDiv.css("background-color", SelectedNoHover);
+                } else {
+                    var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + end + '"]'));
+                    clickedDayDiv.css("background-color", intervalEnds);
                 }
             }
         };

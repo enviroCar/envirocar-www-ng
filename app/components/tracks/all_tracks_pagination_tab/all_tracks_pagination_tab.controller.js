@@ -18,6 +18,8 @@
             UserCredentialsService,
             ecBaseUrl) {
 
+
+        $scope.okay_pressed = false;
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
         $scope.filterOrder = $state.current.data.filterOrder;
@@ -539,4 +541,4 @@
 
     angular.module('enviroCar.tracks')
             .controller('AllTracksPaginationTabCtrl', AllTracksPaginationTabCtrl);
-})()
+})();

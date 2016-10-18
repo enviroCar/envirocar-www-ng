@@ -376,7 +376,7 @@
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                             sums['CO2'] += value_CO2;
                         }
-                        if (data_global.data.features[index].properties.phenomenons.Rpm.value) {
+                        if (data_global.data.features[index].properties.phenomenons.Rpm) {
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                             sums['Rpm'] += value_RPM;
                         }
@@ -391,7 +391,8 @@
                             var consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
                         if (data_global.data.features[index].properties.phenomenons.CO2)
                             var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
-                        var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                        if (data_global.data.features[index].properties.phenomenons.Rpm)
+                            var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
                         if (data_global.data.features[index].properties.phenomenons['Engine Load'])
                             var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         // save all data:

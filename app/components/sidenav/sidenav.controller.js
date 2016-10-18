@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function SidenavCtrl($rootScope, $scope, $element, $mdMedia, $mdSidenav, $log, $translate, $q, navService) {
+    function SidenavCtrl($rootScope, $scope, $element, $mdMedia, $mdSidenav, $log, $translate, $q, $timeout, navService) {
         var vm = this;
         vm.menuItems = [];
         vm.selectItem = selectItem;
@@ -32,6 +32,12 @@
                                 console.log("menuitems:" + vm.menuItems);
                             });
                     vm.collapse();
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'));
+                        $timeout(function () {
+                            window.dispatchEvent(new Event('resize'));
+                        }, 300);
+                    }, 300);
                 });
 
         function selectItem(item) {
@@ -104,18 +110,18 @@
             } else {
                 // Collapsing:
                 if ($mdMedia('gt-xs')) {
-                sideNav.css("min-width", "60px")
-                sideNav.css("width", "60px")
-                sideNav.css("max-width", "60px")
-                sideNavTitlePadding.css("padding-left", "0em");
-                $scope.sideNavTitle = "  ";
-            } else {
-                sideNav.css("min-width", "0px")
-                sideNav.css("width", "0px")
-                sideNav.css("max-width", "0px")
-                sideNavTitlePadding.css("padding-left", "0em");
-                $scope.sideNavTitle = "  ";
-            }
+                    sideNav.css("min-width", "60px")
+                    sideNav.css("width", "60px")
+                    sideNav.css("max-width", "60px")
+                    sideNavTitlePadding.css("padding-left", "0em");
+                    $scope.sideNavTitle = "  ";
+                } else {
+                    sideNav.css("min-width", "0px")
+                    sideNav.css("width", "0px")
+                    sideNav.css("max-width", "0px")
+                    sideNavTitlePadding.css("padding-left", "0em");
+                    $scope.sideNavTitle = "  ";
+                }
 
                 $scope.navExpanded = false;
 

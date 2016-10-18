@@ -17,7 +17,6 @@
     "main-bower-files": "^2.13.1"
   },
   "dependencies": {
-    "leaflet.heat": "^0.2.0",
     "requirejs": "^2.3.2"
   }
 }

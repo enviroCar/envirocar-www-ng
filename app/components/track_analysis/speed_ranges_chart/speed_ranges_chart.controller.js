@@ -9,7 +9,6 @@
             StatisticsService, 
             UserCredentialsService,
             trackAnalysisSettings) {
-        console.log("SpeedRangesChartCtrl started.");
         $scope.onload_all = false;
 
         $scope.onload_speed_Range = false;
@@ -350,7 +349,6 @@
         });
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            console.log("phenomenon changed received.");
             $scope.selectedPhenom = args;
 
             if ($scope.segmentActivated) {
@@ -363,7 +361,6 @@
             } else {
                 $scope.changeRangeRanges(0, $scope.track_length);
             }
-            console.log(args);
         });
 
         $scope.optionsConsumptionRange = {
@@ -656,7 +653,6 @@
         var data_global = {};
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     data_global = data;
                     var track_length = data_global.data.features.length;
                     $scope.track_length = track_length;
@@ -673,7 +669,7 @@
                         if (data_global.data.features[index].properties.phenomenons.CO2) {
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                         }
-                        if (data_global.data.features[index].properties.phenomenons.Rpm.value) {
+                        if (data_global.data.features[index].properties.phenomenons.Rpm) {
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                         }
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
@@ -687,7 +683,6 @@
                         $scope.data_all_ranges[3].values.push(value_RPM);
                         $scope.data_all_ranges[4].values.push(value_EngineLoad);
                     }
-                    console.log($scope.data_all_ranges);
                     var partOfPercent = 100 / $scope.track_length;
 
                     // calculate %'s for each speed interval:

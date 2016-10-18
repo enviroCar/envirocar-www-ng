@@ -2,6 +2,7 @@
 
     SpatialDialogCtrl = function ($scope, $state, $translate, $mdDialog, $timeout, UserService, leafletData, leafletBoundsHelpers, leafletDrawEvents) {
         var drawnItems = new L.FeatureGroup();
+        $scope.okay_pressed = false;
         var drawWhite = false;
         angular.extend($scope, {
             map3: {
@@ -213,6 +214,7 @@
             });
         });
         $scope.errorOverlap = false;
+        $scope.errorServerRequest = false;
         $scope.northEast = {
             lat: undefined,
             lng: undefined
@@ -282,6 +284,7 @@
             } else {
                 // all happy.
 
+                $scope.okay_pressed = true;
                 var spatial_filter_sw = $scope.filters.spatial.params.southwest;
                 var spatial_filter_ne = $scope.filters.spatial.params.northeast;
                 spatial_filter_sw.lat = $scope.southWest.lat;
@@ -313,7 +316,18 @@
                             $mdDialog.hide();
                             $scope.filtersChanged();
                         }, function (data) {
-                    console.log("error " + data)
+                    console.log("error " + data);
+                    $timeout(function () {
+                        $scope.okay_pressed = false;
+                        $scope.errorServerRequest = true;
+                        window.dispatchEvent(new Event('resize'));
+                    },
+                            300);
+                    $timeout(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    },
+                            500);
+                            
                 });
             }
         };

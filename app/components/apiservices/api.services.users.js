@@ -5,7 +5,7 @@
         this.getUserTracksBBox = function(username, token, minx, miny, maxx, maxy){
             return $http({
                 method: 'GET',
-                url: ecBaseUrl + '/users/' + username + '/tracks?bbox='+minx+","+miny+","+maxx+","+maxy,
+                url: ecBaseUrl + '/users/' + username + '/tracks?limit=10000&bbox='+minx+","+miny+","+maxx+","+maxy,
                 cache: true,
                 headers : {
                     'Content-Type' : 'application/JSON',

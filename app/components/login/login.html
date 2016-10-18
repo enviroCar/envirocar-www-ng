@@ -33,6 +33,7 @@
                 <label>{{'PASSWORD'| translate}}</label>
                 <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
             </md-input-container>
+            <span ng-show='error' style="color: red; margin: auto;">{{'INVALID_LOGIN' | translate}}</span>
             <div layout-xs="column" layout="row" style="padding-top:20px;">
                 <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-primary" ng-click="login()">{{'LOGIN'| translate}}</md-button>
                 <span flex class="span-flex"></span>

@@ -3,16 +3,15 @@
     function HeatMapCtrl(
             $scope,
             $http,
-            $state,
-            $translate,
             $timeout,
-            TrackService,
-            UserService,
-            UserCredentialsService,
-            ecBaseUrl) {
-        $scope.onload_heat_map = false;
+            UserCredentialsService) {
+
         angular.extend($scope, {
-            center2: {},
+            center2: {
+                lat: 10.5,
+                lng: 10.5,
+                zoom: 6
+            },
             layers2: {
                 baselayers: {
                     osm: {
@@ -29,16 +28,18 @@
                             mapid: 'naveenjafer.0n3ooo76'
                         }
                     }
+                },
+                overlays: {
                 }
             }
         });
+
+        console.log($scope.layers2.overlays);
+
         var timeline = {};
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-
-        //$scope.layers2 = {};
-        //$scope.layers2.overlays = {};
         var urlredirect = '#/dashboard/chart/';
         var points = [];
         var mid_point = [0, 0];
@@ -89,38 +90,32 @@
             $scope.center2 = {
                 lat: mid_point[1],
                 lng: mid_point[0],
-                zoom: 6
+                zoom: 5
             };
             $scope.layers2.overlays = {
-                heat: {
-                    name: 'Heat Map',
-                    type: 'heat',
-                    data: heat_dataset,
-                    layerOptions: {
-                        radius: 20,
-                        blur: 30,
-                        minopacity: 0
-                    },
-                    visible: true
-                }
-            };
-            $scope.onload_heat_map = true;
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'));
-                $timeout(function () {
-                    window.dispatchEvent(new Event('resize'));
-                }, 600);
-            }, 400);
-            $timeout(function () {
-                window.dispatchEvent(new Event('resize'));
-            }, 500);
+                heat:
+                        {
+                            name: 'Heat Map',
+                            type: 'heat',
+                            data: heat_dataset,
+                            layerOptions: {
+                                radius: 20,
+                                blur: 30,
+                                minopacity: 0,
+                                maxZoom: 8
+                            },
+                            visible: true
+                        }
+            }
+
+            //$scope.onload_heat_map = true;
             console.log($scope.layers2.overlays.heat);
-        }, function (error) {
+        }
+        , function (error) {
             console.log(error);
         });
 
-
-        /** serverseitiger CORS Fehler 
+        /** serverseitiger CORS Fehler
          $http({
          method: 'GET',
          url: "https://envirocar.org/ng-user-stats.json",
@@ -136,13 +131,11 @@
          }, function (error) {
          console.log("ResponseError @GET" + "https://envirocar.org/ng-user-stats.json");
          return error;
-         });
+         }
+         );
          */
     }
     ;
-
-
-
     angular.module('enviroCar')
             .controller('HeatMapCtrl', HeatMapCtrl);
 })();

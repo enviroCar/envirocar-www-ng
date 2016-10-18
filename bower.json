@@ -17,6 +17,10 @@
   "dependencies": {
     "jquery": "^3.1.0",
     "angular": "^1.5.8",
+    "angular-leaflet-directive": "^0.10.0",
+    "angular-simple-logger": "^0.1.7",
+    "ui-leaflet": "^2.0.0",
+    "leaflet.heat": "Leaflet.heat#*",
     "angular-route": "^1.5.8",
     "angular-animate": "^1.5.8",
     "angular-material": "^1.1.1",
@@ -25,20 +29,16 @@
     "angular-cookies": "^1.5.0",
     "d3": "^3.5.3",
     "angular-nvd3": "^1.0.9",
-    "leaflet": "0.7.7",
-    "Leaflet.heat": "*",
-    "heatmap.js-amd": "*",
-    "ui-leaflet": "^1.0.1",
     "nvd3": "^1.8.4",
     "angularjs-slider": "^5.5.0",
     "material-calendar": "^0.2.14",
     "material-angular-paging": "*",
-    "ui-leaflet-draw": "^0.0.3",
-    "heatmap.js": "^0.0.1",
-    "angular-simple-logger": "^0.1.7"
+    "ui-leaflet-draw": "^0.0.3"
   },
   "resolutions": {
     "angular-material": "^1.1.1",
-    "angular": "^1.5.8"
+    "angular": "^1.5.8",
+    "leaflet": "0.7.x",
+    "ui-leaflet": "^1.0.1"
   }
 }

@@ -17,12 +17,13 @@
         </div>
     </div>
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_all" md-diameter="56"></md-progress-circular>
-    <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex>
+    <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex id="comparison_chart_content">
         <md-card-content flex-gt-xs="33" flex-xs="100">
             <p ng-if="!screenIsXS" class='comparison-title'> {{'SPEED'| translate}}</p>
-            <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed && !onload_all" md-diameter="56"></md-progress-circular>
-            <div flex ng-if="onload_speed && onload_all">
-                <nvd3 options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
+            <div flex >
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed && !onload_all" md-diameter="56"></md-progress-circular>
+
+                <nvd3 ng-if="onload_speed && onload_all" options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
             </div>
         </md-card-content>
         <md-card-content flex-gt-xs="33" flex-xs="100">

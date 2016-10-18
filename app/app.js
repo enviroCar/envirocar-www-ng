@@ -3,16 +3,15 @@
 
     angular.module('enviroCar', [
         'ngMaterial',
+        'ui-leaflet',
         'ngAnimate',
         'ngCookies',
         'ui.router',
         'pascalprecht.translate',
         'translations',
         'nvd3',
-        'enviroCar.auth',
-        'ui-leaflet',
-        //'leaflet-directive',
         'enviroCar.api',
+        'enviroCar.auth',
         'enviroCar.track',
         'enviroCar.tracks',
         'materialCalendar',
@@ -45,6 +44,8 @@
                         $state.transitionTo("login");
                         event.preventDefault();
                     }
+                    
+                    
 
                 });
                 

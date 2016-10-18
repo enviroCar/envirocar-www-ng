@@ -3,6 +3,8 @@
     function TrackSummaryCtrl($scope, $stateParams, UserCredentialsService, TrackService) {
 
         $scope.onload_summary = false;
+        $scope.consumption_available = false;
+        $scope.co2_available = false;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
         $scope.trackid = $stateParams.trackid;
@@ -293,6 +295,11 @@
                         endtime: new Date(endtimeg).toLocaleString()
                     };
 
+                    if (!isNaN(fuelSum))
+                        $scope.consumption_available = true;
+
+                    if (!isNaN(co2kgH))
+                        $scope.co2_available = true;
 
                     $scope.onload_summary = true;
                 },

@@ -188,7 +188,6 @@
                                 dataotherusers.push(data);
                                 $scope.onload_speed = true;
                                 if ($scope.onload_CO2 && $scope.onload_consumption) {
-                                    window.dispatchEvent(new Event('resize'));
                                     $scope.onload_all = true;
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
@@ -225,8 +224,8 @@
                                 dataotherusers.push(data);
                                 $scope.onload_consumption = true;
                                 if ($scope.onload_CO2 && $scope.onload_speed) {
-                                    window.dispatchEvent(new Event('resize'));
                                     $scope.onload_all = true;
+                                    window.dispatchEvent(new Event('resize'));
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
                                     }, 300);
@@ -262,14 +261,14 @@
                                 dataotherusers.push(data);
                                 $scope.onload_CO2 = true;
                                 if ($scope.onload_speed && $scope.onload_consumption) {
-                                    window.dispatchEvent(new Event('resize'));
                                     $scope.onload_all = true;
+                                    window.dispatchEvent(new Event('resize'));
                                     $timeout(function () {
                                         window.dispatchEvent(new Event('resize'));
+                                        $timeout(function () {
+                                            window.dispatchEvent(new Event('resize'));
+                                        }, 300);
                                     }, 300);
-                                    $timeout(function () {
-                                        window.dispatchEvent(new Event('resize'));
-                                    }, 500);
                                 }
                             }, function (data) {
                         console.log("error " + data);

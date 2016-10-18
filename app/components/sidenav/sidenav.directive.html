@@ -32,8 +32,8 @@
                         <md-tooltip ng-if="item.commingSoon" md-delay="500" md-direction="right"> {{'COMMING_SOON' | translate}} {{item.tooltip| translate}} </md-tooltip>
                     </span>
                     <span class="sidenav-element flex">
-                        <md-tooltip ng-if="navExpanded" ng-if="!item.commingSoon" md-delay="500" md-direction="right"> {{item.tooltip| translate}} </md-tooltip>
-                        <md-tooltip ng-if="navExpanded" ng-if="item.commingSoon" md-delay="500" md-direction="right"> {{'COMMING_SOON' | translate}} {{item.tooltip| translate}} </md-tooltip>
+                        <md-tooltip ng-if="navExpanded && !item.commingSoon" md-delay="500" md-direction="right"> {{item.tooltip| translate}} </md-tooltip>
+                        <md-tooltip ng-if="navExpanded && item.commingSoon" md-delay="500" md-direction="right"> {{'COMMING_SOON' | translate}} {{item.tooltip| translate}} </md-tooltip>
                         <div ng-if="navExpanded" class="md-list-item-text">
 
                             <p>{{item.name| translate}}</p>

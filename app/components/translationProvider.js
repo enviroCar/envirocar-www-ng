@@ -34,7 +34,8 @@ angular.module('translations', [])
             'PASSWORD'  : 'Password',
             'REGISTER'  : 'Register',
             'LOGIN'     : 'Login',
-            'FORGOT_PASSWORD' : 'forgot password?',
+            'FORGOT_PASSWORD'   : 'forgot password?',
+            'INVALID_LOGIN'     : 'Invalid user credentials.',
             
             // Dashboard:
             'DASHBOARD'             : 'Dashboard',
@@ -198,6 +199,7 @@ angular.module('translations', [])
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Select the ',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_2'        : '-button to draw a rectangle.',
             'SPATIAL_INPUT_MISSING_ERROR'               : 'You must specify a bounding box before you can use this filter. Click on the X on the top right to cancel this filter.',
+            'SPATIAL_SERVER_REQUEST_ERROR'              : 'The server did not respond to your selection. Please try again with another bounding box.',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUARY',
@@ -330,7 +332,8 @@ angular.module('translations', [])
             'PASSWORD': 'Passwort',
             'REGISTER': 'Registrieren',
             'LOGIN': 'Anmelden',
-            'FORGOT_PASSWORD' : 'Passwort vergessen?',
+            'FORGOT_PASSWORD'   : 'Passwort vergessen?',
+            'INVALID_LOGIN'     : 'Fehlerhafte Benutzerdaten.',
             
             // Dashboard:
             'DASHBOARD'             : 'Dashboard',
@@ -499,7 +502,7 @@ angular.module('translations', [])
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Klicke auf den ',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_2'        : '-Knopf um ein Rechteck zu zeichnen.',
             'SPATIAL_INPUT_MISSING_ERROR'               : 'Du musst ein Begrenzungsrechteck eingeben bevor du diesen Filter nutzen kannst. Klicke auf das X oben rechts, um diesen Filter abzubrechen.',
-      
+            'SPATIAL_SERVER_REQUEST_ERROR'              : 'Der Server konnte die Anfrage nicht verarbeiten. Versuche es bitte mit einem anderen Begrenzungsrechteck erneut.',
             
             // Tracks Page - All Tracks Tab:
             'JAN': 'JANUAR',
