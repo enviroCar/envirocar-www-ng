@@ -10,19 +10,19 @@
     function AllTracksPaginationTabCtrl(
             $rootScope,
             $scope,
-            $state,
             $translate,
             $mdMedia,
             $mdDialog,
             TrackService,
             UserCredentialsService,
-            ecBaseUrl) {
+            ecBaseUrl,
+            FilterStateService) {
 
 
         $scope.okay_pressed = false;
         $scope.onload_pagination_tab = false;
         $scope.Math = window.Math;
-        $scope.filterOrder = $state.current.data.filterOrder;
+        $scope.filterOrder = FilterStateService.getFilterStateOrder();
         console.log($scope.filterOrder);
         $scope.itemsPerPage = ($scope.screenIsXS ? 5 : 10);
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
@@ -49,7 +49,9 @@
 
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        var params = $state.current.data;
+
+        var params = FilterStateService.getFilterState();
+
         // Filters:
         $scope.filters = {
             distance: {
@@ -115,13 +117,18 @@
                 if (filter.name === 'spatial') {
                     filter.inUse = false;
                     $scope.commonDialog(filter);
+                } else {
+                    FilterStateService.setFilterInUse(filter.name, true);
                 }
                 $scope.filterOrder.push(filter);
-                $state.current.data.filterOrder = $scope.filterOrder;
+                FilterStateService.setFilterStateOrder($scope.filterOrder);
             }
+            console.log($scope.filters);
+            var muh = FilterStateService.getFilterState();
+            console.log(muh);
         };
         $scope.removeFilter = function (filter) {
-            // delete all scope filters with name of removed filter:}*/
+            // delete all scope filters with name of removed filter:
             var i = $scope.filterOrder.length - 1;
             while (i >= 0) {
                 if ($scope.filterOrder[i].name === filter.name) {
@@ -130,7 +137,9 @@
                 i--;
             }
 
-            var params = $state.current.data;
+            var params = FilterStateService.getFilterState();
+            console.log(params.filterOrder);
+            
             // delete all state filters with name of removed filter:
             var i = params.filterOrder.length - 1;
             while (i >= 0) {
@@ -141,21 +150,42 @@
                             params.distance.inUse = false;
                             params.distance.min = undefined;
                             params.distance.max = undefined;
+                            FilterStateService.setDistanceFilterState(
+                                    false,
+                                    params.distance.min,
+                                    params.distance.max
+                                    );
                             break;
                         case 'date':
+                            console.log("removing date filter.");
                             params.date.inUse = false;
                             params.date.min = undefined;
                             params.date.max = undefined;
+                            FilterStateService.setDateFilterState(
+                                    false,
+                                    params.date.min,
+                                    params.date.max
+                                    );
                             break;
                         case 'duration':
                             params.duration.inUse = false;
                             params.duration.min = undefined;
                             params.duration.max = undefined;
+                            FilterStateService.setDurationFilterState(
+                                    false,
+                                    params.duration.min,
+                                    params.duration.max
+                                    );
                             break;
                         case 'vehicle':
                             params.vehicle.inUse = false;
                             params.vehicle.all = [];
                             params.vehicle.set = [];
+                            FilterStateService.setVehicleFilterState(
+                                    false,
+                                    params.vehicle.all,
+                                    params.vehicle.set
+                                    );
                             break;
                         case 'spatial':
                             params.spatial.inUse = false;
@@ -164,16 +194,29 @@
                             params.spatial.northeast.lat = undefined;
                             params.spatial.northeast.lng = undefined;
                             params.spatial.track_ids = [];
+                            FilterStateService.setSpatialFilterState(
+                                    false,
+                                    params.spatial.southwest.lat,
+                                    params.spatial.southwest.lng,
+                                    params.spatial.northeast.lat,
+                                    params.spatial.northeast.lng,
+                                    params.spatial.track_ids
+                                    );
                             break;
+
                     }
                     // finally delete it:
                     params.filterOrder.splice(i, 1);
                 }
                 i--;
             }
-        }
+            
+            console.log($scope.filters);
+            var muh = FilterStateService.getFilterState();
+            console.log(muh);
+        };
 
-        $state.current.data.filterOrder = $scope.filterOrder;
+        FilterStateService.setFilterStateOrder($scope.filterOrder);
         $scope.commonDialog = function (filter)
         {
             var showObject = {};
@@ -303,7 +346,7 @@
 
                 // if all filters passed, add to resultTracks:
                 resultTracks.push(currTrack);
-                
+
                 $scope.filtered_tracks++;
             }
 
@@ -445,9 +488,9 @@
                             'day': day
                         };
                         /**
-                        if (!contains($scope.monthsWithTracksCalendar, month_year)) {
-                            $scope.monthsWithTracksCalendar.push(month_year);
-                        }*/
+                         if (!contains($scope.monthsWithTracksCalendar, month_year)) {
+                         $scope.monthsWithTracksCalendar.push(month_year);
+                         }*/
 
                         var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
                         var seconds = seconds_passed / 1000;

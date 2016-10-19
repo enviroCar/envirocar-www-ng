@@ -3,14 +3,13 @@
     function HeatMapCtrl(
             $scope,
             $http,
-            $timeout,
             UserCredentialsService) {
 
         angular.extend($scope, {
             center2: {
                 lat: 10.5,
                 lng: 10.5,
-                zoom: 6
+                zoom: 10
             },
             layers2: {
                 baselayers: {
@@ -90,7 +89,7 @@
             $scope.center2 = {
                 lat: mid_point[1],
                 lng: mid_point[0],
-                zoom: 5
+                zoom: 10
             };
             $scope.layers2.overlays = {
                 heat:

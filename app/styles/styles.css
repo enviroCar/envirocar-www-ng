@@ -575,6 +575,25 @@ cl-paging {
   .filter_card_content rzslider {
     padding-right: 16px; }
 
+.comming_soon_txt {
+  color: #e6e6e6;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 25%;
+  font-size: 54px;
+  font-variant: small-caps;
+  -webkit-transform: rotate(340deg);
+  -moz-transform: rotate(340deg);
+  -o-transform: rotate(340deg);
+  writing-mode: lr-tb; }
+
+#comming_soon {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1800;
+  background-color: rgba(41, 59, 51, 0.85); }
+
 #loader_spatial {
   width: 100%;
   height: 85%;

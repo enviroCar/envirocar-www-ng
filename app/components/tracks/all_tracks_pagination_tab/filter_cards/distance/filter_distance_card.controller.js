@@ -1,16 +1,16 @@
 (function () {
     'use strict';
-    function FilterDistanceCardCtrl($scope, $state, $timeout) {
+    function FilterDistanceCardCtrl($scope, $timeout, FilterStateService) {
 
         // load state values:
-        var state = $state.current.data;
+        var state = FilterStateService.getDistanceFilterState();
 
-        $scope.filters.distance.params.min = (state.distance.min ? state.distance.min : $scope.distance_min);
-        $scope.filters.distance.params.max = (state.distance.max ? state.distance.max : $scope.distance_max);
+        $scope.filters.distance.params.min = (state.min ? state.min : $scope.distance_min);
+        $scope.filters.distance.params.max = (state.max ? state.max : $scope.distance_max);
 
         $scope.sliderDistance = {
-            minValue: (state.distance.min ? state.distance.min : $scope.distance_min),
-            maxValue: (state.distance.max ? state.distance.max : $scope.distance_max),
+            minValue: (state.min ? state.min : $scope.distance_min),
+            maxValue: (state.max ? state.max : $scope.distance_max),
             options: {
                 floor: $scope.distance_min,
                 ceil: $scope.distance_max,
@@ -40,12 +40,20 @@
         },
                 50);
 
+        $scope.setToUnused = function(){
+            $scope.filters.distance.inUse = false;
+            FilterStateService.setFilterInUse('distance', false);
+        };
+
         $scope.changeSelectionRange = function (a, b) {
             $scope.filters.distance.params.min = a;
             $scope.filters.distance.params.max = b;
-            $state.current.data.distance.inUse = true;
-            $state.current.data.distance.min = a;
-            $state.current.data.distance.max = b;
+
+            FilterStateService.setDistanceFilterState(
+                    true, 
+                    a,
+                    b
+            );
 
             $scope.filters.distance.inUse = true;
             $scope.filtersChanged();

@@ -23,7 +23,7 @@
                     {{'CLICK_TO_CHANGE_FILTER_OPTION'| translate}}
                 </md-tooltip>
             </md-button>
-            <md-button ng-click="removeFilter(filters.spatial); $state.current.data.spatial.inUse = false; filters.spatial.inUse = false; filtersChanged();" class="md-icon-button md-warn" aria-label="close">
+            <md-button ng-click="removeFilter(filters.spatial); setToUnused(); filtersChanged();" class="md-icon-button md-warn" aria-label="close">
                 <md-icon class="material-icons md-24">delete_forever</md-icon>
                 <md-tooltip>
                     {{'CLICK_TO_REMOVE'| translate}}

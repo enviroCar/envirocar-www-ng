@@ -1,13 +1,10 @@
 (function () {
     'use strict';
     function FilterSpatialCardCtrl(
-            $rootScope,
             $scope,
             $timeout,
-            $state,
-            leafletData,
             leafletBoundsHelpers,
-            leafletDrawEvents) {
+            FilterStateService) {
         var drawnItems2 = new L.FeatureGroup();
 
         $scope.onEachFeature = function(feature, layer) {
@@ -92,6 +89,11 @@
                 }
             }
         });
+
+        $scope.setToUnused = function(){
+            $scope.filters.spatial.inUse = false;
+            FilterStateService.setFilterInUse('spatial', false);
+        };
 
         $scope.updateMap = function () {
             $timeout(function () {

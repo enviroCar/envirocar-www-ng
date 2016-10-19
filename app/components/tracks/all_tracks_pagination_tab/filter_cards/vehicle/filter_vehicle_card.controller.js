@@ -1,17 +1,17 @@
 (function () {
     'use strict';
-    function FilterVehicleCardCtrl($scope, $state, $timeout) {
+    function FilterVehicleCardCtrl($scope, $timeout, FilterStateService) {
         
         $scope.errorNothingSelected = false;
         $scope.items = [];
         $scope.selected = [];
 
         // load state values:
-        var state = $state.current.data;
+        var state = FilterStateService.getVehicleFilterState();
 
         // load filter options from state params:
-        $scope.filters.vehicle.params.cars_set = (state.vehicle.set.length>0 ? state.vehicle.set : []);
-        $scope.filters.vehicle.params.cars_all = (state.vehicle.all.length>0 ? state.vehicle.all : []);
+        $scope.filters.vehicle.params.cars_set = (state.set.length>0 ? state.set : []);
+        $scope.filters.vehicle.params.cars_all = (state.all.length>0 ? state.all : []);
 
         $scope.items = $scope.filters.vehicle.params.cars_all;
         $scope.selected = $scope.filters.vehicle.params.cars_set;
@@ -25,8 +25,13 @@
                 $scope.selected.push($scope.items[i]);
                 $scope.filters.vehicle.params.cars_set.push($scope.items[i]);
             }
-            state.vehicle.set = $scope.filters.vehicle.params.cars_set;
+            state.set = $scope.filters.vehicle.params.cars_set;
         }
+        
+        $scope.setToUnused = function(){
+            $scope.filters.vehicle.inUse = false;
+            FilterStateService.setFilterInUse('vehicle', false);
+        };
 
         $scope.hide = function () {
             $scope.errorNothingSelected = false;
@@ -36,9 +41,12 @@
                 // check status of each checkbox
                 $scope.filters.vehicle.inUse = true;
                 $scope.filtersChanged();
-                state.vehicle.set = $scope.filters.vehicle.params.cars_set;
-                state.vehicle.all = $scope.filters.vehicle.params.cars_all;
-                state.vehicle.inUse = true;
+                
+                FilterStateService.setVehicleFilterState(
+                        true,
+                        $scope.filters.vehicle.params.cars_all,
+                        $scope.filters.vehicle.params.cars_set
+                        );
             }
         };
 

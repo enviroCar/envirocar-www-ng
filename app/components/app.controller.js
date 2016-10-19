@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function AppCtrl($scope, $mdMedia, $element, UserCredentialsService) {
+    function AppCtrl($scope, $mdMedia, UserCredentialsService, FilterStateService) {
         $scope.message = 'Initial Setup';
         $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
         $scope.screenIsXS = $mdMedia('xs');
@@ -40,6 +40,7 @@
         $scope.logout = function () {
             UserCredentialsService.clearCredentials();
             UserCredentialsService.clearCookies();
+            FilterStateService.resetFilterStates();
         };
 
         $scope.loggedIn = function () {

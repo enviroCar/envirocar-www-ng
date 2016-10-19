@@ -1,9 +1,18 @@
 (function () {
 
-    SpatialDialogCtrl = function ($scope, $state, $translate, $mdDialog, $timeout, UserService, leafletData, leafletBoundsHelpers, leafletDrawEvents) {
+    SpatialDialogCtrl = function (
+            $scope,
+            $mdDialog,
+            $timeout,
+            UserService,
+            FilterStateService,
+            leafletBoundsHelpers,
+            leafletDrawEvents) {
+
         var drawnItems = new L.FeatureGroup();
         $scope.okay_pressed = false;
         var drawWhite = false;
+
         angular.extend($scope, {
             map3: {
                 center: {
@@ -66,6 +75,7 @@
                 }
             }
         });
+
         $scope.updateDialogMap = function () {
             $timeout(function () {
                 if (drawWhite) {
@@ -237,8 +247,9 @@
             // zoom map to track:
             $scope.updateDialogMap();
         } else {
-            console.log($state.current.data.spatial.northeast.lat);
-            if ($state.current.data.spatial.northeast.lat !== undefined) {
+            var state = FilterStateService.getSpatialFilterState();
+            console.log(state);
+            if (state.northeast.lat !== undefined) {
                 if ($scope.filters.spatial.params.southwest.lat !== undefined)
                     $scope.southWest.lat = $scope.filters.spatial.params.southwest.lat;
                 if ($scope.filters.spatial.params.southwest.lng !== undefined)
@@ -304,13 +315,14 @@
                             }
                             ;
                             $scope.filters.spatial.inUse = true;
-                            var params = $state.current.data.spatial;
-                            params.inUse = true;
-                            params.southwest.lat = spatial_filter_sw.lat;
-                            params.southwest.lng = spatial_filter_sw.lng;
-                            params.northeast.lat = spatial_filter_ne.lat;
-                            params.northeast.lng = spatial_filter_ne.lng;
-                            params.track_ids = $scope.filters.spatial.params.track_ids;
+                            FilterStateService.setSpatialFilterState(
+                                    true,
+                                    spatial_filter_sw.lat,
+                                    spatial_filter_sw.lng,
+                                    spatial_filter_ne.lat,
+                                    spatial_filter_ne.lng,
+                                    $scope.filters.spatial.params.track_ids
+                                    );
 
                             //$scope.updateDialogMap();
                             $mdDialog.hide();
@@ -327,7 +339,7 @@
                         window.dispatchEvent(new Event('resize'));
                     },
                             500);
-                            
+
                 });
             }
         };

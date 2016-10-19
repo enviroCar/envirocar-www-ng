@@ -1,6 +1,12 @@
 (function () {
 
-    function LoginCtrl($scope, $rootScope, $location, UserCredentialsService, UserService) {
+    function LoginCtrl(
+            $scope,
+            $rootScope,
+            $location,
+            UserCredentialsService,
+            UserService,
+            FilterStateService) {
         console.log("LoginCtrl started.");
         $scope.username = "";
         $scope.password = "";
@@ -45,6 +51,7 @@
                 UserCredentialsService.clearCookies();
                 $scope.username = "";
                 $scope.password = "";
+                FilterStateService.resetFilterStates();
             };
         };
     }
