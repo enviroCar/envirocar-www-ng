@@ -49,7 +49,7 @@
             method: 'GET',
             url: "app/components/assets/tracksummaries.json",
             headers: {
-                'Content-Type': "application/json",
+                'Content-Type': "application/json"
             }
         }).then(function (data) {
             // create new json array for trackArray:

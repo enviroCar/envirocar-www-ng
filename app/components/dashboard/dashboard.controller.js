@@ -5,8 +5,6 @@
 
         var username;
         var token;
-
-        
         var credits = UserCredentialsService.getCredentials();
         if (credits) {
             username = credits.username;
@@ -21,6 +19,7 @@
         $scope.total_users = 0;
         $scope.total_tracks = 0;
         $scope.total_distance = 0;
+        $scope.tracksAvailable = false;
 
         /**
          * START: validation of methods:
@@ -48,7 +47,14 @@
         UserService.getTotalUserTracks(username, token).then(
                 function (data) {
                     $scope.track_number = data.headers('Content-Range').split("/")[1];
+                    if ($scope.track_number > 0)
+                        $scope.tracksAvailable = true;
+                    else
+                        $scope.tracksAvailable = false;
+
                 }, function (data) {
+
+            $scope.tracksAvailable = false;
             console.log("error " + data)
         }
         );

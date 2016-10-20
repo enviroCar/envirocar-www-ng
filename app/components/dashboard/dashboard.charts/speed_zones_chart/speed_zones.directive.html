@@ -9,6 +9,11 @@
     <md-card-content flex>
         <md-progress-circular class="loader_dashboard" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
         <nvd3 ng-if="onloadSpeedZones" options="options_speed" data="dataSpeedZones" flex></nvd3>
-
+        <div class="no_tracks" ng-show="!tracksAvailable">
+            <img src="app/components/assets/img_tracks.png">
+            <p layout-align="center center">
+                <b>{{ 'NO_TRACKS' | translate}}</b>
+            </p>
+        </div>
     </md-card-content>
 </md-card>

@@ -17,10 +17,9 @@
 
         $scope.login = function () {
             $scope.dataLoading = true;
-            console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
+            //console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
             UserService.getUserStatistics($scope.username, $scope.password).then(
                     function (res) { // success response
-                        console.log("getUser success: " + res);
                         $scope.error = false;
                         // When the right credentials are provided.
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
@@ -33,19 +32,21 @@
                             // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
                             $location.path('/home');
                         }
+                        
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
-                    }, function (error) { // error response
-                console.log("getUser error: " + error);
-                // If wrong credentials are procided
-                $scope.error = true;
-                $scope.dataLoading = false;
-                UserCredentialsService.clearCredentials();
-                UserCredentialsService.clearCookies();
-            }
+                    },
+                    function (error) { // error response
+                        console.log("getUser error: " + error);
+                        // If wrong credentials are provided
+                        $scope.error = true;
+                        $scope.dataLoading = false;
+                        UserCredentialsService.clearCredentials();
+                        UserCredentialsService.clearCookies();
+                    }
             );
 
             $scope.logout = function () {
-                console.log("LOGGED OUT!!!!!!!!!!!!!");
+                //console.log("LOGGED OUT!!!!!!!!!!!!!");
                 $scope.error = false;
                 UserCredentialsService.clearCredentials();
                 UserCredentialsService.clearCookies();

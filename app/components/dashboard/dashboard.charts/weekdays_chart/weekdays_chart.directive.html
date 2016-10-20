@@ -15,7 +15,13 @@
             </md-button>
         </div>
     </div >
-    <div layout-gt-md="row" layout-xs="column" layout-gt-xs="column">
+    <div layout-gt-md="row" layout-xs="column" layout-gt-xs="column"  style="position: relative; height: 100%; width: 100%;">
+        <div class="no_tracks" ng-show="!tracksAvailable">
+                <img src="app/components/assets/img_tracks.png" class="greyscale">
+                <p layout-align="center center">
+                    <b>{{ 'NO_TRACKS' | translate}}</b>
+                </p>
+            </div>
         <md-card-content flex>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_weekdays" md-diameter="56"></md-progress-circular>
             <div flex ng-if="onload_weekdays" layout="row">

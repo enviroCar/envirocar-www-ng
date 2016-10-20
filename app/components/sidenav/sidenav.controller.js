@@ -1,7 +1,17 @@
 (function () {
     'use strict';
 
-    function SidenavCtrl($rootScope, $scope, $element, $mdMedia, $mdSidenav, $log, $translate, $q, $timeout, navService) {
+    function SidenavCtrl(
+            $rootScope,
+            $scope,
+            $element,
+            $mdMedia,
+            $mdSidenav,
+            $log,
+            $translate,
+            $q,
+            $timeout,
+            navService) {
         var vm = this;
         vm.menuItems = [];
         vm.selectItem = selectItem;
@@ -139,9 +149,26 @@
                         .then(function () {
                             $log.debug("toggle " + navID + " is done");
                         });
-            }
+            };
         }
         ;
+
+        $scope.openFeedback = function () {
+            if ($translate.use() === 'de') {
+                // german feedback form:
+                window.open(
+                        'https://docs.google.com/forms/d/e/1FAIpQLSdHX4CPrqYwh27HjWYV8ZsblvqVwGVC2B-7ZxWovVOCpGKuJQ/viewform',
+                        '_blank'
+                        );
+            } else { //if ($translate.use() === 'en'){
+                // english feedback form:
+                window.open(
+                        'https://docs.google.com/forms/d/e/1FAIpQLSdfanFDFmIEgD9p6GWyC9oEDXLhiMdE3hptZVCdV8WsG4Ik1g/viewform',
+                        '_blank'
+                        );
+
+            }
+        };
 
     }
     ;

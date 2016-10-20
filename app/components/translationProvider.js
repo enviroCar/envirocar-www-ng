@@ -17,7 +17,8 @@ angular.module('translations', [])
             'WEBSITE-TITLE'         : 'EnviroCar Webapp',
             'LANGUAGE'              : 'Language',
             'CLICK_FOR_MORE_INFO'   : 'click for more information...',
-            'COMMING_SOON'          : 'comming soon...',
+            'COMMING_SOON'          : 'Comming Soon...',
+            'NO_TRACKS'             : 'You have no tracks uploaded yet.',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Open Sidenav',
@@ -28,6 +29,9 @@ angular.module('translations', [])
             'TT_SN_TRACKS_OPEN'     : 'opens the trackview',
             'TT_SN_PROFILE_OPEN'    : 'opens the profileview',
             'TT_SN_SEGMENT_OPEN'    : 'opens the segmentview',
+            'SITE_FEEDBACK'         : 'Site feedback',
+            'SITE_IMPRINT'          : 'Imprint',
+            'SITE_TERMS'            : 'Terms',
             
             // Login:
             'USERNAME'  : 'Username',
@@ -314,7 +318,8 @@ angular.module('translations', [])
             'WEBSITE-TITLE'         : 'EnviroCar Webapp',
             'LANGUAGE'              : 'Sprache',
             'CLICK_FOR_MORE_INFO'   : 'Klick für weitere Informationen...',
-            'COMMING_SOON'          : 'Demnächst verfügbar...',
+            'COMMING_SOON'          : 'Demnächst Verfügbar...',
+            'NO_TRACKS'             : 'Du hast noch keine Fahrten hochgeladen.',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Öffne Seitenleiste',
@@ -325,7 +330,9 @@ angular.module('translations', [])
             'TT_SN_TRACKS_OPEN'     : 'öffnet die Fahrtansicht',
             'TT_SN_PROFILE_OPEN'    : 'öffnet deine Profileeinstellungen',
             'TT_SN_SEGMENT_OPEN'    : 'öffnet die Fahrtabschnittsanalyse',
-
+            'SITE_FEEDBACK'         : 'Seitenfeedback',
+            'SITE_IMPRINT'          : 'Impressum',
+            'SITE_TERMS'            : 'Nutzungsbedingungen',
             
             // Login:
             'USERNAME': 'Benutzername',

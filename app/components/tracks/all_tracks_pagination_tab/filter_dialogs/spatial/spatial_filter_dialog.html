@@ -12,22 +12,24 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content style="padding-top:5%;">
-            <div ng-cloak>
-                <div flex class='center-aligned' style="padding-bottom: 5%;">
-                    {{'FILTER_SPATIAL_DESCRIPTION_SHORT_1'| translate}}
-                    <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
-                    {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2'| translate}}
+        <md-dialog-content style="padding-top:16px; height: 320px;">
+            <div style="height: 320px;">
+                <div ng-if="okay_pressed" id="loader_spatial">
+                    <md-progress-circular md-diameter="136"></md-progress-circular>
                 </div>
-                <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
-                <div style='padding-left: 16px; padding-right: 16px;'>
-                    <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
-                    <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
-                    <p ng-if="errorServerRequest">{{'SPATIAL_SERVER_REQUEST_ERROR'| translate}}</p>
+                <div ng-cloak>
+                    <div flex class='center-aligned' style="padding-bottom: 16px;">
+                        {{'FILTER_SPATIAL_DESCRIPTION_SHORT_1'| translate}}
+                        <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
+                        {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2'| translate}}
+                    </div>
+                    <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
+                    <div style='padding-left: 16px; padding-right: 16px;'>
+                        <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
+                        <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
+                        <p ng-if="errorServerRequest">{{'SPATIAL_SERVER_REQUEST_ERROR'| translate}}</p>
+                    </div>
                 </div>
-            </div>
-            <div ng-if="okay_pressed" id="loader_spatial">
-                <md-progress-circular md-diameter="136"></md-progress-circular>
             </div>
         </md-dialog-content>
         <md-dialog-actions>

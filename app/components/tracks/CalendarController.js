@@ -2,11 +2,44 @@
 (function () {
     'use strict';
 
-    function TrackListCtrl($scope, $state, $stateParams, $timeout, $mdDialog, $translate) {
+    function TrackListCtrl(
+            $scope,
+            $state,
+            $stateParams,
+            $timeout,
+            $mdDialog,
+            $translate,
+            UserCredentialsService,
+            UserService) {
         $scope.onload_all_tracks_page = false;
+        $scope.tracksAvailable = false;
         var tab_a = true;
         var tab_b = false;
         var tab_c = false;
+
+        var username;
+        var token;
+        var credits = UserCredentialsService.getCredentials();
+        if (credits) {
+            username = credits.username;
+            token = credits.password;
+        }
+
+        // ask server for number user tracks:
+        UserService.getTotalUserTracks(username, token).then(
+                function (data) {
+                    var track_number = data.headers('Content-Range').split("/")[1];
+                    if (track_number > 0)
+                        $scope.tracksAvailable = true;
+                    else
+                        $scope.tracksAvailable = false;
+
+                },
+                function (data) {
+                    $scope.tracksAvailable = false;
+                    console.log("error " + data)
+                }
+        );
 
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);

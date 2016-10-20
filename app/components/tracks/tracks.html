@@ -1,12 +1,24 @@
 <!-- Tracks HTML content -->
-<md-progress-circular class="loader_dashboard2" ng-if="!onload_all_tracks_page" md-diameter="156"></md-progress-circular>
-  
+
 <md-tabs md-dynamic-height md-border-bottom>
 
-    <calendar-tab> </calendar-tab>
-    
-    <all-tracks-pagination-tab></all-tracks-pagination-tab>
+    <div ng-if="tracksAvailable">
 
-    <all-tracks-tab> </all-tracks-tab>
+        <calendar-tab> </calendar-tab>
+
+        <all-tracks-pagination-tab></all-tracks-pagination-tab>
+
+        <all-tracks-tab> </all-tracks-tab>
+
+    </div>
 
 </md-tabs>
+
+<div ng-if="!tracksAvailable" style="position: relative; height: 500px; width: 100%;">
+    <div class="no_tracks" ng-show="!tracksAvailable">
+        <img src="app/components/assets/img_tracks.png">
+        <p layout-align="center center">
+            <b>{{ 'NO_TRACKS' | translate}}</b>
+        </p>
+    </div>
+</div>

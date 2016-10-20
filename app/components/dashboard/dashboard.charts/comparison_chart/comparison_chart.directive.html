@@ -17,7 +17,7 @@
         </div>
     </div>
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_all" md-diameter="56"></md-progress-circular>
-    <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex id="comparison_chart_content">
+    <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex id="comparison_chart_content" style="position: relative; height: 100%; width: 100%;">
         <md-card-content flex-gt-xs="33" flex-xs="100">
             <p ng-if="!screenIsXS" class='comparison-title'> {{'SPEED'| translate}}</p>
             <div flex >
@@ -40,5 +40,11 @@
                 <nvd3 options="optionsCO2" data="dataCO2" api="api" flex></nvd3>
             </div>
         </md-card-content>
+        <div class="no_tracks" ng-show="!tracksAvailable">
+            <img src="app/components/assets/img_tracks.png">
+            <p layout-align="center center">
+                <b>{{ 'NO_TRACKS' | translate}}</b>
+            </p>
+        </div>
     </div>
 </md-card>
