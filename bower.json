@@ -17,10 +17,10 @@
   "dependencies": {
     "jquery": "^3.1.0",
     "angular": "^1.5.8",
-    "angular-leaflet-directive": "^0.10.0",
     "angular-simple-logger": "^0.1.7",
     "ui-leaflet": "^2.0.0",
     "leaflet.heat": "Leaflet.heat#*",
+    "leaflet-heat": "leaflet-heat#*",
     "angular-route": "^1.5.8",
     "angular-animate": "^1.5.8",
     "angular-material": "^1.1.1",
@@ -39,6 +39,6 @@
     "angular-material": "^1.1.1",
     "angular": "^1.5.8",
     "leaflet": "0.7.x",
-    "ui-leaflet": "^1.0.1"
+    "ui-leaflet": "^2.0.0"
   }
 }

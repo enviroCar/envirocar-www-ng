@@ -5,36 +5,43 @@
             $http,
             UserCredentialsService) {
 
+        $scope.onload_heat_map = false;
         angular.extend($scope, {
-            center2: {
-                lat: 10.5,
-                lng: 10.5,
-                zoom: 10
-            },
-            layers2: {
-                baselayers: {
-                    osm: {
-                        name: 'OpenStreetMap',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    mapbox_light: {
-                        name: 'Mapbox Light',
-                        url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                        type: 'xyz',
-                        layerOptions: {
-                            apikey: 'pk.eyJ1IjoibmF2ZWVuamFmZXIiLCJhIjoiY2lsYnVmamE0MDA1MXdnbHpvNGZianRuOCJ9.5KqDlJGBKr7ZF9Rdg6j_yQ',
-                            mapid: 'naveenjafer.0n3ooo76'
+            map: {
+                center2: {
+                    lat: 10.5,
+                    lng: 10.5,
+                    zoom: 10
+                },
+                layers2: {
+                    baselayers: {
+                        osm: {
+                            name: 'OpenStreetMap',
+                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        mapbox_light: {
+                            name: 'Mapbox Light',
+                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                            type: 'xyz',
+                            layerOptions: {
+                                apikey: 'pk.eyJ1IjoibmF2ZWVuamFmZXIiLCJhIjoiY2lsYnVmamE0MDA1MXdnbHpvNGZianRuOCJ9.5KqDlJGBKr7ZF9Rdg6j_yQ',
+                                mapid: 'naveenjafer.0n3ooo76'
+                            }
                         }
+                    },
+                    overlays: {
                     }
                 },
-                overlays: {
+                defaults : {
+                    scrollWheelZoom: false,
+                    zoomControl: true,
+                    doubleClickZoom: false,
+                    dragging: false
                 }
             }
         });
-
-        console.log($scope.layers2.overlays);
-
+        console.log($scope.map.layers2.overlays);
         var timeline = {};
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
@@ -86,12 +93,12 @@
             }
             mid_point[0] = mid_point[0] / (tracksummary.length * 2);
             mid_point[1] = mid_point[1] / (tracksummary.length * 2);
-            $scope.center2 = {
+            $scope.map.center2 = {
                 lat: mid_point[1],
                 lng: mid_point[0],
                 zoom: 10
             };
-            $scope.layers2.overlays = {
+            $scope.map.layers2.overlays = {
                 heat:
                         {
                             name: 'Heat Map',
@@ -105,15 +112,12 @@
                             },
                             visible: true
                         }
-            }
-
-            //$scope.onload_heat_map = true;
-            console.log($scope.layers2.overlays.heat);
+            };
+            console.log($scope.map.layers2.overlays.heat);
         }
         , function (error) {
             console.log(error);
         });
-
         /** serverseitiger CORS Fehler
          $http({
          method: 'GET',

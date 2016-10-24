@@ -28,7 +28,7 @@
                     {{ item}}
                 </md-checkbox>
             </div>
-            <p ng-if="errorNothingSelected">{{'ERROR_NOSELECTION'| translate}}</p>
+            <span ng-if="errorNothingSelected" class="error-span">{{'ERROR_NOSELECTION'| translate}}</span>
         </div>
     </div>
 </div>

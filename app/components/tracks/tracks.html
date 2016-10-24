@@ -1,6 +1,6 @@
 <!-- Tracks HTML content -->
 
-<md-tabs md-dynamic-height md-border-bottom>
+<md-tabs ng-if="tracksAvailable" md-dynamic-height md-border-bottom>
 
     <div ng-if="tracksAvailable">
 
@@ -16,7 +16,9 @@
 
 <div ng-if="!tracksAvailable" style="position: relative; height: 500px; width: 100%;">
     <div class="no_tracks" ng-show="!tracksAvailable">
-        <img src="app/components/assets/img_tracks.png">
+        <div class="transparent-container">
+            <img src="app/components/assets/img_tracks.png">
+        </div>
         <p layout-align="center center">
             <b>{{ 'NO_TRACKS' | translate}}</b>
         </p>

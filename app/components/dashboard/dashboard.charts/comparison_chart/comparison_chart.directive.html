@@ -41,7 +41,9 @@
             </div>
         </md-card-content>
         <div class="no_tracks" ng-show="!tracksAvailable">
-            <img src="app/components/assets/img_tracks.png">
+            <div class="transparent-container">
+                <img src="app/components/assets/img_tracks.png">
+            </div>
             <p layout-align="center center">
                 <b>{{ 'NO_TRACKS' | translate}}</b>
             </p>

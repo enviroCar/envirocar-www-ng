@@ -20,6 +20,7 @@
         opacity: 1;
 }:
 */
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
@@ -752,7 +753,9 @@ cl-paging {
 }
 .comming_soon_txt_sidenav{
     color: #e6e6e6;
-    text-align: center;
+    right: 0;
+    top: 0;
+    position: absolute;
     font-size: 14px;
     font-variant: small-caps;
     -webkit-transform: rotate(350deg);
@@ -789,27 +792,41 @@ cl-paging {
 }
 
 .no_tracks {
-    background-color: #d3d3d3;
+    background-color: #d9d9d9;
     width: 100%;
     display: inline-block;
     height: 100%;
     vertical-align: middle;
     position: absolute;
     z-index: 1800;
-    img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    .transparent-container {
+        position: relative;
+        background: #d9d9d9;
+        overflow: hidden;
         width: 100px;
         height: 100px;
-        display:block;
+        z-index: 1900;
         margin:auto;
-        color: rgba(41,59,51,0.55);
-        padding-top: 60px;
+        margin-top: 60px;
+        img {
+            width: 100px;
+            height: 100px;
+            display:block;
+            position: absolute;
+            z-index: 2000;
+            opacity: 0.4;
+        }
     }
     p {
-        color: grey;
+        color: black;
         letter-spacing: 2px;
         text-align: center;
         font-size: 16px;
         font-variant: small-caps;
+        opacity: 0.4;
     }
 }
 
@@ -838,4 +855,9 @@ cl-paging {
 
 .padding-8 {
     padding: 8 8 8 8;
+}
+
+.error-span{
+    color: red;
+    margin: auto;
 }

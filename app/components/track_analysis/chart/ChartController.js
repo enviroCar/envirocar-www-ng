@@ -511,6 +511,7 @@
         // toggle Segment analysis:
         $scope.toggleSegmentAnalysis = function (model) {
             $scope.segmentActivated = !$scope.segmentActivated;
+            
             if ($scope.segmentActivated) {
                 $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
@@ -519,7 +520,7 @@
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
             $rootScope.$broadcast('single_track_page:segment-activated', $scope.segmentActivated);
-
+            
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             },

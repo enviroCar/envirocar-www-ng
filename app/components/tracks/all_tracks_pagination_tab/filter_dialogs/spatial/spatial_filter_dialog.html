@@ -12,8 +12,8 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content style="padding-top:16px; height: 320px;">
-            <div style="height: 320px;">
+        <md-dialog-content style="padding-top:16px; height: 340px;">
+            <div style="height: 340px;">
                 <div ng-if="okay_pressed" id="loader_spatial">
                     <md-progress-circular md-diameter="136"></md-progress-circular>
                 </div>
@@ -25,9 +25,9 @@
                     </div>
                     <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
                     <div style='padding-left: 16px; padding-right: 16px;'>
-                        <p ng-if="errorOverlap">{{'SPATIAL_OVERLAP_ERROR'| translate}}</p>
-                        <p ng-if="ptMissing">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</p>
-                        <p ng-if="errorServerRequest">{{'SPATIAL_SERVER_REQUEST_ERROR'| translate}}</p>
+                        <span ng-if="errorOverlap" class="error-span">{{'SPATIAL_OVERLAP_ERROR'| translate}}</span>
+                        <span ng-if="ptMissing" class="error-span">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</span>
+                        <span ng-if="errorServerRequest" class="error-span">{{'SPATIAL_SERVER_REQUEST_ERROR'| translate}}</span>
                     </div>
                 </div>
             </div>

@@ -52,11 +52,11 @@
                     else
                         $scope.tracksAvailable = false;
 
-                }, function (data) {
-
-            $scope.tracksAvailable = false;
-            console.log("error " + data)
-        }
+                },
+                function (data) {
+                    $scope.tracksAvailable = false;
+                    console.log("error " + data)
+                }
         );
 
         // ask server for number of friends:
