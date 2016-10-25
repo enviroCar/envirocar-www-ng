@@ -13,7 +13,7 @@ var bowerFiles = require('main-bower-files');
 
 gulp.task('connect', function () {
     connect.server({
-        root: '/envirocar-ng',
+        root: '',
         port: 4014
     });
 });
@@ -36,9 +36,12 @@ gulp.task('index', function () {
     var othersBowerSources = gulp.src(["bower_components/angular/angular.min.js", "bower_components/material-angular-paging/build/dist.min.js"]);
 
     return target
-            .pipe(inject(series(othersBowerSources, sources)))
+            .pipe(inject(sources,{
+                addRootSlash: false
+            }))
             .pipe(inject(bowerSources, {
-                name: 'bower'
+                name: 'bower',
+                addRootSlash: false
             }, {
                 relative: true
             }))
