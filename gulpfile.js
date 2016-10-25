@@ -13,7 +13,7 @@ var bowerFiles = require('main-bower-files');
 
 gulp.task('connect', function () {
     connect.server({
-        root: '',
+        root: '/envirocar-ng',
         port: 4014
     });
 });
