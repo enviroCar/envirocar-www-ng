@@ -4,6 +4,7 @@ var connect = require('gulp-connect');
 var inject = require('gulp-inject');
 var series = require('stream-series');
 var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
 /** browserify
  var browserify = require('browserify');
  var source = require('vinyl-source-stream');

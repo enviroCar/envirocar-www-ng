@@ -40,21 +40,20 @@
         $scope.dataWeekdays = [];
 
         $scope.$on('sidenav:item-selected', function (event, args) {
-            $scope.dataWeekdays[0].values[0].x = 'Updating chart.';
-            $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
             $timeout(function () {
+            $scope.optionsWeekdays.chart.yAxis.axisLabel = "";
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
+                $scope.optionsWeekdays.chart.yAxis.axisLabel = "km";
                     window.dispatchEvent(new Event('resize'));
-                }, 600);
-            }, 400);
+                }, 200);
+            }, 100);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 500);
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-
             var axisYLabel = "km";
             $scope.dataWeekdays[0].values[0].x = $translate.instant('SUNDAY');
             $scope.dataWeekdays[0].values[1].x = $translate.instant('MONDAY');
@@ -67,6 +66,9 @@
                 axisLabel: axisYLabel,
                 axisLabelDistance: -20
             };
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 500);
         });
 
         TrackService.getUserTracks($scope.username, $scope.password).then(

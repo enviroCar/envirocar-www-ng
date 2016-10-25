@@ -68,12 +68,44 @@
         };
 
         $scope.$on('sidenav:item-selected', function (event, args) {
+            console.log("sidenav item selected.");
             $timeout(function () {
+                var axisLabelSpeed = "";
+                $scope.optionsSpeed.chart.yAxis = {
+                    axisLabel: axisLabelSpeed,
+                    axisLabelDistance: -10
+                };
+                var axisLabelConsumption = '';
+                $scope.optionsConsumption.chart.yAxis = {
+                    axisLabel: axisLabelConsumption,
+                    axisLabelDistance: -10
+                };
+                var axisLabelCO2 = '';
+                $scope.optionsCO2.chart.yAxis = {
+                    axisLabel: axisLabelCO2,
+                    axisLabelDistance: -10
+                };
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
+                    axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
+                    $scope.optionsSpeed.chart.yAxis = {
+                        axisLabel: axisLabelSpeed,
+                        axisLabelDistance: -10
+                    };
+                    axisLabelConsumption = $translate.instant('CONSUMPTION') + ' (l/h)';
+                    $scope.optionsConsumption.chart.yAxis = {
+                        axisLabel: axisLabelConsumption,
+                        axisLabelDistance: -10
+                    };
+                    axisLabelCO2 = $translate.instant('CO2') + ' (kg/h)';
+                    $scope.optionsCO2.chart.yAxis = {
+                        axisLabel: axisLabelCO2,
+                        axisLabelDistance: -10
+                    };
+                    console.log("speedChart redrawn");
                     window.dispatchEvent(new Event('resize'));
-                }, 600);
-            }, 400);
+                }, 100);
+            }, 100);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 500);

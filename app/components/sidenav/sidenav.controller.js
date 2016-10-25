@@ -53,7 +53,10 @@
         function selectItem(item) {
             vm.title = item.name;
             vm.collapse();
-            $rootScope.$broadcast('sidenav:item-selected', $scope.language);
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+                $rootScope.$broadcast('sidenav:item-selected', $scope.language);
+            }, 1000);
         }
 
         function toggleItemsList() {

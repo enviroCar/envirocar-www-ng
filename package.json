@@ -11,6 +11,7 @@
   "devDependencies": {
     "browserify": "^13.1.1",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-connect": "^5.0.0",
     "gulp-inject": "^4.1.0",
     "gulp-ruby-sass": "^2.1.0",

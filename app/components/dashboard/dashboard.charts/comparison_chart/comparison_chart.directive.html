@@ -22,7 +22,6 @@
             <p ng-if="!screenIsXS" class='comparison-title'> {{'SPEED'| translate}}</p>
             <div flex >
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed && !onload_all" md-diameter="56"></md-progress-circular>
-
                 <nvd3 ng-if="onload_speed && onload_all" options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
             </div>
         </md-card-content>

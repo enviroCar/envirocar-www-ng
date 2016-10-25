@@ -17,7 +17,7 @@ angular.module('translations', [])
             'WEBSITE-TITLE'         : 'EnviroCar Webapp',
             'LANGUAGE'              : 'Language',
             'CLICK_FOR_MORE_INFO'   : 'click for more information...',
-            'COMMING_SOON'          : 'Comming Soon...',
+            'COMMING_SOON'          : 'Coming Soon...',
             'NO_TRACKS'             : 'You have no tracks uploaded yet.',
             
             // Sidenavigation:
@@ -67,8 +67,7 @@ angular.module('translations', [])
             'LABEL_PUBLIC'              : 'enviroCar Ø',
             'TT_LABEL_USER'             : 'Your average',
             'TT_LABEL_PUBLIC'           : 'enviroCar community average',
-            'COMPARISON_CHART_DESCRIPTION'  : 
-                    'Your statistic averages compared to the enviroCar community\'s statistic averages.',
+            'COMPARISON_CHART_DESCRIPTION'  : 'Your statistic averages compared to the enviroCar community\'s statistic averages.',
             
             // Dashboard - LatestTracksChart:
             'LATEST_TRACKS_CHART_DESCRIPTION'   :   'Your latest six tracks are listed here. You can see a summary of the driven distance, your used vehicle, and the duration of the track. Hover over a track to see a map preview of the track. Click on a track to get redirect to the single track analysis page.',
