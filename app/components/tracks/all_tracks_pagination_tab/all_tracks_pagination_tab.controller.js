@@ -139,7 +139,7 @@
 
             var params = FilterStateService.getFilterState();
             console.log(params.filterOrder);
-            
+
             // delete all state filters with name of removed filter:
             var i = params.filterOrder.length - 1;
             while (i >= 0) {
@@ -210,7 +210,7 @@
                 }
                 i--;
             }
-            
+
             console.log($scope.filters);
             var muh = FilterStateService.getFilterState();
             console.log(muh);
@@ -502,14 +502,6 @@
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
-                        var travelDistance = parseFloat(currTrack['length'].toFixed(2));
-                        // update distance_min and distance_max:
-                        if (travelDistance < $scope.distance_min) {
-                            $scope.distance_min = travelDistance;
-                        }
-                        if (travelDistance > $scope.distance_max) {
-                            $scope.distance_max = travelDistance;
-                        }
 
                         var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
                         var minutes = seconds_passed / 60000;
@@ -540,8 +532,19 @@
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,
-                            length: travelDistance
+                            length: 0
                         };
+                        if (currTrack.length) {
+                            var travelDistance = parseFloat(currTrack['length'].toFixed(2));
+                            // update distance_min and distance_max:
+                            if (travelDistance < $scope.distance_min) {
+                                $scope.distance_min = travelDistance;
+                            }
+                            if (travelDistance > $scope.distance_max) {
+                                $scope.distance_max = travelDistance;
+                            }
+                            resultTrack.length = travelDistance;
+                        }
                         $scope.tracksPagination.push(resultTrack);
                     }
                     $scope.distance_max = Math.ceil($scope.distance_max);

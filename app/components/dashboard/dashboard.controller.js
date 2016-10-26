@@ -90,8 +90,10 @@
                     var distSum = 0;
                     for (var i = 0; i < data.data.tracks.length; i++) {
                         var currTrack = data.data.tracks[i];
-                        var currDist = currTrack.length;
-                        distSum += currDist;
+                        if (currTrack.length) {
+                            var currDist = currTrack.length;
+                            distSum += currDist;
+                        }
                     }
                     $scope.distance_driven = distSum.toFixed(1) + "km";
                 }, function (data) {

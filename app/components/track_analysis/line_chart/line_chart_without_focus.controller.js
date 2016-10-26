@@ -250,19 +250,41 @@
                     data_global = data;
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
+
+                    var speedMeasurement;
+                    var consumptionMeasurement;
+                    var co2Measurement;
+                    var rpmMeasurement;
+                    var engineLoadMeasurement;
                     // iterating through each measurement:
                     for (var index = 0; index < data_global.data.features.length; index++) {
-                        // save measurements for each phenomenon:
-                        var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
-                        if (data_global.data.features[index].properties.phenomenons.Consumption)
-                            var consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
-                        if (data_global.data.features[index].properties.phenomenons.CO2)
-                            var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
-                        if (data_global.data.features[index].properties.phenomenons.Rpm)
-                            var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
-                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
-                            var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
 
+                        // save measurements for each phenomenon:
+                        if (data_global.data.features[index].properties.phenomenons.Speed) 
+                            speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
+                         else
+                            speedMeasurement = {x: index, y: undefined};
+                        
+                        if (data_global.data.features[index].properties.phenomenons.Consumption) 
+                            consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
+                        else 
+                            consumptionMeasurement = {x: index, y: undefined};
+                        
+                        if (data_global.data.features[index].properties.phenomenons.CO2) 
+                            co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
+                        else
+                            co2Measurement = {x: index, y: undefined};
+                        
+                        if (data_global.data.features[index].properties.phenomenons.Rpm) 
+                            rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                        else
+                            rpmMeasurement = {x: index, y: undefined};
+                        
+                        if (data_global.data.features[index].properties.phenomenons['Engine Load']) 
+                            engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        else
+                            engineLoadMeasurement = {x: index, y: undefined};
+                        
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);

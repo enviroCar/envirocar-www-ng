@@ -1,12 +1,12 @@
 (function () {
     'use strict';
     function SpeedRangesChartCtrl(
-            $scope, 
-            $stateParams, 
-            $timeout, 
-            $translate, 
+            $scope,
+            $stateParams,
+            $timeout,
+            $translate,
             TrackService,
-            StatisticsService, 
+            StatisticsService,
             UserCredentialsService,
             trackAnalysisSettings) {
         $scope.onload_all = false;
@@ -193,7 +193,14 @@
                     y: 0
                 }
             ];
-            var partOfPercent = 100 / (b - a + 1);
+
+            var count = 0;
+            //checkout partOfPercent for errorneous data:
+            for (var i = a; i < b + 1; i++) {
+                if ($scope.data_all_ranges[0].values[i] !== undefined)
+                    count++;
+            }
+            var partOfPercent = 100 / count;
 
             // calculate %'s for each speed interval:
             for (var i = a; i < b + 1; i++) {
@@ -354,13 +361,12 @@
             if ($scope.segmentActivated) {
                 //$scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
-                if ($scope.min)
+                if ($scope.min !== undefined)
                     $scope.changeRangeRanges($scope.min, $scope.max);
                 else
                     $scope.changeRangeRanges(0, $scope.track_length);
-            } else {
+            } else
                 $scope.changeRangeRanges(0, $scope.track_length);
-            }
         });
 
         $scope.optionsConsumptionRange = {

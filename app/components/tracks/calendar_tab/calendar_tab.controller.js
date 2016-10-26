@@ -208,8 +208,8 @@
                 var currTrack = $scope.currentPageTracks.tracks[i];
                 var currDate = new Date(currTrack.begin);
                 // if currDate within [rangestart,rangeEnd]
-                if (dateDiffInDays($scope.rangeStartDate, currDate) >= 0
-                        && dateDiffInDays(currDate, $scope.rangeEndDate) >= 0) {
+                if ((dateDiffInDays($scope.rangeStartDate, currDate) >= 0)
+                        && (dateDiffInDays(currDate, $scope.rangeEndDate) >= 0)) {
                     // put into currentSelectedTracks!
                     $scope.currentPageTracks.currentSelectedTracks.push(currTrack);
                 }
@@ -224,6 +224,7 @@
             $scope.currentPage = 1;
             $scope.paging.current = 1;
             loadStatistics();
+            loadPages();
 
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
@@ -559,7 +560,6 @@
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
-                        var travelDistance = currTrack['length'].toFixed(1);
                         var resultTrack = {
                             year: year,
                             month: month,
@@ -571,8 +571,13 @@
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,
-                            length: parseFloat(travelDistance)
+                            length: 0
                         };
+                        if (currTrack.length){
+                            var travelDistance = currTrack['length'].toFixed(1);
+                            resultTrack.length = parseFloat(travelDistance);
+                        }
+                        
                         $scope.tracksCalendar.push(resultTrack);
 
                         MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons">directions_car</i><span>' + date_count[stripped_date] + '</span>'));

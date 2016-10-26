@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <md-card-content flex>
-                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
                     <div ng-if="onload_track_map">
                         <leaflet event-broadcast="events" maxZoom="maxZoom" minZoom="minZoom" maxBounds="maxBounds" markers="markers" legend="legend" bounds="bounds" paths="paths" layers="layers" height="500px" ></leaflet>
                     </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <md-card-content flex>
-                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
                     <div ng-if="segmentActivated && onload_track_chart" flex>
                         <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
                     </div>

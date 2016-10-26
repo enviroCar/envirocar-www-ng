@@ -23,7 +23,8 @@
             45, // co2
             5000, // rpm
             110     // engine load
-        ]
+        ],
+        errorColor: '#ff00ff'
     };
     
 angular.module('enviroCar.track')

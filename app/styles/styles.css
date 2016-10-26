@@ -698,6 +698,10 @@ cl-paging {
     margin: auto;
     top: 100px; }
 
+.loader_dashboard2 {
+  width: 100%;
+  margin: auto; }
+
 .padding-right {
   padding-right: 16px; }
 

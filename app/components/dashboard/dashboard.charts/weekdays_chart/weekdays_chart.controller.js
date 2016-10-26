@@ -41,10 +41,10 @@
 
         $scope.$on('sidenav:item-selected', function (event, args) {
             $timeout(function () {
-            $scope.optionsWeekdays.chart.yAxis.axisLabel = "";
+                $scope.optionsWeekdays.chart.yAxis.axisLabel = "";
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
-                $scope.optionsWeekdays.chart.yAxis.axisLabel = "km";
+                    $scope.optionsWeekdays.chart.yAxis.axisLabel = "km";
                     window.dispatchEvent(new Event('resize'));
                 }, 200);
             }, 100);
@@ -116,8 +116,8 @@
                         // time spend
                         //var seconds = (end_date - date) / 1000;
                         //var minutes = seconds / 60;
-
-                        temp_data[0].values[date.getDay()].y += track.length;
+                        if (track.length)
+                            temp_data[0].values[date.getDay()].y += track.length;
                         //temp_data[1].values[date.getDay()].y += minutes;
                     }
                     $scope.dataWeekdays = temp_data;
