@@ -3,7 +3,7 @@
     function calendarTab() {
         return {
             restrict: 'EA',
-            templateUrl: '/app/components/tracks/calendar_tab/calendar_tab.directive.html',
+            templateUrl: './app/components/tracks/calendar_tab/calendar_tab.directive.html',
             controller: 'CalendarTabCtrl',
             controllerAs: 'vm'
         }

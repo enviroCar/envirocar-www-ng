@@ -3,7 +3,7 @@
     function envirocarSidenav() {
         return {
             restrict: 'EA',
-            templateUrl: '/app/components/sidenav/sidenav.directive.html',
+            templateUrl: './app/components/sidenav/sidenav.directive.html',
             controller: 'SidenavCtrl',
             controllerAs: 'vm'
         }

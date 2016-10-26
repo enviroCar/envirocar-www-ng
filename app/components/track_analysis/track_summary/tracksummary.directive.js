@@ -4,7 +4,7 @@
     function trackSummary(){
         return {
             restrict: 'EA',
-            templateUrl: 'app/components/track_analysis/track_summary/tracksummary.directive.html',
+            templateUrl: './app/components/track_analysis/track_summary/tracksummary.directive.html',
             controller: 'TrackSummaryCtrl'
         };
     }
