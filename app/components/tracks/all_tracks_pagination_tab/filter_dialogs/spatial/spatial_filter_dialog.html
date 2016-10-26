@@ -1,0 +1,41 @@
+<md-dialog md-is-locked-open="valid" style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 class="filter_heading" style="padding-left: 16px;">{{'FILTER_SPATIAL_HEADING'| translate}}</h2>
+                <span flex class="flex"></span>
+                <md-button ng-click="cancel()" class="md-icon-button md-light padding-right" aria-label="close-dialog">
+                    <md-icon class="material-icons md-24">close</md-icon>
+                    <md-tooltip>
+                        {{'CLOSE_DIALOG'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="padding-top:16px; height: 340px;">
+            <div style="height: 340px;">
+                <div ng-if="okay_pressed" id="loader_spatial">
+                    <md-progress-circular md-diameter="136"></md-progress-circular>
+                </div>
+                <div ng-cloak>
+                    <div flex class='center-aligned' style="padding-bottom: 16px;">
+                        {{'FILTER_SPATIAL_DESCRIPTION_SHORT_1'| translate}}
+                        <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
+                        {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2'| translate}}
+                    </div>
+                    <leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
+                    <div style='padding-left: 16px; padding-right: 16px;'>
+                        <span ng-if="errorOverlap" class="error-span">{{'SPATIAL_OVERLAP_ERROR'| translate}}</span>
+                        <span ng-if="ptMissing" class="error-span">{{'SPATIAL_INPUT_MISSING_ERROR'| translate}}</span>
+                        <span ng-if="errorServerRequest" class="error-span">{{'SPATIAL_SERVER_REQUEST_ERROR'| translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="hide()" class="md-primary">
+                {{'FILTER_OKAY'| translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

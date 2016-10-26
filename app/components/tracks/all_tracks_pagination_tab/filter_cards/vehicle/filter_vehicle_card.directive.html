@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<div class="divider" flex="100">
+    <div class="filter_card" layout="row" flex="100">
+        <p style="color:#1A80C1;">
+            <span>  <i class="material-icons md-24">directions_car</i>
+                <a>{{'FILTER_VEHICLE_TITLE'| translate}}</a></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button ng-click="showAlert($event, 'FILTER_VEHICLE_TITLE', 'FILTER_VEHICLE_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="removeFilter(filters.vehicle); setToUnused(); filtersChanged();" class="md-icon-button md-warn" aria-label="close">
+                <md-icon class="material-icons  md-24">delete_forever</md-icon>
+                <md-tooltip>
+                    {{'CLICK_TO_REMOVE'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+    <div class="filter_card_content">
+        <div layout="column" layout-padding ng-cloak>
+            <div ng-repeat="item in items">
+                <md-checkbox flex ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                    {{ item}}
+                </md-checkbox>
+            </div>
+            <span ng-if="errorNothingSelected" class="error-span">{{'ERROR_NOSELECTION'| translate}}</span>
+        </div>
+    </div>
+</div>

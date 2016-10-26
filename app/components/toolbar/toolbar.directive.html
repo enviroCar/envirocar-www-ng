@@ -1,5 +1,26 @@
 <md-toolbar md-scroll-shrink ng-if="true">
     <div class="md-toolbar-tools">
-        <h3><span>{{title}}</span></h3>
+
+        <md-button style ="margin-left: 4px; margin-bottom: 8px !important;"  
+                   ng-click = "toggleExpand()">
+
+            <md-tooltip md-delay="500" ng-if="navExpanded"> {{ 'TT_SIDENAV-CLOSE' | translate}} </md-tooltip>
+
+            <md-tooltip md-delay="500" ng-if="!navExpanded"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
+
+            <md-icon class="material-icons md-36 white09"  md-font-set="material-icons" >menu</md-icon>
+        </md-button>
+
+        <img class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png" >
+
+        <span flex class="flex"></span>
+
+        <language-menu style ="margin-left: 4px; margin-top: 8px !important;"></language-menu>
+
+        <a ng-if="loggedIn()" class="white-bg md-button md-36 md-ink-ripple-red" aria-label="Notificiations" ui-sref="login" href="#/login" aria-hidden="false" style="margin-right: 20px !important;" ng-click="logout();">
+            <img ng-src="app/components/assets/button_icons/ic_power_settings_new_white_48dp.png" style="width: 36px; height: 36px;">
+            <md-tooltip md-delay="500"> {{ 'LOGOUT' | translate }} </md-tooltip>
+        </a>
     </div>
+
 </md-toolbar>

@@ -3,7 +3,7 @@
     function envirocarToolbar() {
         return {
             restrict: 'EA',
-            templateUrl: '/app/components/toolbar/toolbar.directive.html',
+            templateUrl: './app/components/toolbar/toolbar.directive.html',
             controller: 'ToolbarCtrl',
             controllerAs: 'vm'
         }

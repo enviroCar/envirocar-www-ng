@@ -1,0 +1,116 @@
+<md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="156"></md-progress-circular>
+    <div layout-gt-sm="row">
+        <md-card ng-if="onload_pagination_tab" flex  layout="column">
+
+            <div layout="row">
+                <p style="color:#1A80C1; margin-left:20px;">
+                    <span><b>{{'ALL_TRACKS_OVERVIEW_TITLE'| translate}}</b></span>
+                </p>
+                <div layout="row" flex>
+                    <p ng-if="!screenIsXS" flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
+                    <span ng-if="screenIsXS" flex class="span-flex"></span>
+                    <md-button ng-click="showAlert($event, 'ALL_TRACKS_OVERVIEW_TITLE', 'ALL_TRACKS_OVERVIEW_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                        <md-icon class="material-icons  md-24">info</md-icon>
+                        <md-tooltip>
+                            {{'CLICK_FOR_MORE_INFO'| translate}}
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+            <p ng-if="screenIsXS" flex style="font-size:17px; text-align:center"> {{'SHOWING'| translate}} {{filtered_tracks}} {{'OF'| translate}} {{currentPaginationTracks.tracks.length}} {{'TRACKS'| translate}}</p>
+            <md-list layout-align="start start" id="calendar-list" flex>
+                <div layout-align="center start" class="divider-list-item fade" ng-repeat='event in currentPaginationTracks.currentMonthTracks' ng-click="goToActivity(event.id)" flex>
+                    <div layout="column" flex>
+                        <div layout="row" style="height: 36px;">
+                            <svg style="width:36px;height:36px;" viewBox="0 0 36 36">
+                            <path fill="rgba(0,101,160,0.9)" d="M11,16H13V20H11M11,10H13V14H11M11,4H13V8H11M4,22H20V2H4V22Z" />
+                            </svg>
+                            <b>{{event.begin| date:'medium'}}</b>
+                        </div>
+                        <div class="divider-list-item-content" layout-xs="column" layout-gt-xs="row" flex-gt-xs >
+                            <span flex-gt-xs flex-sm="30" flex-gt-sm layout="row">
+                                <i class="material-icons md-24" style="margin-left:10px;">timeline</i>
+                                <p class="no-padding">{{event.length}} km</p>
+                            </span>
+                            <span flex-gt-xs flex-sm="30" flex-gt-sm  layout="row">
+                                <i class="material-icons md-24" style="margin-left:10px;">timelapse</i>
+                                <p class="no-padding">{{event.travelTime}}</p>
+                            </span>
+                            <span flex-gt-xs flex-sm="40" flex-gt-sm  layout="row">
+                                <i class="material-icons md-24" style="margin-left:10px;">
+                                    directions_car</i>
+                                <p class="no-padding">{{event.manufacturer}} - {{event.car}}</p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="center">
+                        <md-content>
+                            <p class="placeholder-p">.</p>
+
+                            <img src={{event.url}} style="width:290px;height:184px;"></img>
+                        </md-content>
+                    </md-tooltip>
+                </div>
+
+            </md-list>
+            <span class="center-aligned"> {{'PAGE'| translate}} {{pagingTab.current}} {{'OF'| translate}} {{Math.max(pagingTab.current, pagingTab.total)}} {{'WITH_TRACKS'| translate}} {{Math.min(currentPaginationTracks.currentSelectedTracks.length, pagingTab.current * itemsPerPage - (itemsPerPage - 1))}} {{'FROM_TO'| translate}} {{Math.min(pagingTab.current * itemsPerPage, currentPaginationTracks.currentSelectedTracks.length)}} {{'OF'| translate}} {{currentPaginationTracks.currentSelectedTracks.length}}  </span>
+            <cl-paging ng-show="screenIsXS" cl-pages="pagingTab.total" cl-steps="4" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+            <cl-paging ng-show="screenIsSM" cl-pages="pagingTab.total" cl-steps="7" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+            <cl-paging ng-show="!screenIsXS && !screenIsSM" cl-pages="pagingTab.total" cl-steps="10" cl-page-changed="pagingTab.onPageChanged()" cl-align="center end" cl-current-page="pagingTab.current"></cl-paging>
+        </md-card>
+
+        <md-card flex-gt-sm="35">
+            <md-content layout="column">
+                <div layout="row" flex="100">
+                    <p style="color:#1A80C1; margin-left:20px;">
+                        <span><b>{{'ALL_TRACKS_FILTER_TITLE'| translate}}</b></span>
+                    </p>
+                    <div layout="row" flex>
+                        <span flex class="flex"></span>
+                        <md-button ng-click="showAlert($event, 'ALL_TRACKS_FILTER_TITLE', 'ALL_TRACKS_FILTER_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                            <md-icon class="material-icons  md-24">info</md-icon>
+                            <md-tooltip>
+                                {{'CLICK_FOR_MORE_INFO'| translate}}
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <div>
+                    <!--<filter-card    flex 
+                                    title="FILTER_DISTANCE_TITLE" 
+                                    description="FILTER_DISTANCE_DESCRIPTION"
+                                    btn_help="showAlert($event,'FILTER_DISTANCE_TITLE','FILTER_DISTANCE_DESCRIPTION')"
+                                    btn_edit="commonDialog(filters.distance)"
+                                    btn_close="filters.distance.inUse=false;"
+                                    template="app/components/tracks/all_tracks_pagination_tab/filter_cards/card_templates/distance.template.html"
+                                    >
+                                    
+                    </filter-card>-->
+                    <div ng-repeat="item in filterOrder">
+                        <filter-distance-card ng-if="item.name === filters.distance.name && filters.distance.inUse"></filter-distance-card>
+                        <filter-date-card ng-if="item.name === filters.date.name && filters.date.inUse"></filter-date-card>
+                        <filter-duration-card ng-if="item.name === filters.duration.name && filters.duration.inUse"></filter-duration-card>
+                        <filter-vehicle-card ng-if="item.name === filters.vehicle.name && filters.vehicle.inUse"></filter-vehicle-card>
+                        <filter-spatial-card ng-if="item.name === filters.spatial.name && filters.spatial.inUse"></filter-spatial-card>
+                    </div>
+                </div>
+                <md-menu class="btn_addfilter">
+                    <md-button class="md-primary" ng-click="openMenu($mdOpenMenu, $event)">
+                        <i class="material-icons">add</i>
+                        <span enviroCar-blue>{{'BTN_ADD_FILTER'| translate}}</span>
+                        <md-tooltip>
+                            {{'TT_ADD_FILTER_BUTTON'| translate}}
+                        </md-tooltip>
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item ng-repeat="item in filters" ng-if="!item.inUse">
+                            <md-button ng-click="addFilter(item)">{{item.label}}</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-content>
+        </md-card>
+    </div>
+</md-tab>

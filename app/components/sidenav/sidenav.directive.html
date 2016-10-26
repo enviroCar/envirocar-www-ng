@@ -1,0 +1,74 @@
+<md-sidenav
+    class="md-sidenav-left"
+    md-component-id="left" id="leftSideNav"
+    md-disable-backdrop md-whiteframe="4"
+    md-is-open="true" ng-mouseover="!navExpanded && toggleExpand()"
+    ng-mouseleave="navExpanded && toggleExpand()">
+    <md-toolbar class="md-theme-light" layout="row">
+        <div class="md-toolbar-tools">
+            <md-button style ="margin-left: 4px; margin-bottom: 8px !important;"  
+                       ng-click = "toggleExpand()">
+
+                <md-tooltip md-delay="500" ng-if="navExpanded"> {{ 'TT_SIDENAV-CLOSE' | translate}} </md-tooltip>
+
+                <md-tooltip md-delay="500" ng-if="!navExpanded"> {{ 'TT_SIDENAV-OPEN' | translate}} </md-tooltip>
+
+                <md-icon class="material-icons md-36 white09"  md-font-set="material-icons" >menu</md-icon>
+            </md-button>
+
+            <img ng-if="navExpanded" class="logo-icon" src="app/components/assets/enviroCar_logo_final_white.png">
+
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-list>
+            <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+                <div id="comming_soon_light" ng-if="item.commingSoon">
+                    <p ng-if="navExpanded" class="comming_soon_txt_sidenav">
+                        <b>{{ 'COMMING_SOON' | translate}}</b>
+                    </p>
+                </div>
+                <md-item-content layout="row" layout-align="start center" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+                    <span class="sidenav-element">
+                        <md-icon ng-if="!item.commingSoon" class="material-icons md-avatar md-36 blue"  md-font-set="material-icons"> 
+                            {{item.icon}} 
+                        </md-icon>
+                        <md-icon ng-if="item.commingSoon" class="material-icons md-avatar md-36 grey"  md-font-set="material-icons"> 
+                            {{item.icon}} 
+                        </md-icon>
+                    </span>
+                    <span class="sidenav-element flex">
+                        <div ng-if="navExpanded" class="md-list-item-text">
+                            <p>{{item.name| translate}}</p>
+                        </div>
+                    </span>
+                </md-item-content>
+                <md-tooltip md-delay="500" md-direction="right"> {{item.tooltip| translate}} </md-tooltip>
+
+            </md-list-item>
+        </md-list>
+
+    </md-content>
+
+    <div class="legal" ng-if="navExpanded">
+        <p class="copyright">EnviroCar &copy;2016</p>
+        <ul layout='column'>
+            <li>
+                <a ng-click="openFeedback();">
+                    {{'SITE_FEEDBACK'| translate}}
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href='https://envirocar.org/imprint.php'>
+                    {{'SITE_IMPRINT'| translate}}
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href='https://envirocar.org/terms.php'>
+                    {{'SITE_TERMS'| translate}}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</md-sidenav>

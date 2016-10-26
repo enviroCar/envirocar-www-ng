@@ -1,0 +1,26 @@
+<!-- Tracks HTML content -->
+
+<md-tabs ng-if="tracksAvailable" md-dynamic-height md-border-bottom>
+
+    <div ng-if="tracksAvailable">
+
+        <calendar-tab> </calendar-tab>
+
+        <all-tracks-pagination-tab></all-tracks-pagination-tab>
+
+        <all-tracks-tab> </all-tracks-tab>
+
+    </div>
+
+</md-tabs>
+
+<div ng-if="!tracksAvailable" style="position: relative; height: 500px; width: 100%;">
+    <div class="no_tracks" ng-show="!tracksAvailable">
+        <div class="transparent-container">
+            <img src="app/components/assets/img_tracks.png">
+        </div>
+        <p layout-align="center center">
+            <b>{{ 'NO_TRACKS' | translate}}</b>
+        </p>
+    </div>
+</div>

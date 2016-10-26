@@ -1,0 +1,111 @@
+
+<div flex>
+    <div class="profiletab" ng-style="{
+                'background-color'
+                :
+                        '#0065A0'
+            }" style="height:235px">
+        <div class="cover">
+            <div class="profile-pic absolute" style="height:40%;display:inline-block">
+                <div layout="row">
+                    <div style="width:30%;text-align:center">
+                        <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
+                    </div>
+                    <div style="width:70%;padding-left:25px;padding-top:10px" layout="column">
+                        <div class="container_header">
+                            <p class="title"><b>{{'TRACK_ID'| translate}}:</b>  <br> {{trackid}}</p>
+                            <p class="title"><b>{{'NAME'| translate}}:</b>      <br> {{name}}</p>
+                            <p class="title"><b>{{'CREATED'| translate}}:</b>   <br> {{created| date:'medium'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <md-toolbar flex id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">
+        <div class="md-toolbar-tools" layout="row" flex>
+            <div id="phenom-dropdown" phenomenon-dropdown></div>
+            <md-switch ng-change="toggleSegmentAnalysis(model);" md-accent ng-model="model" aria-label="Segment Analysis">
+                <p ng-if="$mdMedia('gt-sm')">{{ 'SEGMENT_ANALYSIS' | translate }}</p>
+            </md-switch>
+            <div style="padding-left: 10px; padding-right: 10px;" flex>
+                <span flex-xs="5" flex-sm="7" flex-md="10" flex-gt="15" flex-gt-md="20" class="flex"></span>
+                <rzslider  ng-if="segmentActivated" id="slider1" rz-slider-model="slider.minValue"
+                           rz-slider-high="slider.maxValue"
+                           rz-slider-options="slider.options" flex></rzslider>
+                <span flex-xs="5" flex-sm="7" flex-md="10" flex-gt="15" flex-gt-md="20" class="flex"></span>
+            </div>
+            <div ng-hide="$mdMedia('gt-md')" id="toolbar-ctrl-placeholder" style="width: 120px;"></div>
+        </div>
+    </md-toolbar>
+
+    <div class="row ui-sortable-placehold" id="placeholder-toolbar-stp" > <!-- Toolbar Placeholder -->
+    </div>
+
+    <div layout = "column" flex>
+        <md-card flex layout-gt-md="row" layout-md="row" layout-xs="column" layout-gt-xs="column">
+            <div flex-xs="100" flex-gt-xs="50">
+                <div layout="row" flex="100">
+                    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                        <span><b>{{'TRACK_MAP_TITLE'| translate}}</b></span>
+                    </p>
+                    <div layout="row" flex>
+                        <span flex class="flex"></span>
+                        <md-button ng-click="showAlert($event, 'TRACK_MAP_TITLE', 'TRACK_MAP_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                            <md-icon class="material-icons  md-24">info</md-icon>
+                            <md-tooltip>
+                                {{'CLICK_FOR_MORE_INFO'| translate}}
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <md-card-content flex>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
+                    <div ng-if="onload_track_map">
+                        <leaflet event-broadcast="events" maxZoom="maxZoom" minZoom="minZoom" maxBounds="maxBounds" markers="markers" legend="legend" bounds="bounds" paths="paths" layers="layers" height="500px" ></leaflet>
+                    </div>
+                </md-card-content>
+            </div>
+            <div flex-xs="100" flex-gt-xs="50">
+                <div layout="row" flex="100">
+                    <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                        <span><b>{{'TRACK_CHART_TITLE'| translate}}</b></span>
+                    </p>
+                    <div layout="row" flex>
+                        <span flex class="flex"></span>
+                        <md-button ng-click="showAlert($event, 'TRACK_CHART_TITLE', 'TRACK_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                            <md-icon class="material-icons  md-24">info</md-icon>
+                            <md-tooltip>
+                                {{'CLICK_FOR_MORE_INFO'| translate}}
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <md-card-content flex>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
+                    <div ng-if="segmentActivated && onload_track_chart" flex>
+                        <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
+                    </div>
+                    <div ng-if="!segmentActivated && onload_track_chart" flex>
+                        <line-chart-without-focus flex> </line-chart-without-focus>
+                    </div>
+                </md-card-content>
+            </div>
+        </md-card>
+
+        <div layout-gt-xs="row" layout-xs="column" flex>
+            <div layout="column" flex-xs="100" flex-sm="50" flex-gt-sm="50">
+                <div flex-sm="50" flex-xs="100" flex-gt-sm="50">
+                    <comparison-track-chart flex> </comparison-track-chart>
+                </div>
+                <div  flex-sm="50" flex-xs="100" flex-gt-sm="50">
+                    <speed-ranges-chart flex></speed-ranges-chart>
+                </div>
+            </div>
+            <div flex-xs="100" flex-sm="50" flex-gt-sm="50">
+                <track-summary flex></track-summary>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- weekdays comparison directive -->
+<md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' flex>
+            <span><b>{{'WEEKDAYS_CHART_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button ng-click="showAlert($event, 'WEEKDAYS_CHART_TITLE', 'WEEKDAYS_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div >
+    <div layout-gt-md="row" layout-xs="column" layout-gt-xs="column"  style="position: relative; height: 100%; width: 100%;">
+        <div class="no_tracks" ng-show="!tracksAvailable">
+            <div class="transparent-container">
+                <img src="app/components/assets/img_tracks.png">
+            </div>
+            <p layout-align="center center">
+                <b>{{ 'NO_TRACKS' | translate}}</b>
+            </p>
+        </div>
+        <md-card-content flex>
+            <md-progress-circular class="loader_dashboard2" ng-if="!onload_weekdays" md-diameter="56"></md-progress-circular>
+            <div flex ng-if="onload_weekdays" layout="row">
+                <nvd3 options="optionsWeekdays" data="dataWeekdays" api="api" flex></nvd3>
+            </div>
+        </md-card-content>
+    </div>
+</md-card>

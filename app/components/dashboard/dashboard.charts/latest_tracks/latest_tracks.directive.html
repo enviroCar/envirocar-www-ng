@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- latest_tracks directive -->
+<div layout="column" flex>
+    <md-card style="min-height:860px !important; height:860px !important; max-height:860px !important;">
+        <div layout="row">
+            <p class='card-title' flex>
+                <span><b>{{'TITLE_TRACKS'| translate}}</b></span>
+            </p>
+            <div layout="row" flex>
+                <span flex class="flex"></span>
+                <md-button ng-click="showAlert($event, 'TITLE_TRACKS', 'LATEST_TRACKS_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                    <md-icon class="material-icons  md-24">info</md-icon>
+                    <md-tooltip>
+                        {{'CLICK_FOR_MORE_INFO'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </div>
+        <div style="position: relative; height: 810px; width: 100%;">
+            <div class="no_tracks" ng-show="!tracksAvailable">
+                <div class="transparent-container">
+                    <img src="app/components/assets/img_tracks.png">
+                </div>
+                <p layout-align="center center">
+                    <b>{{ 'NO_TRACKS' | translate}}</b>
+                </p>
+            </div>
+            <md-card-content class="text-color nopadding">
+                <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
+                <div class="card-body">
+                    <div class="streamline b-l b-accent m-b">
+                        <div class="sl-item" ng-show="onload_tracks_timeline" ng-repeat='event in events' ng-click="goToActivity(event.id)">
+                            <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
+                            </img> -->
+                            <div class="sl-content" >
+                                <span >
+                                    <span class="title_span"><b>{{event.begin| date:'medium'}}</b></span>
+                                </span>
+                                <br>
+                                <span >
+                                    <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                                    {{event.distance}} km
+                                </span>
+
+                                <br>
+                                <span style="line-height:70%">
+                                    <i class="material-icons md-24" style="height:28px;width:28px">directions_car</i>
+                                    {{event.manufacturer}} - {{event.car}}
+                                </span>
+
+                                <br>
+
+                                <span>
+                                    <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
+                                    {{event.travelTime}}
+                                </span>
+                                <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="left">
+                                    <md-content >
+                                        <p class="placeholder-p">.</p>
+
+                                        <img src={{event.url}} style="width:290px;height:184px;"></img>
+
+                                    </md-content>
+                                </md-tooltip>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </md-card-content>
+        </div>
+    </md-card>
+</div>

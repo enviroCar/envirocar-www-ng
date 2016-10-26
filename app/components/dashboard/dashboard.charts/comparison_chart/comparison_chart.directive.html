@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- user vs community directive -->
+<md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'COMPARISON_CHART_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button ng-click="showAlert($event, 'COMPARISON_CHART_TITLE', 'COMPARISON_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
+                </md-tooltip>
+            </md-button>
+
+        </div>
+    </div>
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_all" md-diameter="56"></md-progress-circular>
+    <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex id="comparison_chart_content" style="position: relative; height: 100%; width: 100%;">
+        <md-card-content flex-gt-xs="33" flex-xs="100">
+            <p ng-if="!screenIsXS" class='comparison-title'> {{'SPEED'| translate}}</p>
+            <div flex >
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed && !onload_all" md-diameter="56"></md-progress-circular>
+                <nvd3 ng-if="onload_speed && onload_all" options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
+            </div>
+        </md-card-content>
+        <md-card-content flex-gt-xs="33" flex-xs="100">
+            <p ng-if="!screenIsXS" class='comparison-title'> {{'CONSUMPTION'| translate}}</p>
+            <md-progress-circular class="loader_dashboard2" ng-if="!onload_consumption && !onload_all" md-diameter="56"></md-progress-circular>
+            <div flex ng-if="onload_consumption && onload_all">
+                <nvd3 options="optionsConsumption" data="dataConsumption" api="api" flex></nvd3>
+            </div>
+        </md-card-content>
+        <md-card-content flex-gt-xs="33" flex-xs="100">
+            <p ng-if="!screenIsXS" class='comparison-title'> {{'CO2'| translate}}</p>
+            <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2 && !onload_all" md-diameter="56"></md-progress-circular>
+            <div flex ng-if="onload_CO2 && onload_all">
+                <nvd3 options="optionsCO2" data="dataCO2" api="api" flex></nvd3>
+            </div>
+        </md-card-content>
+        <div class="no_tracks" ng-show="!tracksAvailable">
+            <div class="transparent-container">
+                <img src="app/components/assets/img_tracks.png">
+            </div>
+            <p layout-align="center center">
+                <b>{{ 'NO_TRACKS' | translate}}</b>
+            </p>
+        </div>
+    </div>
+</md-card>

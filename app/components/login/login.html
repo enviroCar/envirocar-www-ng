@@ -1,0 +1,62 @@
+<!--<div layout="column" flex="33" id="content" role="main" style="margin:auto; width: 50%;">
+    <div ng-show="error">{{error}}</div>
+    <md-input-container md-theme="default" flex>
+        <label>{{'USERNAME'| translate}}</label>
+        <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
+    </md-input-container>
+    <md-input-container md-theme="default" flex>
+        <label>{{'PASSWORD'| translate}}</label>
+        <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
+    </md-input-container>
+    <md-input-container layout-align="center center">
+        <div layout="row" layout-sm="column" layout-margin>
+            <md-button md-theme="defaultPrimary" class="md-raised" flex="50" flex-sm="100" ng-click="login()">{{'LOGIN'| translate}}</md-button>
+            <md-button class="md-raised md-success" flex="50" flex-sm="100">{{'REGISTER'| translate}}</md-button>
+        </div>
+    </md-input-container>
+</div>
+-->
+
+<div layout="column" flex-xs="100" layout-fill layout-align="center center" style="padding-bottom:10px;padding-top:10px;">
+    <div class="loginBox md-whiteframe-z1" layout="column">
+        <md-toolbar>
+            <h3 style="padding-left: 20px;">
+                <span>Login</span> 
+            </h3>
+        </md-toolbar>
+        <md-content class="md-padding" layout="column">
+            <md-input-container>
+                <label>{{'USERNAME'| translate}}</label>
+                <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
+            </md-input-container>
+            <md-input-container>
+                <label>{{'PASSWORD'| translate}}</label>
+                <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
+            </md-input-container>
+            <span ng-show='error' class="error-span">{{'INVALID_LOGIN'| translate}}</span>
+            <div layout-xs="column" layout="row" style="padding-top:20px;">
+                <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-primary" ng-click="login()">{{'LOGIN'| translate}}</md-button>
+                <span flex class="span-flex"></span>
+                <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-success">
+                    <div id="comming_soon_light">
+                        <p class="comming_soon_txt_btn">
+                            <b>{{ 'COMMING_SOON' | translate}}</b>
+                        </p>
+                    </div>
+                    {{'REGISTER'| translate}}
+                </md-button>
+            </div>
+            <div layout="row" style="padding-top:20px;">
+                <span flex class="span-flex"></span>
+                <md-button class="md-no-ink" flex-xs="50" flex-sm="50">
+                    <div id="comming_soon_light">
+                        <p class="comming_soon_txt_btn">
+                            <b>{{ 'COMMING_SOON' | translate}}</b>
+                        </p>
+                    </div>
+                    {{'FORGOT_PASSWORD'| translate}}
+                </md-button>
+            </div>
+        </md-content>
+    </div>
+</div>

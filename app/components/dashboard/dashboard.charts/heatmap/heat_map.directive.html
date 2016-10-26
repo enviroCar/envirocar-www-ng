@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<md-card flex="100">
+    <div layout="row" flex="100">
+        <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+            <span><b>{{'TITLE_HEATMAP'| translate}}</b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button ng-click="showAlert($event, 'TITLE_HEATMAP', 'HEATMAP_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
+                </md-tooltip>
+            </md-button>
+        </div>
+    </div>
+    <leaflet defaults="map.defaults" lf-center="map.center2" layers="map.layers2" width="100%" height="480px">
+        <div id="comming_soon">
+            <p class="comming_soon_txt" layout-align="center center">
+                <b>{{ 'COMMING_SOON' | translate}}</b>
+            </p>
+        </div>
+        <!--<div class="no_tracks" ng-show="!tracksAvailable">
+            <img src="app/components/assets/img_tracks.png">
+            <p layout-align="center center">
+                <b>{{ 'NO_TRACKS' | translate}}</b>
+            </p>
+        </div>-->
+    </leaflet>
+</md-card>
