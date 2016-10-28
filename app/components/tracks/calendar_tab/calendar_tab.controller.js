@@ -123,6 +123,8 @@
         $scope.numberClickedDays = 0;
 
         $scope.dayClick = function (date) {
+            $scope.selectedIndex = 0;
+            $scope.selectedIndex = 1;
             if ($scope.numberClickedDays === 0) {          // if no day is selected:
                 // select clicked Day:
                 $scope.rangeStartDate = new Date(date.getFullYear(),
@@ -283,8 +285,6 @@
                 window.dispatchEvent(new Event('resize'));
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
-                console.log(fullMonth);
-                console.log(lastDay);
                 for (var i = 1; i <= lastDay; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", "transparent");
@@ -573,11 +573,11 @@
                             end: travelEnd,
                             length: 0
                         };
-                        if (currTrack.length){
+                        if (currTrack.length) {
                             var travelDistance = currTrack['length'].toFixed(1);
                             resultTrack.length = parseFloat(travelDistance);
                         }
-                        
+
                         $scope.tracksCalendar.push(resultTrack);
 
                         MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons">directions_car</i><span>' + date_count[stripped_date] + '</span>'));

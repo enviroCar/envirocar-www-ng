@@ -32,46 +32,6 @@
                     url: '/tracks',
                     controller: 'TrackListCtrl',
                     templateUrl: 'app/components/tracks/tracks.html',
-                    data: {
-                        selectedTab : 1,
-                        filterOrder : [],
-                        distance : {
-                            name: 'distance',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        date : {
-                            name: 'date',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        duration : {
-                            name: 'duration',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        vehicle : {
-                            name: 'vehicle',
-                            all : [],
-                            set : []
-                        },
-                        spatial : {
-                            inUse : false,
-                            name: 'spatial',
-                            southwest: {
-                                lat: undefined,
-                                lng: undefined
-                            },
-                            northeast: {
-                                lat: undefined,
-                                lng: undefined
-                            },
-                            track_ids: []
-                        }
-                    },
                     authenticate: true
                 });
 

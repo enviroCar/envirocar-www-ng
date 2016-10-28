@@ -6,7 +6,6 @@
             $stateParams,
             $timeout,
             $translate,
-            $element,
             $mdDialog,
             $mdMedia,
             TrackService,
@@ -49,34 +48,61 @@
         $scope.red_break = trackAnalysisSettings.red_break;
         $scope.max_values = trackAnalysisSettings.max_values;
         $scope.errorColor = trackAnalysisSettings.errorColor;
+        $scope.errorColorTrans = trackAnalysisSettings.errorColorTransparent;
+        $scope.opacity = trackAnalysisSettings.opacity;
+
+        $scope.highlightedInterval = false;
+        $scope.intervalStart;
+        $scope.intervalEnd;
 
         // on Range selection change:
         $scope.changeSelectionRange = function (start, end) {
             if (start === 0)
                 start = 1;
+            // redraw paths:
             // grey-coloring the offrange part of the track:
             for (var index = 1; index < start; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 4;
             }
-            
+
             // coloring the inrange part of the track:
             for (var index = start; index < end; index++) {
-                if (data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon]) {
+                if (data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon] !== undefined) {
                     var value = data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon].value;
-                    $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                            = $scope.percentToRGB(
-                                    $scope.yellow_break[$scope.currentPhenomenonIndex],
-                                    $scope.red_break[$scope.currentPhenomenonIndex],
-                                    $scope.max_values[$scope.currentPhenomenonIndex],
-                                    value);
+
+                    // value not within selected interval? --> opacity.
+                    if ((value < $scope.intervalStart) || (value > $scope.intervalEnd)) {
+                        // set other color::
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.percentToRGB(
+                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
+                                        $scope.red_break[$scope.currentPhenomenonIndex],
+                                        $scope.max_values[$scope.currentPhenomenonIndex],
+                                        value, $scope.opacity);
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
+                    } else {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.percentToRGB(
+                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
+                                        $scope.red_break[$scope.currentPhenomenonIndex],
+                                        $scope.max_values[$scope.currentPhenomenonIndex],
+                                        value, 1);
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
+                    }
                 } else {
-                    $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                            = $scope.errorColor;
+                    if ($scope.highlightedInterval) {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.errorColorTrans;
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
+                    } else {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.errorColor;
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
+                    }
                 }
-                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
             }
-            
+
             // grey-coloring the offrange part of the track:
             var track_length = data_global.data.features.length - 1;
             for (var index = end; index <= track_length; index++) {
@@ -241,8 +267,11 @@
         $scope.segmentActivated = false;
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
+        $scope.intervalStart = 0;
+        $scope.intervalEnd = $scope.max_values[$scope.currentPhenomenonIndex];
+
         // 0 - green; yellow_break - yellow; red_break - red; max_value --> black
-        $scope.percentToRGB = function (yellow_break, red_break, max_value, value) {
+        $scope.percentToRGB = function (yellow_break, red_break, max_value, value, opacity) {
             var r, g;
             if (value <= yellow_break) {
                 r = Math.floor(255 * (value / yellow_break));
@@ -256,7 +285,7 @@
                 r = Math.floor(255 * ((max_value - value) / (max_value - red_break)));
                 g = 0;
             }
-            return "rgb(" + r + "," + g + ",0)";
+            return "rgba(" + r + "," + g + ",0," + opacity + ")";
         };
         // scope: predefined legends:
         legend_all = [
@@ -264,11 +293,11 @@
                 // Speed:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2, 1)],
                 labels: ['  0 km/h',
                     ' ' + $scope.yellow_break[0] / 2 + ' km/h',
                     ' ' + $scope.yellow_break[0] + ' km/h',
@@ -279,11 +308,11 @@
                 // Consumption:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2, 1)],
                 labels: [' 0 l/h',
                     ' ' + $scope.yellow_break[1] / 2 + ' l/h',
                     ' ' + $scope.yellow_break[1] + ' l/h',
@@ -294,11 +323,11 @@
                 // CO2:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2, 1)],
                 labels: [' 0 kg/h',
                     ' ' + $scope.yellow_break[2] / 2 + ' kg/h',
                     ' ' + $scope.yellow_break[2] + ' kg/h',
@@ -309,11 +338,11 @@
                 // RPM:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2, 1)],
                 labels: ['   0 r/min',
                     ' ' + $scope.yellow_break[3] / 2 + ' r/min',
                     ' ' + $scope.yellow_break[3] + ' r/min',
@@ -324,11 +353,11 @@
                 // Engine Load:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2, 1)],
                 labels: ['  0 %',
                     ' ' + $scope.yellow_break[4] / 2 + ' %',
                     ' ' + $scope.yellow_break[4] + ' %',
@@ -364,11 +393,11 @@
             legend: {// Speed by default:
                 position: 'bottomright',
                 colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2, 1)],
                 labels: ['  0 km/h',
                     ' ' + $scope.yellow_break[0] / 2 + ' km/h',
                     ' ' + $scope.yellow_break[0] + ' km/h',
@@ -401,6 +430,135 @@
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
         });
+
+        $scope.highlightInterval = function (interval_low, interval_high) {
+            var start;  // start of slider selected focused segment
+            var end;    // end of slider selected focused segment
+            if ($scope.segmentActivated) {
+                start = $scope.slider.minValue;
+                end = $scope.slider.maxValue;
+            } else {
+                start = 1;
+                end = $scope.slider.options.ceil;
+            }
+            if (start === 0)
+                start = 1;
+            console.log(start, end);
+
+            // redraw paths:
+            // grey-coloring the offrange part of the track:
+            for (var index = 1; index < start; index++) {
+                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
+                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 4;
+            }
+
+            // coloring the inrange part of the track:
+            for (var index = start; index < end; index++) {
+                if (data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon] !== undefined) {
+                    var value = data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon].value;
+
+                    // value not within selected interval? --> opacity.
+                    if ((value < interval_low) || (value > interval_high)) {
+                        // set other color::
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.percentToRGB(
+                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
+                                        $scope.red_break[$scope.currentPhenomenonIndex],
+                                        $scope.max_values[$scope.currentPhenomenonIndex],
+                                        value,
+                                        $scope.opacity);
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
+                    } else {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.percentToRGB(
+                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
+                                        $scope.red_break[$scope.currentPhenomenonIndex],
+                                        $scope.max_values[$scope.currentPhenomenonIndex],
+                                        value,
+                                        1);
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
+                    }
+                } else {
+                    if ($scope.highlightedInterval) {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.errorColorTrans;
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
+                    } else {
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
+                                = $scope.errorColor;
+                        $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
+                    }
+                }
+            }
+
+            // grey-coloring the offrange part of the track:
+            var track_length = data_global.data.features.length - 1;
+            for (var index = end; index <= track_length; index++) {
+                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
+                $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 4;
+            }
+
+        };
+
+        var lastInterval = 6;
+        $scope.$on('single_track_page:interval-clicked', function (event, args) {
+            var low;
+            var high;
+            switch (args) {
+                case 0:
+                    low = 0;
+                    high = 0;
+                    break;
+                case 1:
+                    low = 0;
+                    high = $scope.yellow_break[$scope.currentPhenomenonIndex] / 2;
+                    break;
+                case 2:
+                    low = $scope.yellow_break[$scope.currentPhenomenonIndex] / 2;
+                    high = $scope.yellow_break[$scope.currentPhenomenonIndex];
+                    break;
+                case 3:
+                    low = $scope.yellow_break[$scope.currentPhenomenonIndex];
+                    high = ($scope.yellow_break[$scope.currentPhenomenonIndex] + $scope.red_break[$scope.currentPhenomenonIndex]) / 2;
+                    break;
+                case 4:
+                    low = ($scope.yellow_break[$scope.currentPhenomenonIndex] + $scope.red_break[$scope.currentPhenomenonIndex]) / 2;
+                    high = $scope.red_break[$scope.currentPhenomenonIndex];
+                    break;
+                case 5:
+                    low = $scope.red_break[$scope.currentPhenomenonIndex];
+                    high = $scope.max_values[$scope.currentPhenomenonIndex];
+                    break;
+            }
+            ;
+
+            if (lastInterval === args) {
+                $scope.highlightedInterval = !$scope.highlightedInterval;
+                if ($scope.highlightedInterval) {
+                    $scope.highlightInterval(low, high);
+                    $scope.intervalStart = low;
+                    $scope.intervalEnd = high;
+                } else {
+                    $scope.highlightInterval(0, $scope.max_values[$scope.currentPhenomenonIndex]);
+                    $scope.intervalStart = 0;
+                    $scope.intervalEnd = $scope.max_values[$scope.currentPhenomenonIndex];
+                }
+            } else {
+                $scope.highlightedInterval = true;
+                $scope.highlightInterval(low, high);
+                $scope.intervalStart = low;
+                $scope.intervalEnd = high;
+            }
+
+            lastInterval = args;
+
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'))
+            },
+                    1);
+
+        });
+
         $scope.$on('leafletDirectivePath.click', function (event, path) {
             //path.modelname
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
@@ -445,6 +603,10 @@
                     PhenomenonService.setPhenomenon('Engine Load', 4);
                     break;
             }
+            lastInterval = 6;
+            $scope.highlightedInterval = false;
+            $scope.intervalStart = 0;
+            $scope.intervalEnd = $scope.max_values[$scope.currentPhenomenonIndex];
             if ($scope.segmentActivated) {
                 $scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 $scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
@@ -721,7 +883,7 @@
                         if (data_global.data.features[index].properties.phenomenons.Speed) {
                             var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
                             phenomsJSON['Speed'] = true;
-                            pathObjSpeed['color'] = $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], value_speed);               //more information at percentToRGB().
+                            pathObjSpeed['color'] = $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], value_speed, 1);               //more information at percentToRGB().
                             speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
                         } else {
                             pathObjSpeed['color'] = $scope.errorColor;
@@ -731,7 +893,7 @@
                         if (data_global.data.features[index].properties.phenomenons.Consumption) {
                             var value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
                             phenomsJSON['Consumption'] = true;
-                            pathObjConsumption['color'] = $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], value_consumption);   //more information at percentToRGB().
+                            pathObjConsumption['color'] = $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], value_consumption, 1);   //more information at percentToRGB().
                             consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
                         } else {
                             pathObjConsumption['color'] = $scope.errorColor;
@@ -741,7 +903,7 @@
                         if (data_global.data.features[index].properties.phenomenons.CO2) {
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                             phenomsJSON['CO2'] = true;
-                            pathObjCO2['color'] = $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], value_CO2);                   //more information at percentToRGB().
+                            pathObjCO2['color'] = $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], value_CO2, 1);                   //more information at percentToRGB().
                             co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         } else {
                             pathObjCO2['color'] = $scope.errorColor;
@@ -751,7 +913,7 @@
                         if (data_global.data.features[index].properties.phenomenons.Rpm) {
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                             phenomsJSON['Rpm'] = true;
-                            pathObjRPM['color'] = $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], value_RPM);                   //more information at percentToRGB().
+                            pathObjRPM['color'] = $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], value_RPM, 1);                   //more information at percentToRGB().
                             rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
                         } else {
                             rpmMeasurement = {x: index, y: undefined};
@@ -761,7 +923,7 @@
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                             phenomsJSON['Engine Load'] = true;
-                            pathObjEngine_load['color'] = $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], value_EngineLoad);    //more information at percentToRGB().
+                            pathObjEngine_load['color'] = $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], value_EngineLoad, 1);    //more information at percentToRGB().
                             engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         } else {
                             pathObjEngine_load['color'] = $scope.errorColor;

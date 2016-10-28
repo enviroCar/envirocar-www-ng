@@ -1,12 +1,12 @@
 <!-- Tracks HTML content -->
 
-<md-tabs ng-if="tracksAvailable" md-dynamic-height md-border-bottom>
+<md-tabs ng-if="tracksAvailable" md-dynamic-height md-border-bottom md-selected="1">
 
     <div ng-if="tracksAvailable">
 
-        <calendar-tab> </calendar-tab>
+        <calendar-tab ng-if="tracksAvailable"> </calendar-tab>
 
-        <all-tracks-pagination-tab></all-tracks-pagination-tab>
+        <all-tracks-pagination-tab ng-if="tracksAvailable"></all-tracks-pagination-tab>
 
         <all-tracks-tab> </all-tracks-tab>
 

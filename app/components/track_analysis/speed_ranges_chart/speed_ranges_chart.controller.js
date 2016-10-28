@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function SpeedRangesChartCtrl(
+            $rootScope,
             $scope,
             $stateParams,
             $timeout,
@@ -21,12 +22,14 @@
         $scope.password = UserCredentialsService.getCredentials().password;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
+        $scope.mouseEntered = false;
 
         $scope.optionsSpeedRange = {
             chart: {
                 type: 'pieChart',
                 height: 370,
                 donut: false,
+                growOnHover: false,
                 x: function (d) {
                     return d.key;
                 },
@@ -34,11 +37,11 @@
                     return d.y;
                 },
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -47,6 +50,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -381,11 +394,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -394,6 +407,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -415,11 +438,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -428,6 +451,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -449,11 +482,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -462,6 +495,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -483,11 +526,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -496,6 +539,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,

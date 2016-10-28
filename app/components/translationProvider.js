@@ -122,10 +122,11 @@ angular.module('translations', [])
             'PER_HOUR'                  : 'per hour',
             'PER_100_KM'                : 'per 100km',
             'ON_SEGMENT'                : 'on segment',
+            'STOPS'                     : 'Stop-and-go\'s',
             
             // Track Analysis - Speed Ranges Chart:
             'SPEED_RANGES_CHART_TITLE'          : 'In intervals',
-            'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval?',
+            'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval? Click on one of the intervals and the map highlights all measuered values within that interval. Click again to remove the highlight.',
             
             // Tracks Page - Calendar Tab:
             'DAILY_OVERVIEW'                : 'Daily overview',
@@ -428,10 +429,11 @@ angular.module('translations', [])
             'PER_HOUR'                  : 'pro Stunde',
             'PER_100_KM'                : 'pro 100km',
             'ON_SEGMENT'                : 'auf Segment',
+            'STOPS'                     : 'Stop-and-go\'s',
             
             // Track Analysis - Speed Ranges Chart:
             'SPEED_RANGES_CHART_TITLE'          : 'In Intervallen',
-            'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht?',
+            'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht? Klick auf eines der Intervalle um alle Messungen innerhalb des Intervals auf der Karte hervorzuheben. Klick erneut auf das Interval um die Hervorhebung wieder zu entfernen.',
             
             // Tracks Page - Calendar Tab:
             'DAILY_OVERVIEW'                : 'Tagesübersicht',

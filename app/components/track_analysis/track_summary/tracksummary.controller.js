@@ -15,6 +15,7 @@
         var starttimeg;
         var endtimeg;
         var date_hh_mm_ss;
+        var stops = 0;
         $scope.track_summary_track_length = 0;
         $scope.data_track = [
             {
@@ -135,6 +136,23 @@
             // co2PerTime * delta time:
             var co2kgHConsumed = co2kgH * distance / 100; // (kg/h)
 
+            // interprete and count stop-n-go's:
+            stops = 0;
+            var stopping = false;
+            for (var index = min; index < max; index++) {
+                var speedValue = $scope.data_track[5].values[index];
+                if (stopping) {
+                    if (speedValue > 0) {
+                        stopping = false;
+                        stops++;
+                    }
+                } else {
+                    if (speedValue === 0) {
+                        stopping = true;
+                    }
+                }
+            }
+
             $scope.tracksummary = {
                 distance: distance.toFixed(2),
                 vehiclemodel: vehiclemodel,
@@ -149,8 +167,21 @@
                 co2emissionperhour: co2kgH.toFixed(2),
                 co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                 starttime: new Date(starttimeg).toLocaleString(),
-                endtime: new Date(endtimeg).toLocaleString()
+                endtime: new Date(endtimeg).toLocaleString(),
+                stops: stops
             };
+
+            if (!isNaN(fuelSum)) {
+                $scope.consumption_available = true;
+            } else {
+                $scope.consumption_available = false;
+            }
+
+            if (!isNaN(co2kgH)) {
+                $scope.co2_available = true;
+            } else {
+                $scope.co2_available = false;
+            }
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
@@ -189,19 +220,25 @@
                     // fill data with each measurement point:
                     for (var i = 0; i < $scope.track_summary_track_length; i++) {
                         // get consumption data:
-                        if (data_global.data.features[i].properties.phenomenons.Consumption)
+                        if (data_global.data.features[i].properties.phenomenons.Consumption) {
                             var consumptionMeasurement = data_global.data.features[i].properties.phenomenons.Consumption.value;
+                            $scope.data_track[0].values.push(consumptionMeasurement);
+                        } else {
+                            $scope.data_track[0].values.push(undefined);
+                        }
                         // get CO2 data:
-                        if (data_global.data.features[i].properties.phenomenons.CO2)
+                        if (data_global.data.features[i].properties.phenomenons.CO2) {
                             var co2Measurement = data_global.data.features[i].properties.phenomenons.CO2.value;
+                            $scope.data_track[1].values.push(co2Measurement);
+                        } else {
+                            $scope.data_track[1].values.push(undefined);
+                        }
                         // get Coords:
                         var lat = data_global.data.features[i].geometry.coordinates[0];
                         var lon = data_global.data.features[i].geometry.coordinates[1];
                         // get timestamp:
                         var timeStamp = data_global.data.features[i].properties.time;
 
-                        $scope.data_track[0].values.push(consumptionMeasurement);
-                        $scope.data_track[1].values.push(co2Measurement);
                         $scope.data_track[2].values.push(timeStamp);
                         $scope.data_track[3].values.push(lat);
                         $scope.data_track[4].values.push(lon);
@@ -223,12 +260,16 @@
                         sums.distance += distance_i;
 
                         // calculating fuel consumption:
-                        var fuel_now = $scope.data_track[0].values[i - 1];
-                        sums.fuel += fuel_now;
+                        if ($scope.data_track[0].values[i - 1] !== undefined) {
+                            var fuel_now = $scope.data_track[0].values[i - 1];
+                            sums.fuel += fuel_now;
+                        }
 
                         // calculating co2 emission:
-                        var co2_now = $scope.data_track[1].values[i - 1];
-                        sums.co2 += co2_now;
+                        if ($scope.data_track[1].values[i - 1] !== undefined) {
+                            var co2_now = $scope.data_track[1].values[i - 1];
+                            sums.co2 += co2_now;
+                        }
 
                     }
                     // calculating fuel consumption:
@@ -278,6 +319,28 @@
                     // co2PerTime * delta time:
                     var co2kgHConsumed = co2kgH * distance / 100; // (kg/h)
 
+                    // interprete and count stop-n-go's:
+                    stops = 0;
+                    var stopping = false;
+                    for (var index = 0; index < $scope.track_summary_track_length; index++) {
+                        if (data_global.data.features[index].properties.phenomenons.Speed !== undefined) {
+                            var speedValue = data_global.data.features[index].properties.phenomenons.Speed.value;
+                            if (stopping) {
+                                if (speedValue > 0) {
+                                    stopping = false;
+                                    stops++;
+                                }
+                            } else {
+                                if (speedValue === 0) {
+                                    stopping = true;
+                                }
+                            }
+                            $scope.data_track[5].values.push(speedValue);
+                        } else {
+                            $scope.data_track[5].values.push(undefined);
+                        }
+                    }
+
                     $scope.tracksummary = {
                         distance: distance.toFixed(2),
                         vehiclemodel: vehiclemodel,
@@ -292,14 +355,21 @@
                         co2emissionperhour: co2kgH.toFixed(2),
                         co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                         starttime: new Date(starttimeg).toLocaleString(),
-                        endtime: new Date(endtimeg).toLocaleString()
+                        endtime: new Date(endtimeg).toLocaleString(),
+                        stops: stops
                     };
 
-                    if (!isNaN(fuelSum))
+                    if (!isNaN(fuelSum)) {
                         $scope.consumption_available = true;
+                    } else {
+                        $scope.consumption_available = false;
+                    }
 
-                    if (!isNaN(co2kgH))
+                    if (!isNaN(co2kgH)) {
                         $scope.co2_available = true;
+                    } else {
+                        $scope.co2_available = false;
+                    }
 
                     $scope.onload_summary = true;
                 },

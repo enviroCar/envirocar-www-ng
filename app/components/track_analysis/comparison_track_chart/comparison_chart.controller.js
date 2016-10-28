@@ -57,7 +57,7 @@
                 'Rpm': 0,
                 'Engine Load': 0
             };
-            
+
             var sums = {
                 'Speed': 0,
                 'Consumption': 0,
@@ -73,57 +73,56 @@
                 'Rpm': false,
                 'Engine Load': false
             };
-            if ($scope.data_all[0].values[0])
+            if ($scope.data_all[0].values[0] !== undefined)
                 data_exist['Speed'] = true;
-            if ($scope.data_all[1].values[0])
+            if ($scope.data_all[1].values[0] !== undefined)
                 data_exist['Consumption'] = true;
-            if ($scope.data_all[2].values[0])
+            if ($scope.data_all[2].values[0] !== undefined)
                 data_exist['CO2'] = true;
-            if ($scope.data_all[3].values[0])
+            if ($scope.data_all[3].values[0] !== undefined)
                 data_exist['Rpm'] = true;
-            if ($scope.data_all[4].values[0])
+            if ($scope.data_all[4].values[0] !== undefined)
                 data_exist['Engine Load'] = true;
 
             // calculate sums for min...max for each phenom:
             for (var index = a; index < b; index++) {
-                if ((data_exist['Speed']) && ($scope.data_all[0].values[index].y)){
+                if ((data_exist['Speed']) & ($scope.data_all[0].values[index].y !== undefined)) {
                     sums['Speed'] += $scope.data_all[0].values[index].y;
                     flawlessMeasurements ['Speed'] += 1;
                 }
-                if ((data_exist['Consumption']) & ($scope.data_all[1].values[index].y)){
+                if ((data_exist['Consumption']) & ($scope.data_all[1].values[index].y !== undefined)) {
                     sums['Consumption'] += $scope.data_all[1].values[index].y;
                     flawlessMeasurements ['Consumption'] += 1;
                 }
-                if ((data_exist['CO2']) & ($scope.data_all[2].values[index].y)){
+                if ((data_exist['CO2']) & ($scope.data_all[2].values[index].y !== undefined)) {
                     sums['CO2'] += $scope.data_all[2].values[index].y;
                     flawlessMeasurements ['CO2'] += 1;
                 }
-                if ((data_exist['Rpm']) & ($scope.data_all[3].values[index].y)){
+                if ((data_exist['Rpm']) & ($scope.data_all[3].values[index].y !== undefined)) {
                     sums['Rpm'] += $scope.data_all[3].values[index].y;
                     flawlessMeasurements ['Rpm'] += 1;
                 }
-                if ((data_exist['Engine Load']) & ($scope.data_all[4].values[index].y)){
+                if ((data_exist['Engine Load']) & ($scope.data_all[4].values[index].y !== undefined)) {
                     sums['Engine Load'] += $scope.data_all[4].values[index].y;
                     flawlessMeasurements ['Engine Load'] += 1;
                 }
             }
 
             // calculate track avg speed:
-            var length_of_n = b - a ;
             var track_avgs = {};
-            if (sums['Speed']) {
+            if (sums['Speed'] !== undefined) {
                 track_avgs['Speed'] = sums['Speed'] / flawlessMeasurements ['Speed'];
             }
-            if (sums['Consumption']) {
+            if (sums['Consumption'] !== undefined) {
                 track_avgs['Consumption'] = sums['Consumption'] / flawlessMeasurements ['Consumption'];
             }
-            if (sums['CO2']) {
+            if (sums['CO2'] !== undefined) {
                 track_avgs['CO2'] = sums['CO2'] / flawlessMeasurements ['CO2'];
             }
-            if (sums['Rpm']) {
+            if (sums['Rpm'] !== undefined) {
                 track_avgs['Rpm'] = sums['Rpm'] / flawlessMeasurements ['Rpm'];
             }
-            if (sums['Engine Load']) {
+            if (sums['Engine Load'] !== undefined) {
                 track_avgs['Engine Load'] = sums['Engine Load'] / flawlessMeasurements ['Engine Load'];
             }
 
@@ -132,6 +131,47 @@
             $scope.dataCO2[0].values[0].value = track_avgs['CO2'];
             $scope.dataRPM[0].values[0].value = track_avgs['Rpm'];
             $scope.dataEngineLoad[0].values[0].value = track_avgs['Engine Load'];
+
+            // update bar colors:
+            $scope.dataSpeed[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[0],
+                            $scope.red_break[0],
+                            $scope.max_values[0],
+                            track_avgs['Speed'],
+                            1);
+
+            $scope.dataConsumption[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[1],
+                            $scope.red_break[1],
+                            $scope.max_values[1],
+                            track_avgs['Consumption'],
+                            1);
+
+            $scope.dataCO2[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[2],
+                            $scope.red_break[2],
+                            $scope.max_values[2],
+                            track_avgs['CO2'],
+                            1);
+
+            $scope.dataRPM[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[3],
+                            $scope.red_break[3],
+                            $scope.max_values[3],
+                            track_avgs['Rpm'],
+                            1);
+
+            $scope.dataEngineLoad[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[4],
+                            $scope.red_break[4],
+                            $scope.max_values[4],
+                            track_avgs['Engine Load'],
+                            1);
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
@@ -141,7 +181,7 @@
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            
+
             var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
             $scope.optionsSpeed.chart.yAxis = {
                 axisLabel: axisLabelSpeed,
@@ -171,7 +211,7 @@
 
         $scope.$on('single_track_page:segment-activated', function (event, args) {
             if (args) {
-                if (!$scope.min) 
+                if (!$scope.min)
                     $scope.min = 0;
                 if (!$scope.max)
                     $scope.max = $scope.track_length;
@@ -182,13 +222,13 @@
         });
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            
+
             $scope.selectedPhenom = args;
 
             if ($scope.segmentActivated) {
                 //$scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
-                if ($scope.min)
+                if ($scope.min !== undefined)
                     $scope.changeComparingRange($scope.min, $scope.max);
                 else
                     $scope.changeComparingRange(0, $scope.track_length);
@@ -377,7 +417,7 @@
                         'Rpm': 0,
                         'Engine Load': 0
                     };
-                    
+
                     var value_speed;
                     var value_consumption;
                     var value_CO2;
@@ -389,7 +429,7 @@
                     var co2Measurement;
                     var rpmMeasurement;
                     var engineLoadMeasurement;
-                        
+
                     // iterating through each measurement:
                     for (var index = 1; index < track_length; index++) {
                         // get the phenomenon's value:
@@ -401,7 +441,7 @@
                             value_speed = 0;
                             speedMeasurement = {x: index, y: undefined};
                         }
-                        
+
                         if (data_global.data.features[index].properties.phenomenons.Consumption) {
                             value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
                             sums['Consumption'] += value_consumption;
@@ -410,7 +450,7 @@
                             value_consumption = 0;
                             consumptionMeasurement = {x: index, y: undefined};
                         }
-                        
+
                         if (data_global.data.features[index].properties.phenomenons.CO2) {
                             value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                             sums['CO2'] += value_CO2;
@@ -419,7 +459,7 @@
                             value_CO2 = 0;
                             co2Measurement = {x: index, y: undefined};
                         }
-                        
+
                         if (data_global.data.features[index].properties.phenomenons.Rpm) {
                             value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                             sums['Rpm'] += value_RPM;
@@ -428,7 +468,7 @@
                             value_RPM = 0;
                             rpmMeasurement = {x: index, y: undefined};
                         }
-                            
+
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                             sums['Engine Load'] += value_EngineLoad;
@@ -473,10 +513,22 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Speed']
+                                                "value": track_avgs['Speed'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[0],
+                                                        $scope.red_break[0],
+                                                        $scope.max_values[0],
+                                                        track_avgs['Speed'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": Speed_public
+                                                "value": Speed_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[0],
+                                                        $scope.red_break[0],
+                                                        $scope.max_values[0],
+                                                        Speed_public,
+                                                        1)
                                             }]
                                     }];
                                 $scope.onload_Speed = true;
@@ -498,10 +550,22 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Consumption']
+                                                "value": track_avgs['Consumption'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[1],
+                                                        $scope.red_break[1],
+                                                        $scope.max_values[1],
+                                                        track_avgs['Consumption'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": Consumption_public
+                                                "value": Consumption_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[1],
+                                                        $scope.red_break[1],
+                                                        $scope.max_values[1],
+                                                        Consumption_public,
+                                                        1)
                                             }]
                                     }];
                                 $scope.onload_Consumption = true;
@@ -523,10 +587,22 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['CO2']
+                                                "value": track_avgs['CO2'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[2],
+                                                        $scope.red_break[2],
+                                                        $scope.max_values[2],
+                                                        track_avgs['CO2'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": CO2_public
+                                                "value": CO2_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[2],
+                                                        $scope.red_break[2],
+                                                        $scope.max_values[2],
+                                                        CO2_public,
+                                                        1)
                                             }]
                                     }]
                                 $scope.onload_CO2 = true;
@@ -548,10 +624,22 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Rpm']
+                                                "value": track_avgs['Rpm'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[3],
+                                                        $scope.red_break[3],
+                                                        $scope.max_values[3],
+                                                        track_avgs['Rpm'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": RPM_public
+                                                "value": RPM_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[3],
+                                                        $scope.red_break[3],
+                                                        $scope.max_values[3],
+                                                        RPM_public,
+                                                        1)
                                             }]
                                     }]
                                 $scope.onload_RPM = true;
@@ -573,10 +661,22 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Engine Load']
+                                                "value": track_avgs['Engine Load'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[4],
+                                                        $scope.red_break[4],
+                                                        $scope.max_values[4],
+                                                        track_avgs['Engine Load'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": EngineLoad_public
+                                                "value": EngineLoad_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[4],
+                                                        $scope.red_break[4],
+                                                        $scope.max_values[4],
+                                                        EngineLoad_public,
+                                                        1)
                                             }]
                                     }];
                                 $scope.onload_EngineLoad = true;
