@@ -522,6 +522,9 @@ md-content {
 .range-chart {
   max-height: 200px !important; }
 
+g.nv-axisMaxMin.nv-axisMaxMin-x.nv-axisMax-x text {
+  text-anchor: end !important; }
+
 calendar-md {
   min-height: 400px !important;
   height: 400px !important;

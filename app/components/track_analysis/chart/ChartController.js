@@ -16,6 +16,8 @@
         $scope.$mdMedia = $mdMedia;
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
+        $scope.timestamps = [
+        ];
         $scope.slider = {
             minValue: 0,
             maxValue: 100,
@@ -31,7 +33,7 @@
                     return '#8cbf3f';
                 },
                 translate: function (value) {
-                    return '<font color="white">' + value + '</font>';
+                    return '<font color="white">' + $scope.timestamps[value] + '</font>';
                 },
                 id: 'slider1',
                 onChange: function (id) {
@@ -61,13 +63,13 @@
                 start = 1;
             // redraw paths:
             // grey-coloring the offrange part of the track:
-            for (var index = 1; index < start; index++) {
+            for (var index = 1; index <= start; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 4;
             }
 
             // coloring the inrange part of the track:
-            for (var index = start; index < end; index++) {
+            for (var index = start + 1; index <= end; index++) {
                 if (data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon] !== undefined) {
                     var value = data_global.data.features[index].properties.phenomenons[$scope.currentPhenomenon].value;
 
@@ -105,7 +107,7 @@
 
             // grey-coloring the offrange part of the track:
             var track_length = data_global.data.features.length - 1;
-            for (var index = end; index <= track_length; index++) {
+            for (var index = end + 1; index <= track_length; index++) {
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color'] = grey;
                 $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 4;
             }
@@ -113,6 +115,7 @@
         ;
 
         $scope.changeChartRange = function (start, end) {
+
             // 1. redraw the new chart data:
             var temp_data_array = [
                 {
@@ -147,14 +150,13 @@
                 }
             }
             for (var index = 0; index < 5; index++) {
-                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start));
+                temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) + 1);
             }
 
             $scope.dataTrackChart[0] = temp_data_array[$scope.currentPhenomenonIndex];
 
             // 2. zoom to new selected track segment:
-            if (start === 0)
-                start = 1;
+            start = start + 1;
             var northeast = {
                 lat: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lat,
                 lng: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lng,
@@ -164,7 +166,7 @@
                 lng: $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (start) ]['latlngs'][0].lng,
             };
 
-            for (var index = start + 1; index < end; index++) {
+            for (var index = start + 1; index <= end; index++) {
                 var current_lat = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['latlngs'][0].lat;
                 if (current_lat > northeast.lat) {
                     northeast.lat = current_lat;
@@ -181,6 +183,21 @@
                 }
             }
             ;
+            // last end index as well:
+            var current_lat = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (end) ]['latlngs'][1].lat;
+            if (current_lat > northeast.lat) {
+                northeast.lat = current_lat;
+            }
+            if (current_lat < southwest.lat) {
+                southwest.lat = current_lat;
+            }
+            var current_lng = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (end) ]['latlngs'][1].lng;
+            if (current_lng > northeast.lng) {
+                northeast.lng = current_lng;
+            }
+            if (current_lng < southwest.lng) {
+                southwest.lng = current_lng;
+            }
 
             // zoom zo track segment:
             var padding_lat = (northeast.lat - southwest.lat) / 10;
@@ -443,7 +460,6 @@
             }
             if (start === 0)
                 start = 1;
-            console.log(start, end);
 
             // redraw paths:
             // grey-coloring the offrange part of the track:
@@ -633,12 +649,12 @@
                 xAxis: {
                     axisLabel: 'X Axis',
                     tickFormat: function (d) {
-                        return d3.format(',f')(d);
+                        return $scope.timestamps[d];
                     }
                 },
                 x2Axis: {
                     tickFormat: function (d) {
-                        return d3.format(',f')(d);
+                        return $scope.timestamps[d];
                     }
                 },
                 yAxis: {
@@ -807,8 +823,8 @@
                 function (data) {
                     data_global = data;
                     // set slider ranges:
-                    $scope.slider.maxValue = data_global.data.features.length;
-                    $scope.slider.options.ceil = data_global.data.features.length;
+                    $scope.slider.maxValue = data_global.data.features.length - 1;
+                    $scope.slider.options.ceil = data_global.data.features.length - 1;
                     // ask for each phenom, if track contains it's data:
                     var phenomsJSON = {};
                     if (data_global.data.features[0].properties.phenomenons['Speed'])
@@ -840,6 +856,8 @@
                     var co2Measurement;
                     var rpmMeasurement;
                     var engineLoadMeasurement;
+                    $scope.timestamps = [
+                    ];
 
                     // save measurements for each phenomenon:
                     for (var index = 0; index < data_global.data.features.length; index++) {
@@ -878,8 +896,15 @@
                         pathObjCO2['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjRPM['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjEngine_load['latlngs'] = pathObjSpeed['latlngs'];
-                        // get the phenomenon's value and interpolate a color value from it:
 
+                        // get timestamp:
+                        var time1 = data_global.data.features[index].properties.time;
+                        var time_locale = new Date(time1).toLocaleString();
+                        var date_hh_mm_ss = time_locale.substr(
+                                11, 9);
+                        $scope.timestamps.push(date_hh_mm_ss);
+
+                        // get the phenomenon's value and interpolate a color value from it:
                         if (data_global.data.features[index].properties.phenomenons.Speed) {
                             var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
                             phenomsJSON['Speed'] = true;
@@ -894,29 +919,29 @@
                             var value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
                             phenomsJSON['Consumption'] = true;
                             pathObjConsumption['color'] = $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], value_consumption, 1);   //more information at percentToRGB().
-                            consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
+                            consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value, z: index};
                         } else {
                             pathObjConsumption['color'] = $scope.errorColor;
-                            consumptionMeasurement = {x: index, y: undefined};
+                            consumptionMeasurement = {x: index, y: undefined, z: index};
                         }
 
                         if (data_global.data.features[index].properties.phenomenons.CO2) {
                             var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
                             phenomsJSON['CO2'] = true;
                             pathObjCO2['color'] = $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], value_CO2, 1);                   //more information at percentToRGB().
-                            co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
+                            co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value, z: index};
                         } else {
                             pathObjCO2['color'] = $scope.errorColor;
-                            co2Measurement = {x: index, y: undefined};
+                            co2Measurement = {x: index, y: undefined, z: index};
                         }
 
                         if (data_global.data.features[index].properties.phenomenons.Rpm) {
                             var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
                             phenomsJSON['Rpm'] = true;
                             pathObjRPM['color'] = $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], value_RPM, 1);                   //more information at percentToRGB().
-                            rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                            rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value, z: index};
                         } else {
-                            rpmMeasurement = {x: index, y: undefined};
+                            rpmMeasurement = {x: index, y: undefined, z: index};
                             pathObjRPM['color'] = $scope.errorColor;
                         }
 
@@ -924,10 +949,10 @@
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                             phenomsJSON['Engine Load'] = true;
                             pathObjEngine_load['color'] = $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], value_EngineLoad, 1);    //more information at percentToRGB().
-                            engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                            engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value, z: index};
                         } else {
                             pathObjEngine_load['color'] = $scope.errorColor;
-                            engineLoadMeasurement = {x: index, y: undefined};
+                            engineLoadMeasurement = {x: index, y: undefined, z: index};
                         }
 
                         // enqueue pathObjects for each phenomenon to phenomPath:

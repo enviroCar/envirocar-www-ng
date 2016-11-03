@@ -68,7 +68,7 @@
                 xAxis: {
                     axisLabel: 'X Axis',
                     tickFormat: function (d) {
-                        return d3.format(',f')(d);
+                        return $scope.timestamps[d];
                     }
                 },
                 yAxis: {

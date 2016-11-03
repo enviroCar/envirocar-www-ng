@@ -123,8 +123,6 @@
         $scope.numberClickedDays = 0;
 
         $scope.dayClick = function (date) {
-            $scope.selectedIndex = 0;
-            $scope.selectedIndex = 1;
             if ($scope.numberClickedDays === 0) {          // if no day is selected:
                 // select clicked Day:
                 $scope.rangeStartDate = new Date(date.getFullYear(),

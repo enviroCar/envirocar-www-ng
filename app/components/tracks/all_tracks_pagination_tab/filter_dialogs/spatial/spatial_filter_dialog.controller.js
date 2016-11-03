@@ -248,7 +248,6 @@
             $scope.updateDialogMap();
         } else {
             var state = FilterStateService.getSpatialFilterState();
-            console.log(state);
             if (state.northeast.lat !== undefined) {
                 if ($scope.filters.spatial.params.southwest.lat !== undefined)
                     $scope.southWest.lat = $scope.filters.spatial.params.southwest.lat;

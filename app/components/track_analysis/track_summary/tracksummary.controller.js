@@ -1,6 +1,10 @@
 (function () {
     'use strict';
-    function TrackSummaryCtrl($scope, $stateParams, UserCredentialsService, TrackService) {
+    function TrackSummaryCtrl(
+            $scope,
+            $stateParams,
+            UserCredentialsService,
+            TrackService) {
 
         $scope.onload_summary = false;
         $scope.consumption_available = false;
@@ -153,6 +157,27 @@
                 }
             }
 
+            // interprete and count stop-n-go's (3 measurements in a row; all <= 5km/h):
+            var stops2 = 0;
+            var stopping2 = 0;
+            for (var index = min; index < max; index++) {
+                var speedValue = $scope.data_track[5].values[index];
+                if (stopping2 > 0) {
+                    if (speedValue > 5) {
+                        stopping2 = 0;
+                    } else {
+                        stopping2++;
+                        if (stopping2 === 3) {
+                            stops2++;
+                        }
+                    }
+                } else {
+                    if (speedValue <= 5) {
+                        stopping2++;
+                    }
+                }
+            }
+
             $scope.tracksummary = {
                 distance: distance.toFixed(2),
                 vehiclemodel: vehiclemodel,
@@ -168,7 +193,7 @@
                 co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                 starttime: new Date(starttimeg).toLocaleString(),
                 endtime: new Date(endtimeg).toLocaleString(),
-                stops: stops
+                stops: stops + " " + stops2
             };
 
             if (!isNaN(fuelSum)) {
@@ -341,6 +366,29 @@
                         }
                     }
 
+                    // interprete and count stop-n-go's (3 measurements in a row; all <= 5km/h):
+                    var stops2 = 0;
+                    var stopping2 = 0;
+                    for (var index = 0; index < $scope.track_summary_track_length; index++) {
+                        if (data_global.data.features[index].properties.phenomenons.Speed !== undefined) {
+                            var speedValue = data_global.data.features[index].properties.phenomenons.Speed.value;
+                            if (stopping2 > 0) {
+                                if (speedValue > 5) {
+                                    stopping2 = 0;
+                                } else {
+                                    stopping2++;
+                                    if (stopping2 === 3) {
+                                        stops2++;
+                                    }
+                                }
+                            } else {
+                                if (speedValue <= 5) {
+                                    stopping2++;
+                                }
+                            }
+                        }
+                    }
+
                     $scope.tracksummary = {
                         distance: distance.toFixed(2),
                         vehiclemodel: vehiclemodel,
@@ -356,7 +404,7 @@
                         co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                         starttime: new Date(starttimeg).toLocaleString(),
                         endtime: new Date(endtimeg).toLocaleString(),
-                        stops: stops
+                        stops: stops + " " + stops2
                     };
 
                     if (!isNaN(fuelSum)) {

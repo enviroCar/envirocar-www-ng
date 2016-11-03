@@ -23,7 +23,7 @@
                 function(data){
                     $scope.track_number = data.headers('Content-Range').split("/")[1];
                 }, function(data){
-                    console.log("error " + data)
+                    console.log("error " + data);
                 }
         );
 
@@ -66,7 +66,7 @@
                     $scope.onload_tracks_timeline = true;
                     window.dispatchEvent(new Event('resize'));
                 }, function(data){
-                    console.log("error " + data)
+                    console.log("error " + data);
                 }
         );
       };  
