@@ -279,6 +279,7 @@
             }
         });
         $scope.trackid = $stateParams.trackid;
+        $scope.created = "";
         $scope.onload_track_map = false;
         $scope.onload_track_chart = false;
         $scope.segmentActivated = false;
@@ -647,7 +648,7 @@
                 useInteractiveGuideline: true,
                 duration: 50,
                 xAxis: {
-                    axisLabel: 'X Axis',
+                    axisLabel: "",
                     tickFormat: function (d) {
                         return $scope.timestamps[d];
                     },
@@ -658,7 +659,6 @@
                         return $scope.timestamps[d];
                     }
                 },
-                staggerLabels: true,
                 yAxis: {
                     axisLabel: 'Y Axis',
                     tickFormat: function (d) {

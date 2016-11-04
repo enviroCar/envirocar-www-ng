@@ -66,7 +66,7 @@
                 useInteractiveGuideline: true,
                 duration: 50,
                 xAxis: {
-                    axisLabel: 'X Axis',
+                    axisLabel: "",
                     tickFormat: function (d) {
                         return $scope.timestamps[d];
                     }
