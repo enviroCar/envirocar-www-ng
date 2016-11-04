@@ -650,13 +650,15 @@
                     axisLabel: 'X Axis',
                     tickFormat: function (d) {
                         return $scope.timestamps[d];
-                    }
+                    },
+                    staggerLabels: true
                 },
                 x2Axis: {
                     tickFormat: function (d) {
                         return $scope.timestamps[d];
                     }
                 },
+                staggerLabels: true,
                 yAxis: {
                     axisLabel: 'Y Axis',
                     tickFormat: function (d) {
@@ -899,9 +901,8 @@
 
                         // get timestamp:
                         var time1 = data_global.data.features[index].properties.time;
-                        var time_locale = new Date(time1).toLocaleString();
-                        var date_hh_mm_ss = time_locale.substr(
-                                11, 9);
+                        var date_hh_mm_ss = new Date(time1).toLocaleTimeString();
+                        
                         $scope.timestamps.push(date_hh_mm_ss);
 
                         // get the phenomenon's value and interpolate a color value from it:
