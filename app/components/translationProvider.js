@@ -77,7 +77,14 @@ angular.module('translations', [])
             'HEATMAP_DESCRIPTION'   : 'This map shows where you\'ve been driving.',
             
             // Dashboard - SpeedZoneChart:
-            'SPEED_ZONES'   :   'Speedzones',
+            'SPEED_ZONES'                   : 'Speedzones',
+            'SPEEDZONES_CHART_TITLE'        : 'Your speed zones',
+            'SPEEDZONES_CHART_DESCRIPTION'  : 'There are three speed zones defined as \'slower than 60km/h\',\'between 60 and 130km/h\', and \'above 130km/h\'. How much time did you spend in each of these speed zones and which distances did you cover?',
+            'SPEEDZONES_DESC_SHORT'         : 'Your duration and distance above 130km/h, below 60km/h and in-between.',
+            'HIGH_SPEED_ZONE'               : 'faster than 130km/h',
+            'MID_SPEED_ZONE'                : 'between 60 and 130km/h',
+            'LOW_SPEED_ZONE'                : 'slower than 60km/h',
+            
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Your weekday distribution',
@@ -384,6 +391,12 @@ angular.module('translations', [])
             
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'   :   'Geschwindigkeitszonen',
+            'SPEEDZONES_CHART_TITLE'        : 'Meine Geschwindigkeitszonen',
+            'SPEEDZONES_CHART_DESCRIPTION'  : 'Es sind drei Geschwindigkeitszonen definiert als "langsamer als 60km/h", "zwischen 60 und 130km/h", und "schneller als 130km/h". Wie viel Zeit hast du in jeder Geschwindigkeitzone verbracht und welche Distanzen bist du in den Geschwindigkeiten zurückgelegt?',
+            'SPEEDZONES_DESC_SHORT'         : 'Deine Zeit und Distanz über 130km/h, unter 60km/h und dazwischen.',
+            'HIGH_SPEED_ZONE'               : 'schneller als 130km/h',
+            'MID_SPEED_ZONE'                : 'zwischen 60 und 130km/h',
+            'LOW_SPEED_ZONE'                : 'langsamer als 60km/h',
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Meine Wochentagsverteilung',

@@ -1,19 +1,112 @@
 <!DOCTYPE html>
 <!-- speed and time zones directive -->
 <md-card flex>
+    <div layout="row" flex="100">
+        <p class='card-title' >
+            <span><b>{{'SPEEDZONES_CHART_TITLE'| translate}} </b></span>
+        </p>
+        <div layout="row" flex>
+            <span flex class="flex"></span>
+            <md-button ng-click="showAlert($event, 'SPEEDZONES_CHART_TITLE', 'SPEEDZONES_CHART_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                <md-icon class="material-icons  md-24">info</md-icon>
+                <md-tooltip>
+                    {{'CLICK_FOR_MORE_INFO'| translate}}
+                </md-tooltip>
+            </md-button>
 
-    <a class='card-title'>
-        <span>{{'SPEED_ZONES'| translate}}</span>
-    </a>
+        </div>
+    </div>
 
     <md-card-content flex>
+
         <md-progress-circular class="loader_dashboard" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
-        <nvd3 ng-if="onloadSpeedZones" options="options_speed" data="dataSpeedZones" flex></nvd3>
         <div class="no_tracks" ng-show="!tracksAvailable">
             <img src="app/components/assets/img_tracks.png">
             <p layout-align="center center">
                 <b>{{ 'NO_TRACKS' | translate}}</b>
             </p>
         </div>
+
+
+        <div layout="column" flex style="height: 240px; position: relative;">
+            
+            <div id="comming_soon">
+                <p class="comming_soon_txt_speedzones" layout-align="center center">
+                    <b>{{ 'COMMING_SOON' | translate}}</b>
+                </p>
+            </div>
+            <p class='comparison-title'> {{'SPEEDZONES_DESC_SHORT'| translate}}</p>
+
+            <div flex></div>
+
+            <div layout="row">
+                <div class="rect_red">
+                    <p>{{ 'HIGH_SPEED_ZONE' | translate }}</p>
+                    <img src="app/components/assets/car_pics/SimpleRedCarTopView.png">
+                </div>
+                <div flex></div>
+                <div class="speed-zones-content">
+                    <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
+                        {{"07:06"}} Stunden
+                    </span>
+                    <br>
+                    <span >
+                        <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                        {{502.34}} km
+                    </span>
+                    <br>
+                </div>
+            </div>
+
+            <div flex></div>
+            <div flex></div>
+
+            <div layout="row">
+                <div class="rect_yellow">
+                    <p>{{ 'MID_SPEED_ZONE' | translate }}</p>
+                    <img src="app/components/assets/car_pics/SimpleYellowCarTopView.png">
+                </div>
+                <div flex></div>
+                <div class="speed-zones-content">
+                    <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
+                        {{"11:36"}} Stunden
+                    </span>
+                    <br>
+                    <span >
+                        <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                        {{1231.68}} km
+                    </span>
+                    <br>
+                </div>
+            </div>
+
+            <div flex></div>
+            <div flex></div>
+
+            <div layout="row">
+                <div class="rect_green">
+                    <p>{{ 'LOW_SPEED_ZONE' | translate }}</p>
+                    <img src="app/components/assets/car_pics/SimpleGreenCarTopView.png">
+                </div>
+                <div flex></div>
+                <div class="speed-zones-content">
+                    <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
+                        {{"32:52"}} Stunden
+                    </span>
+                    <br>
+                    <span >
+                        <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                        {{1610.2}} km
+                    </span>
+                </div>
+            </div>
+
+            <div flex></div>
+        </div>
+
+
     </md-card-content>
 </md-card>

@@ -652,7 +652,8 @@
                     tickFormat: function (d) {
                         return $scope.timestamps[d];
                     },
-                    staggerLabels: true
+                    staggerLabels: true,
+                    showMaxMin: false
                 },
                 x2Axis: {
                     tickFormat: function (d) {

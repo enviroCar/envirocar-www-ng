@@ -25,8 +25,8 @@
             110     // engine load
         ],
         opacity: 0.35,
-        errorColorTransparent: 'rgba(0,255,255,' + 0.35 + ')',
-        errorColor: 'rgb(0,255,255)'
+        errorColorTransparent: 'rgba(0,0,255,' + 0.35 + ')',
+        errorColor: 'rgb(0,0,255)'
     };
             angular.module('enviroCar.track')
             .value('trackAnalysisSettings', trackAnalysisSettings);

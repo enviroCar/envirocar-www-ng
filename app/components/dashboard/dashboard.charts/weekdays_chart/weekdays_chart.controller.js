@@ -125,41 +125,6 @@
                 }
 
         );
-        /**
-         getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
-         function (data) {
-         console.log(data);
-         var store = data.data;
-         var speed_user = store.avg;
-         StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
-         function (data) {
-         console.log(data);
-         store = data.data;
-         var speed_public = store.avg;
-         $scope.dataSpeed = [{
-         key: "Cumulative Return",
-         values: [{
-         "label": "LABEL_USER",
-         "value": speed_user
-         }, {
-         "label": "LABEL_PUBLIC",
-         "value": speed_public
-         }]
-         }]
-         dataotherusers.push(data);
-         $scope.onload_speed = true;
-         if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_engine) {
-         window.dispatchEvent(new Event('resize'));
-         $scope.onload_all = true;
-         }
-         window.dispatchEvent(new Event('resize'));
-         }, function (data) {
-         console.log("error " + data);
-         });
-         }, function (data) {
-         console.log("error " + data);
-         });
-         */
 
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));

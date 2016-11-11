@@ -29,7 +29,7 @@
                 type: 'pieChart',
                 height: 370,
                 donut: false,
-                growOnHover: false,
+                growOnHover: true,
                 x: function (d) {
                     return d.key;
                 },
