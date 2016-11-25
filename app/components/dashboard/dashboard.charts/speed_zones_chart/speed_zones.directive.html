@@ -19,16 +19,11 @@
 
     <md-card-content flex>
 
-        <md-progress-circular class="loader_dashboard" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
-        <div class="no_tracks" ng-show="!tracksAvailable">
-            <img src="app/components/assets/img_tracks.png">
-            <p layout-align="center center">
-                <b>{{ 'NO_TRACKS' | translate}}</b>
-            </p>
-        </div>
+        <md-progress-circular class="loader_dashboard2" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
 
 
-        <div layout="column" flex style="height: 240px; position: relative;">
+
+        <div layout="column" flex style="height: 240px; position: relative;" ng-if='onloadSpeedZones'>
             
             <div id="comming_soon">
                 <p class="comming_soon_txt_speedzones" layout-align="center center">
@@ -48,7 +43,7 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"07:06"}} Stunden
+                        {{"07:06"}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
@@ -71,7 +66,7 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"11:36"}} Stunden
+                        {{"11:36"}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
@@ -94,7 +89,7 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"32:52"}} Stunden
+                        {{"32:52"}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
@@ -105,7 +100,16 @@
             </div>
 
             <div flex></div>
+            <div class="no_tracks" ng-show="!tracksAvailable">
+                <div class="transparent-container">
+                    <img src="app/components/assets/img_tracks.png">
+                </div>
+                <p layout-align="center center">
+                    <b>{{ 'NO_TRACKS' | translate}}</b>
+                </p>
+            </div>
         </div>
+
 
 
     </md-card-content>

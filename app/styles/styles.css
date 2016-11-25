@@ -724,15 +724,14 @@ cl-paging {
 
 .rect_red {
   background-color: #ffaaaa;
-  width: 70%;
+  width: 65%;
   height: 40px;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000; }
   .rect_red p {
     font-size: 14px;
     float: left;
-    padding-left: 16px;
-    letter-spacing: 0.1em; }
+    padding-left: 8px; }
   .rect_red img {
     float: right;
     width: 60px;
@@ -747,8 +746,7 @@ cl-paging {
   .rect_yellow p {
     font-size: 14px;
     float: left;
-    padding-left: 16px;
-    letter-spacing: 0.05em; }
+    padding-left: 8px; }
   .rect_yellow img {
     float: right;
     width: 60px;
@@ -756,21 +754,21 @@ cl-paging {
 
 .rect_green {
   background-color: #aaffaa;
-  width: 50%;
+  width: 55%;
   height: 40px;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000; }
   .rect_green p {
     font-size: 14px;
     float: left;
-    padding-left: 16px; }
+    padding-left: 8px; }
   .rect_green img {
     float: right;
     width: 60px;
     height: 40px; }
 
 .speed-zones-content {
-  margin-left: 37px; }
+  margin-left: 0px; }
   .speed-zones-content span {
     color: #black; }
     .speed-zones-content span i {

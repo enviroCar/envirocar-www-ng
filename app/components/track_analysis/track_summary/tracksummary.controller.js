@@ -193,7 +193,7 @@
                 co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                 starttime: new Date(starttimeg).toLocaleString(),
                 endtime: new Date(endtimeg).toLocaleString(),
-                stops: stops + " " + stops2
+                stops: stops //+ " " + stops2
             };
 
             if (!isNaN(fuelSum)) {
@@ -404,7 +404,7 @@
                         co2emissionperhourConsumed: co2kgHConsumed.toFixed(2),
                         starttime: new Date(starttimeg).toLocaleString(),
                         endtime: new Date(endtimeg).toLocaleString(),
-                        stops: stops + " " + stops2
+                        stops: stops //+ " " + stops2
                     };
 
                     if (!isNaN(fuelSum)) {

@@ -84,6 +84,7 @@ angular.module('translations', [])
             'HIGH_SPEED_ZONE'               : 'faster than 130km/h',
             'MID_SPEED_ZONE'                : 'between 60 and 130km/h',
             'LOW_SPEED_ZONE'                : 'slower than 60km/h',
+            'HOURS'                         : 'hours',
             
             
             // Dashboard - WeekdaysChart
@@ -397,6 +398,7 @@ angular.module('translations', [])
             'HIGH_SPEED_ZONE'               : 'schneller als 130km/h',
             'MID_SPEED_ZONE'                : 'zwischen 60 und 130km/h',
             'LOW_SPEED_ZONE'                : 'langsamer als 60km/h',
+            'HOURS'                         : 'Stunden',
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Meine Wochentagsverteilung',
