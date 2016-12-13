@@ -71,7 +71,7 @@
                 co2: 0,
                 speed: 0
             };
-            for (var i = min + 1; i < max; i++) {
+            for (var i = min + 1; i <= max+1; i++) {
                 // calculating distance:
                 var lat_now = $scope.data_track[3].values[i];
                 var lng_now = $scope.data_track[4].values[i];
@@ -108,7 +108,7 @@
 
             // get timestamps:
             var time1 = $scope.data_track[2].values[min];
-            var time2 = $scope.data_track[2].values[max - 1];
+            var time2 = $scope.data_track[2].values[max+1];
             var seconds_passed = new Date(time2).getTime() -
                     new Date(time1).getTime();
             var seconds = seconds_passed / 1000;
@@ -243,7 +243,7 @@
                         phenomsJSON['CO2'] = true;
                     $scope.track_summary_track_length = data_global.data.features.length - 1;
                     // fill data with each measurement point:
-                    for (var i = 0; i < $scope.track_summary_track_length; i++) {
+                    for (var i = 0; i <= $scope.track_summary_track_length; i++) {
                         // get consumption data:
                         if (data_global.data.features[i].properties.phenomenons.Consumption) {
                             var consumptionMeasurement = data_global.data.features[i].properties.phenomenons.Consumption.value;

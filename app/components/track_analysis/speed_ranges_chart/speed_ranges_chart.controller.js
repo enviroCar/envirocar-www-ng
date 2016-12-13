@@ -53,12 +53,8 @@
                     },
                     dispatch: {
                         elementClick: function (e) {
+                            // set/reset highlights from piecharts:
                             $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
-                            // reset highlights from piecharts:
-                            console.log(e);
-                            
-                            // set highlights on piecharts:
-                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                         }
                     }
                 },
