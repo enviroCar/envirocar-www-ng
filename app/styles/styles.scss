@@ -36,6 +36,7 @@
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
+.material-icons.md-40 { font-size: 40px; }
 .material-icons.md-48 { font-size: 48px; }
 .material-icons.md-128 { font-size: 128px; }
 
@@ -315,6 +316,7 @@ md-sidenav {
     md-icon {
         display: block !important;
         height: auto;
+        padding-left: 4px;
     }
     .icon_stroked {
         width: 100%;
@@ -331,6 +333,7 @@ md-sidenav {
         vertical-align: middle;
         width: 90px; 
         height: 25px;
+        padding-bottom: 2px;
     }
     .legal {
         border-top: 1px solid #e0e0e0;
@@ -357,6 +360,15 @@ md-sidenav {
                     text-decoration: none;
                 }
             }
+        }
+    }
+}
+
+.weekday_chart {
+    g.nv-bar.positive {
+        fill: grey !important;
+        rect {
+            stroke-opacity: 1 !important;
         }
     }
 }
@@ -401,9 +413,10 @@ md-sidenav {
     width: 60px;
     height: 100%;
 }
+
 #placeholder-toolbar {
     display:inline-block;
-    height: 61px;
+    height: 56px;
     width: 100%;
 }
 #placeholder-toolbar-stp {

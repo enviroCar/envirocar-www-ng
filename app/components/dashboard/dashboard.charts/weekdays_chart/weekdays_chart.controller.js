@@ -123,7 +123,6 @@
                     $scope.dataWeekdays = temp_data;
                     $scope.onload_weekdays = true;
                 }
-
         );
 
         $timeout(function () {
@@ -131,6 +130,7 @@
         }, 300);
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));
+
         }, 700);
     }
     ;
