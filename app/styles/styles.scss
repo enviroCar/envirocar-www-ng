@@ -45,7 +45,9 @@
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 
 /* Rules for using icons as white on a dark background. */
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light { 
+    color: rgba(255, 255, 255, 1); 
+}
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 // libs overrides
@@ -62,6 +64,17 @@
 .envirocar-green {
     color: #8CBF3F;
 }
+
+.spanwhite {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.spanblue {
+    color: #1A80C1;
+    font-size: 14px;
+}
+
 
 html, body{
     height: 100%;

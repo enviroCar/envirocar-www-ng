@@ -30,7 +30,8 @@
                             }
                         }
                     },
-                    overlays: {
+                    overlays : {
+                        
                     }
                 },
                 defaults : {
@@ -42,12 +43,9 @@
             }
         });
         console.log($scope.map.layers2.overlays);
-        var timeline = {};
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        var urlredirect = '#/dashboard/chart/';
-        var points = [];
         var mid_point = [0, 0];
         var heat_dataset = [];
         var dataset_start = [];
@@ -110,7 +108,8 @@
                                 minopacity: 0,
                                 maxZoom: 8
                             },
-                            visible: true
+                            visible: true,
+                            doRefresh: true
                         }
             };
             console.log($scope.map.layers2.overlays.heat);

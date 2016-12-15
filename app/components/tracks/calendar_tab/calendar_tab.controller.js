@@ -99,12 +99,36 @@
         $scope.rangeStartDate;
         $scope.rangeEndDate;
 
+        var setColorLight = function (toLight, day) {
+            var colorTheme = 'blue';
+            var theme = 'blue';
+            if (toLight){
+                colorTheme = 'white';
+                theme = 'md-light';
+            }
+            console.log(toLight);
+            var dateobject = new Date();
+            dateobject.setFullYear($scope.selectedYear);
+            dateobject.setMonth($scope.selectedMonth);
+            dateobject.setDate(day);
+            var string_date = dateobject.toString();
+            var array_string_date = string_date.split(" ");
+            var stripped_date = (array_string_date[1] + array_string_date[2] + array_string_date[3]);
+            if ($scope.date_count[stripped_date]) {
+                if ($scope.date_count[stripped_date] > 1)
+                    MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons '+theme+'">directions_car</i><span class="span'+colorTheme+'">+' + $scope.date_count[stripped_date] + '</span>'));
+                else
+                    MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons '+theme+'">directions_car</i>'));
+            }
+        };
+
         var removeDayHighlighting = function () {
             var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
             var lastDay = fullMonth.getDate();
             for (var i = 1; i <= lastDay; i++) {
                 var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                 clickedDayDiv.css("background-color", "transparent");
+                setColorLight(false, i);
             }
         };
 
@@ -114,8 +138,10 @@
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     if ((i === start) || (i === end)) {
                         clickedDayDiv.css("background-color", intervalEnds);
-                    } else
+                    } else {
                         clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                    }
+                    setColorLight(true, i);
                 }
             }
         };
@@ -352,33 +378,7 @@
             },
                     500);
         };
-        /**
-         $scope.setIDs = function () {
-         // 1. find all divs:
-         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
-         var lastDay = fullMonth.getDate();
-         console.log("setting IDs for:");
-         console.log(fullMonth);
-         console.log(lastDay);
-         for (var i = 1; i <= lastDay; i++) {
-         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-         clickedDayDiv.css("background-color", "red");
-         console.log(clickedDayDiv);
-         }
-         };
-         
-         $scope.removeIDs = function () {
-         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
-         var lastDay = fullMonth.getDate();
-         console.log("removing IDs for:");
-         console.log(fullMonth);
-         console.log(lastDay);
-         for (var i = 1; i <= lastDay; i++) {
-         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-         clickedDayDiv.css("background-color", "blue");
-         console.log(clickedDayDiv);
-         }
-         };*/
+
         $scope.hoveredTabItem = undefined;
         var hoverhight = "#e8f2f8";
         var SelectedAndHoverHighlight = "#a3cce6";
@@ -386,7 +386,6 @@
         var intervalEnds = "#8cbfe0";
 
         $scope.updateHoverHighlight = function (start, end, hovered, bool) {
-
             if ($scope.numberClickedDays === 0) {
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
@@ -414,8 +413,9 @@
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     if ((i === start) || (i === end)) {
                         clickedDayDiv.css("background-color", intervalEnds);
-                    } else
+                    } else {
                         clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                    }
                 }
                 // remove highlight from 2nd unselected part:
                 for (var i = end + 1; i <= lastDay; i++) {
@@ -496,7 +496,7 @@
         TrackService.getUserTracks($scope.username, $scope.password).then(
                 function (data) {
                     // Erstelle eine Tagestabelle
-                    var date_count = [];
+                    $scope.date_count = [];
                     var tracks = data.data.tracks;
                     var date_min = new Date(tracks[0].begin);
                     var date_max = new Date(tracks[0].begin);
@@ -519,10 +519,10 @@
                         var string_date = dateobject.toString();
                         var array_string_date = string_date.split(" ");
                         var stripped_date = (array_string_date[1] + array_string_date[2] + array_string_date[3]);
-                        if (date_count[stripped_date] !== undefined) {
-                            date_count[stripped_date]++;
+                        if ($scope.date_count[stripped_date] !== undefined) {
+                            $scope.date_count[stripped_date]++;
                         } else {
-                            date_count[stripped_date] = 1;
+                            $scope.date_count[stripped_date] = 1;
                         }
                         // get track begin date:
                         var currDate = new Date(currTrack.begin);
@@ -578,7 +578,10 @@
 
                         $scope.tracksCalendar.push(resultTrack);
 
-                        MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons">directions_car</i><span>' + date_count[stripped_date] + '</span>'));
+                        if ($scope.date_count[stripped_date] > 1)
+                            MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons blue">directions_car</i><span class="spanblue">+' + $scope.date_count[stripped_date] + '</span>'));
+                        else
+                            MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons blue">directions_car</i>'));
                     }
 
                     $scope.start_month = date_max.getUTCMonth(); //months from 0-11

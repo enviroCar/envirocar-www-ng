@@ -78,6 +78,14 @@
 .envirocar-green {
   color: #8CBF3F; }
 
+.spanwhite {
+  color: #ffffff;
+  font-size: 14px; }
+
+.spanblue {
+  color: #1A80C1;
+  font-size: 14px; }
+
 html, body {
   height: 100%;
   position: relative;
