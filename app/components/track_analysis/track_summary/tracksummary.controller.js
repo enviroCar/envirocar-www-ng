@@ -223,7 +223,7 @@
                     $scope.track_summary_endIndex = $scope.track_summary_track_length;
                 $scope.changeSummaryRange($scope.track_summary_startIndex, $scope.track_summary_endIndex - 1);
             } else {
-                $scope.changeSummaryRange(0, $scope.track_summary_track_length);
+                $scope.changeSummaryRange(0, $scope.track_summary_track_length-1);
             }
         });
 

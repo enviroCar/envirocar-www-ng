@@ -183,6 +183,7 @@
                 }
             }
             ;
+            
             // last end index as well:
             var current_lat = $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (end) ]['latlngs'][1].lat;
             if (current_lat > northeast.lat) {
@@ -581,6 +582,7 @@
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
             $scope.showMeasurementX();
         });
+        
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
             $scope.currentPhenomenon = args;
             switch ($scope.currentPhenomenon) {
@@ -808,17 +810,30 @@
             },
                     1);
         };
+        
         $scope.showMeasurementX = function () {
-            // get the lat/lng coordinates:
+            // move the clickedPosition marker to the coordinates of the clicked path:
             if ($scope.clickedXPoint > 0) {
                 $scope.markers.ClickedPosition.lat = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[1];
                 $scope.markers.ClickedPosition.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
             }
+            
+            // highlight the point in the chart:
+            var selector = 'nv-point nv-'+$scope.clickedXPoint;
+            d3.selectAll(selector).classed("hover",true);
+            console.log(selector);
+            
+            var chartMarker = angular.element(document.querySelectorAll(selector));
+            console.log(chartMarker);
+            chartMarker.css("fill-opacity", "1 !important;");
+            
+            console.log($scope.clickedXPoint);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
                     1);
         };
+        
         var data_global = {};
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;

@@ -21,6 +21,8 @@
 }:
 */
 
+
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
@@ -190,12 +192,10 @@ html, body{
     border-color: rgba(140, 191, 63,1);
 }
 
-.sl-item
-{
+.sl-item {
     cursor: pointer; cursor: hand;
     position: relative;
     padding-bottom: 20px;
-
 }
 
 *:focus {
@@ -233,6 +233,16 @@ html, body{
                 font-weight: bold;
             }
         }
+    }
+}
+
+nvd3 {
+    .nv-point
+    {
+        //fill-opacity: 0!important;
+        //fill-opacity: 1!important;
+        //stroke-opacity: 1!important;
+        //stroke-width: 2px;
     }
 }
 

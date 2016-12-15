@@ -106,7 +106,6 @@
                 colorTheme = 'white';
                 theme = 'md-light';
             }
-            console.log(toLight);
             var dateobject = new Date();
             dateobject.setFullYear($scope.selectedYear);
             dateobject.setMonth($scope.selectedMonth);
@@ -367,8 +366,6 @@
                 window.dispatchEvent(new Event('resize'));
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
-                console.log(fullMonth);
-                console.log(lastDay);
                 for (var i = 1; i <= lastDay; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", "transparent");
@@ -443,7 +440,6 @@
                 if (((parseInt(hovered) === end) || (start === (parseInt(hovered)))) && (!bool)) {
                     // add hightlight for selected days [start+1, end[ :
                     for (var i = start + 1; i < end; i++) {
-                        console.log(i);
                         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                         clickedDayDiv.css("background-color", SelectedNoHover);
                     }
@@ -467,7 +463,6 @@
         function handler(ev) {
             $scope.target = $(ev.target);
             var elId = $scope.target.attr('tabindex');
-            console.log("hovered: " + elId);
             if (elId !== undefined) {
                 $scope.hoveredTabItem = elId;
                 $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), elId, false);
@@ -478,7 +473,6 @@
         function handler2(ev) {
             $scope.target = $(ev.target);
             var elId = $scope.target.attr('tabindex');
-            console.log("hovered: " + elId);
             if (elId !== undefined) {
                 $scope.hoveredTabItem = elId;
                 $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), $scope.rangeEndDate.getDate(), true);
@@ -638,8 +632,6 @@
                         window.dispatchEvent(new Event('resize'));
                         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                         var lastDay = fullMonth.getDate();
-                        console.log(fullMonth);
-                        console.log(lastDay);
                         for (var i = 1; i <= lastDay; i++) {
                             var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                             clickedDayDiv.css("background-color", "transparent");

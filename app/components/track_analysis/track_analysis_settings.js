@@ -3,6 +3,7 @@
 
     var trackAnalysisSettings = {
         // value break points for color interpolations:
+        // 100% pure green break point is by default 0 for each phenomenon
         yellow_break: [// 100% pure yellow break point;
             60, // speed
             6, // consumption
@@ -28,6 +29,7 @@
         errorColorTransparent: 'rgba(0,0,255,' + 0.35 + ')',
         errorColor: 'rgb(0,0,255)'
     };
-            angular.module('enviroCar.track')
+    
+    angular.module('enviroCar.track')
             .value('trackAnalysisSettings', trackAnalysisSettings);
 })();

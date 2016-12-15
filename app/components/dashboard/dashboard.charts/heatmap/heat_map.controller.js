@@ -113,6 +113,7 @@
                         }
             };
             console.log($scope.map.layers2.overlays.heat);
+            $scope.onload_heat_map = true;
         }
         , function (error) {
             console.log(error);

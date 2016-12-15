@@ -22,7 +22,7 @@
         <md-progress-circular class="loader_dashboard2" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
 
         <div layout="column" flex style="height: 240px; position: relative;" ng-if='onloadSpeedZones'>
-            
+
             <div id="comming_soon">
                 <p class="comming_soon_txt_speedzones" layout-align="center center">
                     <b>{{ 'COMMING_SOON' | translate}}</b>
@@ -98,7 +98,7 @@
             </div>
 
             <div flex></div>
-            <div class="no_tracks" ng-show="!tracksAvailable">
+            <div class="no_tracks" ng-show="!tracksAvailable && onloadSpeedZones">
                 <div class="transparent-container">
                     <img src="app/components/assets/img_tracks.png">
                 </div>
