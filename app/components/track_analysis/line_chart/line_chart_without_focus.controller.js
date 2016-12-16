@@ -89,16 +89,22 @@
                         elementClick: function (e) {
                             $scope.clickedXPoint = Math.round(e.pointXValue);
                             $scope.showMeasurementX();
+                            $scope.removeHoveredPointInChart();
                         },
                         elementMousemove: function (e) {
                             if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
+                                $scope.removeHoveredPointInChart();
                                 $scope.hoveredXPoint = Math.round(e.pointXValue);
                                 $scope.showHoveredX();
                             }
                         },
                         elementMouseout: function (e) {
+                            $scope.removeHoveredPointInChart();
                             $scope.hoveredXPoint = 0;
                             $scope.removeHoverMarker();
+                        },
+                        onBrush: function (e) {
+                            console.log(e);
                         }
                     }
                 }
@@ -236,6 +242,25 @@
                 $scope.markers.ClickedPosition.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
 
             }
+            
+            // remove highlight of previous clicked point:
+            if ($scope.lastClickedXPoint) {
+                var selector = 'nv-point-' + $scope.lastClickedXPoint;
+                var x = document.getElementsByClassName(selector);
+                x["0"].style["fillOpacity"] = "0";
+                x["0"].style["strokeOpacity"] = "0";
+                x["0"].style["stroke"] = "#1A80C1";
+            }
+
+            // highlight the point in the chart:
+            var selector = 'nv-point-' + $scope.clickedXPoint;
+            var x = document.getElementsByClassName(selector);
+            x["0"].style["fillOpacity"] = "1";
+            x["0"].style["strokeWidth"] = "7px";
+            x["0"].style["strokeOpacity"] = "1";
+            x["0"].style["stroke"] = "#8CBF3F";
+            $scope.lastClickedXPoint = $scope.clickedXPoint;
+            
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
@@ -260,31 +285,31 @@
                     for (var index = 0; index < data_global.data.features.length; index++) {
 
                         // save measurements for each phenomenon:
-                        if (data_global.data.features[index].properties.phenomenons.Speed) 
+                        if (data_global.data.features[index].properties.phenomenons.Speed)
                             speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
-                         else
+                        else
                             speedMeasurement = {x: index, y: undefined};
-                        
-                        if (data_global.data.features[index].properties.phenomenons.Consumption) 
+
+                        if (data_global.data.features[index].properties.phenomenons.Consumption)
                             consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
-                        else 
+                        else
                             consumptionMeasurement = {x: index, y: undefined};
-                        
-                        if (data_global.data.features[index].properties.phenomenons.CO2) 
+
+                        if (data_global.data.features[index].properties.phenomenons.CO2)
                             co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
                         else
                             co2Measurement = {x: index, y: undefined};
-                        
-                        if (data_global.data.features[index].properties.phenomenons.Rpm) 
+
+                        if (data_global.data.features[index].properties.phenomenons.Rpm)
                             rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
                         else
                             rpmMeasurement = {x: index, y: undefined};
-                        
-                        if (data_global.data.features[index].properties.phenomenons['Engine Load']) 
+
+                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
                             engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         else
                             engineLoadMeasurement = {x: index, y: undefined};
-                        
+
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);
