@@ -14,6 +14,7 @@
         $scope.track_number = 0;
         $scope.friends_number = 0;
         $scope.distance_driven = 0;
+        $scope.duration_driven = 0;
         $scope.groups_number = 0;
         $scope.emailId = "";
         $scope.total_users = 0;
@@ -67,7 +68,16 @@
             console.log("Error: " + data);
         }
         );
-
+/**
+        // ask server for driven duration:
+        UserService.getUserStatistic(username, token).then(
+                function (data) {
+                    console.log(data);
+                }, function (data) {
+            console.log("Error: " + data);
+        }
+        );
+*/
         // ask server user email:
         UserService.getUserEmail(username, token).then(
                 function (data) {

@@ -2,6 +2,16 @@
 
     function UserService($http, ecBaseUrl) {
         
+        /**
+         * Gets all tracks of a certain user, containing at least one measurement within the specified BoundingBox parameters.
+         * @param {type} username username - username of the user
+         * @param {type} token - authentication password of the user
+         * @param {type} minx - longitude SouthWest
+         * @param {type} miny - latitude SouthWest
+         * @param {type} maxx - longitude NorthEast
+         * @param {type} maxy - latitude NorthEast
+         * @returns {JSON} data - the json data array of all tracks of the user within the specified BoundingBox
+         */
         this.getUserTracksBBox = function(username, token, minx, miny, maxx, maxy){
             return $http({
                 method: 'GET',
@@ -65,6 +75,31 @@
                 return res.data;
             }).error(function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/statistics");
+                return error;
+            });
+        };
+        
+        /**
+         * Gets the userStatistic for speedzones and tracksummaries of a certain user
+         * @param {String} username - username of the user
+         * @param {String} token - authentication password of the user
+         * @returns {JSON} data - the json data of the speedzones userstatistics and tracksummaries
+         */
+        this.getUserStatistic = function(username, token){
+            return $http({
+               method: 'GET',
+               //url: ecBaseUrl + '/users/' + username + '/userStatistic',
+               url: 'http://localhost:8080/webapp' + '/users/' + username + '/userStatistic',
+               cache: true,
+               headers : {
+                    'Content-Type' : 'application/JSON',
+                    'X-User'    : username,
+                    'X-Token'   : token
+               }
+            }).success(function (res) {
+                return res.data;
+            }).error(function (error) {
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/userStatistic");
                 return error;
             });
         };
@@ -225,7 +260,6 @@
                     'X-Token'   : token
                 }
             }).success(function (res) {
-                console.log(res);
                 return res.data;
             }).error(function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/groups");
@@ -287,16 +321,6 @@
             });
         };
 
-/**
-        function wurst() {
-            UserService.getUser()
-                    .then(function (user) {
-
-                    }, function(error){
-                        
-                    });
-        }
-*/
     };
 
     angular.module('enviroCar.api')

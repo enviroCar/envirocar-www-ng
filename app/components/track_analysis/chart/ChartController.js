@@ -583,6 +583,7 @@
             console.log(path);
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
             $scope.showMeasurementXInChart();
+            $scope.showMeasurementX();
         });
 
         $scope.$on('leafletDirectivePath.mouseover', function (event, path) {
@@ -884,7 +885,9 @@
             }
 
             // highlight the point in the chart:
-            var selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue );
+            var selector = 'nv-point-' + $scope.clickedXPoint;
+            if ($scope.segmentActivated)
+                selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue );
             var x = document.getElementsByClassName(selector);
             if (x["0"]) {
                 x["0"].style["fillOpacity"] = "1";
