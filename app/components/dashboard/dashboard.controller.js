@@ -68,6 +68,7 @@
             console.log("Error: " + data);
         }
         );
+
 /**
         // ask server for driven duration:
         UserService.getUserStatistic(username, token).then(
@@ -78,6 +79,7 @@
         }
         );
 */
+
         // ask server user email:
         UserService.getUserEmail(username, token).then(
                 function (data) {

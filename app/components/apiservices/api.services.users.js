@@ -85,6 +85,7 @@
          * @param {String} token - authentication password of the user
          * @returns {JSON} data - the json data of the speedzones userstatistics and tracksummaries
          */
+        /**
         this.getUserStatistic = function(username, token){
             return $http({
                method: 'GET',
@@ -103,6 +104,7 @@
                 return error;
             });
         };
+        */
         
         /**
          * Gets the total number of all enviroCar users.

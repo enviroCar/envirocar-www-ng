@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "jquery": "^3.1.0",
-    "angular": "^1.5.8",
+    "angular": "1.5.8",
     "angular-simple-logger": "^0.1.7",
     "ui-leaflet": "^2.0.0",
     "leaflet.heat": "Leaflet.heat#*",
@@ -36,8 +36,7 @@
   },
   "resolutions": {
     "angular-material": "^1.1.1",
-    "angular": "^1.5.8",
-    "leaflet": "0.7.x",
+    "angular": "1.5.8",
     "ui-leaflet": "^2.0.0"
   }
 }
