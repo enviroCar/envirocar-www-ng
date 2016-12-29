@@ -18,21 +18,21 @@
     </div>
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_all" md-diameter="56"></md-progress-circular>
     <div layout-gt-xs="row" layout-xs="column" ng-if="onload_all" flex id="comparison_chart_content" style="position: relative; height: 100%; width: 100%;">
-        <md-card-content flex-gt-xs="33" flex-xs="100">
+        <md-card-content flex-gt-sm="33" flex-sm="33" flex-xs="100">
             <p ng-if="!screenIsXS" class='comparison-title'> {{'SPEED'| translate}}</p>
             <div flex >
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_speed && !onload_all" md-diameter="56"></md-progress-circular>
                 <nvd3 ng-if="onload_speed && onload_all" options="optionsSpeed" data="dataSpeed" api="api" flex></nvd3>
             </div>
         </md-card-content>
-        <md-card-content flex-gt-xs="33" flex-xs="100">
+        <md-card-content flex-gt-sm="33" flex-sm="33" flex-xs="100">
             <p ng-if="!screenIsXS" class='comparison-title'> {{'CONSUMPTION'| translate}}</p>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_consumption && !onload_all" md-diameter="56"></md-progress-circular>
             <div flex ng-if="onload_consumption && onload_all">
                 <nvd3 options="optionsConsumption" data="dataConsumption" api="api" flex></nvd3>
             </div>
         </md-card-content>
-        <md-card-content flex-gt-xs="33" flex-xs="100">
+        <md-card-content flex-gt-sm="33" flex-sm="33" flex-xs="100">
             <p ng-if="!screenIsXS" class='comparison-title'> {{'CO2'| translate}}</p>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_CO2 && !onload_all" md-diameter="56"></md-progress-circular>
             <div flex ng-if="onload_CO2 && onload_all">
