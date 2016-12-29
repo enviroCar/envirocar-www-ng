@@ -1,0 +1,148 @@
+<!-- Profile settings HTML content -->
+
+    <div>
+        <div layout-gt-sm="row">
+            <md-card class="card card-4-50">
+                <img src="app/components/assets/profiledup.png" hide show-gt-sm class="md-card-image">
+                </img>
+                <md-card-content class="text-color">
+                    <img src="app/components/assets/profiledup.png" hide-gt-sm style="width:30%">
+
+                    <h2> {{ 'BIO' | translate}}</h2>
+                    <md-list-item  layout-gt-xs="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'NAME' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{name}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'EMAIL' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{email}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'COUNTRY' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{countrytext}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'LANGUAGE' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{languagetext}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'GENDER' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{gendertext}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-divider ></md-divider>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'CREATED' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{created}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'MODIFIED' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{modified}}</p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item  layout="row">
+                        <div class="md-list-item-text">
+                            <p><b>{{'TERMS_OF_USE' | translate}}</b></p>
+                        </div>
+                        <span flex></span>
+                        <div style="right:0px" class="md-list-item-text">
+                            <p>{{termsOfUseVersion}}</p>
+                        </div>
+                    </md-list-item>
+                </md-card-content>
+            </md-card>
+            <md-card class="card card-4-50" style="min-width:70%">
+                <md-toolbar  style="color:black;background-color:white">
+                    <div style="padding-left: 16px;">
+                        <h3 style="color:rgba(0,0,0,0.5)">
+                            <span>Edit Personal Information</span>
+                        </h3>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <div layout="column" ng-cloak class="profilepage">
+                        <md-input-container>
+                            <input ng-model="emailId" type="text" ng-required="true" placeholder="{{'EMAIL' | translate}}">
+                        </md-input-container>
+                        <md-input-container >
+                            <input ng-model="firstName" type="text" placeholder="{{'FIRST_NAME' | translate}}">
+                        </md-input-container>
+                        <md-input-container >
+                            <input ng-model="lastName" type="text" placeholder="{{'LAST_NAME' | translate}}">
+                        </md-input-container>
+                        <md-input-container class="md-icon-float md-block">
+                            <input ng-model="country" type="text" placeholder="{{'COUNTRY' | translate}}">
+                        </md-input-container>
+                        <!-- <md-input-container class="md-icon-float md-block">
+                           <input ng-model="birthday" type="text" placeholder="Birthday (2000-12-31)" > 
+                        </md-input-container> -->
+                        <span>{{'DATE_OF_BIRTH' | translate}}
+                            <md-datepicker ng-model="dateBirthdayPicker" md-placeholder="{{'ENTER_DATE' | translate}}"></md-datepicker>
+                        </span>
+                        <md-select ng-model="gender"placeholder="{{'GENDER' | translate}}" >
+                            <md-option value="m">{{'MALE' | translate}}</md-option>
+                            <md-option value="f">{{'FEMALE' | translate}}</md-option>
+                        </md-select>
+                        <md-select ng-model="lang"placeholder="{{'LANGUAGE' | translate}}" >
+                            <md-option value="en">{{'ENGLISH' | translate}}</md-option>
+                            <md-option value="de">{{'GERMAN' | translate}}</md-option>
+                        </md-select>
+                        <h3 style="color:rgba(0,0,0,0.5)">
+                            <span>{{'HINT_EDIT_PASSWORD' | translate}}
+                            </span>
+                        </h3>
+                        <md-input-container class="md-icon-float md-block">
+                            <input ng-model="oldpassword" type="password" ng-change="passwordentered(0)" ng-required="ifpassword" placeholder="Old Password" >
+                        </md-input-container>
+                        <md-input-container class="md-icon-float md-block">
+                            <input ng-model="newpassword" type="password" ng-change="passwordentered(1)" ng-required="ifpassword" placeholder="New Password" >
+                        </md-input-container>
+                        <md-input-container class="md-icon-float md-block">
+                            <input ng-model="newpasswordrepeat" type="password" ng-change="passwordentered(2)" ng-required="ifpassword" placeholder="New Password(Repeat)" >
+                        </md-input-container>
+                        <div ng-if="submissionSuccess" style="background-color:rgba(185,217,137,0.9);">
+                            <p>Your details have been updated</p>
+                        </div>
+                        <div ng-if="submissionFailure" style="background-color:rgba(255, 59, 41, 0.4)">
+                            <p>{{submissionErrorMessage}}</p>
+                        </div>
+                        <md-button class="green-bg" ng-click="updateUserDetails()" style="width:150px">Update Profile</md-button>
+                    </div>
+
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>

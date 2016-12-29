@@ -2,14 +2,6 @@
 
     LanguageMenuCtrl = function ($rootScope, $scope, $translate, $cookieStore) {
 
-        var language = {
-            'name': 'English',
-            'shortcut': 'en',
-        };
-
-        language = $cookieStore.get('language');
-        console.log(language);
-       
         $scope.optionsLanguage = [
             {
                 name: 'Deutsch',
@@ -24,7 +16,14 @@
         ];
 
         $scope.currOption = $scope.optionsLanguage[1];
+        var language = {
+            'name': 'English',
+            'shortcut': 'en',
+        };
 
+        language = $cookieStore.get('language');
+        console.log(language);
+        
         $scope.saveLanguageSetting = function () {
             language = {
                 'name': $scope.currOption.name,
@@ -32,8 +31,6 @@
             };
             $cookieStore.put('language', language);
         };
-
-        console.log(language);
 
         if (!language) {
             // default language: english
@@ -43,7 +40,7 @@
         } else {
             // use language from cookies:
             $translate.use(language.shortcut);
-            switch (language.shortcut){
+            switch (language.shortcut) {
                 case 'en':
                     $translate.use('en');
                     $scope.currOption = $scope.optionsLanguage[1];
@@ -55,8 +52,8 @@
             }
         }
 
-        $scope.changeLanguage = function(){
-            if ($scope.currOption.shortcut === 'en'){
+        $scope.changeLanguage = function () {
+            if ($scope.currOption.shortcut === 'en') {
                 // switch to DE:
                 $scope.currOption = $scope.optionsLanguage[0];
             } else {

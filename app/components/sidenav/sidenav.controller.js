@@ -27,9 +27,9 @@
             }, {
                 name: 'TABLE',
                 icon: 'person',
-                sref: '.table',
+                sref: '.profile',
                 tooltip: 'TT_SN_PROFILE_OPEN',
-                commingSoon: true
+                commingSoon: false
             }, {
                 name: 'SEGMENT',
                 icon: 'pie_chart',
@@ -53,7 +53,7 @@
         $scope.menuItems[3]['tooltip'] = 'TT_SN_SEGMENT_OPEN';
         $scope.menuItems[0]['commingSoon'] = false;
         $scope.menuItems[1]['commingSoon'] = false;
-        $scope.menuItems[2]['commingSoon'] = true;
+        $scope.menuItems[2]['commingSoon'] = false;
         $scope.menuItems[3]['commingSoon'] = true;
         
         function selectItem(item) {

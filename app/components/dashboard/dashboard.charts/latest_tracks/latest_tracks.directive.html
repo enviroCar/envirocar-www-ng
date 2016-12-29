@@ -30,8 +30,6 @@
                 <div class="card-body">
                     <div class="streamline b-l b-accent m-b">
                         <div class="sl-item" ng-show="onload_tracks_timeline" ng-repeat='event in events' ng-click="goToActivity(event.id)">
-                            <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
-                            </img> -->
                             <div class="sl-content" >
                                 <span >
                                     <span class="title_span"><b>{{event.begin| date:'medium'}}</b></span>
@@ -58,7 +56,7 @@
                                     <md-content >
                                         <p class="placeholder-p">.</p>
 
-                                        <img src={{event.url}} style="width:290px;height:184px;"></img>
+                                        <img src="{{event.url}}" style="width:290px;height:184px;"></img>
 
                                     </md-content>
                                 </md-tooltip>

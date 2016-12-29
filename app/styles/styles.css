@@ -815,3 +815,7 @@ cl-paging {
 .error-span {
   color: red;
   margin: auto; }
+
+.profilepage md-input-container {
+  margin: 0px !important;
+  padding: 0px; }

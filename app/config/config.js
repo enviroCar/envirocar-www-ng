@@ -33,6 +33,12 @@
                     controller: 'TrackListCtrl',
                     templateUrl: 'app/components/tracks/tracks.html',
                     authenticate: true
+                })
+                .state('profile', {
+                    url: '/profile',
+                    controller: 'ProfileCtrl',
+                    templateUrl: 'app/components/profile/profile.html',
+                    authenticate: true
                 });
 
         $urlRouterProvider.otherwise('/dashboard');
