@@ -169,7 +169,7 @@
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/tracks?limit=1");
                 return error;
             });
-        }
+        };
         
         /**
          * Gets a list of all tracks / TODO: Pagination

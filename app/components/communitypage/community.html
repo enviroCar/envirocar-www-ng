@@ -1,0 +1,29 @@
+<!-- Community Analysis HTML content -->
+
+<div flex layout="column">
+    <md-card flex>
+        <div layout="row" flex="100">
+            <p style="color:#1A80C1;background-color:white; margin-left:20px;">
+                <span><b>{{'COMMUNITY_MAP_TITLE'| translate}}</b></span>
+            </p>
+            <div layout="row" flex>
+                <span flex class="flex"></span>
+                <md-button ng-click="showAlert($event, 'COMMUNITY_MAP_TITLE', 'COMMUNITY_MAP_DESCRIPTION')" class="md-icon-button md-accent" aria-label="Info">
+                    <md-icon class="material-icons  md-24">info</md-icon>
+                    <md-tooltip>
+                        {{'CLICK_FOR_MORE_INFO'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </div>
+        <md-card-content flex layout="row">
+            <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_community_map" md-diameter="56"></md-progress-circular>
+            <div ng-if="onload_community_map" flex="60">
+                <leaflet center="center_community" event-broadcast="events_community" layers="layers_community" lf-draw="drawOptions_community" paths="paths_community" height="600px" ></leaflet>
+            </div>
+            <div ng-if="onload_community_map" flex="40" class="community_chart" layout="column">
+                <nvd3 ng-repeat="item in dataCharts track by $index" options="options_community" data="dataCharts[$index]"></nvd3>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>

@@ -16,6 +16,7 @@
         'enviroCar.track',
         'enviroCar.tracks',
         'enviroCar.profile',
+        'enviroCar.community',
         'materialCalendar',
         'cl.paging',
         'rzModule'])
@@ -53,5 +54,7 @@
     angular.module('enviroCar.tracks', []);
     
     angular.module('enviroCar.profile', []);
+    
+    angular.module('enviroCar.community', []);
 
 })();

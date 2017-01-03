@@ -32,7 +32,7 @@ angular.module('translations', [])
             'DASHBOARD'             : 'Dashboard',
             'TRACKS'                : 'Tracks',
             'TABLE'                 : 'Profile',
-            'SEGMENT'               : 'Community data',
+            'COMMUNITY'             : 'Community data',
             'SITE_FEEDBACK'         : 'Site feedback',
             'SITE_IMPRINT'          : 'Imprint',
             'SITE_TERMS'            : 'Terms',
@@ -139,6 +139,7 @@ angular.module('translations', [])
             'START_TIME'                : 'Starttime',
             'END_TIME'                  : 'Finishtime',
             'CO2EMISSION'               : 'CO2 emission',
+            'DURATION'                  : 'Duration',
             'PER_HOUR'                  : 'per hour',
             'PER_100_KM'                : 'per 100km',
             'ON_SEGMENT'                : 'on segment',
@@ -149,6 +150,8 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval? Click on one of the intervals and the map highlights all measuered values within that interval. Click again to remove the highlight.',
             
             // Tracks Page - Calendar Tab:
+            'CALENDAR_OF_TRACKS_TAB'        : 'Calendar tab',
+            'ALL_TRACKS_TAB'                : 'All Tracks',
             'DAILY_OVERVIEW'                : 'Daily overview',
             'MONTHLY_OVERVIEW'              : 'Monthly overview',
             'SELECTION_OVERVIEW'            : 'Selection overview',
@@ -249,12 +252,18 @@ angular.module('translations', [])
             'FIRST_NAME'            : 'First Name',
             'LAST_NAME'             : 'Last Name',
             'ENTER_DATE'            : 'Enter Date',
-            'PASSWORD_TIP'          : 'Leave these fields blank if you do not want to change your password.',
             'OLD_PASSWORD'          : 'Old Password',
             'NEW_PASSWORD'          : 'New Password',
-            'NEW_PASSWORD_R'        : 'New Password(Repeat)',
-            'SUBMISSION_SUCCESS'    : 'Your details have been updated',
-            'UPDATE_PROFILE'        : 'Update Profile',
+            'NEW_PASSWORD_REPEAT'   : 'New Password(Repeat)',
+            'DATE_OF_BIRTH'         : 'Date of Birth',
+            'EDIT_PERSONAL_INFO'    : 'Edit Personal Information',
+            'HINT_EDIT_PASSWORD'    : 'Leave these fields blank if you do not want to change your password.',
+            'INFO_UPDATE_SUCCESS'   : 'Your details have been updated',
+            'MALE'                  : 'Male',
+            'FEMALE'                : 'Female',
+            'BUTTON_UPDATE_PROFILE' : 'Update Profile',
+            'GERMAN'                : 'German',
+            'ENGLISH'               : 'English'
             
             
         });
@@ -278,7 +287,7 @@ angular.module('translations', [])
             'DASHBOARD'             : 'Dashboard',
             'TRACKS'                : 'Fahrten',
             'TABLE'                 : 'Profil',
-            'SEGMENT'               : 'Communitydaten',
+            'COMMUNITY'             : 'Communitydaten',
             'SITE_FEEDBACK'         : 'Seitenfeedback',
             'SITE_IMPRINT'          : 'Impressum',
             'SITE_TERMS'            : 'Nutzungsbedingungen',
@@ -388,7 +397,6 @@ angular.module('translations', [])
             'VEHICLE_TYPE'              : 'Fahrzeugtyp',
             'START_TIME'                : 'Startzeit',
             'END_TIME'                  : 'Endzeit',
-            'TOTAL_TIME'                : 'GESAMT_ZEIT',
             'CO2EMISSION'               : 'CO2 Emissionen',
             'DURATION'                  : 'Fahrtdauer',
             'PER_HOUR'                  : 'pro Stunde',
@@ -401,6 +409,8 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht? Klick auf eines der Intervalle um alle Messungen innerhalb des Intervals auf der Karte hervorzuheben. Klick erneut auf das Interval um die Hervorhebung wieder zu entfernen.',
             
             // Tracks Page - Calendar Tab:
+            'CALENDAR_OF_TRACKS_TAB'        : 'FahrtenKalender',
+            'ALL_TRACKS_TAB'                : 'Alle Fahrten',
             'DAILY_OVERVIEW'                : 'Tagesübersicht',
             'MONTHLY_OVERVIEW'              : 'Monatsübersicht',
             'SELECTION_OVERVIEW'            : 'Übersicht ausgewählter Tage',
@@ -501,13 +511,18 @@ angular.module('translations', [])
             'FIRST_NAME'            : 'Vorname',
             'LAST_NAME'             : 'Nachname',
             'ENTER_DATE'            : 'Wähle ein Datum',
-            'PASSWORD_TIP'          : 'Lasse diese Felder frei, wenn du dein Passwort nicht ändern willst.',
+            'HINT_EDIT_PASSWORD'    : 'Lasse diese Felder frei, wenn du dein Passwort nicht ändern willst.',
             'OLD_PASSWORD'          : 'Altes Passwort',
             'NEW_PASSWORD'          : 'Neues Passwort',
-            'NEW_PASSWORD_R'        : 'Neues Passwort (wiederhole)',
-            'SUBMISSION_SUCCESS'    : 'Deine Profilinformationen wurden aktualisiert.',
-            'UPDATE_PROFILE'        : 'Aktualisiere Profilinformationen',
-            
+            'NEW_PASSWORD_REPEAT'   : 'Neues Passwort (wiederhole)',
+            'INFO_UPDATE_SUCCESS'   : 'Deine Profilinformationen wurden aktualisiert.',
+            'DATE_OF_BIRTH'         : 'Geburtsdatum',
+            'EDIT_PERSONAL_INFO'    : 'Ändere deine persönlichen Informationen',
+            'MALE'                  : 'Männlich',
+            'FEMALE'                : 'Weiblich',
+            'BUTTON_UPDATE_PROFILE' : 'Aktualisiere Profil',
+            'GERMAN'                : 'Deutsch',
+            'ENGLISH'               : 'Englisch'
             
         });
         $translateProvider.preferredLanguage('en');

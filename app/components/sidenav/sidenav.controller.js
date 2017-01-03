@@ -31,11 +31,11 @@
                 tooltip: 'TT_SN_PROFILE_OPEN',
                 commingSoon: false
             }, {
-                name: 'SEGMENT',
+                name: 'COMMUNITY',
                 icon: 'pie_chart',
-                sref: '.segment',
+                sref: '.community',
                 tooltip: 'TT_SN_SEGMENT_OPEN',
-                commingSoon: true
+                commingSoon: false
             }];
 
         $scope.selectItem = selectItem;
@@ -46,7 +46,7 @@
         $scope.menuItems[0]['name'] = 'DASHBOARD';
         $scope.menuItems[1]['name'] = 'TRACKS';
         $scope.menuItems[2]['name'] = 'TABLE';
-        $scope.menuItems[3]['name'] = 'SEGMENT';
+        $scope.menuItems[3]['name'] = 'COMMUNITY';
         $scope.menuItems[0]['tooltip'] = 'TT_SN_DASHBOARD_OPEN';
         $scope.menuItems[1]['tooltip'] = 'TT_SN_TRACKS_OPEN';
         $scope.menuItems[2]['tooltip'] = 'TT_SN_PROFILE_OPEN';
@@ -54,7 +54,7 @@
         $scope.menuItems[0]['commingSoon'] = false;
         $scope.menuItems[1]['commingSoon'] = false;
         $scope.menuItems[2]['commingSoon'] = false;
-        $scope.menuItems[3]['commingSoon'] = true;
+        $scope.menuItems[3]['commingSoon'] = false;
         
         function selectItem(item) {
             $scope.title = item.name;

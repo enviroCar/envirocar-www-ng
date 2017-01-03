@@ -39,6 +39,12 @@
                     controller: 'ProfileCtrl',
                     templateUrl: 'app/components/profile/profile.html',
                     authenticate: true
+                })
+                .state('community', {
+                    url: '/community',
+                    controller: 'CommunityCtrl',
+                    templateUrl: 'app/components/communitypage/community.html',
+                    authenticate: false
                 });
 
         $urlRouterProvider.otherwise('/dashboard');

@@ -129,8 +129,32 @@
                 console.log("ResponseError @"+ecBaseUrl+"/users/");
                 return error;
             });
-        }
+        };
         
+        /**
+         * Updates the properties of a certain user t
+         * @param {type} username
+         * @param {type} token
+         * @param {type} userDetails
+         * @returns {unresolved}
+         */
+        this.putUserDetails = function(username, token, userDetails) {
+            return $http({
+                method: 'PUT',
+                url: ecBaseUrl + '/users/' + username,
+                headers : {
+                    'Content-Type' : 'application/JSON',
+                    'X-User'    : username,
+                    'X-Token'   : token
+                },
+                data: userDetails
+            }).success(function (res) {
+                return res.data;
+            }).error (function (error) {
+                console.log("ResponseError @PUT"+ecBaseUrl+"/users/"+username);
+                return error;
+            });
+        };
         
         /**
          * Gets a list off all users (TODO: pagination; currently limited to 100!)
@@ -151,11 +175,11 @@
             }).success(function (data, status, headers, config) {
                 var number = headers('Content-Range').split("/");
                 return Number(number[1]);
-            }, function (error) {
+            }).error(function (error) {
                 console.log("ResponseError @"+ecBaseUrl+"/users/");
                 return error;
             });
-        }
+        };
         
         /**
          * Gets a certain friend from a certain user
@@ -309,7 +333,6 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username,
-                cache: true,
                 headers : {
                     'Content-Type'  : 'application/JSON',
                     'X-User'        : username,
