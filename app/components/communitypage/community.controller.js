@@ -9,7 +9,10 @@
             leafletDrawEvents) {
 
         $scope.onload_community_map = false;
+        $scope.onload_community_data = true;
+        $scope.onload_data = false;
         $scope.numberSegments = 2;
+        $scope.currentPhenomIndex = 0; // 0 - Speed, 1 - Consumption, 2 - CO2
         var drawnItems = new L.FeatureGroup();
         $scope.segmentColors = [
             {
@@ -79,13 +82,13 @@
                 }
             }
         });
-        
+
         $scope.$on('leafletDirectivePath.mouseover', function (event, path) {
             var segment = parseInt(path.modelName.substring(1));
             // show tooltip:
-            console.log("segment "+segment+" hovered." );
+            console.log("segment " + segment + " hovered.");
         });
-        
+
         $scope.dataCharts = [];
         $scope.options_community = {
             chart: {
@@ -98,21 +101,21 @@
                 showValues: true,
                 duration: 500,
                 stacked: false,
-                forceY: [0, 55],
+                forceY: [0, 200],
                 showLegend: false,
                 showMinMax: false,
                 margin: {
                     left: 16,
                     top: 8,
                     right: 8,
-                    bottom: 8
+                    bottom: 24
                 },
                 color: function (d, i) {
                     return d.values[0].color;
                 }
             }
         };
-        
+
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);
             var dialog_desc = $translate.instant(description);
@@ -136,7 +139,7 @@
                 console.log("Geolocation is not supported by this browser.");
             }
         }
-        
+
         function showPosition(position) {
             console.log(position);
             $scope.center_community = {
@@ -154,7 +157,7 @@
         }
 
         getLocation();
-        
+
         $scope.onload_community_map = true;
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));
@@ -177,6 +180,7 @@
             },
             "tolerance": 25
         };
+
         var getPhenomStatisticValue = function (json, phenom) {
             var result = {
                 min: 0,
@@ -196,11 +200,59 @@
             }
             return result;
         };
-        $scope.dataAll = [];
-        var loadCharts = function (data) {
-            $scope.numberSegments = data.length;
-            console.log("number segments: " + $scope.numberSegments);
+
+        var getPhenomenonMaximum = function (jsondata, phenomenon) {
+            console.log(jsondata);
+            var max = 0;
+            for (var index = 0; index < jsondata.length; index++) {
+                var curr = getPhenomStatisticValue(jsondata[index].properties, phenomenon).max;
+                console.log(curr);
+                if (curr > max) {
+                    max = curr;
+                }
+            }
+            return max;
+        };
+
+        $scope.onPhenomenonChange = function (selected) {
+            // remove old data:
             $scope.dataCharts = [];
+            $scope.currentPhenomIndex = selected;
+
+            // update data on charts for each segment:
+            console.log(selected);
+            console.log($scope.dataAll);
+            for (var index = 0; index < $scope.numberSegments; index++) {
+                var curr = $scope.dataAll[(3 * index) + selected];
+                $scope.dataCharts.push(curr);
+                console.log("Label: "+curr[0].values[0].label);
+                // force new max  value in chart:
+                $scope.options_community.chart.forceY = [0, $scope.max[selected]];
+            }
+            
+        };
+
+        $scope.dataAll = [];
+        $scope.max = [
+            0,
+            0,
+            0
+        ];
+
+        var loadCharts = function (data) {
+            $scope.max = [
+                0,
+                0,
+                0
+            ];
+            $scope.max[0] = getPhenomenonMaximum(data, "Speed");
+            $scope.max[1] = getPhenomenonMaximum(data, "Consumption");
+            $scope.max[2] = getPhenomenonMaximum(data, "CO2");
+
+            $scope.options_community.chart.forceY = [0, $scope.max[0]];
+            $scope.numberSegments = data.length;
+            $scope.dataCharts = [];
+            $scope.dataAll = [];
             for (var i = 0; i < $scope.numberSegments; i++) {
                 var currSegment = data[i].properties;
                 var currSegmentData = {
@@ -214,7 +266,7 @@
                         "values": [
                             {
                                 "color": $scope.segmentColors[0][i],
-                                "label": (i + 1) + "",
+                                "label": (i + 1) + "Speed",
                                 "value": currSegmentData.speed.min
                             }
                         ]
@@ -240,8 +292,6 @@
                         ]
                     }
                 ];
-                console.log("segment " + i + " speedValues: ");
-                console.log(exampledata);
                 $scope.dataAll.push(
                         exampledata
                         );
@@ -254,7 +304,7 @@
                         "values": [
                             {
                                 "color": $scope.segmentColors[0][i],
-                                "label": (i + 1) + "",
+                                "label": (i + 1) + "Consumption",
                                 "value": currSegmentData.consumption.min
                             }
                         ]
@@ -280,8 +330,6 @@
                         ]
                     }
                 ];
-                console.log("segment " + i + " consumptionValues: ");
-                console.log(exampledata);
                 $scope.dataAll.push(
                         exampledata
                         );
@@ -291,7 +339,7 @@
                         "values": [
                             {
                                 "color": $scope.segmentColors[0][i],
-                                "label": (i + 1) + "",
+                                "label": (i + 1) + "CO2",
                                 "value": currSegmentData.co2.min
                             }
                         ]
@@ -317,14 +365,14 @@
                         ]
                     }
                 ];
-                console.log("segment " + i + " co2Values: ");
-                console.log(exampledata);
                 $scope.dataAll.push(
                         exampledata
                         );
             }
             ;
             $scope.options_community.chart.height = 600 / $scope.numberSegments;
+            $scope.onload_community_data = true;
+            $scope.onload_data = true;
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
@@ -336,7 +384,6 @@
         var handle = {
             created: function (e, leafletEvent, leafletObject, model, modelName) {
                 var layerDrawn = leafletEvent.layer;
-                console.log(layerDrawn);
                 var lineString = [];
                 var layer = layerDrawn._latlngs;
                 for (var i = 0; i < layer.length; i++) {
@@ -345,6 +392,7 @@
                             );
                 }
                 $scope.data.geometry.coordinates = lineString;
+                $scope.onload_community_data = false;
                 StatisticsService.getSegmentAnalysis($scope.data).then(
                         function (data) {
                             loadCharts(data.data.features);
@@ -353,7 +401,7 @@
                 });
                 // create single path objects from linestring:
                 $scope.paths_community = [];
-                for (var i = 0; i < lineString.length-1; i++) {
+                for (var i = 0; i < lineString.length - 1; i++) {
                     var pathObj = {};
                     var this_lng = lineString[i][0];
                     var this_lat = lineString[i][1];
@@ -365,12 +413,12 @@
                     pathObj['latlngs'] = [{
                             'lat': this_lat,
                             'lng': this_lng
-                    }, {
+                        }, {
                             'lat': next_lat,
                             'lng': next_lng
-                    }];
+                        }];
                     pathObj['color'] = $scope.segmentColors[2][i];
-                    $scope.paths_community['p'+ (i)] = pathObj;
+                    $scope.paths_community['p' + (i)] = pathObj;
                 }
             },
             edited: function (arg) {
