@@ -18,7 +18,12 @@
         </div>
         <md-card-content flex layout="row">
             <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_community_map" md-diameter="56"></md-progress-circular>
-            <div ng-if="onload_community_map" flex="60">
+            <div ng-if="onload_community_map" flex="60" layout="column">
+                <div flex class='center-aligned' style="padding-bottom: 16px;">
+                    {{'COMMUNITY_MAP_DESCRIPTION_1'| translate}}
+                    <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_polyline.png'/>
+                    {{'COMMUNITY_MAP_DESCRIPTION_2'| translate}}
+                </div>
                 <leaflet center="center_community" event-broadcast="events_community" layers="layers_community" lf-draw="drawOptions_community" paths="paths_community" height="600px" ></leaflet>
             </div>
             <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_community_data" md-diameter="56"></md-progress-circular>

@@ -150,7 +150,7 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'How much percentages of the track did you spend in which interval? Click on one of the intervals and the map highlights all measuered values within that interval. Click again to remove the highlight.',
             
             // Tracks Page - Calendar Tab:
-            'CALENDAR_OF_TRACKS_TAB'        : 'Calendar tab',
+            'CALENDAR_OF_TRACKS_TAB'        : 'Calendar',
             'ALL_TRACKS_TAB'                : 'All Tracks',
             'DAILY_OVERVIEW'                : 'Daily overview',
             'MONTHLY_OVERVIEW'              : 'Monthly overview',
@@ -263,7 +263,14 @@ angular.module('translations', [])
             'FEMALE'                : 'Female',
             'BUTTON_UPDATE_PROFILE' : 'Update Profile',
             'GERMAN'                : 'German',
-            'ENGLISH'               : 'English'
+            'ENGLISH'               : 'English',
+            
+            // Community Analysis Page:
+            'COMMUNITY_MAP_TITLE'           : 'Segment analysis map',
+            'COMMUNITY_MAP_DESCRIPTION_1'   : 'Click on the ',
+            'COMMUNITY_MAP_DESCRIPTION_2'   : '-button to create a polyline of segments. After final creation, statistics for each segment are presented on the right.',
+            'COMMUNITY_MAP_DESCRIPTION'     : 'Statistics for segments by anonymous enviroCar community data.'
+            
             
             
         });
@@ -409,7 +416,7 @@ angular.module('translations', [])
             'SPEED_RANGES_CHART_DESCRIPTION'    : 'In welche Intervallen hast du welchen Anteil deiner Fahrt verbracht? Klick auf eines der Intervalle um alle Messungen innerhalb des Intervals auf der Karte hervorzuheben. Klick erneut auf das Interval um die Hervorhebung wieder zu entfernen.',
             
             // Tracks Page - Calendar Tab:
-            'CALENDAR_OF_TRACKS_TAB'        : 'FahrtenKalender',
+            'CALENDAR_OF_TRACKS_TAB'        : 'Kalenderübersicht',
             'ALL_TRACKS_TAB'                : 'Alle Fahrten',
             'DAILY_OVERVIEW'                : 'Tagesübersicht',
             'MONTHLY_OVERVIEW'              : 'Monatsübersicht',
@@ -522,7 +529,13 @@ angular.module('translations', [])
             'FEMALE'                : 'Weiblich',
             'BUTTON_UPDATE_PROFILE' : 'Aktualisiere Profil',
             'GERMAN'                : 'Deutsch',
-            'ENGLISH'               : 'Englisch'
+            'ENGLISH'               : 'Englisch',
+            
+            // Community Analysis Page:
+            'COMMUNITY_MAP_TITLE'           : 'Abschnitt Analyse Karte',
+            'COMMUNITY_MAP_DESCRIPTION_1'   : 'Klicke auf den ',
+            'COMMUNITY_MAP_DESCRIPTION_2'   : '-Knopf um eine Polylinie von Segmenten zu erstellen. Nachdem die Polylinie erstellt ist, werden Statistiken zu den erstellten Segmenten rechts angezeigt.',
+            'COMMUNITY_MAP_DESCRIPTION'     : 'Statistiken für ausgewählte Streckensegmente durch anonyme enviroCar Communitydaten.'
             
         });
         $translateProvider.preferredLanguage('en');
