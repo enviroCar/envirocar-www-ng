@@ -28,9 +28,6 @@
                     <b>{{ 'COMMING_SOON' | translate}}</b>
                 </p>
             </div>
-            <p class='comparison-title'> {{'SPEEDZONES_DESC_SHORT'| translate}}</p>
-
-            <div flex></div>
 
             <div layout="row">
                 <div class="rect_red">
@@ -41,12 +38,12 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"07:06"}} {{'HOURS'| translate}}
+                        {{userstatistics.duration130}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
                         <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
-                        {{502.34}} km
+                        {{userstatistics.distance130}} km
                     </span>
                     <br>
                 </div>
@@ -64,12 +61,12 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"11:36"}} {{'HOURS'| translate}}
+                        {{userstatistics.duration60to130}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
                         <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
-                        {{1231.68}} km
+                        {{userstatistics.distance60to130}} km
                     </span>
                     <br>
                 </div>
@@ -87,12 +84,12 @@
                 <div class="speed-zones-content">
                     <span>
                         <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
-                        {{"32:52"}} {{'HOURS'| translate}}
+                        {{userstatistics.duration60}} {{'HOURS'| translate}}
                     </span>
                     <br>
                     <span >
                         <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
-                        {{1610.2}} km
+                        {{userstatistics.distance60}} km
                     </span>
                 </div>
             </div>
