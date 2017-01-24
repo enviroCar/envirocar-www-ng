@@ -2,21 +2,20 @@
     'use strict';
     function ProfileCtrl(
             $scope,
-            $state,
             $timeout,
             $translate,
             UserCredentialsService,
             UserService) {
 
-        var username;
-        var token;
+        $scope.username="";
+        $scope.password="";
         var credits = UserCredentialsService.getCredentials();
         if (credits) {
-            username = credits.username;
-            token = credits.password;
+            $scope.username = credits.username;
+            $scope.password = credits.password;
         }
 
-        $scope.name = username;
+        $scope.name = $scope.username;
         $scope.firstName;
         $scope.lastName;
         $scope.email;
@@ -36,9 +35,10 @@
         $scope.termsOfUseVersion;
         $scope.dateBirthdayPicker = undefined;
         // ask server for current userinformation:
-        UserService.getUser(username, token).then(
+        UserService.getUser($scope.username, $scope.password).then(
                 function (data) {
                     console.log(data);
+                    var data = data.data;
                     $scope.created = new Date(data.created).toLocaleString()
                             .split(',')[0];
                     $scope.modified = new Date(data.modified).toLocaleString()
@@ -95,6 +95,7 @@
                     }
                 }, function (error) {
             console.log("error " + error);
+            console.log(error);
         }
         );
 
@@ -141,13 +142,11 @@
             $scope.submissionErrorMessage = "";
             $scope.submissionFailure = false;
             var validationflag = true;
-            var validationerror = 0;
             if ($scope.oldpassword !== undefined && $scope.oldpassword !== "") {
                 console.log("old pw is typed.");
                 if ($scope.newpassword === undefined || $scope.newpassword === "") {
                     console.log("new password(1) is wrong.");
                     validationflag = false;
-                    validationerror = 0;
                 }
             }
             // validate if password and reentered password are same
@@ -156,13 +155,11 @@
                 console.log("old pw: " + $scope.oldpassword);
                 if ($scope.oldpassword === undefined || $scope.oldpassword === "") {
                     validationflag = false;
-                    validationerror = 1;
                     // some error to be thrown.
                 }
                 if ($scope.newpassword !== $scope.newpasswordrepeat) {
                     // some error to be thrown.
                     validationflag = false;
-                    validationerror = 2;
                 }
             }
 
@@ -208,7 +205,7 @@
                     $scope.newpassword !== "" &&
                     $scope.newpassword === $scope.newpasswordrepeat) {
                 // update with new password:
-                UserService.putUserDetails(username, $scope.oldpassword, dataput).then(function (data) {
+                UserService.putUserDetails($scope.username, $scope.oldpassword, dataput).then(function (data) {
                     if (validationflag === true) {
                         $scope.submissionSuccess = true;
                         $timeout(function () {
@@ -218,10 +215,10 @@
                                 "") {
                             // update usercredentials on web app:
                             UserCredentialsService.setCredentials(
-                                    username,
+                                    $scope.username,
                                     $scope.newpassword
                                     );
-                            token = $scope.newpassword;
+                            $scope.token = $scope.newpassword;
                         }
                         // update profilepage with new data:
                         updateNewUserData();
@@ -237,7 +234,7 @@
             } else {
                 // update without new password:
                 if ($scope.newpassword === undefined || $scope.newpassword === "") {
-                    UserService.putUserDetails(username, token, dataput).then(function (data) {
+                    UserService.putUserDetails($scope.username, $scope.password, dataput).then(function (data) {
                         console.log("no new password, but updates on profile.");
 
                         $scope.submissionSuccess = true;

@@ -36,7 +36,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.1f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: $translate.instant('SPEED') + ' (km/h)',
                     axisLabelDistance: -10
@@ -104,8 +104,8 @@
                     };
                     console.log("speedChart redrawn");
                     window.dispatchEvent(new Event('resize'));
-                }, 100);
-            }, 100);
+                }, 400);
+            }, 300);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 500);
@@ -127,6 +127,9 @@
                 axisLabel: axisLabelCO2,
                 axisLabelDistance: -10
             };
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 1000);
         });
 
         $scope.optionsConsumption = {
@@ -149,7 +152,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.2f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: $translate.instant('CONSUMPTION') + ' (l/h)',
                     axisLabelDistance: -20
@@ -183,7 +186,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.4f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: 'CO2 (kg/h)',
                     axisLabelDistance: -20

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function DashboardCtrl($scope, UserCredentialsService, UserService, TrackService) {
+    function DashboardCtrl($scope, $timeout, UserCredentialsService, UserService, TrackService) {
 
         var username;
         var token;
@@ -21,10 +21,6 @@
         $scope.total_tracks = 0;
         $scope.total_distance = 0;
         $scope.tracksAvailable = false;
-
-        /**
-         * START: validation of methods:
-         */
 
         // ask server for number of total community tracks:
         TrackService.getTotalTracks(username, token).then(
@@ -69,16 +65,16 @@
         }
         );
 
-/**
-        // ask server for driven duration:
-        UserService.getUserStatistic(username, token).then(
-                function (data) {
-                    console.log(data);
-                }, function (data) {
-            console.log("Error: " + data);
-        }
-        );
-*/
+        /**
+         // ask server for driven duration:
+         UserService.getUserStatistic(username, token).then(
+         function (data) {
+         console.log(data);
+         }, function (data) {
+         console.log("Error: " + data);
+         }
+         );
+         */
 
         // ask server user email:
         UserService.getUserEmail(username, token).then(
@@ -113,16 +109,18 @@
         }
         );
 
-        /** getUserDistance is not available yet, but:
-         UserService.getUserDistance(username, token).then(
-         function(data){
-         console.log(data);
-         $scope.distance_driven = data.distance;
-         }, function(data){
-         console.log("Error: "+data);
-         }
-         );
-         **/
+/**
+        // TODO: change API service method
+        UserService.getUserStatistic().then(
+                function (data) {
+                    console.log(data);
+                    var globalStats = data.data;
+                    $scope.distance_driven = globalStats.distance + "km";
+                }
+        , function (error) {
+            console.log(error);
+        });
+        */
 
     }
     ;

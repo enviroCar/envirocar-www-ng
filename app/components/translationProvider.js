@@ -19,6 +19,7 @@ angular.module('translations', [])
             'CLICK_FOR_MORE_INFO'   : 'click for more information...',
             'COMMING_SOON'          : 'Coming Soon...',
             'NO_TRACKS'             : 'You have no tracks uploaded yet.',
+            'CHANGE_LANGUAGE'       : 'Change Language',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Open Sidenav',
@@ -38,12 +39,21 @@ angular.module('translations', [])
             'SITE_TERMS'            : 'Terms',
             
             // Login:
-            'USERNAME'  : 'Username',
-            'PASSWORD'  : 'Password',
-            'REGISTER'  : 'Register',
-            'LOGIN'     : 'Login',
-            'FORGOT_PASSWORD'   : 'forgot password?',
-            'INVALID_LOGIN'     : 'Invalid user credentials.',
+            'USERNAME'                  : 'Username',
+            'PASSWORD'                  : 'Password',
+            'REGISTER'                  : 'Register',
+            'LOGIN'                     : 'Login',
+            'FORGOT_PASSWORD'           : 'forgot password?',
+            'INVALID_LOGIN'             : 'Invalid user credentials.',
+            'PASSWORD_REPEAT'           : 'repeat the password',  
+            'BACK_TO_LOGIN'             : 'Back to Login',
+            'UNMATCHING_PASSWORDS'      : 'The passwords do not match.',
+            'EMPTY_PASSWORD'            : 'You must fill in both password fields.',
+            'INVALID_EMAIL'             : 'The email is invalid.',
+            'USERNAME_IN_USE_1'         : 'The username ',
+            'USERNAME_IN_USE_2'         : ' is already in use. Please choose a different username.',
+            'EMPTY_USERNAME'            : 'Please choose a username.',
+            'LOGOUT'                    : 'Logout',
             
             // Dashboard:
             'FRIENDS'               : 'Friends',
@@ -281,6 +291,7 @@ angular.module('translations', [])
             'CLICK_FOR_MORE_INFO'   : 'Klick für weitere Informationen...',
             'COMMING_SOON'          : 'Demnächst Verfügbar...',
             'NO_TRACKS'             : 'Du hast noch keine Fahrten hochgeladen.',
+            'CHANGE_LANGUAGE'       : 'Sprache wechseln',
             
             // Sidenavigation:
             'OPEN-NAV'              : 'Öffne Seitenleiste',
@@ -300,12 +311,21 @@ angular.module('translations', [])
             'SITE_TERMS'            : 'Nutzungsbedingungen',
             
             // Login:
-            'USERNAME': 'Benutzername',
-            'PASSWORD': 'Passwort',
-            'REGISTER': 'Registrieren',
-            'LOGIN': 'Anmelden',
-            'FORGOT_PASSWORD'   : 'Passwort vergessen?',
-            'INVALID_LOGIN'     : 'Fehlerhafte Benutzerdaten.',
+            'USERNAME'                  : 'Benutzername',
+            'PASSWORD'                  : 'Passwort',
+            'REGISTER'                  : 'Registrieren',
+            'LOGIN'                     : 'Anmelden',
+            'FORGOT_PASSWORD'           : 'Passwort vergessen?',
+            'INVALID_LOGIN'             : 'Fehlerhafte Benutzerdaten.',
+            'PASSWORD_REPEAT'           : 'Passwort (erneut)',  
+            'BACK_TO_LOGIN'             : 'Zur Anmeldung',
+            'UNMATCHING_PASSWORDS'      : 'Die Passwörter stimmen nicht überein.',
+            'EMPTY_PASSWORD'            : 'Du musst beide Passwortfelder ausfüllen.',
+            'INVALID_EMAIL'             : 'Die Email ist ungültig.',
+            'USERNAME_IN_USE_1'         : 'Der Nutzername ',
+            'USERNAME_IN_USE_2'         : ' ist bereits vergeben. Bitte wähle einen anderen Nutzernamen.',
+            'EMPTY_USERNAME'            : 'Du musst deinen Benutzernamen noch wählen.',
+            'LOGOUT'                    : 'Ausloggen',
             
             // Dashboard:
             'FRIENDS'               : 'Freunde',

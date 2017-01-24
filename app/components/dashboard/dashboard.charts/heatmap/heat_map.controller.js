@@ -38,11 +38,10 @@
                     scrollWheelZoom: false,
                     zoomControl: true,
                     doubleClickZoom: false,
-                    dragging: false
+                    dragging: true
                 }
             }
         });
-        console.log($scope.map.layers2.overlays);
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;

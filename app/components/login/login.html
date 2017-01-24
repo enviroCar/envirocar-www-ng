@@ -21,41 +21,89 @@
     <div class="loginBox md-whiteframe-z1" layout="column">
         <md-toolbar>
             <h3 style="padding-left: 20px;">
-                <span>Login</span> 
+                <span ng-if='login_active'>{{'LOGIN'| translate}}</span>
+                <span ng-if='!login_active'>{{'REGISTER'| translate}}</span> 
             </h3>
         </md-toolbar>
+        <!-- LOGIN STATE-->
         <md-content class="md-padding" layout="column">
-            <md-input-container>
-                <label>{{'USERNAME'| translate}}</label>
-                <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
-            </md-input-container>
-            <md-input-container>
-                <label>{{'PASSWORD'| translate}}</label>
-                <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
-            </md-input-container>
-            <span ng-show='error' class="error-span">{{'INVALID_LOGIN'| translate}}</span>
-            <div layout-xs="column" layout="row" style="padding-top:20px;">
-                <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-primary" ng-click="login()">{{'LOGIN'| translate}}</md-button>
-                <span flex class="span-flex"></span>
-                <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-success">
-                    <div id="comming_soon_light">
-                        <p class="comming_soon_txt_btn">
-                            <b>{{ 'COMMING_SOON' | translate}}</b>
-                        </p>
-                    </div>
-                    {{'REGISTER'| translate}}
-                </md-button>
+            <div ng-show="login_active" ng-cloak layout="column">
+                <md-input-container>
+                    <label>{{'USERNAME'| translate}}</label>
+                    <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
+                </md-input-container>
+                <md-input-container>
+                    <label>{{'PASSWORD'| translate}}</label>
+                    <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
+                </md-input-container>
             </div>
-            <div layout="row" style="padding-top:20px;">
-                <span flex class="span-flex"></span>
-                <md-button class="md-no-ink" flex-xs="50" flex-sm="50">
-                    <div id="comming_soon_light">
-                        <p class="comming_soon_txt_btn">
-                            <b>{{ 'COMMING_SOON' | translate}}</b>
-                        </p>
-                    </div>
-                    {{'FORGOT_PASSWORD'| translate}}
-                </md-button>
+            <!-- REGISTER STATE-->
+            <div ng-show="!login_active" ng-cloak layout="column">
+                <span ng-show='error_name' class='error-span'>{{'EMPTY_USERNAME'| translate}}</span>
+                <span ng-show="error_name_in_use" class="error-span">{{'USERNAME_IN_USE_1'| translate}}{{name_in_use_alrdy}}{{'USERNAME_IN_USE_2'| translate}}</span>
+                <md-input-container>
+                    <label>{{'USERNAME'| translate}}</label>
+                    <input type="text" ng-model="username_register" ng-required="true">
+                </md-input-container>
+                <span ng-show='error_mail' class='error-span'>{{'INVALID_EMAIL'| translate}}</span>
+                <md-input-container>
+                    <label>{{'EMAIL'| translate}}</label>
+                    <input ng-model="email_register" type="text" ng-required="true">
+                </md-input-container>
+                <span ng-show='error_pw_empty' class='error-span'>{{'EMPTY_PASSWORD'| translate}}</span>
+                <md-input-container>
+                    <label>{{'PASSWORD'| translate}}</label>
+                    <input ng-required="true" ng-model="password_register" type="password">
+                </md-input-container>
+                <span ng-show='error_pw_repeat_empty' class='error-span'>{{'EMPTY_PASSWORD'| translate}}</span>
+                <span ng-show='error_pw_not_match' class='error-span'>{{'UNMATCHING_PASSWORDS'| translate}}</span>
+                <md-input-container>
+                    <label>{{'PASSWORD_REPEAT'| translate}}</label>
+                    <input ng-required="true" ng-model="password_repeat" type="password">
+                </md-input-container>
+            </div>
+            <!-- LOGIN STATE -->
+            <div ng-show="login_active">
+                <span ng-show='error' class='error-span'>{{'INVALID_LOGIN'| translate}}</span>
+                <div layout-xs="column" layout="row" style="padding-top:20px;">
+                    <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-primary" ng-click="login()">{{'LOGIN'| translate}}</md-button>
+                    <span flex class="span-flex"></span>
+                    <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-success" ng-click="login_active = false;">
+                        {{'REGISTER'| translate}}
+                    </md-button>
+                </div>
+                <div layout="row" style="padding-top:20px;">
+                    <span flex class="span-flex"></span>
+                    <md-button class="md-no-ink" flex-xs="50" flex-sm="50" ng-click="forgot_password()">
+                        <div id="comming_soon_light">
+                            <p class="comming_soon_txt_btn">
+                                <b>{{ 'COMMING_SOON' | translate}}</b>
+                            </p>
+                        </div>
+                        {{'FORGOT_PASSWORD'| translate}}
+                    </md-button>
+                </div>
+            </div>
+            <!-- REGISTER STATE -->
+            <div ng-show="!login_active">
+                <div layout-xs="column" layout="row" style="padding-top:20px;">
+                    <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-success" ng-click="login_active = true;">{{'BACK_TO_LOGIN'| translate}}</md-button>
+                    <span flex class="span-flex"></span>
+                    <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30" class="md-raised md-primary" ng-click="register()">
+                        {{'REGISTER'| translate}}
+                    </md-button>
+                </div>
+                <div layout="row" style="padding-top:20px;">
+                    <span flex class="span-flex"></span>
+                    <md-button class="md-no-ink" flex-xs="50" flex-sm="50" ng-click="forgot_password()">
+                        <div id="comming_soon_light">
+                            <p class="comming_soon_txt_btn">
+                                <b>{{ 'COMMING_SOON' | translate}}</b>
+                            </p>
+                        </div>
+                        {{'FORGOT_PASSWORD'| translate}}
+                    </md-button>
+                </div>
             </div>
         </md-content>
     </div>

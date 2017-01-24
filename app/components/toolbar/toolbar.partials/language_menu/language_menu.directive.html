@@ -1,4 +1,5 @@
 <!DOCTYPE html>
 <md-button ng-click="changeLanguage()" aria-label="language">
+    <md-tooltip md-delay="500"> {{ 'CHANGE_LANGUAGE' | translate }} </md-tooltip>
     <img src="{{currOption.image}}"/>
 </md-button>
