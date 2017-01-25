@@ -88,7 +88,7 @@
         this.postNewTrack = function(username, token, track){
             return $http({
                 method: 'POST',
-                url: ecBaseUrl + '/tracks',
+                url: ecBaseUrl + '/users/' + username + '/tracks',
                 headers : {
                     'Content-Type' : 'application/JSON',
                     'X-User'    : username,
@@ -99,6 +99,23 @@
                 return res.data;
             }).error(function (error) {
                 console.log("ResponseError @POST: "+ecBaseUrl+"/tracks");
+                return error;
+            });
+        };
+        
+        this.deleteTrack = function(username, token, trackid){
+            return $http({
+                method: 'DELETE',
+                url: ecBaseUrl + '/users/' + username + '/tracks/'+trackid,
+                headers : {
+                    'Content-Type' : 'application/JSON',
+                    'X-User'    : username,
+                    'X-Token'   : token
+                }
+            }).success(function (res) {
+                return res.data;
+            }).error(function (error) {
+                console.log("ResponseError @DELETE: " + ecBaseUrl + '/users/' + username + '/tracks/'+trackid);
                 return error;
             });
         };

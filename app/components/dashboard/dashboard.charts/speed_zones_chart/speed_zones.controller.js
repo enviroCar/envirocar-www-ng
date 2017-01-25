@@ -30,10 +30,9 @@
             return hours + ":" + minutes;
         };
 
-/*
-        // TODO: request server for userstatistics
-        // TODO: save userstatistics into scope variables
-        UserService.getUserStatistic().then(
+
+        // TODO: update for user's userstatistic after stable server has it.
+        UserService.getUserStatistic($scope.username, $scope.password).then(
                 function (data) {
                     console.log(data);
                     var globalStats = data.data;
@@ -49,13 +48,13 @@
                         distance60to130: (globalStats.distance
                                 - userStats.above130kmh.distance
                                 - userStats.below60kmh.distance
-                                - 0).toFixed(2),
+                                - userStats.NaN.distance).toFixed(2),
                         duration60to130: decimalHoursToHHMM(globalStats.duration
                                 - userStats.above130kmh.duration
                                 - userStats.below60kmh.duration
-                                - 0),
-                        distanceNaN: 0,
-                        durationNaN: decimalHoursToHHMM(0)
+                                - userStats.NaN.duration),
+                        distanceNaN: userStats.NaN.distance,
+                        durationNaN: decimalHoursToHHMM(userStats.NaN.duration)
                     };
                     $scope.onloadSpeedZones = true;
                     $timeout(function () {
@@ -69,7 +68,7 @@
                 }
         , function (error) {
             console.log(error);
-        });*/
+        });
 
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))

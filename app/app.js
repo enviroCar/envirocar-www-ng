@@ -4,7 +4,6 @@
     angular.module('enviroCar', [
         'ngMaterial',
         'ui-leaflet',
-        //'leaflet-directive',
         'ngAnimate',
         'ngCookies',
         'ui.router',

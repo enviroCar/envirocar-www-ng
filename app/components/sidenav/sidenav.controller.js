@@ -35,7 +35,7 @@
                 icon: 'pie_chart',
                 sref: '.community',
                 tooltip: 'TT_SN_SEGMENT_OPEN',
-                commingSoon: false
+                commingSoon: true
             }];
 
         $scope.selectItem = selectItem;
@@ -54,7 +54,7 @@
         $scope.menuItems[0]['commingSoon'] = false;
         $scope.menuItems[1]['commingSoon'] = false;
         $scope.menuItems[2]['commingSoon'] = false;
-        $scope.menuItems[3]['commingSoon'] = false;
+        $scope.menuItems[3]['commingSoon'] = true;
         
         function selectItem(item) {
             $scope.title = item.name;

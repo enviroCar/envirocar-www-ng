@@ -6,8 +6,7 @@
             $timeout,
             UserService,
             FilterStateService,
-            leafletBoundsHelpers,
-            leafletDrawEvents) {
+            leafletBoundsHelpers) {
 
         var drawnItems = new L.FeatureGroup();
         $scope.okay_pressed = false;
@@ -213,7 +212,7 @@
             deletestart: function (arg) {},
             deletestop: function (arg) {}
         };
-        var drawEvents = leafletDrawEvents.getAvailableEvents();
+        var drawEvents = [];//leafletDrawEvents.getAvailableEvents();
         drawEvents.forEach(function (eventName) {
             $scope.$on('leafletDirectiveDraw.' + eventName, function (e, payload) {
                 //{leafletEvent, leafletObject, model, modelName} = payload

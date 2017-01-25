@@ -12,15 +12,26 @@
         }
         $scope.name_of_user = username;
         $scope.track_number = 0;
-        $scope.friends_number = 0;
         $scope.distance_driven = 0;
         $scope.duration_driven = 0;
-        $scope.groups_number = 0;
         $scope.emailId = "";
         $scope.total_users = 0;
         $scope.total_tracks = 0;
         $scope.total_distance = 0;
-        $scope.tracksAvailable = false;
+        $scope.tracksAvailable = true;
+
+        var decimalHoursToHHMM = function (decimalHours) {
+            var decimalTime = parseFloat(decimalHours + "");
+            decimalTime = 60 * decimalTime;
+            var hours = Math.floor(decimalTime / 60);
+            decimalTime = decimalTime - (hours * 60);
+            var minutes = Math.floor(decimalTime);
+            if (hours < 10)
+                hours = "0" + hours;
+            if (minutes < 10)
+                minutes = "0" + minutes;
+            return hours + ":" + minutes;
+        };
 
         // ask server for number of total community tracks:
         TrackService.getTotalTracks(username, token).then(
@@ -40,54 +51,10 @@
         }
         );
 
-        // ask server for number user tracks:
-        UserService.getTotalUserTracks(username, token).then(
-                function (data) {
-                    $scope.track_number = data.headers('Content-Range').split("/")[1];
-                    if ($scope.track_number > 0)
-                        $scope.tracksAvailable = true;
-                    else
-                        $scope.tracksAvailable = false;
-
-                },
-                function (data) {
-                    $scope.tracksAvailable = false;
-                    console.log("error " + data)
-                }
-        );
-
-        // ask server for number of friends:
-        UserService.getUserFriends(username, token).then(
-                function (data) {
-                    $scope.friends_number = data.data.users.length;
-                }, function (data) {
-            console.log("Error: " + data);
-        }
-        );
-
-        /**
-         // ask server for driven duration:
-         UserService.getUserStatistic(username, token).then(
-         function (data) {
-         console.log(data);
-         }, function (data) {
-         console.log("Error: " + data);
-         }
-         );
-         */
-
         // ask server user email:
-        UserService.getUserEmail(username, token).then(
+        UserService.getUser(username, token).then(
                 function (data) {
                     $scope.emailId = data.data.mail;
-                }, function (data) {
-            console.log("Error: " + data);
-        }
-        );
-
-        UserService.getUserGroups(username, token).then(
-                function (data) {
-                    $scope.groups_number = data.data.groups.length;
                 }, function (data) {
             console.log("Error: " + data);
         }
@@ -109,18 +76,23 @@
         }
         );
 
-/**
         // TODO: change API service method
-        UserService.getUserStatistic().then(
+        // ask server for driven userdistance and userduration:
+        UserService.getUserStatistic(username, token).then(
                 function (data) {
                     console.log(data);
                     var globalStats = data.data;
-                    $scope.distance_driven = globalStats.distance + "km";
+                    $scope.distance_driven = globalStats.distance.toFixed(1) + "km";
+                    $scope.duration_driven = decimalHoursToHHMM(globalStats.duration) + "h";
+                    $scope.track_number = globalStats.trackSummaries.length;
+                    if ($scope.distance_driven < 0.1)
+                        $scope.tracksAvailable = false;
                 }
         , function (error) {
+            $scope.tracksAvailable = false;
             console.log(error);
         });
-        */
+
 
     }
     ;

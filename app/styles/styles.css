@@ -450,7 +450,7 @@ md-sidenav {
 
 .profiletab .envirocar_statistics {
   bottom: 10px;
-  left: 70px;
+  left: 35px;
   color: white;
   position: absolute; }
 
@@ -814,6 +814,10 @@ cl-paging {
 
 .error-span {
   color: red;
+  margin: auto; }
+
+.success-span {
+  color: green;
   margin: auto; }
 
 .profilepage md-input-container {
