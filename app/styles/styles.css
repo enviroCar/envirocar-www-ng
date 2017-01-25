@@ -286,7 +286,7 @@ md-sidenav {
   md-sidenav md-icon {
     display: block !important;
     height: auto;
-    padding-left: 4px; }
+    padding-left: 2px; }
   md-sidenav .icon_stroked {
     width: 100%;
     height: 100%;
