@@ -3,12 +3,7 @@
     function CalendarTabCtrl(
             $rootScope,
             $scope,
-            $state,
-            $translate,
             $timeout,
-            $http,
-            $filter,
-            $element,
             TrackService,
             MaterialCalendarData,
             UserCredentialsService,
