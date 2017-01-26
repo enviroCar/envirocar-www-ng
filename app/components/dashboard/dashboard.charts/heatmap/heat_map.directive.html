@@ -14,12 +14,7 @@
             </md-button>
         </div>
     </div>
-    <leaflet defaults="map.defaults" lf-center="map.center2" layers="map.layers2" width="100%" height="480px">
-        <div id="comming_soon">
-            <p class="comming_soon_txt" layout-align="center center">
-                <b>{{ 'COMMING_SOON' | translate}}</b>
-            </p>
-        </div>
+    <leaflet bounds="map.bounds2" defaults="map.defaults" layers="map.layers2" width="100%" height="480px">
         <div class="no_tracks" ng-show="!tracksAvailable && onload_heat_map">
             <div class="transparent-container">
                 <img src="app/components/assets/img_tracks.png">

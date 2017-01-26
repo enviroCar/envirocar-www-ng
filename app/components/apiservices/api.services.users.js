@@ -65,7 +65,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/statistics',
-                cache: true,
+                cache: false, // dont use cache here because of password changes --> bad user experience otherwise
                 headers: {
                     'Content-Type': 'application/JSON',
                     'X-User': username,
@@ -89,7 +89,7 @@
             return $http({
                 method: 'GET',
                 url: 'http://localhost:8080/webapp' + '/users/' + "andy" + '/userStatistic',
-                // don't use caching, because of possible password user changes would lead to bad user expierience otherwise.
+                cache: true,
                 headers: {
                     'Content-Type': 'application/JSON',
                     'X-User': "andy",
