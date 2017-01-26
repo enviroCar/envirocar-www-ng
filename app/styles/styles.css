@@ -730,6 +730,9 @@ cl-paging {
     font-variant: small-caps;
     opacity: 0.4; }
 
+#spatial_filter_dialog_map {
+  height: 300px; }
+
 #loader_spatial {
   width: 100%;
   height: 388px;
