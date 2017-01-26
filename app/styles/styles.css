@@ -794,6 +794,21 @@ cl-paging {
     width: 60px;
     height: 40px; }
 
+.rect_white {
+  background-color: #aaaaaa;
+  width: 50%;
+  height: 40px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000; }
+  .rect_white p {
+    font-size: 14px;
+    float: left;
+    padding-left: 8px; }
+  .rect_white img {
+    float: right;
+    width: 60px;
+    height: 40px; }
+
 .speed-zones-content {
   margin-left: 0px; }
   .speed-zones-content span {

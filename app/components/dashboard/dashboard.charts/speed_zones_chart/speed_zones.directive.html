@@ -22,13 +22,6 @@
         <md-progress-circular class="loader_dashboard2" ng-if="!onloadSpeedZones" md-diameter="156"></md-progress-circular>
 
         <div layout="column" flex style="height: 240px; position: relative;" ng-if='onloadSpeedZones'>
-
-            <div id="comming_soon">
-                <p class="comming_soon_txt_speedzones" layout-align="center center">
-                    <b>{{ 'COMMING_SOON' | translate}}</b>
-                </p>
-            </div>
-
             <div layout="row">
                 <div class="rect_red">
                     <p>{{ 'HIGH_SPEED_ZONE' | translate }}</p>
@@ -90,6 +83,28 @@
                     <span >
                         <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
                         {{userstatistics.distance60}} km
+                    </span>
+                </div>
+            </div>
+            
+            <div flex ng-if="NaN_exist"></div>
+            <div flex ng-if="NaN_exist"></div>
+
+            <div layout="row" ng-if="NaN_exist">
+                <div class="rect_white">
+                    <p>{{ 'NAN_SPEED_ZONE' | translate }}</p>
+                    <img src="app/components/assets/car_pics/SimpleWhiteCarTopView.png">
+                </div>
+                <div flex></div>
+                <div class="speed-zones-content">
+                    <span>
+                        <i class="material-icons md-24" style="height:28px;width:28px">timelapse</i>
+                        {{userstatistics.durationNaN}} {{'HOURS'| translate}}
+                    </span>
+                    <br>
+                    <span >
+                        <i class="material-icons md-24" style="height:28px;width:28px">timeline</i>
+                        {{userstatistics.distanceNaN}} km
                     </span>
                 </div>
             </div>

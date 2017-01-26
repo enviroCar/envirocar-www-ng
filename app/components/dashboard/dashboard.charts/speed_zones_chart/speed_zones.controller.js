@@ -4,6 +4,7 @@
 
         $scope.onloadSpeedZones = false;
         $scope.loading = true;
+        $scope.NaN_exist = false;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
         $scope.userstatistics = {
@@ -56,6 +57,10 @@
                         distanceNaN: userStats.NaN.distance,
                         durationNaN: decimalHoursToHHMM(userStats.NaN.duration)
                     };
+                    if ($scope.userstatistics.distanceNaN > 0)
+                        $scope.NaN_exist = true;
+                    console.log($scope.userstatistics.distanceNaN);
+                    console.log($scope.NaN_exist);
                     $scope.onloadSpeedZones = true;
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'));
