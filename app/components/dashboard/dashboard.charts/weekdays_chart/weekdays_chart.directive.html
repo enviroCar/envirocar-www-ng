@@ -25,7 +25,7 @@
         <md-card-content flex>
             <md-progress-circular class="loader_dashboard2" ng-if="!onload_weekdays" md-diameter="56"></md-progress-circular>
             <div flex ng-if="onload_weekdays" layout="row">
-                <nvd3 class="weekday_chart" options="optionsWeekdays" data="dataWeekdays" api="api" flex></nvd3>
+                <nvd3 options="optionsWeekdays" data="dataWeekdays" api="api" flex></nvd3>
             </div>
         </md-card-content>
     </div>

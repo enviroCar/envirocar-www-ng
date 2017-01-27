@@ -50,8 +50,8 @@
             }, 100);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
-            }, 500);
-        });
+            });
+        }, 500);
 
         $scope.$on('toolbar:language-changed', function (event, args) {
             var axisYLabel = "km";
@@ -130,7 +130,6 @@
         }, 300);
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));
-
         }, 700);
     }
     ;
