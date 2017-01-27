@@ -2,6 +2,7 @@
     'use strict';
     function HeatMapCtrl(
             $scope,
+            $timeout,
             UserCredentialsService,
             UserService,
             leafletBoundsHelpers) {
@@ -27,24 +28,38 @@
                         }
                     },
                     overlays: {
+                        heat:
+                                {
+                                    name: 'Heat Map',
+                                    type: 'heat',
+                                    data: $scope.heat_dataset,
+                                    layerOptions: {
+                                        radius: 20,
+                                        blur: 30,
+                                        minopacity: 0,
+                                        maxZoom: 12
+                                    },
+                                    visible: true,
+                                    doRefresh: true
+                                }
                     }
                 },
-                defaults: {
+                defaults2: {
+                    maxZoom: 10,
+                    zoomControlPosition: 'topright',
                     scrollWheelZoom: true,
                     zoomControl: true,
                     doubleClickZoom: true,
                     dragging: true
                 },
                 bounds2: {
-                    
                 }
             }
         });
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        var mid_point = [0, 0];
-        var heat_dataset = [];
+        $scope.heat_dataset = [];
         var dataset_start = [];
         var dataset_end = [];
         UserService.getUserStatistic($scope.username, $scope.password).then(
@@ -62,8 +77,6 @@
                         ['geometry']
                         ['coordinates'][1];
                         coord_push_start[2] = 1;
-                        mid_point[0] += coord_push_start[1];
-                        mid_point[1] += coord_push_start[0];
                         coord_push_end[1] = tracksummary[i]
                         ['endPosition']
                         ['geometry']
@@ -73,26 +86,17 @@
                         ['geometry']
                         ['coordinates'][1];
                         coord_push_end[2] = 1;
-                        mid_point[0] += coord_push_end[1];
-                        mid_point[1] += coord_push_end[0];
                         dataset_start.push(coord_push_start);
                         dataset_end.push(coord_push_end);
-                        heat_dataset.push(coord_push_start);
-                        heat_dataset.push(coord_push_end);
+                        $scope.heat_dataset.push(coord_push_start);
+                        $scope.heat_dataset.push(coord_push_end);
                     }
-                    mid_point[0] = mid_point[0] / (tracksummary.length * 2);
-                    mid_point[1] = mid_point[1] / (tracksummary.length * 2);
-                    $scope.map.center2 = {
-                        lat: mid_point[1],
-                        lng: mid_point[0],
-                        zoom: 10
-                    };
                     $scope.map.layers2.overlays = {
                         heat:
                                 {
                                     name: 'Heat Map',
                                     type: 'heat',
-                                    data: heat_dataset,
+                                    data: $scope.heat_dataset,
                                     layerOptions: {
                                         radius: 20,
                                         blur: 30,
@@ -155,11 +159,38 @@
                         [northeast.lat + padding_lat, northeast.lng + padding_lng],
                         [southwest.lat - padding_lat, southwest.lng - padding_lng]
                     ]);
-                    $scope.onload_heat_map = true;
+                    $timeout(function () {
+                        $scope.onload_heat_map = true;
+                        window.dispatchEvent(new Event('resize'));
+                    }, 300);
                 }, function (error) {
             console.log(error);
-
         });
+
+        $scope.$on('sidenav:item-selected', function (event, args) {
+            $timeout(function () {
+                console.log("heatmap reloading...");
+                $scope.map.layers2.overlays = {};
+                $scope.map.layers2.overlays = {
+                    heat:
+                            {
+                                name: 'Heat Map',
+                                type: 'heat',
+                                data: $scope.heat_dataset,
+                                layerOptions: {
+                                    radius: 20,
+                                    blur: 30,
+                                    minopacity: 0,
+                                        maxZoom: 8
+                                },
+                                visible: true,
+                                doRefresh: true
+                            }
+                };
+                $scope.map.layers2.overlays.doRefresh = true;
+            }, 500);
+        });
+
 
     }
     ;
