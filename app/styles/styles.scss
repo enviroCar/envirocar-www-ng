@@ -250,16 +250,6 @@ html, body{
     }
 }
 
-nvd3 {
-    .nv-point
-    {
-        //fill-opacity: 0!important;
-        //fill-opacity: 1!important;
-        //stroke-opacity: 1!important;
-        //stroke-width: 2px;
-    }
-}
-
 md-tabs {
     background-color: #e6e6e6;
     md-tab-item {
@@ -919,7 +909,7 @@ cl-paging {
     bottom: 0;
     left: 0;
     z-index: 5000;
-    background-color: rgba(141,159,151,0.85);
+    background-color: rgba(200,209,201,0.85);
     md-progress-circular {
         margin: auto;
         top: 350px;

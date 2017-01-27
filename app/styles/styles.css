@@ -750,7 +750,7 @@ cl-paging {
   bottom: 0;
   left: 0;
   z-index: 5000;
-  background-color: rgba(141, 159, 151, 0.85); }
+  background-color: rgba(200, 209, 201, 0.85); }
   #loader_login md-progress-circular {
     margin: auto;
     top: 350px; }

@@ -97,7 +97,7 @@ angular.module('translations', [])
             
             // Dashboard - Heatmap:
             'TITLE_HEATMAP'         : 'Your footprints',
-            'HEATMAP_DESCRIPTION'   : 'This map shows where you\'ve been driving.',
+            'HEATMAP_DESCRIPTION'   : 'This heat map shows you the start- and endpoints of all your driven tracks.',
             
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'                   : 'Speedzones',
@@ -109,7 +109,6 @@ angular.module('translations', [])
             'LOW_SPEED_ZONE'                : 'slower than 60km/h',
             'HOURS'                         : 'hours',
             'NAN_SPEED_ZONE'                : 'unknown',
-            
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Your weekday distribution',
@@ -380,7 +379,7 @@ angular.module('translations', [])
             
             // Dashboard - Heatmap:
             'TITLE_HEATMAP'         : 'Mein Einflussbereich',
-            'HEATMAP_DESCRIPTION'   : 'Diese Karte zeigt dir an, wo du gefahren bist',
+            'HEATMAP_DESCRIPTION'   : 'Diese Karte zeigt dir die Start- und Endpunkte deiner gefahrenen Strecken.',
             
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'   :   'Geschwindigkeitszonen',
