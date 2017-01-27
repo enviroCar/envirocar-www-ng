@@ -236,7 +236,7 @@ angular.module('translations', [])
             'ERROR_NOSELECTION'                         : 'You must select at least one vehicle. Click on the cross on the top right to remove this filter.',
             
             'FILTER_SPATIAL_TITLE'                      : 'Location filter',
-            'FILTER_SPATIAL_DESCRIPTION'                : 'The location filter filters your tracks by their location. You can specify a bounding box on the map. The resulting tracks have at least one point within the bounding box.',
+            'FILTER_SPATIAL_DESCRIPTION'                : 'The location filter filters your tracks by their location. You can specify a bounding box on the map. The resulting tracks have at least one measurement within the bounding box.',
             'FILTER_SPATIAL_HEADING'                    : 'Location filter options',
             'FILTER_SPATIAL'                            : 'Location',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Select the ',
@@ -453,8 +453,8 @@ angular.module('translations', [])
             'DAILY_OVERVIEW'                : 'Tagesübersicht',
             'MONTHLY_OVERVIEW'              : 'Monatsübersicht',
             'SELECTION_OVERVIEW'            : 'Übersicht ausgewählter Tage',
-            'CALENDAR_TITLE'                : 'Kalendar deiner Fahrten',
-            'CALENDAR_DESCRIPTION'          : 'Dieser Kalendar zeigt dir zu jedem Tag die Anzahl der Fahrten an. Unten siehst du eine Übersicht der Fahrten im Monat. Du kannst einen einzelnen Tag durch Klicken auswählen, oder ein Interval von Tagen durch Klicken auf dem Start- und End-tag auswählen. Die unten aufgeführte Statistik passt sich der Selektion an. Die Seitenliste rechts passt sich ebenfalls deiner Tagesauswahl an.',
+            'CALENDAR_TITLE'                : 'Kalender deiner Fahrten',
+            'CALENDAR_DESCRIPTION'          : 'Dieser Kalender zeigt dir zu jedem Tag die Anzahl der Fahrten an. Unten siehst du eine Übersicht der Fahrten im Monat. Du kannst einen einzelnen Tag durch Klicken auswählen, oder ein Interval von Tagen durch Klicken auf dem Start- und End-tag auswählen. Die unten aufgeführte Statistik passt sich der Selektion an. Die Seitenliste rechts passt sich ebenfalls deiner Tagesauswahl an.',
             'CALENDAR_OVERVIEW_DESCRIPTION' : 'Diese Seitenansicht zeigt dir alle Fahrten aus dem ausgewählten Zeitraum an. Die Fahrten sind nach dem Datum des Uploads sortiert. Du kannst zwischen den Seiten navigieren. Wenn du auf eine der Fahrten klickst, gelangst du zur Einzelfahrtanalyseseite mit der ausgewählten Fahrt.',
             
             // Tracks Page - All Tracks Pagination Tab:
@@ -518,7 +518,7 @@ angular.module('translations', [])
             'ERROR_NOSELECTION'                         : 'Du musst mindestens ein Fahrzeugtyp auswählen. Klicke auf das Kreuz oben rechts um diesen Filter zu entfernen.',
             
             'FILTER_SPATIAL_TITLE'                      : 'Ortsfilter',
-            'FILTER_SPATIAL_DESCRIPTION'                : 'Mit dem Ortsfilter kannst du auf einer Karte ein Rechteck ziehen. Der Ortsfilter filtert die Fahrten danach, ob sie Messungen innerhalb deines gezogenen Rechtsecks enthalten.',
+            'FILTER_SPATIAL_DESCRIPTION'                : 'Mit dem Ortsfilter kannst du auf einer Karte ein Begrenzungsrechteck ziehen. Der Ortsfilter filtert die Fahrten danach, ob sie Messungen innerhalb deines gezogenen Begrenzungsrechtsecks enthalten.',
             'FILTER_SPATIAL_HEADING'                    : 'Ortsfilteroptionen',
             'FILTER_SPATIAL'                            : 'Ort',
             'FILTER_SPATIAL_DESCRIPTION_SHORT_1'        : 'Klicke auf den ',

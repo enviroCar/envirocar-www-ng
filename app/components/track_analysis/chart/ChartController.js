@@ -273,7 +273,7 @@
                     }
                     $('#track_toolbar').css("width", "100%");
                     $timeout(function () {
-                        window.dispatchEvent(new Event('resize'))
+                        window.dispatchEvent(new Event('resize'));
                     },
                             1);
                 }
