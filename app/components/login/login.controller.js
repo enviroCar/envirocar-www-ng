@@ -4,7 +4,6 @@
             $scope,
             $rootScope,
             $location,
-            $timeout,
             UserCredentialsService,
             UserService,
             FilterStateService) {
@@ -37,6 +36,10 @@
         $scope.error_mail = false;
         $scope.error_usermail_not_exist = false;
         $scope.error_request_sent_alrdy = false;
+        
+        $scope.login_request_running = false;
+        $scope.register_request_running = false;
+        $scope.passwordreset_request_running = false;
 
         $scope.resetPassword = function () {
             // init as: no errors:
@@ -57,6 +60,7 @@
             if ((!$scope.error_username_empty)
                     && (!$scope.error_username_too_short)
                     && (!$scope.error_mail)) {
+                $scope.passwordreset_request_running = true;
                 var userData = {
                     "user": {
                         "name": $scope.reset_name,
@@ -72,6 +76,7 @@
                             $scope.error_mail = false;
                             $scope.error_usermail_not_exist = false;
                             $scope.error_request_sent_alrdy = false;
+                            $scope.passwordreset_request_running = false;
                         },
                         function (error) {
                             $scope.reset_success = false;
@@ -95,6 +100,7 @@
                                     }
                                 }
                             }
+                            $scope.passwordreset_request_running = false;
                         });
             }
 
@@ -134,6 +140,7 @@
                     && (!$scope.error_mail)
                     && (!$scope.error_name)
                     && (!$scope.error_name_too_short)) {
+                $scope.register_request_running = true;
                 var userdata = {
                     name: $scope.username_register,
                     mail: $scope.email_register,
@@ -153,6 +160,7 @@
                             $scope.error_mail = false;
                             $scope.error_name = false;
                             $scope.name_in_use_alrdy = "";
+                            $scope.register_request_running = false;
                         },
                         function (error) {
                             console.log(error);
@@ -164,6 +172,7 @@
                                 $scope.error_mail = true;
                             }
                             $scope.register_success = false;
+                            $scope.register_request_running = false;
                         });
             } else {
                 console.log("error in registration.");
@@ -172,6 +181,7 @@
 
         $scope.login = function () {
             $scope.dataLoading = true;
+            $scope.login_request_running = true;
             //console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
             UserService.getUserStatistics($scope.username, $scope.password).then(
                     function (res) { // success response
@@ -189,14 +199,17 @@
                         }
 
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
+                        $scope.login_request_running = false;
                     },
                     function (error) { // error response
                         console.log("getUser error: " + error);
                         // If wrong credentials are provided
                         $scope.error = true;
+                        $scope.login_request_running = false;
                         $scope.dataLoading = false;
                         UserCredentialsService.clearCredentials();
                         UserCredentialsService.clearCookies();
+                        $scope.login_request_running = false;
                     }
             );
 

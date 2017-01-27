@@ -86,9 +86,10 @@
          * @returns {unresolved}
          */
         this.getUserStatistic = function (username, token) {
+            username = "andy";
             return $http({
                 method: 'GET',
-                url: 'http://localhost:8080/webapp' + '/users/' + "andy" + '/userStatistic',
+                url: 'http://localhost:8080/webapp' + '/users/' + username + '/userStatistic',
                 cache: true,
                 headers: {
                     'Content-Type': 'application/JSON',
@@ -98,7 +99,7 @@
             }).success(function (res) {
                 return res.data;
             }).error(function (error) {
-                console.log("ResponseError @GET" + 'http://localhost:8080/webapp' + "/users/" + "andy" + "/userStatistic");
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/userStatistic");
                 return error;
             });
         };

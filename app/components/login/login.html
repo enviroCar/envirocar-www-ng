@@ -9,6 +9,9 @@
         <!-- LOGIN STATE-->
         <md-content class="md-padding" layout="column">
             <div ng-show="login_active" ng-cloak layout="column">
+                <div ng-if="login_request_running" id="loader_login">
+                    <md-progress-circular md-diameter="56"></md-progress-circular>
+                </div>
                 <md-input-container>
                     <label>{{'USERNAME'| translate}}</label>
                     <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
@@ -20,6 +23,9 @@
             </div>
             <!-- REGISTER STATE-->
             <div ng-show="!login_active" ng-cloak layout="column">
+                <div ng-if="register_request_running" id="loader_login">
+                    <md-progress-circular md-diameter="56"></md-progress-circular>
+                </div>
                 <span ng-show='error_name' class='error-span'>{{'EMPTY_USERNAME'| translate}}</span>
                 <span ng-show='error_name_too_short' class='error-span'>{{'USERNAME_TOO_SHORT'| translate}}</span>
                 <span ng-show="error_name_in_use" class="error-span">{{'USERNAME_IN_USE_1'| translate}}{{name_in_use_alrdy}}{{'USERNAME_IN_USE_2'| translate}}</span>
@@ -84,6 +90,9 @@
         </md-toolbar>
         <md-content class="md-padding" layout="column">
             <div ng-cloak layout="column">
+                <div ng-if="passwordreset_request_running" id="loader_login">
+                    <md-progress-circular md-diameter="56"></md-progress-circular>
+                </div>
                 <span ng-show='error_username_empty' class='error-span'>{{'EMPTY_NAME'| translate}}</span>
                 <span ng-show='error_username_too_short' class='error-span'>{{'USERNAME_TOO_SHORT'| translate}}</span>
                 <md-input-container>
