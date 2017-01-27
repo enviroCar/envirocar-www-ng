@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    function SpeedZonesChartCtrl($scope, $http, $timeout, $translate, TrackService, UserService, StatisticsService, UserCredentialsService, ecBaseUrl) {
+    function SpeedZonesChartCtrl($scope, $timeout, $translate, UserService, UserCredentialsService) {
 
         $scope.onloadSpeedZones = false;
         $scope.loading = true;
@@ -31,7 +31,6 @@
             return hours + ":" + minutes;
         };
 
-
         // TODO: update for user's userstatistic after stable server has it.
         UserService.getUserStatistic($scope.username, $scope.password).then(
                 function (data) {
@@ -59,8 +58,6 @@
                     };
                     if ($scope.userstatistics.distanceNaN > 0)
                         $scope.NaN_exist = true;
-                    console.log($scope.userstatistics.distanceNaN);
-                    console.log($scope.NaN_exist);
                     $scope.onloadSpeedZones = true;
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'));
