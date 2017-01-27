@@ -1,4 +1,4 @@
-<md-dialog md-is-locked-open="valid" style="width:420px" aria-label="Mango (Fruit)" ng-cloak>
+<md-dialog md-is-locked-open="valid" style="width:420px" ng-cloak>
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -15,7 +15,7 @@
         <md-dialog-content style="padding-top:16px; height: 340px;">
             <div style="height: 340px;">
                 <div ng-if="okay_pressed" id="loader_spatial">
-                    <md-progress-circular md-diameter="136"></md-progress-circular>
+                    <md-progress-circular md-diameter="56"></md-progress-circular>
                 </div>
                 <div ng-cloak>
                     <div flex class='center-aligned' style="padding-bottom: 16px;">
@@ -23,8 +23,6 @@
                         <img class="leaflet-button" src='app/components/assets/button_icons/leaflet_rectangle.png'/>
                         {{'FILTER_SPATIAL_DESCRIPTION_SHORT_2'| translate}}
                     </div>
-                    <!--<leaflet bounds="map3.spatial_bounds" geojson="map3.geojson"  lf-draw="map3.drawOptions" layers="map3.layers" defaults="map3.defaults" height="250px" ></leaflet>
-                    -->
                     <div id="spatial_filter_dialog_map"></div>
                     <div style='padding-left: 16px; padding-right: 16px;'>
                         <span ng-if="errorOverlap" class="error-span">{{'SPATIAL_OVERLAP_ERROR'| translate}}</span>
