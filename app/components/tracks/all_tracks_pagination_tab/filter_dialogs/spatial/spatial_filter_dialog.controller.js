@@ -48,8 +48,7 @@
             $scope.drawControl = new L.Control.Draw($scope.drawOptions);
             $scope.mymap.addControl($scope.drawControl);
             $scope.mymap.on(L.Draw.Event.CREATED, function (e) {
-                var type = e.layerType,
-                        layer = e.layer;
+                var layer = e.layer;
                 if ($scope.old !== undefined) {
                     $scope.drawnItems.removeLayer($scope.old);
                 }
@@ -58,7 +57,7 @@
 
                 $scope.filters.spatial.layer = layer;
                 $scope.drawnItems.addLayer($scope.filters.spatial.layer);
-                var coords = layer._latlngs;
+                var coords = layer._latlngs[0];
                 $scope.northEast = {
                     lat: coords[2].lat,
                     lng: coords[2].lng
