@@ -26,7 +26,7 @@
             iconUrl: 'app/components/assets/marker-icon-green.png',
             shadowUrl: 'app/components/assets/marker-shadow.png',
             iconSize: [30, 40], // size of the icon
-            shadowSize: [40,50], // size of the shadow
+            shadowSize: [50,64], // size of the shadow
             iconAnchor: [15, 39], // point of the icon which will correspond to marker's location
             shadowAnchor: [20,62], // the same for the shadow
         };
@@ -411,14 +411,12 @@
                     'lat': -1000,
                     'lng': -1000,
                     focus: false,
-                    message: "",
                     icon: $scope.markerGreen
                 },
                 HoveredPosition: {
                     'lat': -1000,
                     'lng': -1000,
                     focus: false,
-                    message: "",
                     icon: $scope.markerBlue
                 }
             },
@@ -815,7 +813,6 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: "",
                 icon: $scope.markerGreen
             };
             /**
@@ -829,7 +826,6 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: "",
                 icon: $scope.markerBlue
             };
             $timeout(function () {

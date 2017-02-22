@@ -211,7 +211,6 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: "",
                 icon: $scope.markerGreen
             };
             /**
@@ -225,7 +224,6 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: "",
                 icon: $scope.markerBlue
             };
             $timeout(function () {
