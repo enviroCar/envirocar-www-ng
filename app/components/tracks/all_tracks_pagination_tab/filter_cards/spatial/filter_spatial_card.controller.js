@@ -12,7 +12,7 @@
                 mouseover: function(){return;},
                 mouseout: function(){return;},
                 click: function() {
-                    $scope.commonDialog($scope.filters.spatial);
+                    //$scope.commonDialog($scope.filters.spatial);
                 }
             });
         };
