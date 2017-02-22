@@ -18,6 +18,22 @@
         $scope.currentPhenomenon = phenom.name;
         $scope.currentPhenomenonIndex = phenom.index;
 
+        $scope.$on('leafletDirectivePath.click', function (event, path) {
+            //path.modelname
+            $scope.clickedXPoint = parseInt(path.modelName.substring(1));
+            $scope.showMeasurementXInChart();
+            $scope.showMeasurementX();
+        });
+
+        $scope.$on('leafletDirectivePath.mouseover', function (event, path) {
+            //path.modelName;
+            $scope.hoveredXPoint = parseInt(path.modelName.substring(1));
+            if ($scope.segmentActivated)
+                $scope.hoveredXPoint = $scope.hoveredXPoint - $scope.slider.minValue;
+            // add sliderMin point on top:
+            $scope.showHoveredPointInChart();
+        });
+        
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
             $scope.currentPhenomenon = args;
             switch ($scope.currentPhenomenon) {
@@ -90,6 +106,7 @@
                             $scope.clickedXPoint = Math.round(e.pointXValue);
                             $scope.showMeasurementX();
                             $scope.removeHoveredPointInChart();
+                            $scope.showMeasurementXInChart();
                         },
                         elementMousemove: function (e) {
                             if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
@@ -231,39 +248,46 @@
                     lng: lon_coord,
                     focus: false,
                     icon: $scope.markerBlue
-                }
+                };
             }
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
                     1);
         };
+        
+        $scope.showMeasurementXInChart = function () {
+            // remove highlight of previous clicked point:
+            if ($scope.lastClickedXPoint) {
+                var selector = 'nv-point-' + $scope.lastClickedXPoint;
+                var x = document.getElementsByClassName(selector);
+                if (x["0"]) {
+                    x["0"].style["fillOpacity"] = "0";
+                    x["0"].style["strokeOpacity"] = "0";
+                    x["0"].style["stroke"] = "#1A80C1";
+                }
+            }
+
+            // highlight the point in the chart:
+            var selector = 'nv-point-' + $scope.clickedXPoint;
+            if ($scope.segmentActivated)
+                selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue);
+            var x = document.getElementsByClassName(selector);
+            if (x["0"]) {
+                x["0"].style["fillOpacity"] = "1";
+                x["0"].style["strokeWidth"] = "7px";
+                x["0"].style["strokeOpacity"] = "1";
+                x["0"].style["stroke"] = "#8CBF3F";
+            }
+            $scope.lastClickedXPoint = ($scope.clickedXPoint - $scope.slider.minValue);
+        };
+        
         $scope.showMeasurementX = function () {
             // get the lat/lng coordinates:
             if ($scope.clickedXPoint > 0) {
                 $scope.markers.ClickedPosition.lat = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[1];
                 $scope.markers.ClickedPosition.lng = data_global.data.features[$scope.clickedXPoint].geometry.coordinates[0];
-
             }
-            
-            // remove highlight of previous clicked point:
-            if ($scope.lastClickedXPoint) {
-                var selector = 'nv-point-' + $scope.lastClickedXPoint;
-                var x = document.getElementsByClassName(selector);
-                x["0"].style["fillOpacity"] = "0";
-                x["0"].style["strokeOpacity"] = "0";
-                x["0"].style["stroke"] = "#1A80C1";
-            }
-
-            // highlight the point in the chart:
-            var selector = 'nv-point-' + $scope.clickedXPoint;
-            var x = document.getElementsByClassName(selector);
-            x["0"].style["fillOpacity"] = "1";
-            x["0"].style["strokeWidth"] = "7px";
-            x["0"].style["strokeOpacity"] = "1";
-            x["0"].style["stroke"] = "#8CBF3F";
-            $scope.lastClickedXPoint = $scope.clickedXPoint;
-            
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
             },
