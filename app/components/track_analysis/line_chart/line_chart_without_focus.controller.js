@@ -28,12 +28,9 @@
         $scope.$on('leafletDirectivePath.mouseover', function (event, path) {
             //path.modelName;
             $scope.hoveredXPoint = parseInt(path.modelName.substring(1));
-            if ($scope.segmentActivated)
-                $scope.hoveredXPoint = $scope.hoveredXPoint - $scope.slider.minValue;
-            // add sliderMin point on top:
             $scope.showHoveredPointInChart();
         });
-        
+
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
             $scope.currentPhenomenon = args;
             switch ($scope.currentPhenomenon) {
@@ -236,6 +233,32 @@
             },
                     1);
         };
+        
+        $scope.showHoveredPointInChart = function () {
+            if (($scope.hoveredXPoint !== $scope.lastClickedXPoint)) {
+                // remove highlight of previous hovered point:
+                if ($scope.lastHoveredXPoint !== $scope.lastClickedXPoint) {
+                    var selector = 'nv-point-' + $scope.lastHoveredXPoint;
+                    var x = document.getElementsByClassName(selector);
+                    if (x["0"]) {
+                        x["0"].style["fillOpacity"] = "0";
+                        x["0"].style["strokeOpacity"] = "0";
+                        x["0"].style["stroke"] = "#1A80C1";
+                    }
+                }
+
+                // highlight the point in the chart:
+                var selector = 'nv-point-' + $scope.hoveredXPoint;
+                var x = document.getElementsByClassName(selector);
+                if (x["0"]) {
+                    x["0"].style["fillOpacity"] = "1";
+                    x["0"].style["strokeWidth"] = "7px";
+                    x["0"].style["strokeOpacity"] = "1";
+                    x["0"].style["stroke"] = "#1A80C1";
+                }
+                $scope.lastHoveredXPoint = $scope.hoveredXPoint;
+            }
+        };
 
         $scope.showHoveredX = function () {
             // get the lat/lng coordinates:
@@ -255,7 +278,7 @@
             },
                     1);
         };
-        
+
         $scope.showMeasurementXInChart = function () {
             // remove highlight of previous clicked point:
             if ($scope.lastClickedXPoint) {
@@ -271,7 +294,7 @@
             // highlight the point in the chart:
             var selector = 'nv-point-' + $scope.clickedXPoint;
             if ($scope.segmentActivated)
-                selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue);
+                selector = 'nv-point-' + $scope.clickedXPoint;
             var x = document.getElementsByClassName(selector);
             if (x["0"]) {
                 x["0"].style["fillOpacity"] = "1";
@@ -279,9 +302,21 @@
                 x["0"].style["strokeOpacity"] = "1";
                 x["0"].style["stroke"] = "#8CBF3F";
             }
-            $scope.lastClickedXPoint = ($scope.clickedXPoint - $scope.slider.minValue);
+            $scope.lastClickedXPoint = $scope.clickedXPoint;
         };
         
+        $scope.lastHoveredXPoint = undefined;
+
+        $scope.removeHoveredPointInChart = function () {
+            var selector = 'nv-point-' + $scope.lastHoveredXPoint;
+            var x = document.getElementsByClassName(selector);
+            if (x["0"]) {
+                x["0"].style["fillOpacity"] = "0";
+                x["0"].style["strokeOpacity"] = "0";
+                x["0"].style["stroke"] = "#1A80C1";
+            }
+        };
+
         $scope.showMeasurementX = function () {
             // get the lat/lng coordinates:
             if ($scope.clickedXPoint > 0) {

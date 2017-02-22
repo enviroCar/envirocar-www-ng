@@ -83,18 +83,17 @@
          * Test of local hosted application webapp
          * @param {type} username
          * @param {type} token
-         * @returns {unresolved}
+         * @returns {unresolved} 'http://localhost:8080/webapp'
          */
         this.getUserStatistic = function (username, token) {
-            username = "andy";
             return $http({
                 method: 'GET',
-                url: 'http://localhost:8080/webapp' + '/users/' + username + '/userStatistic',
+                url:  ecBaseUrl + '/users/' + username + '/userStatistic',
                 cache: true,
                 headers: {
                     'Content-Type': 'application/JSON',
-                    'X-User': "andy",
-                    'X-Token': "hallohallo"
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).success(function (res) {
                 return res.data;
@@ -322,13 +321,12 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            })
-                    .success(function (data, status, headers, config) {
-                        return data;
-                    }, function (error) {
-                        console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
-                        return error;
-                    });
+            }).success(function (data, status, headers, config) {
+                return data;
+            }, function (error) {
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
+                return error;
+            });
         };
 
         this.getUser = function (username, token) {

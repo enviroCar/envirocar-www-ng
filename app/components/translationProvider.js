@@ -384,7 +384,7 @@ angular.module('translations', [])
             // Dashboard - SpeedZoneChart:
             'SPEED_ZONES'   :   'Geschwindigkeitszonen',
             'SPEEDZONES_CHART_TITLE'        : 'Meine Geschwindigkeitszonen',
-            'SPEEDZONES_CHART_DESCRIPTION'  : 'Es sind drei Geschwindigkeitszonen definiert als "langsamer als 60km/h", "zwischen 60 und 130km/h", und "schneller als 130km/h". Wie viel Zeit hast du in jeder Geschwindigkeitzone verbracht und welche Distanzen bist du in den Geschwindigkeiten zurückgelegt?',
+            'SPEEDZONES_CHART_DESCRIPTION'  : 'Es sind drei Geschwindigkeitszonen definiert als "langsamer als 60km/h", "zwischen 60 und 130km/h", und "schneller als 130km/h". Wie viel Zeit hast du beim Fahren in jeder Geschwindigkeitzone verbracht und welche Distanzen hast du in ihnen zurückgelegt?',
             'SPEEDZONES_DESC_SHORT'         : 'Deine Zeit und Distanz über 130km/h, unter 60km/h und dazwischen.',
             'HIGH_SPEED_ZONE'               : 'schneller als 130km/h',
             'MID_SPEED_ZONE'                : 'zwischen 60 und 130km/h',

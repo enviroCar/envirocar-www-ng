@@ -20,6 +20,11 @@
         $scope.total_distance = 0;
         $scope.tracksAvailable = true;
 
+        /**
+         * gets a "hh:mm"-representation of a decimal hours number 
+         * @param {type} decimalHours
+         * @returns {String}
+         */
         var decimalHoursToHHMM = function (decimalHours) {
             var decimalTime = parseFloat(decimalHours + "");
             decimalTime = 60 * decimalTime;
@@ -60,36 +65,17 @@
         }
         );
 
-        TrackService.getUserTracks(username, token).then(
-                function (data) {
-                    var distSum = 0;
-                    for (var i = 0; i < data.data.tracks.length; i++) {
-                        var currTrack = data.data.tracks[i];
-                        if (currTrack.length) {
-                            var currDist = currTrack.length;
-                            distSum += currDist;
-                        }
-                    }
-                    $scope.distance_driven = distSum.toFixed(1) + "km";
-                }, function (data) {
-            console.log("Error: " + data);
-        }
-        );
-
-        // TODO: change API service method
         // ask server for driven userdistance and userduration:
         UserService.getUserStatistic(username, token).then(
                 function (data) {
-                    console.log(data);
                     var globalStats = data.data;
                     $scope.distance_driven = globalStats.distance.toFixed(1) + "km";
                     $scope.duration_driven = decimalHoursToHHMM(globalStats.duration) + "h";
                     $scope.track_number = globalStats.trackSummaries.length;
-                    if ($scope.distance_driven < 0.1)
+                    if ($scope.track_number === 0)
                         $scope.tracksAvailable = false;
                 }
         , function (error) {
-            $scope.tracksAvailable = false;
             console.log(error);
         });
 
