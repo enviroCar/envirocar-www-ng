@@ -109,6 +109,10 @@ angular.module('translations', [])
             'LOW_SPEED_ZONE'                : 'slower than 60km/h',
             'HOURS'                         : 'hours',
             'NAN_SPEED_ZONE'                : 'unknown',
+            'HIGH_SPEED_ZONE_TT'            : 'your total duration and distance above 130km/h',
+            'MID_SPEED_ZONE_TT'             : 'your total duration and distance between 60 and 130km/h',
+            'LOW_SPEED_ZONE_TT'             : 'your total duration and distance below 60km/h',
+            'NAN_SPEED_ZONE_TT'             : 'your total duration and distance with erroneous measurements',
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Your weekday distribution',
@@ -391,6 +395,10 @@ angular.module('translations', [])
             'LOW_SPEED_ZONE'                : 'langsamer als 60km/h',
             'HOURS'                         : 'Stunden',
             'NAN_SPEED_ZONE'                : 'unbekannt',
+            'HIGH_SPEED_ZONE_TT'            : 'deine Gesamtfahrtdauer und -distanz über 130km/h',
+            'MID_SPEED_ZONE_TT'             : 'deine Gesamtfahrtdauer und -distanz zwischen 60 und 130km/h',
+            'LOW_SPEED_ZONE_TT'             : 'deine Gesamtfahrtdauer und -distanz unter 60km/h',
+            'NAN_SPEED_ZONE_TT'             : 'deine Gesamtfahrtdauer und -distanz mit fehlerhaften Messungen',
             
             // Dashboard - WeekdaysChart
             'WEEKDAYS_CHART_TITLE'          : 'Meine Wochentagsverteilung',

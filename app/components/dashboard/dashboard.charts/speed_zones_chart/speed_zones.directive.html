@@ -23,6 +23,9 @@
 
         <div layout="column" flex style="height: 240px; position: relative;" ng-if='onloadSpeedZones'>
             <div layout="row">
+                <md-tooltip>
+                    {{'HIGH_SPEED_ZONE_TT'| translate}}
+                </md-tooltip>
                 <div class="rect_red">
                     <p>{{ 'HIGH_SPEED_ZONE' | translate }}</p>
                     <img src="app/components/assets/car_pics/SimpleRedCarTopView.png">
@@ -46,6 +49,9 @@
             <div flex></div>
 
             <div layout="row">
+                <md-tooltip>
+                    {{'MID_SPEED_ZONE_TT'| translate}}
+                </md-tooltip>
                 <div class="rect_yellow">
                     <p>{{ 'MID_SPEED_ZONE' | translate }}</p>
                     <img src="app/components/assets/car_pics/SimpleYellowCarTopView.png">
@@ -69,6 +75,9 @@
             <div flex></div>
 
             <div layout="row">
+                <md-tooltip>
+                    {{'LOW_SPEED_ZONE_TT'| translate}}
+                </md-tooltip>
                 <div class="rect_green">
                     <p>{{ 'LOW_SPEED_ZONE' | translate }}</p>
                     <img src="app/components/assets/car_pics/SimpleGreenCarTopView.png">
@@ -91,6 +100,9 @@
             <div flex ng-if="NaN_exist"></div>
 
             <div layout="row" ng-if="NaN_exist">
+                <md-tooltip>
+                    {{'NAN_SPEED_ZONE_TT'| translate}}
+                </md-tooltip>
                 <div class="rect_white">
                     <p>{{ 'NAN_SPEED_ZONE' | translate }}</p>
                     <img src="app/components/assets/car_pics/SimpleWhiteCarTopView.png">
