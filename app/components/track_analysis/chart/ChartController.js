@@ -14,6 +14,22 @@
             leafletBoundsHelpers,
             trackAnalysisSettings) {
         $scope.$mdMedia = $mdMedia;
+        $scope.markerBlue = {
+            iconUrl: 'app/components/assets/marker-icon.png',
+            shadowUrl: 'app/components/assets/marker-shadow.png',
+            iconSize: [30, 40], // size of the icon
+            shadowSize: [50,64], // size of the shadow
+            iconAnchor: [15, 39], // point of the icon which will correspond to marker's location
+            shadowAnchor: [20,62], // the same for the shadow
+        };
+        $scope.markerGreen = {
+            iconUrl: 'app/components/assets/marker-icon-green.png',
+            shadowUrl: 'app/components/assets/marker-shadow.png',
+            iconSize: [30, 40], // size of the icon
+            shadowSize: [40,50], // size of the shadow
+            iconAnchor: [15, 39], // point of the icon which will correspond to marker's location
+            shadowAnchor: [20,62], // the same for the shadow
+        };
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
         $scope.timestamps = [
@@ -392,8 +408,18 @@
             maxbounds: {},
             markers: {
                 ClickedPosition: {
+                    'lat': -1000,
+                    'lng': -1000,
+                    focus: false,
+                    message: "",
+                    icon: $scope.markerGreen
                 },
                 HoveredPosition: {
+                    'lat': -1000,
+                    'lng': -1000,
+                    focus: false,
+                    message: "",
+                    icon: $scope.markerBlue
                 }
             },
             layers: {
@@ -580,7 +606,6 @@
 
         $scope.$on('leafletDirectivePath.click', function (event, path) {
             //path.modelname
-            console.log(path);
             $scope.clickedXPoint = parseInt(path.modelName.substring(1));
             $scope.showMeasurementXInChart();
             $scope.showMeasurementX();
@@ -790,7 +815,8 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: ""
+                message: "",
+                icon: $scope.markerGreen
             };
             /**
              $timeout(function () {
@@ -803,7 +829,8 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: ""
+                message: "",
+                icon: $scope.markerBlue
             };
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
@@ -858,7 +885,8 @@
                 $scope.markers.HoveredPosition = {
                     lat: lat_coord,
                     lng: lon_coord,
-                    focus: false
+                    focus: false,
+                    icon: $scope.markerBlue
                 };
             }
             ;
@@ -872,7 +900,7 @@
 
         $scope.lastClickedXPoint = undefined;
 
-        $scope.showMeasurementXInChart = function(){
+        $scope.showMeasurementXInChart = function () {
             // remove highlight of previous clicked point:
             if ($scope.lastClickedXPoint) {
                 var selector = 'nv-point-' + $scope.lastClickedXPoint;
@@ -887,7 +915,7 @@
             // highlight the point in the chart:
             var selector = 'nv-point-' + $scope.clickedXPoint;
             if ($scope.segmentActivated)
-                selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue );
+                selector = 'nv-point-' + ($scope.clickedXPoint - $scope.slider.minValue);
             var x = document.getElementsByClassName(selector);
             if (x["0"]) {
                 x["0"].style["fillOpacity"] = "1";
@@ -1100,8 +1128,7 @@
                             500);
                 }, function (error) {
             console.log(error);
-        }
-        );
+        });
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },

@@ -197,7 +197,8 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: ""
+                message: "",
+                icon: $scope.markerGreen
             };
             /**
              $timeout(function () {
@@ -210,7 +211,8 @@
                 'lat': -1000,
                 'lng': -1000,
                 focus: false,
-                message: ""
+                message: "",
+                icon: $scope.markerBlue
             };
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'))
@@ -227,7 +229,8 @@
                 $scope.markers.HoveredPosition = {
                     lat: lat_coord,
                     lng: lon_coord,
-                    focus: false
+                    focus: false,
+                    icon: $scope.markerBlue
                 }
             }
             $timeout(function () {
