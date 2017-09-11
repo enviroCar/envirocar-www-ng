@@ -20,9 +20,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error (function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics/"+phenomenon);
                 return error;
             });
@@ -45,9 +45,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics");
                 return error;
             });
@@ -70,9 +70,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID);
                 return error;
             });
@@ -95,9 +95,9 @@
                     'X-Token'   : token
                 },
                 data: track
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @POST: "+ecBaseUrl+"/tracks");
                 return error;
             });
@@ -130,9 +130,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/" + username + "/tracks");
                 return error;
             });
@@ -154,10 +154,10 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (data, status, headers, config) {
-                var number = headers('Content-Range').split("/");
+            }).then(function (data) {
+                var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
-            }).error(function (error) {
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/tracks?limit=1");
                 return error;
             });
@@ -179,10 +179,10 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (data, status, headers, config) {
-                var number = headers('Content-Range').split("/");
+            }).then(function (data) {
+                var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
-            }).error( function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/tracks?limit=1");
                 return error;
             });
@@ -204,9 +204,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET"+ecBaseUrl+"/tracks");
                 return error;
             });

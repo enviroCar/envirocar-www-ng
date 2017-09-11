@@ -47,10 +47,10 @@
                 defaults2: {
                     maxZoom: 10,
                     zoomControlPosition: 'topright',
-                    scrollWheelZoom: true,
-                    zoomControl: true,
-                    doubleClickZoom: true,
-                    dragging: true
+                    scrollWheelZoom: false,
+                    zoomControl: false,
+                    doubleClickZoom: false,
+                    dragging: false
                 },
                 bounds2: {
                 }
@@ -64,6 +64,7 @@
         var dataset_end = [];
         UserService.getUserStatistic($scope.username, $scope.password).then(
                 function (data) {
+                    console.log(data);
                     var tracksummary = data.data.trackSummaries;
                     for (var i = 0; i < tracksummary.length; i++) {
                         var coord_push_start = [];

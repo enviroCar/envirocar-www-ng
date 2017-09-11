@@ -19,9 +19,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/statistics/" + phenomenon);
                 return error;
             });
@@ -44,9 +44,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics");
                 return error;
             });
@@ -70,9 +70,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics/" + phenomenon);
                 return error;
             });
@@ -95,9 +95,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics");
                 return error;
             });
@@ -120,9 +120,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics/" + phenomenon);
                 return error;
             });
@@ -144,9 +144,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
                 return error;
             });
@@ -163,9 +163,9 @@
                 method: 'POST',
                 url: 'https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics',
                 data: data
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @GEThttps://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics");
                 return error;
             });

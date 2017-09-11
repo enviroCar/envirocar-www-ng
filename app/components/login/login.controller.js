@@ -36,7 +36,7 @@
         $scope.error_mail = false;
         $scope.error_usermail_not_exist = false;
         $scope.error_request_sent_alrdy = false;
-        
+
         $scope.login_request_running = false;
         $scope.register_request_running = false;
         $scope.passwordreset_request_running = false;
@@ -182,10 +182,11 @@
         $scope.login = function () {
             $scope.dataLoading = true;
             $scope.login_request_running = true;
-            //console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
+            console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
             UserService.getUserStatistics($scope.username, $scope.password).then(
                     function (res) { // success response
                         $scope.error = false;
+                        console.log(res);
                         // When the right credentials are provided.
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
                         if (typeof $rootScope.url_redirect_on_login !== "undefined") {
@@ -200,8 +201,7 @@
 
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
                         $scope.login_request_running = false;
-                    },
-                    function (error) { // error response
+                    }, function(error) { // error response
                         console.log("getUser error: " + error);
                         // If wrong credentials are provided
                         $scope.error = true;

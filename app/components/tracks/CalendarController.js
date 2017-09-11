@@ -28,7 +28,8 @@
         // ask server for number user tracks:
         UserService.getTotalUserTracks(username, token).then(
                 function (data) {
-                    var track_number = data.headers('Content-Range').split("/")[1];
+                    console.log(data);
+                    var track_number = data;
                     if (track_number > 0)
                         $scope.tracksAvailable = true;
                     else

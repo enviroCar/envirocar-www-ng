@@ -22,10 +22,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/tracks?bbox=" + minx + "," + miny + "," + maxx + "," + maxy);
+            }).then(function(res) {
+                return res;
+            }, function(error) {
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/" + username + "/tracks?bbox="+minx+","+miny+","+maxx+","+maxy);
                 return error;
             });
         };
@@ -47,10 +47,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics/" + phenomenon);
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/statistics/"+phenomenon);
                 return error;
             });
         };
@@ -71,11 +71,9 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
-                return error;
+            }).then(function (res) {
+                console.log(res);
+                return res;
             });
         };
 
@@ -95,10 +93,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/userStatistic");
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });
         };
@@ -119,10 +117,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (data, status, headers, config) {
-                var number = headers('Content-Range').split("/");
+            }).then(function (data) {
+                var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
-            }).error(function (error) {
+            },function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/");
                 return error;
             });
@@ -145,10 +143,10 @@
                     'X-Token': token
                 },
                 data: userDetails
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @PUT" + ecBaseUrl + "/users/" + username);
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @"+ecBaseUrl+"/users/");
                 return error;
             });
         };
@@ -169,8 +167,8 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (data, status, headers, config) {
-                var number = headers('Content-Range').split("/");
+            }).then(function (data) {
+                var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
             }).error(function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/");
@@ -195,10 +193,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/friends" + friend);
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/friends"+ friend);
                 return error;
             });
         };
@@ -220,10 +218,10 @@
                     'X-Token': token
                 },
                 data: friends
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @POST: " + ecBaseUrl + "/users/" + username + "/friends");
+            }).then(function (res) {
+                return res;
+            }, function (error) {
+                console.log("ResponseError @POST: "+ecBaseUrl+"/users/"+username+"/friends");
                 return error;
             });
         };
@@ -244,7 +242,7 @@
                 },
                 data: userdata
             }).success(function (res) {
-                return res.data;
+                return res;
             }).error(function (error) {
                 console.log("ResponseError @POST: " + ecBaseUrl + "/users/" + username);
                 return error;
@@ -268,8 +266,8 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (data, status, headers, config) {
-                var number = headers('Content-Range').split("/");
+            }).then(function (data) {
+                var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
             }, function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/tracks");
@@ -286,10 +284,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/groups");
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });
         };
@@ -304,27 +302,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/friends");
-                return error;
-            });
-        };
-
-        this.getUserStatistics = function (username, token) {
-            return $http({
-                method: 'GET',
-                url: ecBaseUrl + '/users/' + username + '/statistics',
-                headers: {
-                    'Content-Type': 'application/JSON',
-                    'X-User': username,
-                    'X-Token': token
-                }
-            }).success(function (data, status, headers, config) {
-                return data;
-            }, function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
+            }).then(function (res) {
+                return res;
+            },function (error) {
+                console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/groups");
                 return error;
             });
         };
@@ -338,11 +319,10 @@
                     'X-User': username,
                     'X-Token': token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username);
-                console.log(error);
+            }).then(function (res) {
+                return res;
+            }, function (error) {
+                console.log("ResponseError @"+ecBaseUrl+"/users/"+username+"/statistics");
                 return error;
             });
         };
@@ -355,9 +335,9 @@
                     'Content-Type': 'application/JSON'
                 },
                 data: userdata
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @POST" + ecBaseUrl + "/resetPassword");
                 return error;
             });

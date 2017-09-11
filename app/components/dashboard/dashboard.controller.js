@@ -41,27 +41,31 @@
         // ask server for number of total community tracks:
         TrackService.getTotalTracks(username, token).then(
                 function (data) {
-                    $scope.total_tracks = data.headers('Content-Range').split("/")[1];
+                    console.log(data);
+                    $scope.total_tracks = data;
                 }, function (data) {
             console.log("error " + data);
+            console.log(data);
         }
         );
 
         // ask server for number of total users:
         UserService.getTotalUsers(username, token).then(
                 function (data) {
-                    $scope.total_users = data.headers('Content-Range').split("/")[1];
+                    $scope.total_users = data;
                 }, function (data) {
             console.log("error " + data);
+            console.log(data);
         }
         );
 
         // ask server user email:
         UserService.getUser(username, token).then(
                 function (data) {
-                    $scope.emailId = data.data.mail;
+                    $scope.emailId = data.mail;
                 }, function (data) {
             console.log("Error: " + data);
+            console.log(data);
         }
         );
 

@@ -21,7 +21,7 @@
         
         UserService.getTotalUserTracks($scope.username, $scope.password).then(
                 function(data){
-                    $scope.track_number = data.headers('Content-Range').split("/")[1];
+                    $scope.track_number = data;
                 }, function(data){
                     console.log("error " + data);
                 }

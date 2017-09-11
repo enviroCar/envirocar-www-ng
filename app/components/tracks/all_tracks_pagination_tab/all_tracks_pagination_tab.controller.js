@@ -28,23 +28,23 @@
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
 
         $(window).resize(function () {
-            $scope.$apply(function () {
-                if (window.innerHeight < 1000) {
-                    $scope.itemsPerPage = 5;
-                } else {
-                    $scope.itemsPerPage = 10;
-                }
-                var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
-                $scope.currentPaginationTracks.currentMonthTracks = [];
-                // number pages:
-                $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
-                // take the first $scope.itemsPerPage:
-                for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
-                    $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
-                }
-                $scope.pagingTab.current = 1;
-                loadPages();
-            });
+//            $scope.$apply(function () {
+//                if (window.innerHeight < 1000) {
+//                    $scope.itemsPerPage = 5;
+//                } else {
+//                    $scope.itemsPerPage = 10;
+//                }
+//                var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
+//                $scope.currentPaginationTracks.currentMonthTracks = [];
+//                // number pages:
+//                $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+//                // take the first $scope.itemsPerPage:
+//                for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
+//                    $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
+//                }
+//                $scope.pagingTab.current = 1;
+//                loadPages();
+//            });
         });
 
         $scope.username = UserCredentialsService.getCredentials().username;
