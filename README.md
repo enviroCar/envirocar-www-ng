@@ -1,6 +1,6 @@
 # envirocar-www-ng
 This is the Angular Webapp for enviroCar platform. (www.envirocar.org). 
-The Webapp is built with [AngularJS 1.58](https://angularjs.org/). 
+The Webapp is built with [AngularJS 1.6.6](https://angularjs.org/). 
 The UI components are built with [Angular Material](https://material.angularjs.org/).
 
 ## Installation

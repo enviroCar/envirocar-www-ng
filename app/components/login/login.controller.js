@@ -164,7 +164,7 @@
                         },
                         function (error) {
                             console.log(error);
-                            if (error.status === 409) {
+                            if (error.status === 409) { // name or email alrdy in use
                                 $scope.error_name_in_use = true;
                                 $scope.name_in_use_alrdy = $scope.username_register;
                             }

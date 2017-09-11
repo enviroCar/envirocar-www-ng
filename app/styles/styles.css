@@ -255,9 +255,12 @@ md-toolbar {
     display: block !important;
     height: auto; }
 
-md-tooltip {
-  font-size: 26px;
-  z-index: 3600; }
+.leaflet-right {
+  z-index: 15 !important; }
+
+.md-tooltip {
+  font-size: 16px;
+  z-index: 10000 !important; }
 
 .white-bg {
   text-align: center;
@@ -498,20 +501,22 @@ md-content {
   align: center; }
 
 .trackpreview {
-  width: 300px;
-  height: 190px; }
+  z-index: 5000 !important;
+  width: 290px;
+  height: 180px; }
   .trackpreview .md-content {
     width: 290px;
     height: 180px;
-    padding: 4px;
     background-color: grey;
-    border-bottom: 4px solid grey; }
+    border-bottom: 4px solid grey;
+    border-top: 4px solid grey; }
   .trackpreview .img {
     vertical-align: central;
     position: absolute;
     top: 2em;
-    left: 0em;
+    left: 2em;
     background-color: grey;
+    border-top: 4px solid grey;
     border-bottom: 4px solid grey; }
   .trackpreview .placeholder-p {
     color: transparent;

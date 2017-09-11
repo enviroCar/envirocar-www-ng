@@ -241,11 +241,9 @@
                     'Content-Type': 'application/JSON'
                 },
                 data: userdata
-            }).success(function (res) {
+            }).then(function (res) {
+                console.log(res);
                 return res;
-            }).error(function (error) {
-                console.log("ResponseError @POST: " + ecBaseUrl + "/users/" + username);
-                return error;
             });
         };
 
