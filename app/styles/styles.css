@@ -255,6 +255,9 @@ md-toolbar {
     display: block !important;
     height: auto; }
 
+.leaflet-pane {
+  z-index: 0 !important; }
+
 .leaflet-right {
   z-index: 15 !important; }
 
@@ -509,7 +512,8 @@ md-content {
     height: 180px;
     background-color: grey;
     border-bottom: 4px solid grey;
-    border-top: 4px solid grey; }
+    border-top: 4px solid grey;
+    z-index: 5000 !important; }
   .trackpreview .img {
     vertical-align: central;
     position: absolute;
@@ -517,7 +521,8 @@ md-content {
     left: 2em;
     background-color: grey;
     border-top: 4px solid grey;
-    border-bottom: 4px solid grey; }
+    border-bottom: 4px solid grey;
+    z-index: 5000 !important; }
   .trackpreview .placeholder-p {
     color: transparent;
     background-color: transparent;
