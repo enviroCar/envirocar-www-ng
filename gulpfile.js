@@ -33,7 +33,9 @@ gulp.task('index', function () {
         read: false
     });
 
-    var othersBowerSources = gulp.src(["bower_components/angular/angular.min.js", "bower_components/material-angular-paging/build/dist.min.js"]);
+    var othersBowerSources = gulp.src([
+        "bower_components/angular/angular.min.js", 
+        "bower_components/material-angular-paging/build/dist.min.js"]);
 
     return target
             .pipe(inject(series(othersBowerSources, sources),{

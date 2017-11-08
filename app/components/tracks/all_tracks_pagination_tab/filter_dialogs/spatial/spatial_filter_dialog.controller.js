@@ -58,7 +58,7 @@
 
                 $scope.filters.spatial.layer = layer;
                 $scope.drawnItems.addLayer($scope.filters.spatial.layer);
-                var coords = layer._latlngs;
+                var coords = layer._latlngs[0];
                 $scope.northEast = {
                     lat: coords[2].lat,
                     lng: coords[2].lng

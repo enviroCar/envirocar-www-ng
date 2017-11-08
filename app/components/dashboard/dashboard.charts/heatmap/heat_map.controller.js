@@ -146,19 +146,19 @@
                         if (lng_max < curr_end[0])
                             lng_max = curr_end[0];
                     }
-                    var southwest = {
+                    $scope.southwest = {
                         lat: lat_min,
                         lng: lng_min
                     };
-                    var northeast = {
+                    $scope.northeast = {
                         lat: lat_max,
                         lng: lng_max
                     };
-                    var padding_lat = (northeast.lat - southwest.lat) / 10;
-                    var padding_lng = (northeast.lng - southwest.lng) / 10;
+                    var padding_lat = ($scope.northeast.lat - $scope.southwest.lat) / 10;
+                    var padding_lng = ($scope.northeast.lng - $scope.southwest.lng) / 10;
                     $scope.map.bounds2 = leafletBoundsHelpers.createBoundsFromArray([
-                        [northeast.lat + padding_lat, northeast.lng + padding_lng],
-                        [southwest.lat - padding_lat, southwest.lng - padding_lng]
+                        [$scope.northeast.lat + padding_lat, $scope.northeast.lng + padding_lng],
+                        [$scope.southwest.lat - padding_lat, $scope.southwest.lng - padding_lng]
                     ]);
                     $timeout(function () {
                         $scope.onload_heat_map = true;
@@ -188,6 +188,18 @@
                                 doRefresh: true
                             }
                 };
+                
+                    var padding_lat = ($scope.northeast.lat - $scope.southwest.lat) / 10;
+                    var padding_lng = ($scope.northeast.lng - $scope.southwest.lng) / 10;
+                    $scope.map.bounds2 = leafletBoundsHelpers.createBoundsFromArray([
+                        [$scope.northeast.lat + padding_lat, $scope.northeast.lng + padding_lng],
+                        [$scope.southwest.lat - padding_lat, $scope.southwest.lng - padding_lng]
+                    ]);
+                    $timeout(function () {
+                        $scope.onload_heat_map = true;
+                        window.dispatchEvent(new Event('resize'));
+                    }, 300);
+                
                 $scope.map.layers2.overlays.doRefresh = true;
             }, 500);
         });
