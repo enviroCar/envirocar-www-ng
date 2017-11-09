@@ -13,22 +13,23 @@
             PhenomenonService,
             leafletBoundsHelpers,
             trackAnalysisSettings) {
+
         $scope.$mdMedia = $mdMedia;
         $scope.markerBlue = {
             iconUrl: 'app/components/assets/marker-icon.png',
             shadowUrl: 'app/components/assets/marker-shadow.png',
             iconSize: [30, 40], // size of the icon
-            shadowSize: [50,64], // size of the shadow
+            shadowSize: [50, 64], // size of the shadow
             iconAnchor: [15, 39], // point of the icon which will correspond to marker's location
-            shadowAnchor: [20,62], // the same for the shadow
+            shadowAnchor: [20, 62], // the same for the shadow
         };
         $scope.markerGreen = {
             iconUrl: 'app/components/assets/marker-icon-green.png',
             shadowUrl: 'app/components/assets/marker-shadow.png',
             iconSize: [30, 40], // size of the icon
-            shadowSize: [50,64], // size of the shadow
+            shadowSize: [50, 64], // size of the shadow
             iconAnchor: [15, 39], // point of the icon which will correspond to marker's location
-            shadowAnchor: [20,62], // the same for the shadow
+            shadowAnchor: [20, 62], // the same for the shadow
         };
         var grey = '#737373';
         $rootScope.track_toolbar_fixed = false;
@@ -434,6 +435,7 @@
                 }
             },
             legend: {// Speed by default:
+                legendClass: "info legend",
                 position: 'bottomright',
                 colors: ['#00ff00',
                     $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2, 1),
@@ -619,6 +621,7 @@
         });
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
+            console.log(args);
             $scope.currentPhenomenon = args;
             switch ($scope.currentPhenomenon) {
                 case 'Speed':
@@ -668,6 +671,7 @@
                 $scope.changeSelectionRange(0, $scope.slider.options.ceil);
                 $scope.changeChartRange(0, $scope.slider.options.ceil);
             }
+            console.log($scope.legend);
         });
         // chart options for the nvd3 line with focus chart:
         $scope.clickedXPoint = 0;

@@ -546,16 +546,17 @@ md-content {
   background: rgba(255, 255, 255, 0.7);
   line-height: 18px;
   border-radius: 5px;
-  color: #555;
-  width: 100px; }
+  color: #555; }
+  .legend .info-label {
+    padding-left: 24px; }
 
 .legend i {
+  position: absolute;
   color: #777;
   width: 18px;
   height: 18px;
   float: left;
-  margin-right: 8px;
-  opacity: 0.7; }
+  margin-right: 8px; }
 
 .range-chart {
   max-height: 200px !important; }

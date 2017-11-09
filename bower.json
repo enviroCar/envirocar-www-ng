@@ -35,7 +35,7 @@
   "resolutions": {
     "angular-material": "^1.1.1",
     "leaflet": "1.0.3",
-    "ui-leaflet": "1.0.3",
+    "ui-leaflet": "2.0.0",
     "angular": "1.6.6",
     "angular-cookies": "1.6.6"
   }
