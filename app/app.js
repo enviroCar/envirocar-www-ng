@@ -55,7 +55,13 @@
     angular.module('enviroCar.profile', []);
 
     angular.module('enviroCar.community', []);
-
+    
+    /*
+     * The default legend directive of ui-leaflet is conflicting in the 
+     * combination of used library versions of leaflet, leaflet draw and leaflet 
+     * heat.
+     * An override of the legend-directive is necessary:
+     */
     angular.module("ui-leaflet").directive('legend', ["leafletLogger", "$http", "$timeout", "leafletHelpers", "leafletLegendHelpers", function (leafletLogger, $http, $timeout, leafletHelpers, leafletLegendHelpers) {
             var $log = leafletLogger,
                     errorHeader = leafletHelpers.errorHeader + ' [Legend] ';
@@ -200,12 +206,18 @@
             };
         }]);
 
+    /**
+     * A decorator $delegate is necessary or otherwise we gonna have two active 
+     * legend directives
+     */
     angular.module("ui-leaflet").decorator(
             "legendDirective",
             function legendDirectiveDecorator($delegate) {
                 console.log(". . . . . . . . . . . . . .");
                 console.log("There are %s matching directives.", $delegate.length);
                 console.log(". . . . . . . . . . . . . .");
+                // make use of only the index[1] legend-directive - which is our
+                //  declaration of the legend directive 
                 var randomDirective = $delegate[ 1 ];
                 // Demonstrating that our custom "label" field is available on the
                 // object in the $delegate collection.

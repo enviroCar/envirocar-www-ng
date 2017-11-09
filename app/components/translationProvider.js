@@ -130,6 +130,8 @@ angular.module('translations', [])
             'TRACK_ID'  : 'Track ID',
             'NAME'      : 'Name',
             'CREATED'   : 'created',
+            'DOWNLOAD_TRACK' : 'download track',
+            'DOWNLOAD_TRACK_TOOLTIP' : 'Download the track as a *.csv file',
             
             // Track Analysis - Toolbar:
             'SEGMENT_ANALYSIS'  : 'Segment analysis',
@@ -416,6 +418,8 @@ angular.module('translations', [])
             'TRACK_ID'  : 'Fahrt ID',
             'NAME'      : 'Name',
             'CREATED'   : 'erstellt am',
+            'DOWNLOAD_TRACK' : 'Track herunterladen',
+            'DOWNLOAD_TRACK_TOOLTIP' : 'Lade die Fahrt als *.csv Datei herunter',
             
             // Track Analysis - Toolbar:
             'SEGMENT_ANALYSIS'  : 'Segmentanalyse',

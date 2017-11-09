@@ -14,6 +14,10 @@
             leafletBoundsHelpers,
             trackAnalysisSettings) {
 
+        $scope.downloadTrack = function () {
+            window.location.href = "http://envirocar.org/api/stable/tracks/" + $scope.trackid;
+        };
+
         $scope.$mdMedia = $mdMedia;
         $scope.markerBlue = {
             iconUrl: 'app/components/assets/marker-icon.png',

@@ -6,7 +6,7 @@
                         '#0065A0'
             }" style="height:235px">
         <div class="cover">
-            <div class="profile-pic absolute" style="height:40%;display:inline-block;">
+            <div class="profile-pic absolute" flex="100" style="height:40%;display:inline-block;width: 100% !important;">
                 <div layout="row">
                     <div style="width:30%;text-align:center">
                         <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
@@ -20,6 +20,13 @@
                     </div>
                 </div>
             </div>
+            <md-button class="md-raised md-primary download-track" target="_blank" href='http://envirocar.org/api/stable/tracks/{{trackid}}.csv'>
+                <i class="material-icons">file_download</i>
+                {{'DOWNLOAD_TRACK'| translate }}
+                <md-tooltip md-direction="bottom">
+                    {{'DOWNLOAD_TRACK_TOOLTIP'| translate}}
+                </md-tooltip>
+            </md-button>
         </div>
     </div>
     <md-toolbar flex id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">
