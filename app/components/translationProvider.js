@@ -37,8 +37,8 @@ angular.module('translations', [])
             'SITE_FEEDBACK'         : 'Site feedback',
             'SITE_IMPRINT'          : 'Imprint',
             'SITE_TERMS'            : 'Terms',
-            'LINK_IMPRINT'          : 'localhost:8383/imprint.html?lng=en',
-            'LINK_TERMS'            : 'localhost:8383/conditions.html?lng=en',
+            'LINK_IMPRINT'          : 'https://www.envirocar.org/dev/imprint.html?lng=en',
+            'LINK_TERMS'            : 'https://www.envirocar.org/dev/conditions.html?lng=en',
             
             // Login:
             'USERNAME'                  : 'Username',
@@ -322,8 +322,8 @@ angular.module('translations', [])
             'SITE_FEEDBACK'         : 'Seitenfeedback',
             'SITE_IMPRINT'          : 'Impressum',
             'SITE_TERMS'            : 'Nutzungsbedingungen',
-            'LINK_IMPRINT'          : 'localhost:8383/imprint.html?lng=de',
-            'LINK_TERMS'            : 'localhost:8383/conditions.html?lng=de',
+            'LINK_IMPRINT'          : 'https://www.envirocar.org/dev/imprint.html?lng=de',
+            'LINK_TERMS'            : 'https://www.envirocar.org/dev/conditions.html?lng=de',
             
             // Login:
             'USERNAME'                  : 'Benutzername',
