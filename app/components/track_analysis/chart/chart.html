@@ -27,6 +27,13 @@
                     {{'DOWNLOAD_TRACK_TOOLTIP'| translate}}
                 </md-tooltip>
             </md-button>
+            <md-button class="md-raised md-warn delete-track" ng-click="deleteTrack($event)">
+                <i class="material-icons">delete_forever</i>
+                {{'DELETE_TRACK'| translate }}
+                <md-tooltip md-direction="top">
+                    {{'DELETE_TRACK_TOOLTIP'| translate}}
+                </md-tooltip>
+            </md-button>
         </div>
     </div>
     <md-toolbar flex id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">

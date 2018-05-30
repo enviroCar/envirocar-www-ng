@@ -340,6 +340,23 @@
                 return error;
             });
         };
+        
+        this.deleteUser = function (username, token) {
+            return $http({
+                method: 'DELETE',
+                url: ecBaseUrl + '/users/' + username,
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
+                }
+            }).then(function (res) {
+                return res;
+            }, function(error) {
+                console.log("ResponseError @POST" + ecBaseUrl + "/users/" + username);
+                return error;
+            });
+        }
 
     }
     ;

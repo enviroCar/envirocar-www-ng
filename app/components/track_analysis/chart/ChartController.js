@@ -3,6 +3,7 @@
     function ChartCtrl(
             $rootScope,
             $scope,
+            $state,
             $stateParams,
             $timeout,
             $translate,
@@ -16,6 +17,12 @@
 
         $scope.downloadTrack = function () {
             window.location.href = "http://envirocar.org/api/stable/tracks/" + $scope.trackid;
+        };
+
+        $scope.goToDashboard = function () {
+            //redirect to the track analytics page.
+            $state.go('dashboard', {
+            });
         };
 
         $scope.$mdMedia = $mdMedia;
@@ -406,6 +413,7 @@
                     ' ' + ($scope.red_break[4] + $scope.max_values[4]) / 2 + ' %']
             }
         ];
+
         // scope extension for the leaflet map:
         angular.extend($scope, {
             paths: {},
@@ -880,7 +888,6 @@
             }
         };
 
-
         $scope.showHoveredX = function () {
             // get the lat/lng coordinates:
             if ($scope.hoveredXPoint > 0) {
@@ -900,7 +907,6 @@
             },
                     1);
         };
-
 
         $scope.lastClickedXPoint = undefined;
 
@@ -1133,6 +1139,30 @@
                 }, function (error) {
             console.log(error);
         });
+
+        $scope.deleteTrack = function (ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirmDeleteUser = $mdDialog.confirm()
+                    .title($translate.instant("DIALOG_DELETE_TRACK_TITLE"))
+                    .textContent($translate.instant("DIALOG_DELETE_TRACK_TEXT"))
+                    .ariaLabel('delete user profile dialog')
+                    .targetEvent(ev)
+                    .ok($translate.instant("DIALOG_DELETE_TRACK_CONFIRM"))
+                    .cancel($translate.instant("DIALOG_DELETE_TRACK_CANCEL"));
+            $mdDialog.show(confirmDeleteUser).then(function () {
+                TrackService.deleteTrack($scope.username, $scope.password, $scope.trackid).then(
+                        function (data) {
+                            console.log(data);
+                            // redirect to dashboard:
+                            $scope.goToDashboard();
+                        }, function (error) {
+                    console.log(error);
+                });
+            }, function () {
+                // do nothing
+            });
+        };
+
         $timeout(function () {
             window.dispatchEvent(new Event('resize'))
         },

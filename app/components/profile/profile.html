@@ -137,7 +137,12 @@
                     <div ng-if="submissionFailure" style="background-color:rgba(255, 59, 41, 0.4)">
                         <p>{{submissionErrorMessage}}</p>
                     </div>
-                    <div layout="row" layout-align="end center">
+                    <div layout="row">
+                        <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30"
+                                   class="md-raised md-warn" ng-click="showConfirm($event)">
+                            {{'BUTTON_DELETE_PROFILE'| translate}}
+                        </md-button>
+                        <span flex></span>
                         <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30"
                                    class="md-raised md-primary" ng-click="updateUserDetails()">
                             {{'BUTTON_UPDATE_PROFILE'| translate}}

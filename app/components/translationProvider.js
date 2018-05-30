@@ -134,6 +134,12 @@ angular.module('translations', [])
             'CREATED'   : 'created',
             'DOWNLOAD_TRACK' : 'download track',
             'DOWNLOAD_TRACK_TOOLTIP' : 'Download the track as a *.csv file',
+            'DELETE_TRACK' : 'delete track',
+            'DELETE_TRACK_TOOLTIP' : 'Delete the track from the enviroCar server',
+            'DIALOG_DELETE_TRACK_TITLE'   : 'Delete Your track?',
+            'DIALOG_DELETE_TRACK_TEXT'    : 'Are you sure you want to irrevocable delete this track?',
+            'DIALOG_DELETE_TRACK_CONFIRM' : 'irrevocable delete',
+            'DIALOG_DELETE_TRACK_CANCEL'  : 'cancel',
             
             // Track Analysis - Toolbar:
             'SEGMENT_ANALYSIS'  : 'Segment analysis',
@@ -285,8 +291,13 @@ angular.module('translations', [])
             'MALE'                  : 'Male',
             'FEMALE'                : 'Female',
             'BUTTON_UPDATE_PROFILE' : 'Update Profile',
+            'BUTTON_DELETE_PROFILE' : 'Delete Profile',
             'GERMAN'                : 'German',
             'ENGLISH'               : 'English',
+            'DIALOG_DELETE_TITLE'   : 'Delete Your Account?',
+            'DIALOG_DELETE_TEXT'    : 'Are you sure you want to irrevocable delete your enviroCar user account?',
+            'DIALOG_DELETE_CONFIRM' : 'irrevocable delete',
+            'DIALOG_DELETE_CANCEL'  : 'cancel',
             
             // Community Analysis Page:
             'COMMUNITY_MAP_TITLE'           : 'Segment analysis map',
@@ -424,6 +435,12 @@ angular.module('translations', [])
             'CREATED'   : 'erstellt am',
             'DOWNLOAD_TRACK' : 'Track herunterladen',
             'DOWNLOAD_TRACK_TOOLTIP' : 'Lade die Fahrt als *.csv Datei herunter',
+            'DELETE_TRACK' : 'Track löschen',
+            'DELETE_TRACK_TOOLTIP' : 'Lösche den Track aus dem enviroCar server',
+            'DIALOG_DELETE_TRACK_TITLE'   : 'Diese Fahrt löschen?',
+            'DIALOG_DELETE_TRACK_TEXT'    : 'Sind Sie sicher, dass Sie diese Fahrt unwiderruflich löschen möchten?',
+            'DIALOG_DELETE_TRACK_CONFIRM' : 'unwiderruflich löschen',
+            'DIALOG_DELETE_TRACK_CANCEL'  : 'abbrechen',
             
             // Track Analysis - Toolbar:
             'SEGMENT_ANALYSIS'  : 'Segmentanalyse',
@@ -575,8 +592,13 @@ angular.module('translations', [])
             'MALE'                  : 'Männlich',
             'FEMALE'                : 'Weiblich',
             'BUTTON_UPDATE_PROFILE' : 'Aktualisiere Profil',
+            'BUTTON_DELETE_PROFILE' : 'Profil löschen',
             'GERMAN'                : 'Deutsch',
             'ENGLISH'               : 'Englisch',
+            'DIALOG_DELETE_TITLE'   : 'Wirklich löschen?',
+            'DIALOG_DELETE_TEXT'    : 'Sind Sie sicher, dass Sie Ihren enviroCar-Nutzeraccount wirklich unwiderruflich löschen möchten?',
+            'DIALOG_DELETE_CONFIRM' : 'unwiderruflich löschen',
+            'DIALOG_DELETE_CANCEL'  : 'abbrechen',
             
             // Community Analysis Page:
             'COMMUNITY_MAP_TITLE'           : 'Abschnitt Analyse Karte',

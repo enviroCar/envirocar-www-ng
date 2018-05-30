@@ -112,9 +112,9 @@
                     'X-User'    : username,
                     'X-Token'   : token
                 }
-            }).success(function (res) {
-                return res.data;
-            }).error(function (error) {
+            }).then(function (res) {
+                return res;
+            },function (error) {
                 console.log("ResponseError @DELETE: " + ecBaseUrl + '/users/' + username + '/tracks/'+trackid);
                 return error;
             });

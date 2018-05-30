@@ -4,11 +4,12 @@
             $scope,
             $timeout,
             $translate,
+            $mdDialog,
             UserCredentialsService,
             UserService) {
 
-        $scope.username="";
-        $scope.password="";
+        $scope.username = "";
+        $scope.password = "";
         var credits = UserCredentialsService.getCredentials();
         if (credits) {
             $scope.username = credits.username;
@@ -131,6 +132,31 @@
                     $scope.languagetext = $scope.lang;
                 }
             }
+        };
+
+        $scope.showConfirm = function (ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            var confirmDeleteUser = $mdDialog.confirm()
+                    .title($translate.instant("DIALOG_DELETE_TITLE"))
+                    .textContent($translate.instant("DIALOG_DELETE_TEXT"))
+                    .ariaLabel('delete user profile dialog')
+                    .targetEvent(ev)
+                    .ok($translate.instant("DIALOG_DELETE_CONFIRM"))
+                    .cancel($translate.instant("DIALOG_DELETE_CANCEL"));
+            $mdDialog.show(confirmDeleteUser).then(function () {
+                UserService.deleteUser(
+                        $scope.username,
+                        $scope.password).then(function (data) {
+                    console.log(data);
+                    // log out from page:
+                    UserCredentialsService.clearCredentials();
+                    UserCredentialsService.clearCookies();
+                }, function (error) {
+                    console.log(error);
+                });
+            }, function () {
+                // do nothing
+            });
         };
 
         var passwordold;
@@ -278,140 +304,12 @@
             } else {
                 $scope.gendertext = "NA";
             }
-            
+
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             }
             , 500);
         });
-        /**
-         * 
-         
-         // Successfully changed profile.
-         
-         console.log(resp);
-         // getData()
-         }, function (err) {
-         $scope.submissionErrorMessage = "Could not update profile";
-         // Could not update profile.
-         if (err.status == 403) {
-         // please enter your exisiting password correctly.
-         $scope.submissionErrorMessage =
-         "Please enter the correct existing password"
-         }
-         $scope.submissionFailure = true;
-         console.log(err);
-         })
-         } else {
-         if (validationerror == 1) {
-         console.log("type in old password please")
-         $scope.submissionErrorMessage =
-         "Please enter your current password"
-         // type in old password please
-         } else if (validationerror == 2) {
-         $scope.submissionErrorMessage =
-         "Please re-enter your new password correctly."
-         // reenter new password correctly.
-         } else if (validationerror == 0) {
-         $scope.submissionErrorMessage = "New password cannot be empty";
-         }
-         $scope.submissionFailure = true;
-         }
-         };*/
-        /**    
-         $scope.ifpassword = false;
-         $scope.passwordentered = function (id) {
-         
-         console.log($scope.oldpassword);
-         if ($scope.oldpassword != undefined) {
-         $scope.ifpassword = true;
-         } else {
-         console.log("event fired in else")
-         $scope.ifpassword = false;
-         }
-         console.log("changed");
-         
-         }
-         
-         function getdata() {
-         url = "https://envirocar.org/api/stable/users/" + username;
-         factorysingletrack.get(url).then(function (data) {
-         $scope.created = new Date(data.data.created).toLocaleString().split(
-         ',')[0];
-         $scope.modified = new Date(data.data.modified).toLocaleString()
-         .split(
-         ',')[0];
-         $scope.termsOfUseVersion = (new Date(data.data.acceptedTermsOfUseVersion)
-         .toLocaleString().split(',')[0]);
-         
-         console.log(data.data);
-         if (data.data.firstName != undefined) {
-         $scope.firstName = data.data.firstName;
-         }
-         if (data.data.lastName != undefined) {
-         $scope.lastName = data.data.lastName;
-         }
-         if (data.data.gender != undefined) {
-         $scope.gender = data.data.gender;
-         if ($scope.gender == "m") {
-         $scope.gendertext = "Male"
-         } else {
-         $scope.gendertext = "Female"
-         }
-         } else {
-         $scope.gendertext = "NA"
-         }
-         if (data.data.country != undefined) {
-         $scope.country = data.data.country;
-         $scope.countrytext = data.data.country;
-         } else {
-         $scope.countrytext = "NA";
-         }
-         if (data.data.language != undefined) {
-         $scope.langfull = data.data.language;
-         $scope.lang = data.data.language.split('-')[0];
-         if ($scope.lang == "en") {
-         $scope.langtext = "English";
-         } else if ($scope.lang == "de") {
-         $scope.langtext = "German";
-         }
-         } else {
-         $scope.langtext = "NA";
-         }
-         
-         if (data.data.mail != undefined) {
-         $scope.emailId = data.data.mail;
-         }
-         if (data.data.dayOfBirth != undefined) {
-         $scope.birthday = data.data.dayOfBirth;
-         var dateParse = data.data.dayOfBirth.split('-');
-         console.log(dateParse[0] + ' ' + dateParse[1] + ' ' + dateParse[2])
-         $scope.dateBirthdayPicker = new Date(dateParse[0], dateParse[1] - 1, dateParse[2]);
-         }
-         $scope.profilepic = url + "/avatar";
-         if (data.data.badges != undefined) {
-         $scope.badgesTrue = true;
-         for (var i = 0; i < data.data.badges.length; i++) {
-         var helper_obj = {};
-         helper_obj['title'] = data.data.badges[i];
-         if (data.data.badges[i] == "developer") {
-         helper_obj['url'] =
-         "assets\\images\\ic_code_black_48dp.png";
-         } else if (data.data.badges[i] == "contributor") {
-         helper_obj['url'] =
-         "assets\\images\\ic_person_add_black_48dp.png";
-         }
-         $scope.badges.push(helper_obj);
-         }
-         }
-         })
-         }
-         
-         
-         // TODO: fill information:
-         $scope.myDate = new Date();
-         
-         */
     }
     ;
     angular.module('enviroCar.profile')
