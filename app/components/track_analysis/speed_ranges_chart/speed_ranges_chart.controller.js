@@ -5,11 +5,8 @@
             $scope,
             $stateParams,
             $timeout,
-            $translate,
             TrackService,
-            StatisticsService,
-            UserCredentialsService,
-            trackAnalysisSettings) {
+            UserCredentialsService) {
         $scope.onload_all = false;
 
         $scope.onload_speed_Range = false;
@@ -17,6 +14,7 @@
         $scope.onload_CO2_Range = false;
         $scope.onload_EngineLoad_Range = false;
         $scope.onload_RPM_Range = false;
+        $scope.onload_GPSSpeed_Range = false;
         $scope.loading = true;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
@@ -72,6 +70,7 @@
             $scope.onload_CO2_Range = false;
             $scope.onload_EngineLoad_Range = false;
             $scope.onload_RPM_Range = false;
+            $scope.onload_GPSSpeed_Range = false;
             $scope.dataSpeedRange = [
                 {
                     key: '  0 km/h',
@@ -199,6 +198,32 @@
                 },
                 {
                     key: "> " + $scope.red_break[4] + " %",
+                    y: 0
+                }
+            ];
+            $scope.dataGPSSpeedRange = [
+                {
+                    key: '  0 km/h',
+                    y: 0
+                },
+                {
+                    key: '0-' + $scope.yellow_break[5] / 2 + ' km/h',
+                    y: 0
+                },
+                {
+                    key: $scope.yellow_break[5] / 2 + '-' + $scope.yellow_break[5] + ' km/h',
+                    y: 0
+                },
+                {
+                    key: $scope.yellow_break[5] + '-' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' km/h',
+                    y: 0
+                },
+                {
+                    key: ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + '-' + $scope.red_break[5] + ' km/h',
+                    y: 0
+                },
+                {
+                    key: "> " + $scope.red_break[5] + " km/h",
                     y: 0
                 }
             ];
@@ -340,6 +365,32 @@
                 }
             }
             $scope.onload_EngineLoad_Range = true;
+            
+            // calculate %'s for each consumption interval:
+            for (var i = a; i < b + 1; i++) {
+                var v = $scope.data_all_ranges[5].values[i];
+                switch (true) {
+                    case (v === 0):
+                        $scope.dataGPSSpeedRange[0].y += partOfPercent;
+                        break;
+                    case (v < $scope.yellow_break[5] / 2):
+                        $scope.dataGPSSpeedRange[1].y += partOfPercent;
+                        break;
+                    case (v < $scope.yellow_break[5]):
+                        $scope.dataGPSSpeedRange[2].y += partOfPercent;
+                        break;
+                    case (v < ($scope.yellow_break[5] + $scope.red_break[5]) / 2):
+                        $scope.dataGPSSpeedRange[3].y += partOfPercent;
+                        break;
+                    case (v < $scope.red_break[5]):
+                        $scope.dataGPSSpeedRange[4].y += partOfPercent;
+                        break;
+                    case (v >= $scope.red_break[5]):
+                        $scope.dataGPSSpeedRange[5].y += partOfPercent;
+                        break;
+                }
+            }
+            $scope.onload_GPSSpeed_Range = true;
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
@@ -554,6 +605,50 @@
                 }
             }
         };
+        $scope.optionsGPSSpeedRange = {
+            chart: {
+                type: 'pieChart',
+                height: 370,
+                donut: false,
+                x: function (d) {
+                    return d.key;
+                }, /**
+                 y: function (d) {
+                 return d.y;
+                 },*/
+                color: ['#00ff00',
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.yellow_break[5] + $scope.red_break[5]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.red_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.red_break[5] + $scope.max_values[5]) / 2, 1)],
+                showLabels: true,
+                labelsOutside: true,
+                pie: {
+                    startAngle: function (d) {
+                        return d.startAngle / 2 - Math.PI / 2
+                    },
+                    endAngle: function (d) {
+                        return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
+                    }
+                },
+                duration: 300,
+                legendPosition: 'bottom',
+                valueFormat: function (d) {
+                    return d3.format(',.2f')(d) + "%";
+                }
+            }
+        };
 
         $scope.dataSpeedRange = [
             {
@@ -685,6 +780,32 @@
                 y: 0
             }
         ];
+        $scope.dataGPSSpeedRange = [
+            {
+                key: '  0 %',
+                y: 0
+            },
+            {
+                key: '0-' + $scope.yellow_break[5] / 2 + ' %',
+                y: 0
+            },
+            {
+                key: $scope.yellow_break[5] / 2 + '-' + $scope.yellow_break[5] + ' %',
+                y: 0
+            },
+            {
+                key: $scope.yellow_break[5] + '-' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' %',
+                y: 0
+            },
+            {
+                key: ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + '-' + $scope.red_break[5] + ' %',
+                y: 0
+            },
+            {
+                key: "> " + $scope.red_break[5] + " %",
+                y: 0
+            }
+        ];
 
         // to be filled with server query:
         $scope.data_all_ranges = [
@@ -702,6 +823,9 @@
                 values: []
             }, {
                 key: 'Engine Load',
+                values: []
+            }, {
+                key: 'GPS Speed',
                 values: []
             }
         ];
@@ -730,6 +854,9 @@
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                         }
+                        if (data_global.data.features[index].properties.phenomenons["GPS Speed"]) {
+                            var value_GPSSpeed = data_global.data.features[index].properties.phenomenons["GPS Speed"].value;
+                        }
 
                         // save all data:
                         $scope.data_all_ranges[0].values.push(value_speed);
@@ -737,6 +864,7 @@
                         $scope.data_all_ranges[2].values.push(value_CO2);
                         $scope.data_all_ranges[3].values.push(value_RPM);
                         $scope.data_all_ranges[4].values.push(value_EngineLoad);
+                        $scope.data_all_ranges[5].values.push(value_GPSSpeed);
                     }
                     var partOfPercent = 100 / $scope.track_length;
 
@@ -869,6 +997,32 @@
                         }
                     }
                     $scope.onload_EngineLoad_Range = true;
+
+                    // calculate %'s for each consumption interval:
+                    for (var i = 0; i < $scope.track_length; i++) {
+                        var v = $scope.data_all_ranges[5].values[i];
+                        switch (true) {
+                            case (v === 0):
+                                $scope.dataGPSSpeedRange[0].y += partOfPercent;
+                                break;
+                            case (v < $scope.yellow_break[5] / 2):
+                                $scope.dataGPSSpeedRange[1].y += partOfPercent;
+                                break;
+                            case (v < $scope.yellow_break[5]):
+                                $scope.dataGPSSpeedRange[2].y += partOfPercent;
+                                break;
+                            case (v < ($scope.yellow_break[5] + $scope.red_break[5]) / 2):
+                                $scope.dataGPSSpeedRange[3].y += partOfPercent;
+                                break;
+                            case (v < $scope.red_break[5]):
+                                $scope.dataGPSSpeedRange[4].y += partOfPercent;
+                                break;
+                            case (v >= $scope.red_break[5]):
+                                $scope.dataGPSSpeedRange[5].y += partOfPercent;
+                                break;
+                        }
+                    }
+                    $scope.onload_GPSSpeed_Range = true;
 
 
                     $timeout(function () {

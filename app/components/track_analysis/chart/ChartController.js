@@ -170,14 +170,19 @@
                     key: $translate.instant('ENGINE_LOAD'),
                     values: [
                     ]
+                },
+                {
+                    key: $translate.instant('GPS_SPEED'),
+                    values: [
+                    ]
                 }
             ];
-            for (var phenomIndex = 0; phenomIndex < 5; phenomIndex++) {
+            for (var phenomIndex = 0; phenomIndex < 6; phenomIndex++) {
                 for (var index = 0; index < $scope.data_all[phenomIndex].values.length; index++) {
                     temp_data_array[phenomIndex].values[index] = $scope.data_all[phenomIndex].values[index];
                 }
             }
-            for (var index = 0; index < 5; index++) {
+            for (var index = 0; index < 6; index++) {
                 temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) + 1);
             }
 
@@ -312,6 +317,7 @@
         $scope.onload_track_map = false;
         $scope.onload_track_chart = false;
         $scope.segmentActivated = false;
+        // FIXME: Speed not always awaylable and cannot be the default anymore.
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
         $scope.intervalStart = 0;
@@ -411,6 +417,22 @@
                     ' ' + ($scope.yellow_break[4] + $scope.red_break[4]) / 2 + ' %',
                     ' ' + $scope.red_break[4] + ' %',
                     ' ' + ($scope.red_break[4] + $scope.max_values[4]) / 2 + ' %']
+            },
+            {
+                // GPS Speed:
+                position: 'bottomright',
+                colors: ['#00ff00',
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.yellow_break[5] + $scope.red_break[5]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.red_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.red_break[5] + $scope.max_values[5]) / 2, 1)],
+                labels: ['  0 km/h',
+                    ' ' + $scope.yellow_break[5] / 2 + ' km/h',
+                    ' ' + $scope.yellow_break[5] + ' km/h',
+                    ' ' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' km/h',
+                    ' ' + $scope.red_break[5] + ' km/h',
+                    ' ' + ($scope.red_break[5] + $scope.max_values[5]) / 2 + ' km/h']
             }
         ];
 
@@ -446,6 +468,7 @@
                     }
                 }
             },
+            // FIXME: Speed is no more the default available phenomenon.
             legend: {// Speed by default:
                 legendClass: "info legend",
                 position: 'bottomright',
@@ -477,6 +500,7 @@
             $scope.data_all[2].key = $translate.instant('CO2');
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
+            $scope.data_all[5].key = $translate.instant('GPS_SPEED');
             //2. set previous selected phenomenon
             $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
             //3. set previous selected selection range
@@ -557,7 +581,7 @@
 
         };
 
-        var lastInterval = 6;
+        var lastInterval = 5;
         $scope.$on('single_track_page:interval-clicked', function (event, args) {
             var low;
             var high;
@@ -671,8 +695,15 @@
                     $scope.currentPhenomenonIndex = 4;
                     PhenomenonService.setPhenomenon('Engine Load', 4);
                     break;
+                case 'GPS Speed':
+                    $scope.dataTrackChart[0] = $scope.data_all[5];
+                    $scope.paths = $scope.paths_all[5];
+                    $scope.legend = legend_all[5];
+                    $scope.currentPhenomenonIndex = 5;
+                    PhenomenonService.setPhenomenon('GPS Speed', 5);
+                    break;
             }
-            lastInterval = 6;
+            lastInterval = 5;
             $scope.highlightedInterval = false;
             $scope.intervalStart = 0;
             $scope.intervalEnd = $scope.max_values[$scope.currentPhenomenonIndex];
@@ -728,7 +759,13 @@
                 },
                 y2Axis: {
                     tickFormat: function (d) {
-                        return d3.format(',.2f')(d);
+                        var y;
+                        if ($scope.currentPhenomenonIndex === 3) {
+                            y = d.toFixed(0);
+                        } else {
+                            y = d3.format(',.2f')(d);
+                        }
+                        return y;
                     }
                 },
                 interactiveLayer: {
@@ -807,6 +844,11 @@
                 key: $translate.instant('ENGINE_LOAD'),
                 values: [
                 ]
+            },
+            {
+                key: $translate.instant('GPS_SPEED'),
+                values: [
+                ]
             }
         ];
         $scope.paths_all = [
@@ -814,9 +856,11 @@
             {p1: 0},
             {p1: 0},
             {p1: 0},
+            {p1: 0},
             {p1: 0}
         ];
         // Chart data setup for Track Chart:
+        // FIXME: // Speed is not always available anymore
         $scope.dataTrackChart = [
             {
                 key: 'Speed',
@@ -831,11 +875,6 @@
                 focus: false,
                 icon: $scope.markerGreen
             };
-            /**
-             $timeout(function () {
-             window.dispatchEvent(new Event('resize'))
-             },
-             10);*/
         };
         $scope.removeHoverMarker = function () {
             $scope.markers.HoveredPosition = {
@@ -953,6 +992,7 @@
         $scope.password = UserCredentialsService.getCredentials().password;
         TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
                 function (data) {
+                    console.log(data);
                     data_global = data;
                     // set slider ranges:
                     $scope.slider.maxValue = data_global.data.features.length - 1;
@@ -969,6 +1009,8 @@
                         phenomsJSON['Rpm'] = true;
                     if (data_global.data.features[0].properties.phenomenons['Engine Load'])
                         phenomsJSON['Engine Load'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['GPS Speed'])
+                        phenomsJSON['GPS Speed'] = true;
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
                     // max bounds of the track:
@@ -988,6 +1030,7 @@
                     var co2Measurement;
                     var rpmMeasurement;
                     var engineLoadMeasurement;
+                    var gpsSpeedMeasurement;
                     $scope.timestamps = [
                     ];
 
@@ -998,6 +1041,7 @@
                         var pathObjCO2 = {};
                         var pathObjRPM = {};
                         var pathObjEngine_load = {};
+                        var pathObjGPS_Speed = {};
                         // get coords:
                         var lat_coord = data_global.data.features[index].geometry.coordinates[1];
                         var lon_coord = data_global.data.features[index].geometry.coordinates[0];
@@ -1015,6 +1059,7 @@
                         pathObjCO2['weight'] = 8;
                         pathObjRPM['weight'] = 8;
                         pathObjEngine_load['weight'] = 8;
+                        pathObjGPS_Speed['weight'] = 8;
                         // path coordinates:
                         if (index > 0)
                             pathObjSpeed['latlngs'] = [{
@@ -1028,6 +1073,7 @@
                         pathObjCO2['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjRPM['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjEngine_load['latlngs'] = pathObjSpeed['latlngs'];
+                        pathObjGPS_Speed['latlngs'] = pathObjSpeed['latlngs'];
 
                         // get timestamp:
                         var time1 = data_global.data.features[index].properties.time;
@@ -1036,6 +1082,7 @@
                         $scope.timestamps.push(date_hh_mm_ss);
 
                         // get the phenomenon's value and interpolate a color value from it:
+                        // FIXME: Speed is not always available anymore
                         if (data_global.data.features[index].properties.phenomenons.Speed) {
                             var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
                             phenomsJSON['Speed'] = true;
@@ -1086,6 +1133,16 @@
                             engineLoadMeasurement = {x: index, y: undefined, z: index};
                         }
 
+                        if (data_global.data.features[index].properties.phenomenons["GPS Speed"]) {
+                            var value_GPSSPeed = data_global.data.features[index].properties.phenomenons["GPS Speed"].value;
+                            phenomsJSON['GPS Speed'] = true;
+                            pathObjGPS_Speed['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_GPSSPeed, 1);    //more information at percentToRGB().
+                            gpsSpeedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['GPS Speed'].value, z: index};
+                        } else {
+                            pathObjGPS_Speed['color'] = $scope.errorColor;
+                            gpsSpeedMeasurement = {x: index, y: undefined, z: index};
+                        }
+
                         // enqueue pathObjects for each phenomenon to phenomPath:
                         if (index > 0) {
                             $scope.paths_all[0]['p' + (index)] = pathObjSpeed;
@@ -1093,7 +1150,9 @@
                             $scope.paths_all[2]['p' + (index)] = pathObjCO2;
                             $scope.paths_all[3]['p' + (index)] = pathObjRPM;
                             $scope.paths_all[4]['p' + (index)] = pathObjEngine_load;
+                            $scope.paths_all[5]['p' + (index)] = pathObjGPS_Speed;
                             // add 'speed'-path as default overlay to leaflet map:
+                            // FIXME: speed is not always available and the default phenomenon must be choosen differently.
                             $scope.paths['p' + (index)] = pathObjSpeed;
                         }
                         // save all data:
@@ -1102,11 +1161,15 @@
                         $scope.data_all[2].values.push(co2Measurement);
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
+                        console.log($scope.data_all);
+                        console.log(gpsSpeedMeasurement);
+                        $scope.data_all[5].values.push(gpsSpeedMeasurement);
                     }
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
 
 
                     // save 'speed'-data as default into time series chart 
+                    // FIXME: Speed data not always available, change the default phenomenon!
                     $scope.dataTrackChart[0] = $scope.data_all[0];
                     // zoom map to track:
                     var padding_lat = (northeast.lat - southwest.lat) / 10;
@@ -1142,14 +1205,14 @@
 
         $scope.deleteTrack = function (ev) {
             // Appending dialog to document.body to cover sidenav in docs app
-            var confirmDeleteUser = $mdDialog.confirm()
+            var confirmDeleteTrack = $mdDialog.confirm()
                     .title($translate.instant("DIALOG_DELETE_TRACK_TITLE"))
                     .textContent($translate.instant("DIALOG_DELETE_TRACK_TEXT"))
                     .ariaLabel('delete user profile dialog')
                     .targetEvent(ev)
                     .ok($translate.instant("DIALOG_DELETE_TRACK_CONFIRM"))
                     .cancel($translate.instant("DIALOG_DELETE_TRACK_CANCEL"));
-            $mdDialog.show(confirmDeleteUser).then(function () {
+            $mdDialog.show(confirmDeleteTrack).then(function () {
                 TrackService.deleteTrack($scope.username, $scope.password, $scope.trackid).then(
                         function (data) {
                             console.log(data);

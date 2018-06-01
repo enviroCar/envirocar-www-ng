@@ -202,6 +202,7 @@
                         UserCredentialsService.setCredentials($scope.username, $scope.password);
                         $scope.login_request_running = false;
                     }, function(error) { // error response
+                        console.log(error);
                         console.log("getUser error: " + error);
                         // If wrong credentials are provided
                         $scope.error = true;

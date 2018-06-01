@@ -5,8 +5,10 @@
             $timeout,
             $translate,
             $mdDialog,
+            $mdMedia,
             UserCredentialsService,
-            UserService) {
+            UserService,
+            TrackService) {
 
         $scope.username = "";
         $scope.password = "";
@@ -96,10 +98,8 @@
                     }
                 }, function (error) {
             console.log("error " + error);
-            console.log(error);
         }
         );
-
         var updateNewUserData = function () {
             console.log("updating userdata on webapp..");
             // update eMail:
@@ -133,17 +133,39 @@
                 }
             }
         };
+        $scope.deleteUserDialog = function ()
+        {
+            var showObject = {};
+            var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+            showObject = {
+                controller: 'DeleteUserCtrl',
+                templateUrl: 'app/components/profile/delete/delete_confirm_dialog.html',
+                parent: angular.element(document.body),
+                scope: $scope.$new(),
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen
+            };
+            $mdDialog.show(showObject).then(function (answer) {
+                // delete tracks too?
+                if (answer) {
+                    TrackService.getUserTracks($scope.username, $scope.password).then(function (data) {
+                        var tracks = data.data.tracks;
+                        var currentTrack;
+                        for (currentTrack in tracks) {
+                            // delete track:
+                            TrackService.deleteTrack($scope.username, $scope.password, tracks[currentTrack].id).then(function (data) {
+                                console.log("Track '" + data + "' has been deleted.");
+                            }, function (error) {
+                                console.log("Error deleting track '" + error + "'.");
+                            });
+                        }
+                    }, function (error) {
+                        console.log("Error getting user tracks -> unsecure user profile deletion. Aborting mission...  Please try again later.");
+                        // TODO: abort mission
+                    });
+                }
 
-        $scope.showConfirm = function (ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            var confirmDeleteUser = $mdDialog.confirm()
-                    .title($translate.instant("DIALOG_DELETE_TITLE"))
-                    .textContent($translate.instant("DIALOG_DELETE_TEXT"))
-                    .ariaLabel('delete user profile dialog')
-                    .targetEvent(ev)
-                    .ok($translate.instant("DIALOG_DELETE_CONFIRM"))
-                    .cancel($translate.instant("DIALOG_DELETE_CANCEL"));
-            $mdDialog.show(confirmDeleteUser).then(function () {
+                // 2. finally delete the user:
                 UserService.deleteUser(
                         $scope.username,
                         $scope.password).then(function (data) {
@@ -153,12 +175,47 @@
                     UserCredentialsService.clearCookies();
                 }, function (error) {
                     console.log(error);
+//                        });
+                    console.log("dialog confirmed with answer: " + answer);
+                    $scope.status = 'You said the information was "' + answer +
+                            '".';
+                }, function () {
+                    console.log("dialog canceled without answer");
+                    $scope.status = 'You cancelled the dialog.';
                 });
-            }, function () {
-                // do nothing
+                $scope.$watch(function () {
+                    return $mdMedia('xs') || $mdMedia('sm');
+                }, function (wantsFullScreen) {
+                    $scope.customFullscreen = (wantsFullScreen === true);
+                });
             });
-        };
+        }
 
+        $scope.showConfirm = function (ev) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            $scope.deleteUserDialog();
+//            var confirmDeleteUser = $mdDialog.confirm()
+//                    .title($translate.instant("DIALOG_DELETE_TITLE"))
+//                    .textContent($translate.instant("DIALOG_DELETE_TEXT"))
+//                    .ariaLabel('delete user profile dialog')
+//                    .targetEvent(ev)
+//                    .ok($translate.instant("DIALOG_DELETE_CONFIRM"))
+//                    .cancel($translate.instant("DIALOG_DELETE_CANCEL"));
+//            $mdDialog.show(confirmDeleteUser).then(function () {
+//                UserService.deleteUser(
+//                        $scope.username,
+//                        $scope.password).then(function (data) {
+//                    console.log(data);
+//                    // log out from page:
+//                    UserCredentialsService.clearCredentials();
+//                    UserCredentialsService.clearCookies();
+//                }, function (error) {
+//                    console.log(error);
+//                });
+//            }, function () {
+//                // do nothing
+//            });
+        };
         var passwordold;
         $scope.submissionSuccess = false;
         $scope.submissionErrorMessage = "";
@@ -262,7 +319,6 @@
                 if ($scope.newpassword === undefined || $scope.newpassword === "") {
                     UserService.putUserDetails($scope.username, $scope.password, dataput).then(function (data) {
                         console.log("no new password, but updates on profile.");
-
                         $scope.submissionSuccess = true;
                         $timeout(function () {
                             $scope.submissionSuccess = false;
@@ -281,7 +337,6 @@
                 }
             }
         };
-
         $scope.$on('toolbar:language-changed', function (event, args) {
             if ($scope.lang !== undefined && $scope.lang !== "") {
                 if ($scope.lang === "en") {

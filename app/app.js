@@ -19,7 +19,8 @@
         'materialCalendar',
         'cl.paging',
         'rzModule'])
-            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
+            .value("ecBaseUrl", "http://localhost:9999")
+//            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
             .run(function ($rootScope, $state, $stateParams, UserCredentialsService) {
                 console.log('app started');
                 $rootScope.previewurl = "";

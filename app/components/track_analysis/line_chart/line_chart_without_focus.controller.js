@@ -11,6 +11,7 @@
             PhenomenonService) {
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_chart = false;
+        // FIXME: Speed phenomenon not always available/ should not be the default phenom.
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
         var phenom = PhenomenonService.getPhenomenon();
@@ -58,6 +59,11 @@
                     $scope.dataTrackChart[0] = $scope.data_all[4];
                     $scope.paths = $scope.paths_all[4];
                     $scope.currentPhenomenonIndex = 4;
+                    break;
+                case 'GPS Speed':
+                    $scope.dataTrackChart[0] = $scope.data_all[5];
+                    $scope.paths = $scope.paths_all[5];
+                    $scope.currentPhenomenonIndex = 5;
                     break;
             }
         });
@@ -151,6 +157,11 @@
                 key: $translate.instant('ENGINE_LOAD'),
                 values: [
                 ]
+            },
+            {
+                key: $translate.instant('GPS_SPEED'),
+                values: [
+                ]
             }
         ];
 
@@ -173,6 +184,9 @@
             case 4:
                 label = $translate.instant('ENGINE_LOAD');
                 break;
+            case 5:
+                label = $translate.instant('GPS_SPEED');
+                break;
         }
         ;
         $scope.dataTrackChart = [
@@ -190,6 +204,7 @@
             $scope.data_all[2].key = $translate.instant('CO2');
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
+            $scope.data_all[5].key = $translate.instant('GPS_SPEED');
 
             //2. set to current selected phenomenon
             var phenom = PhenomenonService.getPhenomenon();
@@ -341,6 +356,7 @@
                     var co2Measurement;
                     var rpmMeasurement;
                     var engineLoadMeasurement;
+                    var gpsSpeedMeasurement;
                     // iterating through each measurement:
                     for (var index = 0; index < data_global.data.features.length; index++) {
 
@@ -369,6 +385,11 @@
                             engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
                         else
                             engineLoadMeasurement = {x: index, y: undefined};
+                        
+                        if (data_global.data.features[index].properties.phenomenons['GPS Speed'])
+                            gpsSpeedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['GPS Speed'].value};
+                        else
+                            gpsSpeedMeasurement = {x: index, y: undefined};
 
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
@@ -376,6 +397,7 @@
                         $scope.data_all[2].values.push(co2Measurement);
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
+                        $scope.data_all[5].values.push(gpsSpeedMeasurement);
                     }
 
 
