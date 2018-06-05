@@ -19,9 +19,10 @@
         'materialCalendar',
         'cl.paging',
         'rzModule'])
-            .value("ecBaseUrl", "http://localhost:9999")
-//            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
-            .run(function ($rootScope, $state, $stateParams, UserCredentialsService) {
+//            .value("ecBaseUrl", "http://localhost:9999")
+            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
+            .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
+                "ngInject";
                 console.log('app started');
                 $rootScope.previewurl = "";
                 $rootScope.$state = $state;
@@ -37,10 +38,9 @@
                         event.preventDefault();
                     }
 
-
-
                 });
 
+                $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
             });
 
@@ -56,7 +56,7 @@
     angular.module('enviroCar.profile', []);
 
     angular.module('enviroCar.community', []);
-    
+
     /*
      * The default legend directive of ui-leaflet is conflicting in the 
      * combination of used library versions of leaflet, leaflet draw and leaflet 
@@ -64,6 +64,7 @@
      * An override of the legend-directive is necessary:
      */
     angular.module("ui-leaflet").directive('legend', ["leafletLogger", "$http", "$timeout", "leafletHelpers", "leafletLegendHelpers", function (leafletLogger, $http, $timeout, leafletHelpers, leafletLegendHelpers) {
+            "ngInject";
             var $log = leafletLogger,
                     errorHeader = leafletHelpers.errorHeader + ' [Legend] ';
             return {
@@ -214,6 +215,7 @@
     angular.module("ui-leaflet").decorator(
             "legendDirective",
             function legendDirectiveDecorator($delegate) {
+                "ngInject";
                 console.log(". . . . . . . . . . . . . .");
                 console.log("There are %s matching directives.", $delegate.length);
                 console.log(". . . . . . . . . . . . . .");

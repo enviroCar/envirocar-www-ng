@@ -2,6 +2,7 @@
     'use strict';
     
     function PhenomenonService(){
+        "ngInject";
             
             console.log("PhenomenonService started.");
             var phenomenon = {

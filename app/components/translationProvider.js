@@ -11,6 +11,7 @@ angular.module('translations', [])
             'preferredLocale': 'en_EN'
         })
         .config(['$translateProvider', function ($translateProvider) {
+        "ngInject";
                 console.log('translation configuration set up');
                 $translateProvider.translations('en', {
                     // defaults:

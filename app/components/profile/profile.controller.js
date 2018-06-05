@@ -9,6 +9,7 @@
             UserCredentialsService,
             UserService,
             TrackService) {
+        "ngInject";
 
         $scope.username = "";
         $scope.password = "";

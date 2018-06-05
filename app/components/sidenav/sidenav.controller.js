@@ -11,6 +11,7 @@
             $q,
             $timeout,
             $translate) {
+        "ngInject";
 
         $scope.menuItems = [{
                 name: 'DASHBOARD',

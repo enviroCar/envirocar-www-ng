@@ -2,6 +2,7 @@
     'use strict';
 
     function config($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider) {
+        "ngInject";
         console.log('run config');
 
         $stateProvider
@@ -105,6 +106,7 @@
         $httpProvider.defaults.headers.patch = {};
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        $httpProvider.defaults.withCredentials = true;
     }
 
     angular.module('enviroCar')

@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function ComparisonTrackChartCtrl($scope, $stateParams, $timeout, $translate, TrackService, StatisticsService, UserCredentialsService) {
+        "ngInject";
         $scope.onload_all = false;
 
         $scope.onload_speed = false;

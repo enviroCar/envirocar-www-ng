@@ -17,6 +17,7 @@
             UserCredentialsService,
             ecBaseUrl,
             FilterStateService) {
+        "ngInject";
 
 
         $scope.okay_pressed = false;

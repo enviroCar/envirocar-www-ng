@@ -14,6 +14,7 @@
             PhenomenonService,
             leafletBoundsHelpers,
             trackAnalysisSettings) {
+        "ngInject";
 
         $scope.downloadTrack = function () {
             window.location.href = "http://envirocar.org/api/stable/tracks/" + $scope.trackid;

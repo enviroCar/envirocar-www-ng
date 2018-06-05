@@ -11,6 +11,7 @@
             $translate,
             UserCredentialsService,
             UserService) {
+        "ngInject";
         $scope.onload_all_tracks_page = false;
         $scope.tracksAvailable = false;
         var tab_a = true;
@@ -107,4 +108,4 @@
     angular.module('enviroCar.tracks')
             .controller('TrackListCtrl', TrackListCtrl);
 
-})()
+})();

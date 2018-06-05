@@ -9,6 +9,7 @@
             TrackService,
             UserCredentialsService,
             PhenomenonService) {
+        "ngInject";
         $scope.trackid = $stateParams.trackid;
         $scope.onload_track_chart = false;
         // FIXME: Speed phenomenon not always available/ should not be the default phenom.

@@ -2,6 +2,7 @@
     'use strict';
 
     function DashboardCtrl($scope, $timeout, UserCredentialsService, UserService, TrackService) {
+        "ngInject";
 
         var username;
         var token;
@@ -39,7 +40,7 @@
         };
 
         // ask server for number of total community tracks:
-        TrackService.getTotalTracks(username, token).then(
+        TrackService.getTotalTracks(username).then(
                 function (data) {
                     console.log(data);
                     $scope.total_tracks = data;

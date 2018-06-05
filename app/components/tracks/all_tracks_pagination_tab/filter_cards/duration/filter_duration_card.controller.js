@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function FilterDurationCardCtrl($scope, $timeout, FilterStateService) {
+        "ngInject";
         
         // load state values:
         var state = FilterStateService.getDurationFilterState();

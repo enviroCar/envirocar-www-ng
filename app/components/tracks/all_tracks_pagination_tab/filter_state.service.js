@@ -2,6 +2,7 @@
     'use strict';
 
     function FilterStateService() {
+        "ngInject";
 
         var trackTab = 1;
         

@@ -7,6 +7,7 @@
             $translate,
             StatisticsService,
             leafletDrawEvents) {
+        "ngInject";
 
         $scope.onload_community_map = false;
         $scope.onload_community_data = true;

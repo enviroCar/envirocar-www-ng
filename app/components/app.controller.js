@@ -2,6 +2,7 @@
     'use strict';
 
     function AppCtrl($scope, $mdMedia, UserCredentialsService, FilterStateService) {
+        "ngInject";
         $scope.message = 'Initial Setup';
         $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
         $scope.screenIsXS = $mdMedia('xs');

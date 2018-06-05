@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function SpeedZonesChartCtrl($scope, $timeout, $translate, UserService, UserCredentialsService) {
+        "ngInject";
 
         $scope.onloadSpeedZones = false;
         $scope.loading = true;

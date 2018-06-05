@@ -1,6 +1,7 @@
 (function () {
 
     LanguageMenuCtrl = function ($rootScope, $scope, $translate, $cookieStore) {
+        "ngInject";
 
         $scope.optionsLanguage = [
             {

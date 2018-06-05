@@ -7,6 +7,7 @@
             $timeout,
             TrackService,
             UserCredentialsService) {
+        "ngInject";
         $scope.onload_all = false;
 
         $scope.onload_speed_Range = false;

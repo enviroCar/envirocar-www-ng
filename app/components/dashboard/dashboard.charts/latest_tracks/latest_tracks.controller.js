@@ -2,6 +2,7 @@
     'use strict';
     
     function LatestTracksChartCtrl($scope, $state, $translate, TrackService, UserService, UserCredentialsService, ecBaseUrl) {
+        "ngInject";
         var timeline = {};
         $scope.track_number = 0;
         $scope.onload_tracks_timeline = false;
@@ -30,6 +31,7 @@
         // tracks holen:
         TrackService.getUserTracks($scope.username, $scope.password). then(
                 function(data){
+                    console.log(data);
                     $scope.number = data.data.tracks.length;
                     var limit = 0;
                     // The latest tracks display shows latest 6 tracks. If the user only has a total of less than 6 tracks, then we update that number to avoid exceptions

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     function muh($scope){
-        console.log("muh");
+        "ngInject";
     }
 
     angular.module('enviroCar.tracks')

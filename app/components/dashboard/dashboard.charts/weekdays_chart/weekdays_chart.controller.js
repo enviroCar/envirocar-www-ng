@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function WeekdaysChartCtrl($scope, $timeout, $translate, TrackService, UserCredentialsService) {
+        "ngInject";
         $scope.onload_weekdays = false;
         $scope.loading = true;
 

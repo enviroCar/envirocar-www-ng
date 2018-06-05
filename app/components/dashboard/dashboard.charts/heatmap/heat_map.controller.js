@@ -6,6 +6,7 @@
             UserCredentialsService,
             UserService,
             leafletBoundsHelpers) {
+        "ngInject";
 
         $scope.onload_heat_map = false;
         angular.extend($scope, {

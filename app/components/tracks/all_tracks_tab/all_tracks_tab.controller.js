@@ -16,6 +16,7 @@
             TrackService,
             UserCredentialsService,
             ecBaseUrl) {
+        "ngInject";
 
 
             /**
@@ -161,4 +162,4 @@
     ;
     angular.module('enviroCar.tracks')
             .controller('AllTracksTabCtrl', AllTracksTabCtrl);
-})()
+})();

@@ -5,6 +5,7 @@
             $timeout,
             leafletBoundsHelpers,
             FilterStateService) {
+        "ngInject";
         var drawnItems2 = new L.FeatureGroup();
 
         $scope.onEachFeature = function(feature, layer) {

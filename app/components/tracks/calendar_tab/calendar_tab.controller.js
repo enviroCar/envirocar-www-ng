@@ -8,6 +8,7 @@
             MaterialCalendarData,
             UserCredentialsService,
             ecBaseUrl) {
+        "ngInject";
         $scope.onload_calendar = false;
         $scope.nostatistics = true;
         $scope.Math = window.Math;
@@ -644,4 +645,4 @@
 
     angular.module('enviroCar.tracks')
             .controller('CalendarTabCtrl', CalendarTabCtrl);
-})()
+})();

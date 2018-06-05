@@ -2,10 +2,9 @@
     'use strict';
 
     function FilterDistanceCardCtrl($scope) {
+        "ngInject";
         console.log($scope.filters);
-        console.log("TEEEEEEEEEEEEEEEEEEEEEEEEST")
         $scope.showAlert=function(){
-            console.log("bläh");
         }
     }
     ;

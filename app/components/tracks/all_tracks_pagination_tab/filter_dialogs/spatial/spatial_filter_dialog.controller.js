@@ -7,6 +7,7 @@
             UserService,
             FilterStateService,
             UserCredentialsService) {
+        "ngInject";
 
         $scope.okay_pressed = false;
         $scope.errorOverlap = false;

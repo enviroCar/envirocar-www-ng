@@ -5,6 +5,7 @@
             $mdDialog,
             UserCredentialsService,
             TrackService) {
+        "ngInject";
 
         $scope.username = "";
         $scope.password = "";

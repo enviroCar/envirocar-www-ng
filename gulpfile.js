@@ -5,6 +5,12 @@ var inject = require('gulp-inject');
 var series = require('stream-series');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var ngAnnotate = require('gulp-ng-annotate', {
+    remove: false,
+    add: true,
+    single_quotes: true
+});
+
 /** browserify
  var browserify = require('browserify');
  var source = require('vinyl-source-stream');
@@ -48,7 +54,44 @@ gulp.task('index', function () {
                 relative: true
             }))
             .pipe(gulp.dest(''));
-})
+});
+
+gulp.task('index-release', function () {
+    var target = gulp.src('./app/index.html');
+    var sources = gulp.src(['release.js', './app/**/*.css'], {
+        read: false
+    });
+    var bowerSources = gulp.src(bowerFiles(), {
+        read: false
+    });
+
+    var othersBowerSources = gulp.src([
+        "bower_components/angular/angular.min.js", 
+        "bower_components/material-angular-paging/build/dist.min.js"]);
+
+    return target
+            .pipe(inject(series(othersBowerSources, sources),{
+                addRootSlash: false
+            }))
+            .pipe(inject(bowerSources, {
+                name: 'bower',
+                addRootSlash: false
+            }, {
+                relative: true
+            }))
+            .pipe(gulp.dest(''));
+});
+
+gulp.task('ng-annotate', function () {
+    var sources = gulp.src(['./app/**/*.js'], {
+        read: false
+    });
+    return gulp.src(['./app/**/*.js'])
+            .pipe(concat('release.js'))
+            .pipe(ngAnnotate())
+            .pipe(uglify())
+            .pipe(gulp.dest(''));
+});
 
 gulp.task('minify', function () {
     gulp.src(['app/**/*.js'])
@@ -68,4 +111,4 @@ gulp.task('browserify', function () {
 
 gulp.task('default', ['styles', 'index', 'connect', 'watch']);
 
-gulp.task('release', ['styles', 'index', 'minify']);
+gulp.task('release', ['styles', 'ng-annotate', 'index-release']);

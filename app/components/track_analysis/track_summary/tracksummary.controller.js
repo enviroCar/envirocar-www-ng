@@ -5,6 +5,7 @@
             $stateParams,
             UserCredentialsService,
             TrackService) {
+        "ngInject";
 
         $scope.onload_summary = false;
         $scope.consumption_available = false;

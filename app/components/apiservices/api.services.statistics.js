@@ -1,7 +1,7 @@
 (function () {
 
     function StatisticsService($http, ecBaseUrl) {
-
+        "ngInject";
         /**
          * Gets the total statistics of a certain phenomenon
          * @param {String} username - authentication username
@@ -21,7 +21,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/statistics/" + phenomenon);
                 return error;
             });
@@ -46,7 +46,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics");
                 return error;
             });
@@ -72,7 +72,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics/" + phenomenon);
                 return error;
             });
@@ -97,7 +97,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics");
                 return error;
             });
@@ -122,7 +122,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics/" + phenomenon);
                 return error;
             });
@@ -146,7 +146,7 @@
                 }
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
                 return error;
             });
@@ -165,7 +165,7 @@
                 data: data
             }).then(function (res) {
                 return res;
-            },function (error) {
+            }, function (error) {
                 console.log("ResponseError @GEThttps://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics");
                 return error;
             });

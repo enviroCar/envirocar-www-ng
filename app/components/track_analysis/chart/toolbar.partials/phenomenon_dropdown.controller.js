@@ -1,6 +1,7 @@
 (function () {
 
     PhenomenonDropdownCtrl = function ($rootScope, $scope, $translate, $cookieStore) {
+        "ngInject";
         $scope.phenomenon = $translate.instant('SPEED');
         $scope.storeSelection = 0;
         $scope.phenomsIDs = [

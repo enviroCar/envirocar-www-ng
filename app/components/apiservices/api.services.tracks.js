@@ -1,6 +1,7 @@
 (function () {
 
     function TrackService($http, ecBaseUrl) {
+        "ngInject";
         
         /**
          * Gets the statistic of a certain track of a certain phenomenon
@@ -15,10 +16,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/' + trackID + '/statistics/' + phenomenon,
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
@@ -40,10 +41,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/' + trackID + '/statistics',
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
@@ -65,10 +66,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/' + trackID,
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
@@ -89,10 +90,10 @@
             return $http({
                 method: 'POST',
                 url: ecBaseUrl + '/users/' + username + '/tracks',
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 },
                 data: track
             }).then(function (res) {
@@ -107,10 +108,10 @@
             return $http({
                 method: 'DELETE',
                 url: ecBaseUrl + '/users/' + username + '/tracks/'+trackid,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
@@ -125,10 +126,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/tracks?limit=10000',
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
@@ -149,10 +150,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/tracks?limit=1',
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (data) {
                 var number = data.headers('Content-Range').split("/");
@@ -169,17 +170,14 @@
          * @param {type} token
          * @returns {data} data.headers('Content-Range').split("/")[1] - is the total amount of all tracks        
          */
-        this.getTotalTracks = function(username, token){
+        this.getTotalTracks = function(username){
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/tracks?limit=1',
-                cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
-                }
-            }).then(function (data) {
+                cache: true
+            }).then(function (data, headers) {
+                console.log(data);
+                console.log(headers);
                 var number = data.headers('Content-Range').split("/");
                 return Number(number[1]);
             }, function (error) {
@@ -199,10 +197,10 @@
                 method: 'GET',
                 url: ecBaseUrl + '/tracks?limit=10000',
                 cache: true,
-                headers : {
-                    'Content-Type' : 'application/JSON',
-                    'X-User'    : username,
-                    'X-Token'   : token
+                headers: {
+                    'Content-Type': 'application/JSON',
+                    'X-User': username,
+                    'X-Token': token
                 }
             }).then(function (res) {
                 return res;
