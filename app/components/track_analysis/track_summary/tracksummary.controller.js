@@ -3,15 +3,12 @@
     function TrackSummaryCtrl(
             $scope,
             $stateParams,
-            UserCredentialsService,
             TrackService) {
         "ngInject";
 
         $scope.onload_summary = false;
         $scope.consumption_available = false;
         $scope.co2_available = false;
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
         $scope.trackid = $stateParams.trackid;
         var distance = 0;
         var vehiclemodel;
@@ -228,7 +225,7 @@
             }
         });
 
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     var data_global = data;
                     var track_data = data.data;

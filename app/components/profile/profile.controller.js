@@ -12,11 +12,9 @@
         "ngInject";
 
         $scope.username = "";
-        $scope.password = "";
         var credits = UserCredentialsService.getCredentials();
         if (credits) {
             $scope.username = credits.username;
-            $scope.password = credits.password;
         }
 
         $scope.name = $scope.username;
@@ -39,7 +37,7 @@
         $scope.termsOfUseVersion;
         $scope.dateBirthdayPicker = undefined;
         // ask server for current userinformation:
-        UserService.getUser($scope.username, $scope.password).then(
+        UserService.getUser($scope.username).then(
                 function (data) {
                     console.log(data);
                     var data = data.data;
@@ -149,12 +147,12 @@
             $mdDialog.show(showObject).then(function (answer) {
                 // delete tracks too?
                 if (answer) {
-                    TrackService.getUserTracks($scope.username, $scope.password).then(function (data) {
+                    TrackService.getUserTracks($scope.username).then(function (data) {
                         var tracks = data.data.tracks;
                         var currentTrack;
                         for (currentTrack in tracks) {
                             // delete track:
-                            TrackService.deleteTrack($scope.username, $scope.password, tracks[currentTrack].id).then(function (data) {
+                            TrackService.deleteTrack($scope.username, tracks[currentTrack].id).then(function (data) {
                                 console.log("Track '" + data + "' has been deleted.");
                             }, function (error) {
                                 console.log("Error deleting track '" + error + "'.");
@@ -168,8 +166,7 @@
 
                 // 2. finally delete the user:
                 UserService.deleteUser(
-                        $scope.username,
-                        $scope.password).then(function (data) {
+                        $scope.username).then(function (data) {
                     console.log(data);
                     // log out from page:
                     UserCredentialsService.clearCredentials();
@@ -318,7 +315,7 @@
             } else {
                 // update without new password:
                 if ($scope.newpassword === undefined || $scope.newpassword === "") {
-                    UserService.putUserDetails($scope.username, $scope.password, dataput).then(function (data) {
+                    UserService.putUserDetails($scope.username, dataput).then(function (data) {
                         console.log("no new password, but updates on profile.");
                         $scope.submissionSuccess = true;
                         $timeout(function () {

@@ -1,6 +1,6 @@
 (function () {
 
-    function UserService($http, $cookies, ecBaseUrl, ecAuthProxy) {
+    function UserService($http, ecBaseUrl) {
         "ngInject";
 
         /**
@@ -15,13 +15,13 @@
         this.getUserTracksBBox = function (username, minx, miny, maxx, maxy) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/tracks?limit=10000&bbox=' + minx + "," + miny + "," + maxx + "," + maxy,
+                url: ecBaseUrl + '/users/' + username + '/tracks?limit=10000&bbox=' + minx + "," + miny + "," + maxx + "," + maxy,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/users/" + username + "/tracks?bbox=" + minx + "," + miny + "," + maxx + "," + maxy);
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/tracks?bbox=" + minx + "," + miny + "," + maxx + "," + maxy);
                 return error;
             });
         };
@@ -35,13 +35,13 @@
         this.getUserPhenomenonStatistics = function (username, phenomenon) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/statistics/' + phenomenon,
+                url: ecBaseUrl + '/users/' + username + '/statistics/' + phenomenon,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/users/" + username + "/statistics/" + phenomenon);
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics/" + phenomenon);
                 return error;
             });
         };
@@ -88,7 +88,7 @@
         this.getUserStatistics = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/statistics',
+                url: ecBaseUrl + '/users/' + username + '/statistics',
                 withCredentials: true,
                 cache: false // dont use cache here because of password changes --> bad user experience otherwise
             }).then(function (res) {
@@ -108,13 +108,13 @@
         this.getUserStatistic = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/userStatistic',
+                url: ecBaseUrl + '/users/' + username + '/userStatistic',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/users/" + username + "/statistics");
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
                 return error;
             });
         };
@@ -126,7 +126,7 @@
         this.getTotalUsers = function () {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users?page=1&limit=10000',
+                url: ecBaseUrl + '/users?page=1&limit=10000',
                 cache: true,
                 withCredentials: true
             }).then(function (data) {
@@ -134,7 +134,7 @@
 //                        data.headers('Content-Range').split("/");
                 return number;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users?page=1&limit=10000");
+                console.log("ResponseError @" + ecBaseUrl + "/users?page=1&limit=10000");
                 return error;
             });
         };
@@ -148,13 +148,13 @@
         this.putUserDetails = function (username, userDetails) {
             return $http({
                 method: 'PUT',
-                url: ecAuthProxy + '/users/' + username,
+                url: ecBaseUrl + '/users/' + username,
                 withCredentials: true,
                 data: userDetails
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/");
+                console.log("ResponseError @" + ecBaseUrl + "/users/");
                 return error;
             });
         };
@@ -170,8 +170,8 @@
                 cache: true,
                 withCredentials: true
             }).then(function (data) {
-                var number = data.headers('Content-Range').split("/");
-                return Number(number[1]);
+                var number = data.headers("content-range").split("/")[1];
+                return number;
             }).error(function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/");
                 return error;
@@ -187,13 +187,13 @@
         this.getUserFriend = function (username, friend) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/friends/' + friend,
+                url: ecBaseUrl + '/users/' + username + '/friends/' + friend,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/" + username + "/friends" + friend);
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/friends" + friend);
                 return error;
             });
         };
@@ -207,13 +207,13 @@
         this.postUserFriends = function (username, friends) {
             return $http({
                 method: 'POST',
-                url: ecAuthProxy + '/users/' + username + '/friends',
+                url: ecBaseUrl + '/users/' + username + '/friends',
                 withCredentials: true,
                 data: friends
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @POST: " + ecAuthProxy + "/users/" + username + "/friends");
+                console.log("ResponseError @POST: " + ecBaseUrl + "/users/" + username + "/friends");
                 return error;
             });
         };
@@ -226,7 +226,7 @@
         this.postUser = function (userdata) {
             return $http({
                 method: 'POST',
-                url: ecAuthProxy + '/users/',
+                url: ecBaseUrl + '/users/',
                 withCredentials: true,
                 data: userdata
             }).then(function (res) {
@@ -250,8 +250,8 @@
                 cache: true,
                 withCredentials: true
             }).then(function (data) {
-                var number = data.headers('Content-Range').split("/");
-                return Number(number[1]);
+                var number = data.headers("content-range").split("/")[1];
+                return number;
             }, function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/tracks?limit=1");
                 return error;
@@ -261,12 +261,12 @@
         this.getUserGroups = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/groups',
+                url: ecBaseUrl + '/users/' + username + '/groups',
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/" + username + "/statistics");
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/statistics");
                 return error;
             });
         };
@@ -274,26 +274,29 @@
         this.getUserFriends = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/friends',
+                url: ecBaseUrl + '/users/' + username + '/friends',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/" + username + "/groups");
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username + "/groups");
                 return error;
             });
         };
 
-        this.getUserWithAuth = function (username) {
+        this.getUserWithAuth = function (username, password) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username,
-                withCredentials: true
+                url: ecBaseUrl + '/users/' + username,
+                headers: {
+                    'X-user': username,
+                    'X-token': password
+                }
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/" + username);
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };
@@ -301,12 +304,12 @@
         this.getUser = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username,
+                url: ecBaseUrl + '/users/' + username,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecAuthProxy + "/users/" + username);
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };
@@ -314,13 +317,13 @@
         this.postPasswordReset = function (userdata) {
             return $http({
                 method: 'POST',
-                url: ecAuthProxy + '/resetPassword',
+                url: ecBaseUrl + '/resetPassword',
                 withCredentials: true,
                 data: userdata
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @POST" + ecAuthProxy + "/resetPassword");
+                console.log("ResponseError @POST" + ecBaseUrl + "/resetPassword");
                 return error;
             });
         };
@@ -328,12 +331,12 @@
         this.deleteUser = function (username) {
             return $http({
                 method: 'DELETE',
-                url: ecAuthProxy + '/users/' + username,
+                url: ecBaseUrl + '/users/' + username,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @DELETE" + ecAuthProxy + "/users/" + username);
+                console.log("ResponseError @DELETE" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };

@@ -176,8 +176,6 @@
         $scope.login = function () {
             $scope.dataLoading = true;
             $scope.login_request_running = true;
-
-            console.log("logging in attempt with: " + $scope.username + "|" + $scope.password);
 //            $.ajax({
 //                url: "http://localhost:9999/users/" + $scope.username,
 //                beforeSend: function (request) {
@@ -193,6 +191,7 @@
             // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
 
             UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
+                console.log(data);
                 if ($scope.username === data.data.name) {
                     $scope.error = false;
 

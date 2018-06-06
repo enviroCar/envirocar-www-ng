@@ -344,9 +344,7 @@
         };
 
         var data_global = {};
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     data_global = data;
                     $scope.name = data.data.properties.name;

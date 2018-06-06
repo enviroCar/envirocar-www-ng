@@ -11,8 +11,6 @@
         $scope.onload_RPM = false;
         $scope.onload_GPSSpeed = false;
         $scope.loading = true;
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
 
@@ -473,7 +471,7 @@
             }
         ];
         var data_global = {};
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     data_global = data;
                     var track_length = data_global.data.features.length;
@@ -598,7 +596,7 @@
                     }
                     // ask for enviroCar averages:
                     // Speed:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+                    StatisticsService.getPhenomenonStatistics("Speed").then(
                             function (data) {
                                 var store = data.data;
                                 var Speed_public = store.avg;
@@ -635,7 +633,7 @@
                         console.log("error " + data);
                     });
                     // Consumption:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+                    StatisticsService.getPhenomenonStatistics("Consumption").then(
                             function (data) {
                                 var store = data.data;
                                 var Consumption_public = store.avg;
@@ -672,7 +670,7 @@
                         console.log("error " + data);
                     });
                     // CO2:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+                    StatisticsService.getPhenomenonStatistics("CO2").then(
                             function (data) {
                                 var store = data.data;
                                 var CO2_public = store.avg;
@@ -709,7 +707,7 @@
                         console.log("error " + data);
                     });
                     // RPM:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Rpm").then(
+                    StatisticsService.getPhenomenonStatistics("Rpm").then(
                             function (data) {
                                 var store = data.data;
                                 var RPM_public = store.avg;
@@ -746,7 +744,7 @@
                         console.log("error " + data);
                     });
                     // Engine Load:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
+                    StatisticsService.getPhenomenonStatistics("Engine Load").then(
                             function (data) {
                                 var store = data.data;
                                 var EngineLoad_public = store.avg;
@@ -783,7 +781,7 @@
                         console.log("error " + data);
                     });
                     // GPS Speed:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "GPS Speed").then(
+                    StatisticsService.getPhenomenonStatistics("GPS Speed").then(
                             function (data) {
                                 var store = data.data;
                                 var GPSSpeed_public = store.avg;

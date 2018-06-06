@@ -48,8 +48,9 @@
 
         $scope.logout = function () {
             UserCredentialsService.clearCredentials();
-            UserCredentialsService.clearCookies();
             FilterStateService.resetFilterStates();
+            // reset jsessionid cookie:
+            UserCredentialsService.deleteCookies();
         };
 
         $scope.loggedIn = function () {

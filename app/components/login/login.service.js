@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function UserCredentialsService() {
+    function UserCredentialsService($cookieStore) {
         "ngInject";
 
         console.log("UserCredentialsService started.");
@@ -20,6 +20,13 @@
         this.clearCredentials = function () {
             usercredits.username = '';
         };
+        
+        this.deleteCookies = function() {
+            $cookieStore.put('language', "");
+            $cookieStore.put('JSESSIONID', "");
+            $cookieStore.remove('JSESSIONID');
+            $cookieStore.remove('language');
+        }
     }
     ;
 

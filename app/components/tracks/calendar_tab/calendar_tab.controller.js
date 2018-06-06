@@ -554,7 +554,7 @@
                             car: currTrack.sensor.properties.model,
                             manufacturer: currTrack.sensor.properties.manufacturer,
                             id: currTrack.id,
-                            url: ecBaseUrl + '/tracks/' + currTrack.id + "/preview",
+                            url: 'https://envirocar.org/api/stable/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,

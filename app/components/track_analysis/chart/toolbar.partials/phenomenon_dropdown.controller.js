@@ -1,6 +1,6 @@
 (function () {
 
-    PhenomenonDropdownCtrl = function ($rootScope, $scope, $translate, $cookieStore) {
+    PhenomenonDropdownCtrl = function ($rootScope, $scope, $translate) {
         "ngInject";
         $scope.phenomenon = $translate.instant('SPEED');
         $scope.storeSelection = 0;

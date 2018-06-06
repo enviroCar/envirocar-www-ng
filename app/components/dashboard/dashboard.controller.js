@@ -39,27 +39,6 @@
             return hours + ":" + minutes;
         };
 
-        // ask server for number of total community tracks:
-        TrackService.getTotalTracks(username).then(
-                function (data) {
-                    console.log(data);
-                    $scope.total_tracks = data;
-                }, function (error) {
-            console.log("error " + error);
-            console.log(error);
-        }
-        );
-
-        // ask server for number of total users:
-        UserService.getTotalUsers().then(
-                function (data) {
-                    $scope.total_users = data;
-                }, function (error) {
-            console.log("error " + error);
-            console.log(error);
-        }
-        );
-
         // ask server user email:
         UserService.getUser(username).then(
                 function (data) {

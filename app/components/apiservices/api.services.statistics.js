@@ -1,6 +1,6 @@
 (function () {
 
-    function StatisticsService($http, ecBaseUrl, ecAuthProxy) {
+    function StatisticsService($http, ecBaseUrl) {
         "ngInject";
         /**
          * Gets the total statistics of a certain phenomenon
@@ -10,13 +10,13 @@
         this.getPhenomenonStatistics = function (phenomenon) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/statistics/' + phenomenon,
+                url: ecBaseUrl + '/statistics/' + phenomenon,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/statistics/" + phenomenon);
+                console.log("ResponseError @GET" + ecBaseUrl + "/statistics/" + phenomenon);
                 return error;
             });
         };
@@ -29,13 +29,13 @@
         this.getStatistics = function (trackID) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/tracks/'+trackID+'/statistics',
+                url: ecBaseUrl + '/tracks/'+trackID+'/statistics',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/tracks/" + trackID + "/statistics");
+                console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics");
                 return error;
             });
         };
@@ -49,13 +49,13 @@
         this.getTrackPhenomenonStatistics = function (trackID, phenomenon) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/tracks/' + trackID + '/statistics/' + phenomenon,
+                url: ecBaseUrl + '/tracks/' + trackID + '/statistics/' + phenomenon,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/tracks/" + trackID + "/statistics/" + phenomenon);
+                console.log("ResponseError @GET" + ecBaseUrl + "/tracks/" + trackID + "/statistics/" + phenomenon);
                 return error;
             });
         };
@@ -88,13 +88,13 @@
         this.getUserPhenomenonStatistics = function (username, phenomenon) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/statistics/' + phenomenon,
+                url: ecBaseUrl + '/users/' + username + '/statistics/' + phenomenon,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/users/" + username + "/statistics/" + phenomenon);
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics/" + phenomenon);
                 return error;
             });
         };
@@ -107,13 +107,13 @@
         this.getUserStatistics = function (username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/statistics',
+                url: ecBaseUrl + '/users/' + username + '/statistics',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @GET" + ecAuthProxy + "/users/" + username + "/statistics");
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username + "/statistics");
                 return error;
             });
         };

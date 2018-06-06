@@ -17,8 +17,6 @@
         $scope.onload_RPM_Range = false;
         $scope.onload_GPSSpeed_Range = false;
         $scope.loading = true;
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
         $scope.mouseEntered = false;
@@ -831,7 +829,7 @@
             }
         ];
         var data_global = {};
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     data_global = data;
                     var track_length = data_global.data.features.length;

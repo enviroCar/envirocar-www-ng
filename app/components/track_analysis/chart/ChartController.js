@@ -990,10 +990,8 @@
 
         var data_global = {};
         $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
-                    console.log(data);
                     data_global = data;
                     // set slider ranges:
                     $scope.slider.maxValue = data_global.data.features.length - 1;
@@ -1162,8 +1160,6 @@
                         $scope.data_all[2].values.push(co2Measurement);
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
-                        console.log($scope.data_all);
-                        console.log(gpsSpeedMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
                     }
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
@@ -1214,7 +1210,7 @@
                     .ok($translate.instant("DIALOG_DELETE_TRACK_CONFIRM"))
                     .cancel($translate.instant("DIALOG_DELETE_TRACK_CANCEL"));
             $mdDialog.show(confirmDeleteTrack).then(function () {
-                TrackService.deleteTrack($scope.username, $scope.password, $scope.trackid).then(
+                TrackService.deleteTrack($scope.username, $scope.trackid).then(
                         function (data) {
                             console.log(data);
                             // redirect to dashboard:

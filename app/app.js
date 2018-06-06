@@ -19,8 +19,8 @@
         'materialCalendar',
         'cl.paging',
         'rzModule'])
-            .value("ecAuthProxy", "http://localhost:9999")
-            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
+//            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
+            .value("ecBaseUrl", "http://localhost:9999")
             .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
                 "ngInject";
                 console.log('app started');

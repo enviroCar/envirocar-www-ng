@@ -1,6 +1,6 @@
 (function () {
 
-    function TrackService($http, ecBaseUrl, ecAuthProxy) {
+    function TrackService($http, ecBaseUrl) {
         "ngInject";
         
         /**
@@ -12,13 +12,13 @@
         this.getTrackPhenomenonStatistics = function(trackID, phenomenon){
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/tracks/' + trackID + '/statistics/' + phenomenon,
+                url: ecBaseUrl + '/tracks/' + trackID + '/statistics/' + phenomenon,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @GET"+ecAuthProxy+"/tracks/"+trackID+"/statistics/"+phenomenon);
+                console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics/"+phenomenon);
                 return error;
             });
         };
@@ -31,13 +31,13 @@
         this.getTrackStatistics = function(trackID){
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/tracks/' + trackID + '/statistics',
+                url: ecBaseUrl + '/tracks/' + trackID + '/statistics',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @GET"+ecAuthProxy+"/tracks/"+trackID+"/statistics");
+                console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID+"/statistics");
                 return error;
             });
         };
@@ -50,13 +50,13 @@
         this.getTrack = function(trackID) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/tracks/' + trackID,
+                url: ecBaseUrl + '/tracks/' + trackID,
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @GET"+ecAuthProxy+"/tracks/"+trackID);
+                console.log("ResponseError @GET"+ecBaseUrl+"/tracks/"+trackID);
                 return error;
             });
         };
@@ -70,13 +70,13 @@
         this.postNewTrack = function(username, track){
             return $http({
                 method: 'POST',
-                url: ecAuthProxy + '/users/' + username + '/tracks',
+                url: ecBaseUrl + '/users/' + username + '/tracks',
                 withCredentials: true,
                 data: track
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @POST: "+ecAuthProxy+"/tracks");
+                console.log("ResponseError @POST: "+ecBaseUrl+"/tracks");
                 return error;
             });
         };
@@ -84,12 +84,12 @@
         this.deleteTrack = function(username, trackid){
             return $http({
                 method: 'DELETE',
-                url: ecAuthProxy + '/users/' + username + '/tracks/'+trackid,
+                url: ecBaseUrl + '/users/' + username + '/tracks/'+trackid,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @DELETE: " + ecAuthProxy + '/users/' + username + '/tracks/'+trackid);
+                console.log("ResponseError @DELETE: " + ecBaseUrl + '/users/' + username + '/tracks/'+trackid);
                 return error;
             });
         };
@@ -97,36 +97,13 @@
         this.getUserTracks = function(username) {
             return $http({
                 method: 'GET',
-                url: ecAuthProxy + '/users/' + username + '/tracks?page=1&limit=10000',
+                url: ecBaseUrl + '/users/' + username + '/tracks?page=1&limit=10000',
                 cache: true,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             },function (error) {
-                console.log("ResponseError @GET"+ecAuthProxy+"/users/" + username + "/tracks?page=1&limit=10000");
-                return error;
-            });
-        };
-        
-        /**
-         * Gets the total number of tracks driven by all community members
-         * @param {type} token
-         * @returns {data} data.headers('Content-Range').split("/")[1] - is the total amount of all tracks        
-         */
-        this.getTotalTracks = function(){
-            
-            return $http({
-                method: 'GET',
-                url: ecBaseUrl + '/tracks?limit=1',
-                cache: true,
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            }).then(function (data) {
-                var number = data.data.tracks.length;
-                return number;
-            }, function (error) {
-                console.log("ResponseError @GET"+ecBaseUrl+"/tracks?limit=1");
+                console.log("ResponseError @GET"+ecBaseUrl+"/users/" + username + "/tracks?page=1&limit=10000");
                 return error;
             });
         };
