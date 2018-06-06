@@ -14,7 +14,6 @@
         $scope.Math = window.Math;
 
         $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
 
         // pagination:
         $scope.currentPageTracks = {
@@ -483,7 +482,7 @@
         $scope.tracksCalendar = [
         ];
         // tracks holen:
-        TrackService.getUserTracks($scope.username, $scope.password).then(
+        TrackService.getUserTracks($scope.username).then(
                 function (data) {
                     // Erstelle eine Tagestabelle
                     $scope.date_count = [];

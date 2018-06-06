@@ -44,24 +44,24 @@
                 function (data) {
                     console.log(data);
                     $scope.total_tracks = data;
-                }, function (data) {
-            console.log("error " + data);
-            console.log(data);
+                }, function (error) {
+            console.log("error " + error);
+            console.log(error);
         }
         );
 
         // ask server for number of total users:
-        UserService.getTotalUsers(username, token).then(
+        UserService.getTotalUsers().then(
                 function (data) {
                     $scope.total_users = data;
-                }, function (data) {
-            console.log("error " + data);
-            console.log(data);
+                }, function (error) {
+            console.log("error " + error);
+            console.log(error);
         }
         );
 
         // ask server user email:
-        UserService.getUser(username, token).then(
+        UserService.getUser(username).then(
                 function (data) {
                     $scope.emailId = data.mail;
                 }, function (data) {
@@ -71,7 +71,7 @@
         );
 
         // ask server for driven userdistance and userduration:
-        UserService.getUserStatistic(username, token).then(
+        UserService.getUserStatistic(username).then(
                 function (data) {
                     var globalStats = data.data;
                     $scope.distance_driven = globalStats.distance.toFixed(1) + "km";

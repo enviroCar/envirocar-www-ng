@@ -100,8 +100,7 @@
                 } else {
                     // Dialog started first time: get Map view boundingbox info from UserStatistics:
                     $scope.username = UserCredentialsService.getCredentials().username;
-                    $scope.password = UserCredentialsService.getCredentials().password;
-                    UserService.getUserStatistic($scope.username, $scope.password).then(
+                    UserService.getUserStatistic($scope.username).then(
                             function (data) {
                                 var trackSummaries = data.data.trackSummaries;
                                 console.log(trackSummaries);
@@ -221,7 +220,7 @@
                 spatial_filter_sw.lng = $scope.southWest.lng;
                 spatial_filter_ne.lat = $scope.northEast.lat;
                 spatial_filter_ne.lng = $scope.northEast.lng;
-                UserService.getUserTracksBBox($scope.username, $scope.password,
+                UserService.getUserTracksBBox($scope.username,
                         $scope.filters.spatial.params.southwest.lng,
                         $scope.filters.spatial.params.southwest.lat,
                         $scope.filters.spatial.params.northeast.lng,
@@ -246,18 +245,16 @@
                             //$scope.updateDialogMap();
                             $mdDialog.hide();
                             $scope.filtersChanged();
-                        }, function (data) {
-                    console.log("error " + data);
+                        }, function (error) {
+                    console.log("error " + error);
                     $timeout(function () {
                         $scope.okay_pressed = false;
                         $scope.errorServerRequest = true;
                         window.dispatchEvent(new Event('resize'));
-                    },
-                            300);
+                    }, 300);
                     $timeout(function () {
                         window.dispatchEvent(new Event('resize'));
-                    },
-                            500);
+                    }, 500);
 
                 });
             }
@@ -266,10 +263,10 @@
         $scope.cancel = function () {
             // The user clicked on cancel, so apply no changes
             $mdDialog.cancel();
-        };
+        }
         $scope.$on('toolbar:language-changed', function (event, args) {
             // TODO: translation of leaflet buttons 'Draw a Rectangle' etc.
-        });
+        })
 
     };
     angular.module('enviroCar.tracks')

@@ -7,9 +7,6 @@
         $scope.track_number = 0;
         $scope.onload_tracks_timeline = false;
         $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
-        
-        var urlredirect = '#/dashboard/chart/';
         
         $scope.goToActivity = function(trackid) {
             //redirect to the track analytics page.
@@ -19,20 +16,13 @@
         };
         
         var helperevents = [];
-        
-        UserService.getTotalUserTracks($scope.username, $scope.password).then(
-                function(data){
-                    $scope.track_number = data;
-                }, function(data){
-                    console.log("error " + data);
-                }
-        );
 
         // tracks holen:
-        TrackService.getUserTracks($scope.username, $scope.password). then(
+        TrackService.getUserTracks($scope.username). then(
                 function(data){
                     console.log(data);
                     $scope.number = data.data.tracks.length;
+                    $scope.lrack_number = $scope.number;
                     var limit = 0;
                     // The latest tracks display shows latest 6 tracks. If the user only has a total of less than 6 tracks, then we update that number to avoid exceptions
                     if ($scope.number >= 6)
@@ -47,7 +37,6 @@
                             helper_events['manufacturer'] = data.data.tracks[cntr].sensor.properties.manufacturer;
                             helper_events['id'] = data.data.tracks[cntr].id;
                             helper_events['title'] = data.data.tracks[cntr].name;
-                            helper_events['urlredirect'] = urlredirect + data.data.tracks[cntr].id;
                             helper_events['url'] = ecBaseUrl + '/tracks/'+ data.data.tracks[cntr].id + "/preview";
                             var seconds_passed = new Date(data.data.tracks[cntr].end).getTime() - new Date(data.data.tracks[cntr].begin).getTime();
                             var seconds = seconds_passed / 1000;

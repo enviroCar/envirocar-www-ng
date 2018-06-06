@@ -19,7 +19,7 @@
         'materialCalendar',
         'cl.paging',
         'rzModule'])
-//            .value("ecBaseUrl", "http://localhost:9999")
+            .value("ecAuthProxy", "http://localhost:9999")
             .value("ecBaseUrl", "https://enviroCar.org/api/stable")
             .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
                 "ngInject";
@@ -37,11 +37,9 @@
                         $state.transitionTo("login");
                         event.preventDefault();
                     }
-
                 });
 
                 $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-
             });
 
 

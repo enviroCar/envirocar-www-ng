@@ -27,21 +27,22 @@
         }
 
         // ask server for number user tracks:
-        UserService.getTotalUserTracks(username, token).then(
-                function (data) {
-                    console.log(data);
-                    var track_number = data;
-                    if (track_number > 0)
-                        $scope.tracksAvailable = true;
-                    else
-                        $scope.tracksAvailable = false;
-
-                },
-                function (data) {
-                    $scope.tracksAvailable = false;
-                    console.log("error " + data)
-                }
-        );
+//        UserService.getTotalUserTracks(username).then(
+//                function (data) {
+//                    console.log(data);
+//                    var track_number = data;
+//                    if (track_number > 0)
+//                        $scope.tracksAvailable = true;
+//                    else
+//                        $scope.tracksAvailable = false;
+//
+//                },
+//                function (data) {
+//                    $scope.tracksAvailable = false;
+//                    console.log("error " + data)
+//                }
+//        );
+        $scope.tracksAvailable = true;
 
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);

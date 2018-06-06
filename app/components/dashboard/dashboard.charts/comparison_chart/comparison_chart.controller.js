@@ -203,12 +203,14 @@
         };
 
         var dataotherusers = [];
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "Speed").then(
                 function (data) {
+                    console.log(data);
                     var store = data.data;
                     var speed_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+                    StatisticsService.getPhenomenonStatistics("Speed").then(
                             function (data) {
+                                console.log(data);
                                 store = data.data;
                                 var speed_public = store.avg;
                                 $scope.dataSpeed = [{
@@ -239,11 +241,11 @@
             console.log("error " + data);
         });
 
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "Consumption").then(
                 function (data) {
                     var store = data.data;
                     var consumption_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+                    StatisticsService.getPhenomenonStatistics("Consumption").then(
                             function (data) {
                                 store = data.data;
                                 var consumption_public = store.avg;
@@ -276,11 +278,11 @@
             console.log("error " + data);
         });
 
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "CO2").then(
                 function (data) {
                     var store = data.data;
                     var CO2_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+                    StatisticsService.getPhenomenonStatistics("CO2").then(
                             function (data) {
                                 store = data.data;
                                 var CO2_public = store.avg;

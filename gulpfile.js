@@ -83,14 +83,11 @@ gulp.task('index-release', function () {
 });
 
 gulp.task('ng-annotate', function () {
-    var sources = gulp.src(['./app/**/*.js'], {
-        read: false
-    });
     return gulp.src(['./app/**/*.js'])
             .pipe(concat('release.js'))
             .pipe(ngAnnotate())
             .pipe(uglify())
-            .pipe(gulp.dest(''));
+            .pipe(gulp.dest(''));ö
 });
 
 gulp.task('minify', function () {

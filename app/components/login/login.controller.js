@@ -6,8 +6,7 @@
             $location,
             UserCredentialsService,
             UserService,
-            FilterStateService,
-            ecBaseUrl) {
+            FilterStateService) {
         "ngInject";
         console.log("LoginCtrl started.");
         $scope.username = "";
@@ -190,25 +189,28 @@
 //            }).then(function (data, status, jqxhr) {
 //                console.log(data);
 //                console.log(jqxhr);
-                // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
-                // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
-                
-                UserService.getUser($scope.username).then(function (data, status, jqxhr) {
-                    console.log(data);
+            // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
+            // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
+
+            UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
+                if ($scope.username === data.data.name) {
                     $scope.error = false;
 
                     // When the right credentials are provided.
-                    UserCredentialsService.setCredentials($scope.username, $scope.password);
+                    UserCredentialsService.setCredentials($scope.username);
                     if (typeof $rootScope.url_redirect_on_login !== "undefined") {
 //                        $location.path($rootScope.url_redirect_on_login);
                     } else {
                         // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
-                        $location.path('/home');
+                        $location.path('/dashboard');
                     }
-                    $scope.login_request_running = false;
-                }, function (err) {
-                    console.log(err);
-                });
+                } else {
+                    $scope.error = true;
+                }
+                $scope.login_request_running = false;
+            }, function (err) {
+                console.log(err);
+            });
 //            });
         };
 //                        $scope.error = false;

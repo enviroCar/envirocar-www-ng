@@ -1,19 +1,16 @@
 (function () {
     'use strict';
 
-    function UserCredentialsService($cookieStore) {
+    function UserCredentialsService() {
         "ngInject";
 
         console.log("UserCredentialsService started.");
         var usercredits = {
-            'username': '',
-            'password': ''
+            'username': ''
         };
 
-        this.setCredentials = function (username, password) {
+        this.setCredentials = function (username) {
             usercredits.username = username;
-            usercredits.password = password;
-            $cookieStore.put('usercredits', usercredits);
         };
 
         this.getCredentials = function () {
@@ -22,11 +19,6 @@
 
         this.clearCredentials = function () {
             usercredits.username = '';
-            usercredits.password = '';
-        };
-
-        this.clearCookies = function () {
-            $cookieStore.remove('usercredits');
         };
     }
     ;
