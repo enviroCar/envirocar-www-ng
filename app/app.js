@@ -20,14 +20,15 @@
         'cl.paging',
         'rzModule'])
 //            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
-            .value("ecBaseUrl", "http://localhost:9999")
+            .value("ecBaseUrl", "http://localhost:9999/api")
+            .value("ecBase", "http://localhost:9999")
             .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
                 "ngInject";
                 console.log('app started');
                 $rootScope.previewurl = "";
                 $rootScope.$state = $state;
                 $rootScope.$stateParams = $stateParams;
-                UserCredentialsService.clearCredentials();
+//                UserCredentialsService.clearCredentials();
 
                 $rootScope.$on("$stateChangeStart", function (event, toState, toParams,
                         fromState, fromParams) {

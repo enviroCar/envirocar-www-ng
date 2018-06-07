@@ -11,7 +11,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/statistics/' + phenomenon,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -30,7 +30,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/'+trackID+'/statistics',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -50,7 +50,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/' + trackID + '/statistics/' + phenomenon,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -69,7 +69,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/tracks/' + trackID + '/statistics',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -89,7 +89,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/statistics/' + phenomenon,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -108,7 +108,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/statistics',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;

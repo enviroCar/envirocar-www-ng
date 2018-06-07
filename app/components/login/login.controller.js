@@ -6,7 +6,8 @@
             $location,
             UserCredentialsService,
             UserService,
-            FilterStateService) {
+            FilterStateService,
+            ecBaseUrl) {
         "ngInject";
         console.log("LoginCtrl started.");
         $scope.username = "";
@@ -176,41 +177,43 @@
         $scope.login = function () {
             $scope.dataLoading = true;
             $scope.login_request_running = true;
-//            $.ajax({
-//                url: "http://localhost:9999/users/" + $scope.username,
-//                beforeSend: function (request) {
-//                    request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));
-//                },
-//                xhrFields: {
-//                    withCredentials: true
-//                }
-//            }).then(function (data, status, jqxhr) {
-//                console.log(data);
-//                console.log(jqxhr);
-            // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
-            // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
-
-            UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
-                console.log(data);
-                if ($scope.username === data.data.name) {
-                    $scope.error = false;
-
-                    // When the right credentials are provided.
-                    UserCredentialsService.setCredentials($scope.username);
-                    if (typeof $rootScope.url_redirect_on_login !== "undefined") {
-//                        $location.path($rootScope.url_redirect_on_login);
-                    } else {
-                        // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
-                        $location.path('/dashboard');
-                    }
-                } else {
-                    $scope.error = true;
+            $.ajax({
+                url: ecBaseUrl+"/users",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));
+                },
+                xhrFields: {
+                    withCredentials: true
                 }
-                $scope.login_request_running = false;
-            }, function (err) {
-                console.log(err);
+            }).then(function (data, status, jqxhr) {
+                console.log(data);
+                console.log(jqxhr);
+                // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
+                // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
+
+                UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
+                    console.log(data);
+                    console.log($scope.username);
+                    console.log($scope.password);
+                    if ($scope.username === data.data.name) {
+                        $scope.error = false;
+
+                        // When the right credentials are provided.
+                        UserCredentialsService.setCredentials($scope.username);
+                        if (typeof $rootScope.url_redirect_on_login !== "undefined") {
+//                        $location.path($rootScope.url_redirect_on_login);
+                        } else {
+                            // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
+                            $location.path('/dashboard');
+                        }
+                    } else {
+                        $scope.error = true;
+                    }
+                    $scope.login_request_running = false;
+                }, function (err) {
+                    console.log(err);
+                });
             });
-//            });
         };
 //                        $scope.error = false;
 //                        console.log(res);

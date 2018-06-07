@@ -16,7 +16,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/tracks?limit=10000&bbox=' + minx + "," + miny + "," + maxx + "," + maxy,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -36,7 +36,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/statistics/' + phenomenon,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -109,7 +109,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/userStatistic',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -127,7 +127,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users?page=1&limit=10000',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (data) {
                 var number = data.data.users.length;
@@ -167,7 +167,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users?limit=1',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (data) {
                 var number = data.headers("content-range").split("/")[1];
@@ -188,7 +188,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/friends/' + friend,
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -247,7 +247,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/tracks?limit=1',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (data) {
                 var number = data.headers("content-range").split("/")[1];
@@ -275,7 +275,7 @@
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username + '/friends',
-                cache: true,
+                cache: false,
                 withCredentials: true
             }).then(function (res) {
                 return res;
@@ -290,9 +290,9 @@
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username,
                 headers: {
-                    'X-user': username,
-                    'X-token': password
-                }
+                    'Authorization': "Basic "+btoa(username+":"+password)
+                },
+                withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {

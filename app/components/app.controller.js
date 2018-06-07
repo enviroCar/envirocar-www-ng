@@ -47,10 +47,8 @@
         });
 
         $scope.logout = function () {
-            UserCredentialsService.clearCredentials();
+            UserCredentialsService.logout();
             FilterStateService.resetFilterStates();
-            // reset jsessionid cookie:
-            UserCredentialsService.deleteCookies();
         };
 
         $scope.loggedIn = function () {
