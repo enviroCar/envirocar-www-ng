@@ -21,7 +21,10 @@
             $.ajax({
                 type: "POST",
                 url: ecBase + "/logout",
-                withCredentials: true,
+//                    withCredentials: true,
+                xhrFields: {
+                    withCredentials: true
+                },
                 // log out at server
                 success: function (data, status, jqxhr) {
                     $.ajax({
@@ -53,8 +56,10 @@
                         }
                     });
                 }
-            });
-        };
+            }
+            );
+        }
+        ;
 
         this.deleteCookies = function () {
             $cookies.remove('JSESSIONID');
