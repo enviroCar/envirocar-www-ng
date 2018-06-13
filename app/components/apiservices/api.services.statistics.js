@@ -118,43 +118,6 @@
             });
         };
 
-
-        /**
-         * Gets the statistics of segments' values
-         * @param {JSON} data - the segments
-         * @returns {JSON} - the statistics for each segment
-         */
-        this.getSegmentAnalysis = function (data) {
-            return $http({
-                method: 'POST',
-                url: 'https://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics',
-                data: data
-            }).then(function (res) {
-                return res;
-            }, function (error) {
-                console.log("ResponseError @GEThttps://envirocar.org/envirocar-rest-analyzer/dev/rest/route/statistics");
-                return error;
-            });
-        };
-        // data example:
-        /**
-         * var data = {
-         "type": "Feature",
-         "geometry": {
-         "type": "LineString",
-         "coordinates": coordinates
-         },
-         "timeInterval": {
-         "dateStart": "2010-06-08T11:29:10Z",
-         "dateEnd": "2026-09-08T11:29:10Z",
-         "daytimeStart": "1:30",
-         "daytimeEnd": "15:30"
-         },
-         "tolerance": $scope.slider.value
-         };
-         */
-
-
     }
     ;
 
