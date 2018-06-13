@@ -13,11 +13,13 @@
             UserCredentialsService,
             PhenomenonService,
             leafletBoundsHelpers,
-            trackAnalysisSettings) {
+            trackAnalysisSettings,
+            ecServerBase) {
         "ngInject";
+        $scope.ecServerBase = ecServerBase;
 
         $scope.downloadTrack = function () {
-            window.location.href = "http://envirocar.org/api/stable/tracks/" + $scope.trackid;
+            window.location.href = ecServerBase + "/tracks/" + $scope.trackid;
         };
 
         $scope.goToDashboard = function () {
@@ -318,7 +320,7 @@
         $scope.onload_track_map = false;
         $scope.onload_track_chart = false;
         $scope.segmentActivated = false;
-        // FIXME: Speed not always awaylable and cannot be the default anymore.
+        // FIXME: Speed not always available and cannot be the default anymore.
         $scope.currentPhenomenon = 'Speed';
         $scope.currentPhenomenonIndex = 0;
         $scope.intervalStart = 0;

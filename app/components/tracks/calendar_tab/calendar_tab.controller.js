@@ -7,7 +7,8 @@
             TrackService,
             MaterialCalendarData,
             UserCredentialsService,
-            ecBaseUrl) {
+            ecBaseUrl,
+            ecServerBase) {
         "ngInject";
         $scope.onload_calendar = false;
         $scope.nostatistics = true;
@@ -554,7 +555,7 @@
                             car: currTrack.sensor.properties.model,
                             manufacturer: currTrack.sensor.properties.manufacturer,
                             id: currTrack.id,
-                            url: 'https://envirocar.org/api/stable/tracks/' + currTrack.id + "/preview",
+                            url: ecServerBase + '/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,

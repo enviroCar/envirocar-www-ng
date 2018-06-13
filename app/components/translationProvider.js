@@ -10,7 +10,7 @@ angular.module('translations', [])
             },
             'preferredLocale': 'en_EN'
         })
-        .config(['$translateProvider', function ($translateProvider) {
+        .config(['$translateProvider', function ($translateProvider, ecWebsiteBase) {
         "ngInject";
                 console.log('translation configuration set up');
                 $translateProvider.translations('en', {
@@ -38,8 +38,8 @@ angular.module('translations', [])
                     'SITE_FEEDBACK': 'Site feedback',
                     'SITE_IMPRINT': 'Imprint',
                     'SITE_TERMS': 'Terms',
-                    'LINK_IMPRINT': 'https://www.envirocar.org/dev/imprint.html?lng=en',
-                    'LINK_TERMS': 'https://www.envirocar.org/dev/conditions.html?lng=en',
+                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=en',
+                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=en',
 
                     // Login:
                     'USERNAME': 'Username',
@@ -340,8 +340,8 @@ angular.module('translations', [])
                     'SITE_FEEDBACK': 'Seitenfeedback',
                     'SITE_IMPRINT': 'Impressum',
                     'SITE_TERMS': 'Nutzungsbedingungen',
-                    'LINK_IMPRINT': 'https://www.envirocar.org/dev/imprint.html?lng=de',
-                    'LINK_TERMS': 'https://www.envirocar.org/dev/conditions.html?lng=de',
+                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=de',
+                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=de',
 
                     // Login:
                     'USERNAME': 'Benutzername',

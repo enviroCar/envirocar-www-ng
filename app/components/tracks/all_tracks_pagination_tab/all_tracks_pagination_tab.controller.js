@@ -16,6 +16,7 @@
             TrackService,
             UserCredentialsService,
             ecBaseUrl,
+            ecServerBase,
             FilterStateService) {
         "ngInject";
 
@@ -528,7 +529,7 @@
                             car: carType,
                             manufacturer: carManu,
                             id: currTrack.id,
-                            url: 'https://envirocar.org/api/stable/tracks/' + currTrack.id + "/preview",
+                            url: ecServerBase + '/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,

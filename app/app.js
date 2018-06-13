@@ -19,16 +19,16 @@
         'materialCalendar',
         'cl.paging',
         'rzModule'])
-//            .value("ecBaseUrl", "https://enviroCar.org/api/stable")
-            .value("ecBaseUrl", "http://localhost:9999/api")
-            .value("ecBase", "http://localhost:9999")
+            .value("ecBaseUrl", "https://envirocar.org/auth-proxy/api")
+            .value("ecBase", "https://envirocar.org/auth-proxy")
+            .value("ecWebsiteBase", "https://envirocar.org/")
+            .value("ecServerBase", "https://envirocar.org/api/stable")
             .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
                 "ngInject";
                 console.log('app started');
                 $rootScope.previewurl = "";
                 $rootScope.$state = $state;
                 $rootScope.$stateParams = $stateParams;
-//                UserCredentialsService.clearCredentials();
 
                 $rootScope.$on("$stateChangeStart", function (event, toState, toParams,
                         fromState, fromParams) {

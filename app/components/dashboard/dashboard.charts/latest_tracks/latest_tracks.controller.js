@@ -1,7 +1,14 @@
 (function () {
     'use strict';
 
-    function LatestTracksChartCtrl($scope, $state, $translate, TrackService, UserService, UserCredentialsService, ecBaseUrl) {
+    function LatestTracksChartCtrl($scope,
+    		$state,
+    		$translate,
+    		TrackService,
+    		UserService,
+    		UserCredentialsService,
+    		ecBaseUrl,
+    		ecServerBase) {
         "ngInject";
         var timeline = {};
         $scope.track_number = 0;
@@ -36,7 +43,7 @@
                             helper_events['manufacturer'] = data.data.tracks[cntr].sensor.properties.manufacturer;
                             helper_events['id'] = data.data.tracks[cntr].id;
                             helper_events['title'] = data.data.tracks[cntr].name;
-                            helper_events['url'] = 'https://envirocar.org/api/stable/tracks/' + data.data.tracks[cntr].id + "/preview";
+                            helper_events['url'] = ecServerBase + '/tracks/' + data.data.tracks[cntr].id + "/preview";
                             var seconds_passed = new Date(data.data.tracks[cntr].end).getTime() - new Date(data.data.tracks[cntr].begin).getTime();
                             var seconds = seconds_passed / 1000;
                             var timeoftravel = seconds / 60;
