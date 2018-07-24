@@ -3,22 +3,18 @@
     function CalendarTabCtrl(
             $rootScope,
             $scope,
-            $state,
-            $translate,
             $timeout,
-            $http,
-            $filter,
-            $element,
             TrackService,
             MaterialCalendarData,
             UserCredentialsService,
-            ecBaseUrl) {
+            ecBaseUrl,
+            ecServerBase) {
+        "ngInject";
         $scope.onload_calendar = false;
         $scope.nostatistics = true;
         $scope.Math = window.Math;
 
         $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
 
         // pagination:
         $scope.currentPageTracks = {
@@ -99,12 +95,35 @@
         $scope.rangeStartDate;
         $scope.rangeEndDate;
 
+        var setColorLight = function (toLight, day) {
+            var colorTheme = 'blue';
+            var theme = 'blue';
+            if (toLight){
+                colorTheme = 'white';
+                theme = 'md-light';
+            }
+            var dateobject = new Date();
+            dateobject.setFullYear($scope.selectedYear);
+            dateobject.setMonth($scope.selectedMonth);
+            dateobject.setDate(day);
+            var string_date = dateobject.toString();
+            var array_string_date = string_date.split(" ");
+            var stripped_date = (array_string_date[1] + array_string_date[2] + array_string_date[3]);
+            if ($scope.date_count[stripped_date]) {
+                if ($scope.date_count[stripped_date] > 1)
+                    MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons '+theme+'">directions_car</i><span class="span'+colorTheme+'">+' + $scope.date_count[stripped_date] + '</span>'));
+                else
+                    MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons '+theme+'">directions_car</i>'));
+            }
+        };
+
         var removeDayHighlighting = function () {
             var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
             var lastDay = fullMonth.getDate();
             for (var i = 1; i <= lastDay; i++) {
                 var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                 clickedDayDiv.css("background-color", "transparent");
+                setColorLight(false, i);
             }
         };
 
@@ -114,8 +133,10 @@
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     if ((i === start) || (i === end)) {
                         clickedDayDiv.css("background-color", intervalEnds);
-                    } else
+                    } else {
                         clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                    }
+                    setColorLight(true, i);
                 }
             }
         };
@@ -208,8 +229,8 @@
                 var currTrack = $scope.currentPageTracks.tracks[i];
                 var currDate = new Date(currTrack.begin);
                 // if currDate within [rangestart,rangeEnd]
-                if (dateDiffInDays($scope.rangeStartDate, currDate) >= 0
-                        && dateDiffInDays(currDate, $scope.rangeEndDate) >= 0) {
+                if ((dateDiffInDays($scope.rangeStartDate, currDate) >= 0)
+                        && (dateDiffInDays(currDate, $scope.rangeEndDate) >= 0)) {
                     // put into currentSelectedTracks!
                     $scope.currentPageTracks.currentSelectedTracks.push(currTrack);
                 }
@@ -224,6 +245,7 @@
             $scope.currentPage = 1;
             $scope.paging.current = 1;
             loadStatistics();
+            loadPages();
 
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
@@ -282,8 +304,6 @@
                 window.dispatchEvent(new Event('resize'));
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
-                console.log(fullMonth);
-                console.log(lastDay);
                 for (var i = 1; i <= lastDay; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", "transparent");
@@ -342,8 +362,6 @@
                 window.dispatchEvent(new Event('resize'));
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
-                console.log(fullMonth);
-                console.log(lastDay);
                 for (var i = 1; i <= lastDay; i++) {
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     clickedDayDiv.css("background-color", "transparent");
@@ -353,33 +371,7 @@
             },
                     500);
         };
-        /**
-         $scope.setIDs = function () {
-         // 1. find all divs:
-         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
-         var lastDay = fullMonth.getDate();
-         console.log("setting IDs for:");
-         console.log(fullMonth);
-         console.log(lastDay);
-         for (var i = 1; i <= lastDay; i++) {
-         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-         clickedDayDiv.css("background-color", "red");
-         console.log(clickedDayDiv);
-         }
-         };
-         
-         $scope.removeIDs = function () {
-         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
-         var lastDay = fullMonth.getDate();
-         console.log("removing IDs for:");
-         console.log(fullMonth);
-         console.log(lastDay);
-         for (var i = 1; i <= lastDay; i++) {
-         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
-         clickedDayDiv.css("background-color", "blue");
-         console.log(clickedDayDiv);
-         }
-         };*/
+
         $scope.hoveredTabItem = undefined;
         var hoverhight = "#e8f2f8";
         var SelectedAndHoverHighlight = "#a3cce6";
@@ -387,7 +379,6 @@
         var intervalEnds = "#8cbfe0";
 
         $scope.updateHoverHighlight = function (start, end, hovered, bool) {
-
             if ($scope.numberClickedDays === 0) {
                 var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                 var lastDay = fullMonth.getDate();
@@ -415,8 +406,9 @@
                     var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                     if ((i === start) || (i === end)) {
                         clickedDayDiv.css("background-color", intervalEnds);
-                    } else
+                    } else {
                         clickedDayDiv.css("background-color", SelectedAndHoverHighlight);
+                    }
                 }
                 // remove highlight from 2nd unselected part:
                 for (var i = end + 1; i <= lastDay; i++) {
@@ -444,7 +436,6 @@
                 if (((parseInt(hovered) === end) || (start === (parseInt(hovered)))) && (!bool)) {
                     // add hightlight for selected days [start+1, end[ :
                     for (var i = start + 1; i < end; i++) {
-                        console.log(i);
                         var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                         clickedDayDiv.css("background-color", SelectedNoHover);
                     }
@@ -468,7 +459,6 @@
         function handler(ev) {
             $scope.target = $(ev.target);
             var elId = $scope.target.attr('tabindex');
-            console.log("hovered: " + elId);
             if (elId !== undefined) {
                 $scope.hoveredTabItem = elId;
                 $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), elId, false);
@@ -479,7 +469,6 @@
         function handler2(ev) {
             $scope.target = $(ev.target);
             var elId = $scope.target.attr('tabindex');
-            console.log("hovered: " + elId);
             if (elId !== undefined) {
                 $scope.hoveredTabItem = elId;
                 $scope.updateHoverHighlight($scope.rangeStartDate.getDate(), $scope.rangeEndDate.getDate(), $scope.rangeEndDate.getDate(), true);
@@ -494,10 +483,10 @@
         $scope.tracksCalendar = [
         ];
         // tracks holen:
-        TrackService.getUserTracks($scope.username, $scope.password).then(
+        TrackService.getUserTracks($scope.username).then(
                 function (data) {
                     // Erstelle eine Tagestabelle
-                    var date_count = [];
+                    $scope.date_count = [];
                     var tracks = data.data.tracks;
                     var date_min = new Date(tracks[0].begin);
                     var date_max = new Date(tracks[0].begin);
@@ -520,10 +509,10 @@
                         var string_date = dateobject.toString();
                         var array_string_date = string_date.split(" ");
                         var stripped_date = (array_string_date[1] + array_string_date[2] + array_string_date[3]);
-                        if (date_count[stripped_date] !== undefined) {
-                            date_count[stripped_date]++;
+                        if ($scope.date_count[stripped_date] !== undefined) {
+                            $scope.date_count[stripped_date]++;
                         } else {
-                            date_count[stripped_date] = 1;
+                            $scope.date_count[stripped_date] = 1;
                         }
                         // get track begin date:
                         var currDate = new Date(currTrack.begin);
@@ -559,7 +548,6 @@
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
-                        var travelDistance = currTrack['length'].toFixed(1);
                         var resultTrack = {
                             year: year,
                             month: month,
@@ -567,15 +555,23 @@
                             car: currTrack.sensor.properties.model,
                             manufacturer: currTrack.sensor.properties.manufacturer,
                             id: currTrack.id,
-                            url: ecBaseUrl + '/tracks/' + currTrack.id + "/preview",
+                            url: ecServerBase + '/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,
-                            length: parseFloat(travelDistance)
+                            length: 0
                         };
+                        if (currTrack.length) {
+                            var travelDistance = currTrack['length'].toFixed(1);
+                            resultTrack.length = parseFloat(travelDistance);
+                        }
+
                         $scope.tracksCalendar.push(resultTrack);
 
-                        MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons">directions_car</i><span>' + date_count[stripped_date] + '</span>'));
+                        if ($scope.date_count[stripped_date] > 1)
+                            MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons blue">directions_car</i><span class="spanblue">+' + $scope.date_count[stripped_date] + '</span>'));
+                        else
+                            MaterialCalendarData.setDayContent(dateobject, ('<i class="material-icons blue">directions_car</i>'));
                     }
 
                     $scope.start_month = date_max.getUTCMonth(); //months from 0-11
@@ -632,8 +628,6 @@
                         window.dispatchEvent(new Event('resize'));
                         var fullMonth = new Date($scope.selectedYear, $scope.selectedMonth + 1, 0);
                         var lastDay = fullMonth.getDate();
-                        console.log(fullMonth);
-                        console.log(lastDay);
                         for (var i = 1; i <= lastDay; i++) {
                             var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
                             clickedDayDiv.css("background-color", "transparent");
@@ -651,4 +645,4 @@
 
     angular.module('enviroCar.tracks')
             .controller('CalendarTabCtrl', CalendarTabCtrl);
-})()
+})();

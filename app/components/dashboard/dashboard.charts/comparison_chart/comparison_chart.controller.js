@@ -7,6 +7,7 @@
             $mdDialog,
             StatisticsService,
             UserCredentialsService) {
+        "ngInject";
         $scope.onload_all = false;
 
         $scope.onload_speed = false;
@@ -36,7 +37,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.1f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: $translate.instant('SPEED') + ' (km/h)',
                     axisLabelDistance: -10
@@ -104,8 +105,8 @@
                     };
                     console.log("speedChart redrawn");
                     window.dispatchEvent(new Event('resize'));
-                }, 100);
-            }, 100);
+                }, 400);
+            }, 300);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 500);
@@ -127,6 +128,9 @@
                 axisLabel: axisLabelCO2,
                 axisLabelDistance: -10
             };
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 1000);
         });
 
         $scope.optionsConsumption = {
@@ -149,7 +153,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.2f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: $translate.instant('CONSUMPTION') + ' (l/h)',
                     axisLabelDistance: -20
@@ -183,7 +187,7 @@
                 valueFormat: function (d) {
                     return d3.format(',.4f')(d);
                 },
-                duration: 300,
+                duration: 200,
                 yAxis: {
                     axisLabel: 'CO2 (kg/h)',
                     axisLabelDistance: -20
@@ -199,12 +203,14 @@
         };
 
         var dataotherusers = [];
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "Speed").then(
                 function (data) {
+                    console.log(data);
                     var store = data.data;
                     var speed_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+                    StatisticsService.getPhenomenonStatistics("Speed").then(
                             function (data) {
+                                console.log(data);
                                 store = data.data;
                                 var speed_public = store.avg;
                                 $scope.dataSpeed = [{
@@ -235,11 +241,11 @@
             console.log("error " + data);
         });
 
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "Consumption").then(
                 function (data) {
                     var store = data.data;
                     var consumption_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+                    StatisticsService.getPhenomenonStatistics("Consumption").then(
                             function (data) {
                                 store = data.data;
                                 var consumption_public = store.avg;
@@ -272,11 +278,11 @@
             console.log("error " + data);
         });
 
-        StatisticsService.getUserPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+        StatisticsService.getUserPhenomenonStatistics($scope.username, "CO2").then(
                 function (data) {
                     var store = data.data;
                     var CO2_user = store.avg;
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+                    StatisticsService.getPhenomenonStatistics("CO2").then(
                             function (data) {
                                 store = data.data;
                                 var CO2_public = store.avg;

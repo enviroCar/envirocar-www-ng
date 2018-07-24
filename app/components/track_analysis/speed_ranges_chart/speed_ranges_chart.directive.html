@@ -60,4 +60,13 @@
             <nvd3 options="optionsRPMRange" data="dataRPMRange" api="api" flex></nvd3>
         </div>
     </md-card-content>
+    
+    <!-- on GPS Speed Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='GPS Speed'">
+        <p class='comparison-title'> {{'GPS_SPEED'| translate}}</p>
+        <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_GPSSpeed_Range" md-diameter="56"></md-progress-circular>
+        <div class="range-chart" flex ng-if="onload_GPSSpeed_Range" layout="row">
+            <nvd3 options="optionsGPSSpeedRange" data="dataGPSSpeedRange" api="api" flex></nvd3>
+        </div>
+    </md-card-content>
 </md-card>

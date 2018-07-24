@@ -1,6 +1,6 @@
 
 <md-tab label="{{'TRACKS_LIST'| translate}}"><!--
-    <md-progress-circular class="loader_dashboard2" ng-if="!onload_all_tracks" md-diameter="156"></md-progress-circular>
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_all_tracks" md-diameter="56"></md-progress-circular>
     <md-content ng-if="onload_all_tracks" id="track_list_tab" style="height: {{tablistheight}}px;">
         <section  ng-repeat="months in monthsWithTracks">
             <md-subheader style="color: {{constants.colors[months.month]}}"><b> {{constants.months[months.month]}} , {{months.year}}</b></md-subheader>

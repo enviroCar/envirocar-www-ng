@@ -6,7 +6,7 @@
                         '#0065A0'
             }" style="height:235px">
         <div class="cover">
-            <div class="profile-pic absolute" style="height:40%;display:inline-block">
+            <div class="profile-pic absolute" flex="100" style="height:40%;display:inline-block;width: 100% !important;">
                 <div layout="row">
                     <div style="width:30%;text-align:center">
                         <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
@@ -20,6 +20,20 @@
                     </div>
                 </div>
             </div>
+            <md-button class="md-raised md-primary download-track" target="_blank" href='{{ecServerBase}}/tracks/{{trackid}}.csv'>
+                <i class="material-icons">file_download</i>
+                {{'DOWNLOAD_TRACK'| translate }}
+                <md-tooltip md-direction="bottom">
+                    {{'DOWNLOAD_TRACK_TOOLTIP'| translate}}
+                </md-tooltip>
+            </md-button>
+            <md-button class="md-raised md-warn delete-track" ng-click="deleteTrack($event)">
+                <i class="material-icons">delete_forever</i>
+                {{'DELETE_TRACK'| translate }}
+                <md-tooltip md-direction="top">
+                    {{'DELETE_TRACK_TOOLTIP'| translate}}
+                </md-tooltip>
+            </md-button>
         </div>
     </div>
     <md-toolbar flex id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">
@@ -60,7 +74,7 @@
                     </div>
                 </div>
                 <md-card-content flex>
-                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_track_map" md-diameter="56"></md-progress-circular>
                     <div ng-if="onload_track_map">
                         <leaflet event-broadcast="events" maxZoom="maxZoom" minZoom="minZoom" maxBounds="maxBounds" markers="markers" legend="legend" bounds="bounds" paths="paths" layers="layers" height="500px" ></leaflet>
                     </div>
@@ -82,7 +96,7 @@
                     </div>
                 </div>
                 <md-card-content flex>
-                    <md-progress-circular layout-aling="center center" class="loader_dashboard" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
+                    <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
                     <div ng-if="segmentActivated && onload_track_chart" flex>
                         <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
                     </div>
@@ -95,11 +109,11 @@
 
         <div layout-gt-xs="row" layout-xs="column" flex>
             <div layout="column" flex-xs="100" flex-sm="50" flex-gt-sm="50">
-                <div flex-sm="50" flex-xs="100" flex-gt-sm="50">
-                    <comparison-track-chart flex> </comparison-track-chart>
-                </div>
                 <div  flex-sm="50" flex-xs="100" flex-gt-sm="50">
                     <speed-ranges-chart flex></speed-ranges-chart>
+                </div>
+                <div flex-sm="50" flex-xs="100" flex-gt-sm="50">
+                    <comparison-track-chart flex> </comparison-track-chart>
                 </div>
             </div>
             <div flex-xs="100" flex-sm="50" flex-gt-sm="50">

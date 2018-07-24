@@ -2,8 +2,17 @@
     'use strict';
 
     function FilterStateService() {
+        "ngInject";
 
-        console.log("FilterStateService started.");
+        var trackTab = 1;
+        
+        this.getTrackTab = function(){
+            return trackTab;
+        };
+        
+        this.setTrackTab = function(tab){
+            trackTab = tab;
+        };
 
         var filterdata = {
             selectedTab: 1,

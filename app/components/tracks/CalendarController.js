@@ -11,6 +11,7 @@
             $translate,
             UserCredentialsService,
             UserService) {
+        "ngInject";
         $scope.onload_all_tracks_page = false;
         $scope.tracksAvailable = false;
         var tab_a = true;
@@ -26,20 +27,22 @@
         }
 
         // ask server for number user tracks:
-        UserService.getTotalUserTracks(username, token).then(
-                function (data) {
-                    var track_number = data.headers('Content-Range').split("/")[1];
-                    if (track_number > 0)
-                        $scope.tracksAvailable = true;
-                    else
-                        $scope.tracksAvailable = false;
-
-                },
-                function (data) {
-                    $scope.tracksAvailable = false;
-                    console.log("error " + data)
-                }
-        );
+//        UserService.getTotalUserTracks(username).then(
+//                function (data) {
+//                    console.log(data);
+//                    var track_number = data;
+//                    if (track_number > 0)
+//                        $scope.tracksAvailable = true;
+//                    else
+//                        $scope.tracksAvailable = false;
+//
+//                },
+//                function (data) {
+//                    $scope.tracksAvailable = false;
+//                    console.log("error " + data)
+//                }
+//        );
+        $scope.tracksAvailable = true;
 
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);
@@ -106,4 +109,4 @@
     angular.module('enviroCar.tracks')
             .controller('TrackListCtrl', TrackListCtrl);
 
-})()
+})();

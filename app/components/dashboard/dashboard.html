@@ -28,11 +28,11 @@
                     </div>
                 </div>
                 <div class="detail2" >
-                    <md-tooltip md-delay="500">{{ 'TT_DB_FRIENDS' | translate}} </md-tooltip>
-                    <p ng-bind="friends_number">
+                    <md-tooltip md-delay="500">{{ 'TT_DB_DURATION' | translate}} </md-tooltip>
+                    <p ng-bind="duration_driven">
                         <br>
                     <div class="descp">
-                        {{'FRIENDS'| translate}}
+                        {{'DURATION'| translate}}
                     </div>
                 </div>
                 <div class="detail2" >
@@ -43,33 +43,11 @@
                         {{'DISTANCE'| translate}}
                     </div>
                 </div>
-                <div class="detail2" >
-                    <md-tooltip md-delay="500">{{ 'TT_DB_GROUPS' | translate}} </md-tooltip>
-                    <p ng-bind="groups_number">
-                        <br>
-                    <div class="descp">
-                        {{'GROUPS'| translate}}
-                    </div>
-                </div>
-            </div>
-            <div class="envirocar_statistics" >
-                <div class="detail_envirocar" >
-                    <md-tooltip md-delay="500">{{ 'TT_DB_TOTAL_USERS' | translate}} </md-tooltip>
-                    <div class="descp">
-                        {{total_users}} {{'TOTAL_USERS'| translate}}
-                    </div>
-                </div>
-                <div class="detail_envirocar" >
-                    <md-tooltip md-delay="500">{{ 'TT_DB_TOTAL_TRACKS' | translate}} </md-tooltip>
-                    <div class="descp">
-                        {{total_tracks}} {{'TOTAL_TRACKS'| translate}}
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- to be filled with charts -->
+    <!-- filling with charts -->
 
     <div layout-gt-sm="row" layout-sm="column" layout-xs="column" flex>
 
@@ -87,9 +65,13 @@
             </div>
         </div>
     </div>
-    <div>
-        <weekdays-chart flex></weekdays-chart>
+    <div layout-gt-sm="row" layout-sm="column" layout-xs="column" flex>
+        <div layout="column" flex-gt-sm="50" flex-sm="100">
+            <weekdays-chart flex></weekdays-chart>
+        </div>
+        <div layout="column" flex>
+            <speed-zones-chart flex> </speed-zones-chart>
+        </div>
     </div>
 
 </div>
-

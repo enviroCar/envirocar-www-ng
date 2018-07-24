@@ -13,7 +13,6 @@
                     {{'CLICK_FOR_MORE_INFO'| translate}}
                 </md-tooltip>
             </md-button>
-
         </div>
     </div>
     <md-progress-circular class="loader_dashboard2" ng-if="!onload_all" md-diameter="56"></md-progress-circular>
@@ -39,7 +38,7 @@
                 <nvd3 options="optionsCO2" data="dataCO2" api="api" flex></nvd3>
             </div>
         </md-card-content>
-        <div class="no_tracks" ng-show="!tracksAvailable">
+        <div class="no_tracks" ng-show="!tracksAvailable && onload_all">
             <div class="transparent-container">
                 <img src="app/components/assets/img_tracks.png">
             </div>

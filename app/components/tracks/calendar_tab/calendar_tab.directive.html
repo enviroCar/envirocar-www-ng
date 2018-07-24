@@ -1,5 +1,5 @@
 <md-tab label="{{'CALENDAR_OF_TRACKS_TAB'| translate}}">
-    <md-progress-circular  ng-if="!onload_calendar" md-diameter="156"></md-progress-circular>
+    <md-progress-circular  ng-if="!onload_calendar" md-diameter="56"></md-progress-circular>
     <div ng-if="onload_calendar" layout-gt-sm="row">
         <md-card flex-gt-sm="65" >
 
@@ -18,10 +18,9 @@
                         </md-button>
                     </div>
                 </div>
-                <div>
+                <div flex style="height: 500px !important;">
 
-                    <calendar-md flex layout layout-fill
-
+                    <calendar-md layout-fill layout-row flex 
                                  on-prev-month="prevMonth"
                                  on-next-month="nextMonth"
                                  data-start-month="{{start_month}}"
@@ -29,18 +28,6 @@
                                  on-day-click="dayClick"
                                  week-starts-on="1"
                                  >
-                        <!--        calendar-direction="direction"
-                                    day-content="setDayContent"
-                                    day-format="'d'"
-                                    tooltips="tooltips"
-                                    title-format="'MMMM y'"
-                                    ng-model='selectedDate'
-                                    day-label-format="'EEE'"
-                                    day-label-tooltip-format="'EEEE'"
-                                    day-tooltip-format="'fullDate'"
-                                    week-starts-on="1"
-                                    disable-future-selection="true"> -->
-
                     </calendar-md>
                 </div>
                 <div flex>
@@ -127,7 +114,7 @@
                                 <md-content >
                                     <p class="placeholder-p">.</p>
 
-                                    <img src="{{event.url}}" style="width:290px;height:184px;"></img>
+                                    <img src="{{event.url}}">
 
                                 </md-content>
                             </md-tooltip>

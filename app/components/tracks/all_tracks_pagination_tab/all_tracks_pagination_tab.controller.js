@@ -16,7 +16,9 @@
             TrackService,
             UserCredentialsService,
             ecBaseUrl,
+            ecServerBase,
             FilterStateService) {
+        "ngInject";
 
 
         $scope.okay_pressed = false;
@@ -28,27 +30,26 @@
         $scope.itemsPerPage = (window.innerHeight < 1000 ? 5 : 10);
 
         $(window).resize(function () {
-            $scope.$apply(function () {
-                if (window.innerHeight < 1000) {
-                    $scope.itemsPerPage = 5;
-                } else {
-                    $scope.itemsPerPage = 10;
-                }
-                var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
-                $scope.currentPaginationTracks.currentMonthTracks = [];
-                // number pages:
-                $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
-                // take the first $scope.itemsPerPage:
-                for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
-                    $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
-                }
-                $scope.pagingTab.current = 1;
-                loadPages();
-            });
+//            $scope.$apply(function () {
+//                if (window.innerHeight < 1000) {
+//                    $scope.itemsPerPage = 5;
+//                } else {
+//                    $scope.itemsPerPage = 10;
+//                }
+//                var number_monthly_tracks = $scope.currentPaginationTracks.currentSelectedTracks.length;
+//                $scope.currentPaginationTracks.currentMonthTracks = [];
+//                // number pages:
+//                $scope.pagingTab.total = Math.ceil(number_monthly_tracks / $scope.itemsPerPage);
+//                // take the first $scope.itemsPerPage:
+//                for (var i = 0; i < $scope.itemsPerPage && i < number_monthly_tracks; i++) {
+//                    $scope.currentPaginationTracks.currentMonthTracks.push($scope.currentPaginationTracks.currentSelectedTracks[i]);
+//                }
+//                $scope.pagingTab.current = 1;
+//                loadPages();
+//            });
         });
 
         $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
 
         var params = FilterStateService.getFilterState();
 
@@ -139,7 +140,7 @@
 
             var params = FilterStateService.getFilterState();
             console.log(params.filterOrder);
-            
+
             // delete all state filters with name of removed filter:
             var i = params.filterOrder.length - 1;
             while (i >= 0) {
@@ -210,7 +211,7 @@
                 }
                 i--;
             }
-            
+
             console.log($scope.filters);
             var muh = FilterStateService.getFilterState();
             console.log(muh);
@@ -430,7 +431,7 @@
             return false;
         };
         // tracks holen:
-        TrackService.getUserTracks($scope.username, $scope.password).then(
+        TrackService.getUserTracks($scope.username).then(
                 function (data) {
                     // Erstelle eine Tagestabelle
                     var date_count = [];
@@ -502,14 +503,6 @@
                         var travelTime = date_hh_mm_ss;
                         var travelStart = new Date(currTrack.begin);
                         var travelEnd = new Date(currTrack.end);
-                        var travelDistance = parseFloat(currTrack['length'].toFixed(2));
-                        // update distance_min and distance_max:
-                        if (travelDistance < $scope.distance_min) {
-                            $scope.distance_min = travelDistance;
-                        }
-                        if (travelDistance > $scope.distance_max) {
-                            $scope.distance_max = travelDistance;
-                        }
 
                         var seconds_passed = new Date(currTrack.end).getTime() - new Date(currTrack.begin).getTime();
                         var minutes = seconds_passed / 60000;
@@ -536,12 +529,23 @@
                             car: carType,
                             manufacturer: carManu,
                             id: currTrack.id,
-                            url: ecBaseUrl + '/tracks/' + currTrack.id + "/preview",
+                            url: ecServerBase + '/tracks/' + currTrack.id + "/preview",
                             travelTime: travelTime,
                             begin: travelStart,
                             end: travelEnd,
-                            length: travelDistance
+                            length: 0
                         };
+                        if (currTrack.length) {
+                            var travelDistance = parseFloat(currTrack['length'].toFixed(2));
+                            // update distance_min and distance_max:
+                            if (travelDistance < $scope.distance_min) {
+                                $scope.distance_min = travelDistance;
+                            }
+                            if (travelDistance > $scope.distance_max) {
+                                $scope.distance_max = travelDistance;
+                            }
+                            resultTrack.length = travelDistance;
+                        }
                         $scope.tracksPagination.push(resultTrack);
                     }
                     $scope.distance_max = Math.ceil($scope.distance_max);

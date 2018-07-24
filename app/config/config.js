@@ -2,6 +2,7 @@
     'use strict';
 
     function config($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider) {
+        "ngInject";
         console.log('run config');
 
         $stateProvider
@@ -32,46 +33,12 @@
                     url: '/tracks',
                     controller: 'TrackListCtrl',
                     templateUrl: 'app/components/tracks/tracks.html',
-                    data: {
-                        selectedTab : 1,
-                        filterOrder : [],
-                        distance : {
-                            name: 'distance',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        date : {
-                            name: 'date',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        duration : {
-                            name: 'duration',
-                            inUse: false,
-                            min: undefined,
-                            max: undefined
-                        },
-                        vehicle : {
-                            name: 'vehicle',
-                            all : [],
-                            set : []
-                        },
-                        spatial : {
-                            inUse : false,
-                            name: 'spatial',
-                            southwest: {
-                                lat: undefined,
-                                lng: undefined
-                            },
-                            northeast: {
-                                lat: undefined,
-                                lng: undefined
-                            },
-                            track_ids: []
-                        }
-                    },
+                    authenticate: true
+                })
+                .state('profile', {
+                    url: '/profile',
+                    controller: 'ProfileCtrl',
+                    templateUrl: 'app/components/profile/profile.html',
                     authenticate: true
                 });
 
@@ -131,6 +98,9 @@
         $httpProvider.defaults.headers.post = {};
         $httpProvider.defaults.headers.put = {};
         $httpProvider.defaults.headers.patch = {};
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        $httpProvider.defaults.withCredentials = true;
     }
 
     angular.module('enviroCar')

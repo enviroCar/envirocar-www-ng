@@ -1,14 +1,13 @@
 (function () {
     'use strict';
     function SpeedRangesChartCtrl(
-            $scope, 
-            $stateParams, 
-            $timeout, 
-            $translate, 
+            $rootScope,
+            $scope,
+            $stateParams,
+            $timeout,
             TrackService,
-            StatisticsService, 
-            UserCredentialsService,
-            trackAnalysisSettings) {
+            UserCredentialsService) {
+        "ngInject";
         $scope.onload_all = false;
 
         $scope.onload_speed_Range = false;
@@ -16,17 +15,18 @@
         $scope.onload_CO2_Range = false;
         $scope.onload_EngineLoad_Range = false;
         $scope.onload_RPM_Range = false;
+        $scope.onload_GPSSpeed_Range = false;
         $scope.loading = true;
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
+        $scope.mouseEntered = false;
 
         $scope.optionsSpeedRange = {
             chart: {
                 type: 'pieChart',
                 height: 370,
                 donut: false,
+                growOnHover: true,
                 x: function (d) {
                     return d.key;
                 },
@@ -34,11 +34,11 @@
                     return d.y;
                 },
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0]),
-                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.yellow_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.yellow_break[0] + $scope.red_break[0]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], $scope.red_break[0], 1),
+                    $scope.percentToRGB($scope.yellow_break[0], $scope.red_break[0], $scope.max_values[0], ($scope.red_break[0] + $scope.max_values[0]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -47,6 +47,12 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            // set/reset highlights from piecharts:
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                        }
                     }
                 },
                 duration: 300,
@@ -63,6 +69,7 @@
             $scope.onload_CO2_Range = false;
             $scope.onload_EngineLoad_Range = false;
             $scope.onload_RPM_Range = false;
+            $scope.onload_GPSSpeed_Range = false;
             $scope.dataSpeedRange = [
                 {
                     key: '  0 km/h',
@@ -193,7 +200,40 @@
                     y: 0
                 }
             ];
-            var partOfPercent = 100 / (b - a + 1);
+            $scope.dataGPSSpeedRange = [
+                {
+                    key: '  0 km/h',
+                    y: 0
+                },
+                {
+                    key: '0-' + $scope.yellow_break[5] / 2 + ' km/h',
+                    y: 0
+                },
+                {
+                    key: $scope.yellow_break[5] / 2 + '-' + $scope.yellow_break[5] + ' km/h',
+                    y: 0
+                },
+                {
+                    key: $scope.yellow_break[5] + '-' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' km/h',
+                    y: 0
+                },
+                {
+                    key: ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + '-' + $scope.red_break[5] + ' km/h',
+                    y: 0
+                },
+                {
+                    key: "> " + $scope.red_break[5] + " km/h",
+                    y: 0
+                }
+            ];
+
+            var count = 0;
+            //checkout partOfPercent for errorneous data:
+            for (var i = a; i < b + 1; i++) {
+                if ($scope.data_all_ranges[0].values[i] !== undefined)
+                    count++;
+            }
+            var partOfPercent = 100 / count;
 
             // calculate %'s for each speed interval:
             for (var i = a; i < b + 1; i++) {
@@ -324,6 +364,32 @@
                 }
             }
             $scope.onload_EngineLoad_Range = true;
+            
+            // calculate %'s for each consumption interval:
+            for (var i = a; i < b + 1; i++) {
+                var v = $scope.data_all_ranges[5].values[i];
+                switch (true) {
+                    case (v === 0):
+                        $scope.dataGPSSpeedRange[0].y += partOfPercent;
+                        break;
+                    case (v < $scope.yellow_break[5] / 2):
+                        $scope.dataGPSSpeedRange[1].y += partOfPercent;
+                        break;
+                    case (v < $scope.yellow_break[5]):
+                        $scope.dataGPSSpeedRange[2].y += partOfPercent;
+                        break;
+                    case (v < ($scope.yellow_break[5] + $scope.red_break[5]) / 2):
+                        $scope.dataGPSSpeedRange[3].y += partOfPercent;
+                        break;
+                    case (v < $scope.red_break[5]):
+                        $scope.dataGPSSpeedRange[4].y += partOfPercent;
+                        break;
+                    case (v >= $scope.red_break[5]):
+                        $scope.dataGPSSpeedRange[5].y += partOfPercent;
+                        break;
+                }
+            }
+            $scope.onload_GPSSpeed_Range = true;
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
@@ -354,13 +420,12 @@
             if ($scope.segmentActivated) {
                 //$scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
-                if ($scope.min)
+                if ($scope.min !== undefined)
                     $scope.changeRangeRanges($scope.min, $scope.max);
                 else
                     $scope.changeRangeRanges(0, $scope.track_length);
-            } else {
+            } else
                 $scope.changeRangeRanges(0, $scope.track_length);
-            }
         });
 
         $scope.optionsConsumptionRange = {
@@ -375,11 +440,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1]),
-                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.yellow_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.yellow_break[1] + $scope.red_break[1]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], $scope.red_break[1], 1),
+                    $scope.percentToRGB($scope.yellow_break[1], $scope.red_break[1], $scope.max_values[1], ($scope.red_break[1] + $scope.max_values[1]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -388,6 +453,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -409,11 +484,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2]),
-                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.yellow_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.yellow_break[2] + $scope.red_break[2]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], $scope.red_break[2], 1),
+                    $scope.percentToRGB($scope.yellow_break[2], $scope.red_break[2], $scope.max_values[2], ($scope.red_break[2] + $scope.max_values[2]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -422,6 +497,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -443,11 +528,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4]),
-                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.yellow_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.yellow_break[4] + $scope.red_break[4]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], $scope.red_break[4], 1),
+                    $scope.percentToRGB($scope.yellow_break[4], $scope.red_break[4], $scope.max_values[4], ($scope.red_break[4] + $scope.max_values[4]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -456,6 +541,16 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -477,11 +572,11 @@
                  return d.y;
                  },*/
                 color: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3]),
-                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2)],
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.yellow_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.yellow_break[3] + $scope.red_break[3]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], $scope.red_break[3], 1),
+                    $scope.percentToRGB($scope.yellow_break[3], $scope.red_break[3], $scope.max_values[3], ($scope.red_break[3] + $scope.max_values[3]) / 2, 1)],
                 showLabels: true,
                 labelsOutside: true,
                 pie: {
@@ -490,6 +585,60 @@
                     },
                     endAngle: function (d) {
                         return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
+                    }
+                },
+                duration: 300,
+                legendPosition: 'bottom',
+                valueFormat: function (d) {
+                    return d3.format(',.2f')(d) + "%";
+                }
+            }
+        };
+        $scope.optionsGPSSpeedRange = {
+            chart: {
+                type: 'pieChart',
+                height: 370,
+                donut: false,
+                x: function (d) {
+                    return d.key;
+                }, /**
+                 y: function (d) {
+                 return d.y;
+                 },*/
+                color: ['#00ff00',
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.yellow_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.yellow_break[5] + $scope.red_break[5]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], $scope.red_break[5], 1),
+                    $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], ($scope.red_break[5] + $scope.max_values[5]) / 2, 1)],
+                showLabels: true,
+                labelsOutside: true,
+                pie: {
+                    startAngle: function (d) {
+                        return d.startAngle / 2 - Math.PI / 2
+                    },
+                    endAngle: function (d) {
+                        return d.endAngle / 2 - Math.PI / 2
+                    },
+                    dispatch: {
+                        elementClick: function (e) {
+                            $rootScope.$broadcast('single_track_page:interval-clicked', e.index);
+                            // reset highlights from piecharts:
+                            console.log(e);
+                            
+                            // set highlights on piecharts:
+                            //var clickedDayDiv = angular.element(document.querySelectorAll('[tabindex="' + i + '"]'));
+                        }
                     }
                 },
                 duration: 300,
@@ -630,6 +779,32 @@
                 y: 0
             }
         ];
+        $scope.dataGPSSpeedRange = [
+            {
+                key: '  0 %',
+                y: 0
+            },
+            {
+                key: '0-' + $scope.yellow_break[5] / 2 + ' %',
+                y: 0
+            },
+            {
+                key: $scope.yellow_break[5] / 2 + '-' + $scope.yellow_break[5] + ' %',
+                y: 0
+            },
+            {
+                key: $scope.yellow_break[5] + '-' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' %',
+                y: 0
+            },
+            {
+                key: ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + '-' + $scope.red_break[5] + ' %',
+                y: 0
+            },
+            {
+                key: "> " + $scope.red_break[5] + " %",
+                y: 0
+            }
+        ];
 
         // to be filled with server query:
         $scope.data_all_ranges = [
@@ -648,10 +823,13 @@
             }, {
                 key: 'Engine Load',
                 values: []
+            }, {
+                key: 'GPS Speed',
+                values: []
             }
         ];
         var data_global = {};
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     data_global = data;
                     var track_length = data_global.data.features.length;
@@ -675,6 +853,9 @@
                         if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
                             var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
                         }
+                        if (data_global.data.features[index].properties.phenomenons["GPS Speed"]) {
+                            var value_GPSSpeed = data_global.data.features[index].properties.phenomenons["GPS Speed"].value;
+                        }
 
                         // save all data:
                         $scope.data_all_ranges[0].values.push(value_speed);
@@ -682,6 +863,7 @@
                         $scope.data_all_ranges[2].values.push(value_CO2);
                         $scope.data_all_ranges[3].values.push(value_RPM);
                         $scope.data_all_ranges[4].values.push(value_EngineLoad);
+                        $scope.data_all_ranges[5].values.push(value_GPSSpeed);
                     }
                     var partOfPercent = 100 / $scope.track_length;
 
@@ -814,6 +996,32 @@
                         }
                     }
                     $scope.onload_EngineLoad_Range = true;
+
+                    // calculate %'s for each consumption interval:
+                    for (var i = 0; i < $scope.track_length; i++) {
+                        var v = $scope.data_all_ranges[5].values[i];
+                        switch (true) {
+                            case (v === 0):
+                                $scope.dataGPSSpeedRange[0].y += partOfPercent;
+                                break;
+                            case (v < $scope.yellow_break[5] / 2):
+                                $scope.dataGPSSpeedRange[1].y += partOfPercent;
+                                break;
+                            case (v < $scope.yellow_break[5]):
+                                $scope.dataGPSSpeedRange[2].y += partOfPercent;
+                                break;
+                            case (v < ($scope.yellow_break[5] + $scope.red_break[5]) / 2):
+                                $scope.dataGPSSpeedRange[3].y += partOfPercent;
+                                break;
+                            case (v < $scope.red_break[5]):
+                                $scope.dataGPSSpeedRange[4].y += partOfPercent;
+                                break;
+                            case (v >= $scope.red_break[5]):
+                                $scope.dataGPSSpeedRange[5].y += partOfPercent;
+                                break;
+                        }
+                    }
+                    $scope.onload_GPSSpeed_Range = true;
 
 
                     $timeout(function () {

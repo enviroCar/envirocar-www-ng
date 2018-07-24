@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     function ComparisonTrackChartCtrl($scope, $stateParams, $timeout, $translate, TrackService, StatisticsService, UserCredentialsService) {
-        console.log("SpeedCtrl started.");
+        "ngInject";
         $scope.onload_all = false;
 
         $scope.onload_speed = false;
@@ -9,9 +9,8 @@
         $scope.onload_CO2 = false;
         $scope.onload_engine = false;
         $scope.onload_RPM = false;
+        $scope.onload_GPSSpeed = false;
         $scope.loading = true;
-        $scope.username = UserCredentialsService.getCredentials().username;
-        $scope.password = UserCredentialsService.getCredentials().password;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
 
@@ -51,12 +50,22 @@
         };
 
         $scope.changeComparingRange = function (a, b) {
+            var flawlessMeasurements = {
+                'Speed': 0,
+                'Consumption': 0,
+                'CO2': 0,
+                'Rpm': 0,
+                'Engine Load': 0,
+                'GPS Speed': 0
+            };
+
             var sums = {
                 'Speed': 0,
                 'Consumption': 0,
                 'CO2': 0,
                 'Rpm': 0,
-                'Engine Load': 0
+                'Engine Load': 0,
+                'GPS Speed': 0
             };
 
             var data_exist = {
@@ -64,50 +73,69 @@
                 'Consumption': false,
                 'CO2': false,
                 'Rpm': false,
-                'Engine Load': false
+                'Engine Load': false,
+                'GPS Speed': false
             };
-            if ($scope.data_all[0].values[0])
+            if ($scope.data_all[0].values[0] !== undefined)
                 data_exist['Speed'] = true;
-            if ($scope.data_all[1].values[0])
+            if ($scope.data_all[1].values[0] !== undefined)
                 data_exist['Consumption'] = true;
-            if ($scope.data_all[2].values[0])
+            if ($scope.data_all[2].values[0] !== undefined)
                 data_exist['CO2'] = true;
-            if ($scope.data_all[3].values[0])
+            if ($scope.data_all[3].values[0] !== undefined)
                 data_exist['Rpm'] = true;
-            if ($scope.data_all[4].values[0])
+            if ($scope.data_all[4].values[0] !== undefined)
                 data_exist['Engine Load'] = true;
+            if ($scope.data_all[5].values[0] !== undefined)
+                data_exist['GPS Speed'] = true;
 
             // calculate sums for min...max for each phenom:
             for (var index = a; index < b; index++) {
-                if (data_exist['Speed'])
+                if ((data_exist['Speed']) & ($scope.data_all[0].values[index].y !== undefined)) {
                     sums['Speed'] += $scope.data_all[0].values[index].y;
-                if (data_exist['Consumption'])
+                    flawlessMeasurements ['Speed'] += 1;
+                }
+                if ((data_exist['Consumption']) & ($scope.data_all[1].values[index].y !== undefined)) {
                     sums['Consumption'] += $scope.data_all[1].values[index].y;
-                if (data_exist['CO2'])
+                    flawlessMeasurements ['Consumption'] += 1;
+                }
+                if ((data_exist['CO2']) & ($scope.data_all[2].values[index].y !== undefined)) {
                     sums['CO2'] += $scope.data_all[2].values[index].y;
-                if (data_exist['Rpm'])
+                    flawlessMeasurements ['CO2'] += 1;
+                }
+                if ((data_exist['Rpm']) & ($scope.data_all[3].values[index].y !== undefined)) {
                     sums['Rpm'] += $scope.data_all[3].values[index].y;
-                if (data_exist['Engine Load'])
+                    flawlessMeasurements ['Rpm'] += 1;
+                }
+                if ((data_exist['Engine Load']) & ($scope.data_all[4].values[index].y !== undefined)) {
                     sums['Engine Load'] += $scope.data_all[4].values[index].y;
+                    flawlessMeasurements ['Engine Load'] += 1;
+                }
+                if ((data_exist['GPS Speed']) & ($scope.data_all[5].values[index].y !== undefined)) {
+                    sums['GPS Speed'] += $scope.data_all[5].values[index].y;
+                    flawlessMeasurements ['GPS Speed'] += 1;
+                }
             }
 
             // calculate track avg speed:
-            var length_of_n = b - a ;
             var track_avgs = {};
-            if (sums['Speed']) {
-                track_avgs['Speed'] = sums['Speed'] / length_of_n;
+            if (sums['Speed'] !== undefined) {
+                track_avgs['Speed'] = sums['Speed'] / flawlessMeasurements ['Speed'];
             }
-            if (sums['Consumption']) {
-                track_avgs['Consumption'] = sums['Consumption'] / length_of_n;
+            if (sums['Consumption'] !== undefined) {
+                track_avgs['Consumption'] = sums['Consumption'] / flawlessMeasurements ['Consumption'];
             }
-            if (sums['CO2']) {
-                track_avgs['CO2'] = sums['CO2'] / length_of_n;
+            if (sums['CO2'] !== undefined) {
+                track_avgs['CO2'] = sums['CO2'] / flawlessMeasurements ['CO2'];
             }
-            if (sums['Rpm']) {
-                track_avgs['Rpm'] = sums['Rpm'] / length_of_n;
+            if (sums['Rpm'] !== undefined) {
+                track_avgs['Rpm'] = sums['Rpm'] / flawlessMeasurements ['Rpm'];
             }
-            if (sums['Engine Load']) {
-                track_avgs['Engine Load'] = sums['Engine Load'] / length_of_n;
+            if (sums['Engine Load'] !== undefined) {
+                track_avgs['Engine Load'] = sums['Engine Load'] / flawlessMeasurements ['Engine Load'];
+            }
+            if (sums['GPS Speed'] !== undefined) {
+                track_avgs['GPS Speed'] = sums['GPS Speed'] / flawlessMeasurements ['GPS Speed'];
             }
 
             $scope.dataSpeed[0].values[0].value = track_avgs['Speed'];
@@ -115,17 +143,66 @@
             $scope.dataCO2[0].values[0].value = track_avgs['CO2'];
             $scope.dataRPM[0].values[0].value = track_avgs['Rpm'];
             $scope.dataEngineLoad[0].values[0].value = track_avgs['Engine Load'];
+            $scope.dataGPSSpeed[0].values[0].value = track_avgs['GPS Speed'];
+
+            // update bar colors:
+            $scope.dataSpeed[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[0],
+                            $scope.red_break[0],
+                            $scope.max_values[0],
+                            track_avgs['Speed'],
+                            1);
+
+            $scope.dataConsumption[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[1],
+                            $scope.red_break[1],
+                            $scope.max_values[1],
+                            track_avgs['Consumption'],
+                            1);
+
+            $scope.dataCO2[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[2],
+                            $scope.red_break[2],
+                            $scope.max_values[2],
+                            track_avgs['CO2'],
+                            1);
+
+            $scope.dataRPM[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[3],
+                            $scope.red_break[3],
+                            $scope.max_values[3],
+                            track_avgs['Rpm'],
+                            1);
+
+            $scope.dataEngineLoad[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[4],
+                            $scope.red_break[4],
+                            $scope.max_values[4],
+                            track_avgs['Engine Load'],
+                            1);
+
+            $scope.dataGPSSpeed[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[5],
+                            $scope.red_break[5],
+                            $scope.max_values[5],
+                            track_avgs['GPS Speed'],
+                            1);
         };
 
         $scope.$on('single_track_page:segment-changed', function (event, args) {
-            
             $scope.min = args.min;
             $scope.max = args.max;
             $scope.changeComparingRange($scope.min, $scope.max);
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
-            
+
             var axisLabelSpeed = $translate.instant('SPEED') + ' (km/h)';
             $scope.optionsSpeed.chart.yAxis = {
                 axisLabel: axisLabelSpeed,
@@ -151,11 +228,16 @@
                 axisLabel: axisLabelRPM,
                 axisLabelDistance: -10
             };
+            var axisLabelGPSSpeed = $translate.instant('GPS_SPEED') + ' km/h';
+            $scope.optionsGPSSpeed.chart.yAxis = {
+                axisLabel: axisLabelGPSSpeed,
+                axisLabelDistance: -10
+            };
         });
 
         $scope.$on('single_track_page:segment-activated', function (event, args) {
             if (args) {
-                if (!$scope.min) 
+                if (!$scope.min)
                     $scope.min = 0;
                 if (!$scope.max)
                     $scope.max = $scope.track_length;
@@ -166,13 +248,12 @@
         });
 
         $scope.$on('track-toolbar:phenomenon-changed', function (event, args) {
-            
             $scope.selectedPhenom = args;
 
             if ($scope.segmentActivated) {
                 //$scope.changeSelectionRange($scope.slider.minValue, $scope.slider.maxValue);
                 //$scope.changeChartRange($scope.slider.minValue, $scope.slider.maxValue);
-                if ($scope.min)
+                if ($scope.min !== undefined)
                     $scope.changeComparingRange($scope.min, $scope.max);
                 else
                     $scope.changeComparingRange(0, $scope.track_length);
@@ -215,6 +296,7 @@
                 }
             }
         };
+
         $scope.optionsCO2 = {
             chart: {
                 type: 'discreteBarChart',
@@ -320,6 +402,41 @@
             }
         };
 
+        $scope.optionsGPSSpeed = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 200,
+                margin: {
+                    top: 10,
+                    right: 0,
+                    bottom: 15,
+                    left: 50
+                },
+                x: function (d) {
+                    return $translate.instant(d.label);
+                },
+                y: function (d) {
+                    return d.value;
+                },
+                showValues: true,
+                valueFormat: function (d) {
+                    return d3.format(',.1f')(d);
+                },
+                duration: 300,
+                yAxis: {
+                    axisLabel: $translate.instant('GPS Speed') + ' (km/h)',
+                    axisLabelDistance: -20
+                },
+                tooltip: {
+                    contentGenerator: function (d)
+                    {
+                        var html = '<h3><b>' + $translate.instant('TT_' + d.data.label) + '</b> = ' + d.data.value.toFixed(1) + 'km/h </h3>';
+                        return html;
+                    }
+                }
+            }
+        };
+
         // to be filled with server query:
         $scope.data_all = [
             {
@@ -346,10 +463,15 @@
                 key: 'Engine Load',
                 values: [
                 ]
+            },
+            {
+                key: 'GPS Speed',
+                values: [
+                ]
             }
         ];
         var data_global = {};
-        TrackService.getTrack($scope.username, $scope.password, $scope.trackid).then(
+        TrackService.getTrack($scope.trackid).then(
                 function (data) {
                     data_global = data;
                     var track_length = data_global.data.features.length;
@@ -359,48 +481,97 @@
                         'Consumption': 0,
                         'CO2': 0,
                         'Rpm': 0,
-                        'Engine Load': 0
+                        'Engine Load': 0,
+                        'GPS Speed': 0
                     };
+
+                    var value_speed;
+                    var value_consumption;
+                    var value_CO2;
+                    var value_RPM;
+                    var value_EngineLoad;
+                    var value_GPSSpeed;
+                    // save measurements for each phenomenon:
+                    var speedMeasurement;
+                    var consumptionMeasurement;
+                    var co2Measurement;
+                    var rpmMeasurement;
+                    var engineLoadMeasurement;
+                    var gpsSpeedMeasurement;
+
+                    var data_exist = {
+                        'Speed': false,
+                        'Consumption': false,
+                        'CO2': false,
+                        'Rpm': false,
+                        'Engine Load': false,
+                        'GPS Speed': false
+                    };
+
                     // iterating through each measurement:
                     for (var index = 1; index < track_length; index++) {
                         // get the phenomenon's value:
                         if (data_global.data.features[index].properties.phenomenons.Speed) {
-                            var value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
+                            value_speed = data_global.data.features[index].properties.phenomenons.Speed.value;
                             sums['Speed'] += value_speed;
-                        }
-                        if (data_global.data.features[index].properties.phenomenons.Consumption) {
-                            var value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
-                            sums['Consumption'] += value_consumption;
-                        }
-                        if (data_global.data.features[index].properties.phenomenons.CO2) {
-                            var value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
-                            sums['CO2'] += value_CO2;
-                        }
-                        if (data_global.data.features[index].properties.phenomenons.Rpm) {
-                            var value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
-                            sums['Rpm'] += value_RPM;
-                        }
-                        if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
-                            var value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
-                            sums['Engine Load'] += value_EngineLoad;
+                            speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
+                        } else {
+                            value_speed = 0;
+                            speedMeasurement = {x: index, y: undefined};
                         }
 
-                        // save measurements for each phenomenon:
-                        var speedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Speed.value};
-                        if (data_global.data.features[index].properties.phenomenons.Consumption)
-                            var consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
-                        if (data_global.data.features[index].properties.phenomenons.CO2)
-                            var co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
-                        if (data_global.data.features[index].properties.phenomenons.Rpm)
-                            var rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
-                        if (data_global.data.features[index].properties.phenomenons['Engine Load'])
-                            var engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        if (data_global.data.features[index].properties.phenomenons.Consumption) {
+                            value_consumption = data_global.data.features[index].properties.phenomenons.Consumption.value;
+                            sums['Consumption'] += value_consumption;
+                            consumptionMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Consumption.value};
+                        } else {
+                            value_consumption = 0;
+                            consumptionMeasurement = {x: index, y: undefined};
+                        }
+
+                        if (data_global.data.features[index].properties.phenomenons.CO2) {
+                            value_CO2 = data_global.data.features[index].properties.phenomenons.CO2.value;
+                            sums['CO2'] += value_CO2;
+                            co2Measurement = {x: index, y: data_global.data.features[index].properties.phenomenons.CO2.value};
+                        } else {
+                            value_CO2 = 0;
+                            co2Measurement = {x: index, y: undefined};
+                        }
+
+                        if (data_global.data.features[index].properties.phenomenons.Rpm) {
+                            value_RPM = data_global.data.features[index].properties.phenomenons.Rpm.value;
+                            sums['Rpm'] += value_RPM;
+                            rpmMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons.Rpm.value};
+                        } else {
+                            value_RPM = 0;
+                            rpmMeasurement = {x: index, y: undefined};
+                        }
+
+                        if (data_global.data.features[index].properties.phenomenons["Engine Load"]) {
+                            value_EngineLoad = data_global.data.features[index].properties.phenomenons["Engine Load"].value;
+                            sums['Engine Load'] += value_EngineLoad;
+                            engineLoadMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Engine Load'].value};
+                        } else {
+                            value_EngineLoad = 0;
+                            engineLoadMeasurement = {x: index, y: undefined};
+                        }
+
+                        if (data_global.data.features[index].properties.phenomenons["GPS Speed"]) {
+                            value_GPSSpeed = data_global.data.features[index].properties.phenomenons["GPS Speed"].value;
+                            sums['GPS Speed'] += value_GPSSpeed;
+                            gpsSpeedMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['GPS Speed'].value};
+                        } else {
+                            value_GPSSpeed = 0;
+                            gpsSpeedMeasurement = {x: index, y: undefined};
+                        }
+
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);
                         $scope.data_all[2].values.push(co2Measurement);
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
+                        $scope.data_all[5].values.push(gpsSpeedMeasurement);
                     }
 
                     // calculate track avg speed:
@@ -420,10 +591,12 @@
                     if (sums['Engine Load']) {
                         track_avgs['Engine Load'] = sums['Engine Load'] / track_length;
                     }
+                    if (sums['GPS Speed']) {
+                        track_avgs['GPS Speed'] = sums['GPS Speed'] / track_length;
+                    }
                     // ask for enviroCar averages:
-                    var enviroCarStats = [];
                     // Speed:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
+                    StatisticsService.getPhenomenonStatistics("Speed").then(
                             function (data) {
                                 var store = data.data;
                                 var Speed_public = store.avg;
@@ -431,13 +604,24 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Speed']
+                                                "value": track_avgs['Speed'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[0],
+                                                        $scope.red_break[0],
+                                                        $scope.max_values[0],
+                                                        track_avgs['Speed'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": Speed_public
+                                                "value": Speed_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[0],
+                                                        $scope.red_break[0],
+                                                        $scope.max_values[0],
+                                                        Speed_public,
+                                                        1)
                                             }]
                                     }];
-                                enviroCarStats.push(data);
                                 $scope.onload_Speed = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
@@ -449,7 +633,7 @@
                         console.log("error " + data);
                     });
                     // Consumption:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Consumption").then(
+                    StatisticsService.getPhenomenonStatistics("Consumption").then(
                             function (data) {
                                 var store = data.data;
                                 var Consumption_public = store.avg;
@@ -457,13 +641,24 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Consumption']
+                                                "value": track_avgs['Consumption'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[1],
+                                                        $scope.red_break[1],
+                                                        $scope.max_values[1],
+                                                        track_avgs['Consumption'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": Consumption_public
+                                                "value": Consumption_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[1],
+                                                        $scope.red_break[1],
+                                                        $scope.max_values[1],
+                                                        Consumption_public,
+                                                        1)
                                             }]
                                     }];
-                                enviroCarStats.push(data);
                                 $scope.onload_Consumption = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
@@ -475,7 +670,7 @@
                         console.log("error " + data);
                     });
                     // CO2:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "CO2").then(
+                    StatisticsService.getPhenomenonStatistics("CO2").then(
                             function (data) {
                                 var store = data.data;
                                 var CO2_public = store.avg;
@@ -483,13 +678,24 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['CO2']
+                                                "value": track_avgs['CO2'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[2],
+                                                        $scope.red_break[2],
+                                                        $scope.max_values[2],
+                                                        track_avgs['CO2'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": CO2_public
+                                                "value": CO2_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[2],
+                                                        $scope.red_break[2],
+                                                        $scope.max_values[2],
+                                                        CO2_public,
+                                                        1)
                                             }]
                                     }]
-                                enviroCarStats.push(data);
                                 $scope.onload_CO2 = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
@@ -501,7 +707,7 @@
                         console.log("error " + data);
                     });
                     // RPM:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Rpm").then(
+                    StatisticsService.getPhenomenonStatistics("Rpm").then(
                             function (data) {
                                 var store = data.data;
                                 var RPM_public = store.avg;
@@ -509,13 +715,24 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Rpm']
+                                                "value": track_avgs['Rpm'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[3],
+                                                        $scope.red_break[3],
+                                                        $scope.max_values[3],
+                                                        track_avgs['Rpm'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": RPM_public
+                                                "value": RPM_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[3],
+                                                        $scope.red_break[3],
+                                                        $scope.max_values[3],
+                                                        RPM_public,
+                                                        1)
                                             }]
                                     }]
-                                enviroCarStats.push(data);
                                 $scope.onload_RPM = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
@@ -527,7 +744,7 @@
                         console.log("error " + data);
                     });
                     // Engine Load:
-                    StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Engine Load").then(
+                    StatisticsService.getPhenomenonStatistics("Engine Load").then(
                             function (data) {
                                 var store = data.data;
                                 var EngineLoad_public = store.avg;
@@ -535,14 +752,62 @@
                                         key: "Cumulative Return",
                                         values: [{
                                                 "label": "TRACK_LABEL_USER",
-                                                "value": track_avgs['Engine Load']
+                                                "value": track_avgs['Engine Load'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[4],
+                                                        $scope.red_break[4],
+                                                        $scope.max_values[4],
+                                                        track_avgs['Engine Load'],
+                                                        1)
                                             }, {
                                                 "label": "TRACK_LABEL_PUBLIC",
-                                                "value": EngineLoad_public
+                                                "value": EngineLoad_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[4],
+                                                        $scope.red_break[4],
+                                                        $scope.max_values[4],
+                                                        EngineLoad_public,
+                                                        1)
                                             }]
                                     }];
-                                enviroCarStats.push(data);
                                 $scope.onload_EngineLoad = true;
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
+                            }, function (data) {
+                        console.log("error " + data);
+                    });
+                    // GPS Speed:
+                    StatisticsService.getPhenomenonStatistics("GPS Speed").then(
+                            function (data) {
+                                var store = data.data;
+                                var GPSSpeed_public = store.avg;
+                                $scope.dataGPSSpeed = [{
+                                        key: "Cumulative Return",
+                                        values: [{
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['GPS Speed'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[5],
+                                                        $scope.red_break[5],
+                                                        $scope.max_values[5],
+                                                        track_avgs['GPS Speed'],
+                                                        1)
+                                            }, {
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": GPSSpeed_public,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[5],
+                                                        $scope.red_break[5],
+                                                        $scope.max_values[5],
+                                                        GPSSpeed_public,
+                                                        1)
+                                            }]
+                                    }];
+                                $scope.onload_GPSSpeed = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
                                 }, 300);

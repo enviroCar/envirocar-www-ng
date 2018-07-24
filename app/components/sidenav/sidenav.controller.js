@@ -8,51 +8,58 @@
             $mdMedia,
             $mdSidenav,
             $log,
-            $translate,
             $q,
             $timeout,
-            navService) {
-        var vm = this;
-        vm.menuItems = [];
-        vm.selectItem = selectItem;
-        vm.toggleItemsList = toggleItemsList;
+            $translate) {
+        "ngInject";
+
+        $scope.menuItems = [{
+                name: 'DASHBOARD',
+                icon: 'dashboard',
+                sref: '.dashboard',
+                tooltip: 'TT_SN_DASHBOARD_OPEN',
+                commingSoon: false
+            }, {
+                name: 'TRACKS',
+                icon: 'directions_car',
+                sref: '.tracks',
+                tooltip: 'TT_SN_TRACKS_OPEN',
+                commingSoon: false
+            }, {
+                name: 'TABLE',
+                icon: 'person',
+                sref: '.profile',
+                tooltip: 'TT_SN_PROFILE_OPEN',
+                commingSoon: false
+            }, {
+                name: 'COMMUNITY',
+                icon: 'pie_chart',
+                sref: '.community',
+                tooltip: 'TT_SN_SEGMENT_OPEN',
+                commingSoon: true
+            }];
+
+        $scope.selectItem = selectItem;
+        $scope.toggleItemsList = toggleItemsList;
         //vm.title = $state.current.data.title;
         //vm.showSimpleToast = showSimpleToast;
 
-        navService
-                .loadAllItems()
-                .then(function (menuItems) {
-                    vm.menuItems = [].concat(menuItems);
-                    $translate(['DASHBOARD', 'TRACKS', 'TABLE', 'SEGMENT',
-                        'TT_SN_DASHBOARD_OPEN', 'TT_SN_TRACKS_OPEN',
-                        'TT_SN_PROFILE_OPEN', 'TT_SN_SEGMENT_OPEN']).then(
-                            function (translations) {
-                                vm.menuItems[0]['name'] = 'DASHBOARD';
-                                vm.menuItems[1]['name'] = 'TRACKS';
-                                vm.menuItems[2]['name'] = 'TABLE';
-                                vm.menuItems[3]['name'] = 'SEGMENT';
-                                vm.menuItems[0]['tooltip'] = 'TT_SN_DASHBOARD_OPEN';
-                                vm.menuItems[1]['tooltip'] = 'TT_SN_TRACKS_OPEN';
-                                vm.menuItems[2]['tooltip'] = 'TT_SN_PROFILE_OPEN';
-                                vm.menuItems[3]['tooltip'] = 'TT_SN_SEGMENT_OPEN';
-                                vm.menuItems[0]['commingSoon'] = false;
-                                vm.menuItems[1]['commingSoon'] = false;
-                                vm.menuItems[2]['commingSoon'] = true;
-                                vm.menuItems[3]['commingSoon'] = true;
-                                console.log("menuitems:" + vm.menuItems);
-                            });
-                    vm.collapse();
-                    $timeout(function () {
-                        window.dispatchEvent(new Event('resize'));
-                        $timeout(function () {
-                            window.dispatchEvent(new Event('resize'));
-                        }, 300);
-                    }, 300);
-                });
-
+        $scope.menuItems[0]['name'] = 'DASHBOARD';
+        $scope.menuItems[1]['name'] = 'TRACKS';
+        $scope.menuItems[2]['name'] = 'TABLE';
+        $scope.menuItems[3]['name'] = 'COMMUNITY';
+        $scope.menuItems[0]['tooltip'] = 'TT_SN_DASHBOARD_OPEN';
+        $scope.menuItems[1]['tooltip'] = 'TT_SN_TRACKS_OPEN';
+        $scope.menuItems[2]['tooltip'] = 'TT_SN_PROFILE_OPEN';
+        $scope.menuItems[3]['tooltip'] = 'TT_SN_SEGMENT_OPEN';
+        $scope.menuItems[0]['commingSoon'] = false;
+        $scope.menuItems[1]['commingSoon'] = false;
+        $scope.menuItems[2]['commingSoon'] = false;
+        $scope.menuItems[3]['commingSoon'] = true;
+        
         function selectItem(item) {
-            vm.title = item.name;
-            vm.collapse();
+            $scope.title = item.name;
+            $scope.collapse();
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
                 $rootScope.$broadcast('sidenav:item-selected', $scope.language);
@@ -60,19 +67,16 @@
         }
 
         function toggleItemsList() {
-            console.log("fired here");
             var pending = $q.when(true);
             pending.then(function () {
                 $mdSidenav('left').toggle();
-                vm.collapse();
+                $scope.collapse();
             });
-        }
-        ;
+        };
 
         $scope.navExpanded = true;
 
         $scope.toggleLeft = buildToggler('left');
-        $scope.sideNavTitle = "  " + $translate.instant('WEBSITE-TITLE');
         var sideNav = angular.element($element[0].querySelector('#leftSideNav'));
         var sideNavTitlePadding = angular.element($element[0].querySelector('#sidenav-title'));
 
@@ -91,7 +95,8 @@
                         $log.debug("open LEFT is done");
                     });
         };
-        vm.collapse = function () {
+        
+        $scope.collapse = function () {
             if ($mdMedia('gt-xs')) {
                 sideNav.css("min-width", "60px")
                 sideNav.css("width", "60px")
@@ -108,6 +113,9 @@
 
             $scope.navExpanded = false;
         };
+        
+        
+        $scope.collapse();
 
         $scope.toggleExpand = function () {
             if (!$scope.navExpanded) {

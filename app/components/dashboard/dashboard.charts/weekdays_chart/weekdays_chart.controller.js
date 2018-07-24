@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function WeekdaysChartCtrl($scope, $timeout, $translate, TrackService, UserCredentialsService) {
+        "ngInject";
         $scope.onload_weekdays = false;
         $scope.loading = true;
 
@@ -41,17 +42,17 @@
 
         $scope.$on('sidenav:item-selected', function (event, args) {
             $timeout(function () {
-            $scope.optionsWeekdays.chart.yAxis.axisLabel = "";
+                $scope.optionsWeekdays.chart.yAxis.axisLabel = "";
                 window.dispatchEvent(new Event('resize'));
                 $timeout(function () {
-                $scope.optionsWeekdays.chart.yAxis.axisLabel = "km";
+                    $scope.optionsWeekdays.chart.yAxis.axisLabel = "km";
                     window.dispatchEvent(new Event('resize'));
                 }, 200);
             }, 100);
             $timeout(function () {
                 window.dispatchEvent(new Event('resize'));
-            }, 500);
-        });
+            });
+        }, 500);
 
         $scope.$on('toolbar:language-changed', function (event, args) {
             var axisYLabel = "km";
@@ -116,50 +117,14 @@
                         // time spend
                         //var seconds = (end_date - date) / 1000;
                         //var minutes = seconds / 60;
-
-                        temp_data[0].values[date.getDay()].y += track.length;
+                        if (track.length)
+                            temp_data[0].values[date.getDay()].y += track.length;
                         //temp_data[1].values[date.getDay()].y += minutes;
                     }
                     $scope.dataWeekdays = temp_data;
                     $scope.onload_weekdays = true;
                 }
-
         );
-        /**
-         getUserPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
-         function (data) {
-         console.log(data);
-         var store = data.data;
-         var speed_user = store.avg;
-         StatisticsService.getPhenomenonStatistics($scope.username, $scope.password, "Speed").then(
-         function (data) {
-         console.log(data);
-         store = data.data;
-         var speed_public = store.avg;
-         $scope.dataSpeed = [{
-         key: "Cumulative Return",
-         values: [{
-         "label": "LABEL_USER",
-         "value": speed_user
-         }, {
-         "label": "LABEL_PUBLIC",
-         "value": speed_public
-         }]
-         }]
-         dataotherusers.push(data);
-         $scope.onload_speed = true;
-         if ($scope.onload_CO2 && $scope.onload_consumption && $scope.onload_engine) {
-         window.dispatchEvent(new Event('resize'));
-         $scope.onload_all = true;
-         }
-         window.dispatchEvent(new Event('resize'));
-         }, function (data) {
-         console.log("error " + data);
-         });
-         }, function (data) {
-         console.log("error " + data);
-         });
-         */
 
         $timeout(function () {
             window.dispatchEvent(new Event('resize'));

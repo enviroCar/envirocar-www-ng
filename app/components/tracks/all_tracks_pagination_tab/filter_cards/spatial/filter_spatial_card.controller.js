@@ -5,6 +5,7 @@
             $timeout,
             leafletBoundsHelpers,
             FilterStateService) {
+        "ngInject";
         var drawnItems2 = new L.FeatureGroup();
 
         $scope.onEachFeature = function(feature, layer) {
@@ -12,7 +13,7 @@
                 mouseover: function(){return;},
                 mouseout: function(){return;},
                 click: function() {
-                    $scope.commonDialog($scope.filters.spatial);
+                    //$scope.commonDialog($scope.filters.spatial);
                 }
             });
         };

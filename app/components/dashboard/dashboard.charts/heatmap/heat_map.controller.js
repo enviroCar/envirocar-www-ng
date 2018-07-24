@@ -2,17 +2,15 @@
     'use strict';
     function HeatMapCtrl(
             $scope,
-            $http,
-            UserCredentialsService) {
+            $timeout,
+            UserCredentialsService,
+            UserService,
+            leafletBoundsHelpers) {
+        "ngInject";
 
         $scope.onload_heat_map = false;
         angular.extend($scope, {
             map: {
-                center2: {
-                    lat: 10.5,
-                    lng: 10.5,
-                    zoom: 10
-                },
                 layers2: {
                     baselayers: {
                         osm: {
@@ -31,112 +29,183 @@
                         }
                     },
                     overlays: {
+                        heat:
+                                {
+                                    name: 'Heat Map',
+                                    type: 'heat',
+                                    data: $scope.heat_dataset,
+                                    layerOptions: {
+                                        radius: 20,
+                                        blur: 30,
+                                        minopacity: 0,
+                                        maxZoom: 12
+                                    },
+                                    visible: true,
+                                    doRefresh: true
+                                }
                     }
                 },
-                defaults : {
+                defaults2: {
+                    maxZoom: 10,
+                    zoomControlPosition: 'topright',
                     scrollWheelZoom: false,
-                    zoomControl: true,
+                    zoomControl: false,
                     doubleClickZoom: false,
                     dragging: false
+                },
+                bounds2: {
                 }
             }
         });
-        console.log($scope.map.layers2.overlays);
-        var timeline = {};
         $scope.track_number = 0;
         $scope.username = UserCredentialsService.getCredentials().username;
         $scope.password = UserCredentialsService.getCredentials().password;
-        var urlredirect = '#/dashboard/chart/';
-        var points = [];
-        var mid_point = [0, 0];
-        var heat_dataset = [];
+        $scope.heat_dataset = [];
         var dataset_start = [];
         var dataset_end = [];
-        $http({
-            method: 'GET',
-            url: "app/components/assets/tracksummaries.json",
-            headers: {
-                'Content-Type': "application/json"
-            }
-        }).then(function (data) {
-            // create new json array for trackArray:
-            var tracksummary = data.data.trackSummaries;
-            for (var i = 0; i < tracksummary.length; i++) {
-                var coord_push_start = [];
-                var coord_push_end = [];
-                coord_push_start[1] = tracksummary[i]
-                ['startPosition']
-                ['geometry']
-                ['coordinates'][0];
-                coord_push_start[0] = tracksummary[i]
-                ['startPosition']
-                ['geometry']
-                ['coordinates'][1];
-                coord_push_start[2] = 1;
-                mid_point[0] += coord_push_start[1];
-                mid_point[1] += coord_push_start[0];
-                coord_push_end[1] = tracksummary[i]
-                ['endPosition']
-                ['geometry']
-                ['coordinates'][0];
-                coord_push_end[0] = tracksummary[i]
-                ['endPosition']
-                ['geometry']
-                ['coordinates'][1];
-                coord_push_end[2] = 1;
-                mid_point[0] += coord_push_end[1];
-                mid_point[1] += coord_push_end[0];
-                dataset_start.push(coord_push_start);
-                dataset_end.push(coord_push_end);
-                heat_dataset.push(coord_push_start);
-                heat_dataset.push(coord_push_end);
-            }
-            mid_point[0] = mid_point[0] / (tracksummary.length * 2);
-            mid_point[1] = mid_point[1] / (tracksummary.length * 2);
-            $scope.map.center2 = {
-                lat: mid_point[1],
-                lng: mid_point[0],
-                zoom: 10
-            };
-            $scope.map.layers2.overlays = {
-                heat:
-                        {
-                            name: 'Heat Map',
-                            type: 'heat',
-                            data: heat_dataset,
-                            layerOptions: {
-                                radius: 20,
-                                blur: 30,
-                                minopacity: 0,
-                                maxZoom: 8
-                            },
-                            visible: true
-                        }
-            };
-            console.log($scope.map.layers2.overlays.heat);
-        }
-        , function (error) {
+        UserService.getUserStatistic($scope.username, $scope.password).then(
+                function (data) {
+                    console.log(data);
+                    var tracksummary = data.data.trackSummaries;
+                    for (var i = 0; i < tracksummary.length; i++) {
+                        var coord_push_start = [];
+                        var coord_push_end = [];
+                        coord_push_start[1] = tracksummary[i]
+                        ['startPosition']
+                        ['geometry']
+                        ['coordinates'][0];
+                        coord_push_start[0] = tracksummary[i]
+                        ['startPosition']
+                        ['geometry']
+                        ['coordinates'][1];
+                        coord_push_start[2] = 1;
+                        coord_push_end[1] = tracksummary[i]
+                        ['endPosition']
+                        ['geometry']
+                        ['coordinates'][0];
+                        coord_push_end[0] = tracksummary[i]
+                        ['endPosition']
+                        ['geometry']
+                        ['coordinates'][1];
+                        coord_push_end[2] = 1;
+                        dataset_start.push(coord_push_start);
+                        dataset_end.push(coord_push_end);
+                        $scope.heat_dataset.push(coord_push_start);
+                        $scope.heat_dataset.push(coord_push_end);
+                    }
+                    $scope.map.layers2.overlays = {
+                        heat:
+                                {
+                                    name: 'Heat Map',
+                                    type: 'heat',
+                                    data: $scope.heat_dataset,
+                                    layerOptions: {
+                                        radius: 20,
+                                        blur: 30,
+                                        minopacity: 0,
+                                        maxZoom: 8
+                                    },
+                                    visible: true,
+                                    doRefresh: true
+                                }
+                    };
+                    var lat_min, lat_max, lng_min, lng_max;
+                    // get southWest and northEast:
+                    if (tracksummary[0].endPosition.geometry.coordinates[1]
+                            < tracksummary[0].startPosition.geometry.coordinates[1]) {
+                        lat_min = tracksummary[0].endPosition.geometry.coordinates[1];
+                        lat_max = tracksummary[0].startPosition.geometry.coordinates[1];
+                    } else {
+                        lat_min = tracksummary[0].startPosition.geometry.coordinates[1];
+                        lat_max = tracksummary[0].endPosition.geometry.coordinates[1];
+                    }
+                    if (tracksummary[0].endPosition.geometry.coordinates[0]
+                            < tracksummary[0].startPosition.geometry.coordinates[0]) {
+                        lng_min = tracksummary[0].endPosition.geometry.coordinates[0];
+                        lng_max = tracksummary[0].startPosition.geometry.coordinates[0];
+                    } else {
+                        lng_min = tracksummary[0].startPosition.geometry.coordinates[0];
+                        lng_max = tracksummary[0].endPosition.geometry.coordinates[0];
+                    }
+                    for (var i = 1; i < tracksummary.length; i++) {
+                        var curr_start = tracksummary[i].startPosition.geometry.coordinates;
+                        var curr_end = tracksummary[i].endPosition.geometry.coordinates;
+                        if (lat_min > curr_start[1])
+                            lat_min = curr_start[1];
+                        if (lat_min > curr_end[1])
+                            lat_min = curr_end[1];
+                        if (lng_min > curr_start[0])
+                            lng_min = curr_start[0];
+                        if (lng_min > curr_end[0])
+                            lng_min = curr_end[0];
+                        if (lat_max < curr_start[1])
+                            lat_max = curr_start[1];
+                        if (lat_max < curr_end[1])
+                            lat_max = curr_end[1];
+                        if (lng_max < curr_start[0])
+                            lng_max = curr_start[0];
+                        if (lng_max < curr_end[0])
+                            lng_max = curr_end[0];
+                    }
+                    $scope.southwest = {
+                        lat: lat_min,
+                        lng: lng_min
+                    };
+                    $scope.northeast = {
+                        lat: lat_max,
+                        lng: lng_max
+                    };
+                    var padding_lat = ($scope.northeast.lat - $scope.southwest.lat) / 10;
+                    var padding_lng = ($scope.northeast.lng - $scope.southwest.lng) / 10;
+                    $scope.map.bounds2 = leafletBoundsHelpers.createBoundsFromArray([
+                        [$scope.northeast.lat + padding_lat, $scope.northeast.lng + padding_lng],
+                        [$scope.southwest.lat - padding_lat, $scope.southwest.lng - padding_lng]
+                    ]);
+                    $timeout(function () {
+                        $scope.onload_heat_map = true;
+                        window.dispatchEvent(new Event('resize'));
+                    }, 300);
+                }, function (error) {
             console.log(error);
         });
-        /** serverseitiger CORS Fehler
-         $http({
-         method: 'GET',
-         url: "https://envirocar.org/ng-user-stats.json",
-         cache: true,
-         headers: {
-         'Content-Type': 'Accept',
-         'X-User'    :   $scope.username,
-         'X-Token'   :   $scope.password
-         }
-         }).then(function (res) {
-         console.log("heatmap log:");
-         console.log(res);
-         }, function (error) {
-         console.log("ResponseError @GET" + "https://envirocar.org/ng-user-stats.json");
-         return error;
-         }
-         );
-         */
+
+        $scope.$on('sidenav:item-selected', function (event, args) {
+            $timeout(function () {
+                console.log("heatmap reloading...");
+                $scope.map.layers2.overlays = {};
+                $scope.map.layers2.overlays = {
+                    heat:
+                            {
+                                name: 'Heat Map',
+                                type: 'heat',
+                                data: $scope.heat_dataset,
+                                layerOptions: {
+                                    radius: 20,
+                                    blur: 30,
+                                    minopacity: 0,
+                                        maxZoom: 8
+                                },
+                                visible: true,
+                                doRefresh: true
+                            }
+                };
+                
+                    var padding_lat = ($scope.northeast.lat - $scope.southwest.lat) / 10;
+                    var padding_lng = ($scope.northeast.lng - $scope.southwest.lng) / 10;
+                    $scope.map.bounds2 = leafletBoundsHelpers.createBoundsFromArray([
+                        [$scope.northeast.lat + padding_lat, $scope.northeast.lng + padding_lng],
+                        [$scope.southwest.lat - padding_lat, $scope.southwest.lng - padding_lng]
+                    ]);
+                    $timeout(function () {
+                        $scope.onload_heat_map = true;
+                        window.dispatchEvent(new Event('resize'));
+                    }, 300);
+                
+                $scope.map.layers2.overlays.doRefresh = true;
+            }, 500);
+        });
+
+
     }
     ;
     angular.module('enviroCar')

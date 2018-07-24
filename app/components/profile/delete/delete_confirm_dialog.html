@@ -1,0 +1,42 @@
+<md-dialog md-is-locked-open="valid" style="width:420px" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 class="filter_heading" style="padding-left: 16px;">{{'DIALOG_DELETE_TITLE'| translate}}</h2>
+                <span flex class="flex"></span>
+                <md-button ng-click="cancel()" class="md-icon-button md-light padding-right" aria-label="close-dialog">
+                    <md-icon class="material-icons md-24">close</md-icon>
+                    <md-tooltip>
+                        {{'CLOSE_DIALOG'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="padding-top:16px; height: 340px;">
+            <div style="height: 340px;">
+                <div ng-if="okay_pressed" id="loader_delete_user">
+                    <md-progress-circular md-diameter="56"></md-progress-circular>
+                </div>
+                <div ng-cloak >
+                    <div flex class='center-aligned' style="padding-bottom: 16px; padding-left: 16px; padding-right: 16px;">
+                        {{'DIALOG_DELETE_TEXT'| translate}}
+                    </div>
+                    <div flex style="padding-left: 16px;">
+                        <md-checkbox ng-model="cb_delete_alltracks" aria-label="DELETE_ALL_TRACKS_TOO">
+                            {{'DELETE_ALL_TRACKS_TOO_1'| translate}} {{total_user_tracks}} {{'DELETE_ALL_TRACKS_TOO_2'| translate}}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions flex>
+            <md-button style="left: 0px;" ng-click="cancel()" class="md-primary">
+                {{'DIALOG_DELETE_CANCEL'| translate}}
+            </md-button>
+            <span flex></span>
+            <md-button style="right: 16px;" ng-click="deleteUser()" class="md-primary">
+                {{'DIALOG_DELETE_CONFIRM'| translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

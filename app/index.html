@@ -2,20 +2,25 @@
 <html lang="en" ng-app="enviroCar">
 
     <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
         <meta charset="UTF-8">
         <title>enviroCar WebApp</title>
-        
+        <link rel="icon" href="app/components/assets/app_logo.png">
+
 
         <!-- bower:css -->
         <!-- endInject -->
         <!-- inject:css -->
         <!-- endInject -->
+        <!--<link rel="stylesheet" href="bower_components/leaflet-dist/leaflet.css" />-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
+        <link rel="manifest" href="app/config/manifest.json">
+
     </head>
 
     <!--[if lt IE 11]>
-      <p>You are using an <strong>outdated</strong> browser. Please
+      <p>You are either using an <strong>outdated</strong> browser or the
+        <strong>unsupported</strong> Internet Explorer. Please
         <a href="http://browsehappy.com/">upgrade your browser</a>
         to improve your experience.</p>
     <![endif]-->
@@ -39,26 +44,27 @@
         </div>
 
         <div layout="row" flex>
-            <div id="placeholder-left" flex-gt-sm="2" flex-gt-md="10" flex-gt-lg="20">
+            <div id="placeholder-left" flex-gt-md="10" flex-gt-lg="20">
 
             </div>
 
             <div id="contentPane" ui-view flex style="overflow: hidden !important;"> <!-- Contentpage -->
             </div>
 
-            <div id="placeholder-right" flex-gt-sm="2" flex-gt-md="10" flex-gt-lg="20">
+            <div id="placeholder-right" flex-gt-md="10" flex-gt-lg="20">
 
             </div>
 
         </div>
     </div>
 
+    <script src="bower_components/leaflet/dist/leaflet.js"></script>
     <!-- bower:js -->
     <!-- endInject -->
     <!-- inject:js -->
     <!-- endinject -->
-    
-        
+
+
 
 </body>
 

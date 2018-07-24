@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     function FilterVehicleCardCtrl($scope, $timeout, FilterStateService) {
+        "ngInject";
         
         $scope.errorNothingSelected = false;
         $scope.items = [];

@@ -21,6 +21,8 @@
 }:
 */
 
+
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
@@ -36,6 +38,7 @@
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
+.material-icons.md-40 { font-size: 40px; }
 .material-icons.md-48 { font-size: 48px; }
 .material-icons.md-128 { font-size: 128px; }
 
@@ -44,7 +47,9 @@
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
 
 /* Rules for using icons as white on a dark background. */
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light { 
+    color: rgba(255, 255, 255, 1); 
+}
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 // libs overrides
@@ -59,8 +64,27 @@
 }
 
 .envirocar-green {
+    color: #BAD88B;
+}
+
+.envirocar-blue-light {
+    color: #75b2d9;
+}
+
+.envirocar-green-light {
     color: #8CBF3F;
 }
+
+.spanwhite {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.spanblue {
+    color: #1A80C1;
+    font-size: 16px;
+}
+
 
 html, body{
     height: 100%;
@@ -176,12 +200,10 @@ html, body{
     border-color: rgba(140, 191, 63,1);
 }
 
-.sl-item
-{
+.sl-item {
     cursor: pointer; cursor: hand;
     position: relative;
     padding-bottom: 20px;
-
 }
 
 *:focus {
@@ -206,6 +228,12 @@ html, body{
     }
     .title_span{
         color: #1A80C1;
+    }
+}
+
+#profile_summary {
+    md-list-item {
+        padding: 0 0 0 0;
     }
 }
 
@@ -270,9 +298,17 @@ md-toolbar {
     }
 }
 
-md-tooltip {
+.leaflet-pane {
+    z-index: 0 !important;
+}
+
+.leaflet-right {
+    z-index: 15 !important;
+}
+
+.md-tooltip {
     font-size: 16px;
-    z-index: 3600;
+    z-index: 10000 !important;
 }
 
 .white-bg {
@@ -315,6 +351,7 @@ md-sidenav {
     md-icon {
         display: block !important;
         height: auto;
+        padding-left: 2px;
     }
     .icon_stroked {
         width: 100%;
@@ -331,6 +368,7 @@ md-sidenav {
         vertical-align: middle;
         width: 90px; 
         height: 25px;
+        padding-bottom: 2px;
     }
     .legal {
         border-top: 1px solid #e0e0e0;
@@ -401,9 +439,10 @@ md-sidenav {
     width: 60px;
     height: 100%;
 }
+
 #placeholder-toolbar {
     display:inline-block;
-    height: 61px;
+    height: 56px;
     width: 100%;
 }
 #placeholder-toolbar-stp {
@@ -513,7 +552,7 @@ md-sidenav {
 
 .profiletab .envirocar_statistics{
     bottom: 10px;
-    left: 70px;
+    left: 35px;
     color:white;
     position: absolute;
 }
@@ -540,6 +579,19 @@ md-sidenav {
 
 .container_header {
     color: #ffffff;
+}
+
+.download-track {
+    position: absolute;
+    color: #fff;
+    right: 35px;
+    top: 10px;
+}
+.delete-track {
+    position: absolute;
+    color: #fff;
+    right: 35px;
+    top: 70px;
 }
 
 toolbar-card {
@@ -574,23 +626,33 @@ md-content {
 
 .trackpreview {
 
-    width:300px;
-    height:190px;
+    z-index: 5000 !important;
+    width:288px;
+    height:200px;
+    /*    margin-top:4px;
+        margin-bottom: 4px;*/
 
-    .md-content {
-        width:290px;
-        height:180px;
-        padding: 4px;
-        background-color: grey;
-        border-bottom: 4px solid grey
-    }
-    .img{
-        vertical-align: central;
-        position: absolute;
-        top:2em;
-        left:0em;
-        background-color: grey;
-        border-bottom: 4px solid grey
+    md-content {
+        width:288px;
+        height:200px;
+        background-color: rgb(95,95,95);
+        position: relative; 
+        top: 6px;
+        /*        border-bottom: 4px solid grey;
+                border-top: 4px solid grey;*/
+        z-index: 5000 !important;
+        img{
+            width: 288px;
+            height: 188px;
+            /*vertical-align: central;*/
+            /*position: absolute;*/
+            /*bottom: 2px;*/
+            /*        top:2em;
+                    left:2em;*/
+            /*        border-top: 4px solid grey;
+                    border-bottom: 4px solid grey;*/
+            z-index: 5000 !important;
+        }
     }
 
     .placeholder-p {
@@ -614,28 +676,35 @@ md-content {
     line-height: 18px;
     border-radius: 5px;
     color: #555;
-    width: 100px;
+    .info-label {
+        padding-left: 24px;
+    }
 }
 
 .legend i   {
+    position: absolute;
     color: #777;
     width: 18px;
     height: 18px;
     float: left;
     margin-right: 8px;
-    opacity: 0.7;
 }
 
 .range-chart {
     max-height: 200px !important;
 }
 
-calendar-md {
+g.nv-axisMaxMin.nv-axisMaxMin-x.nv-axisMax-x {
+    text {
+        text-anchor: end !important;
+    }
+}
+
+/*calendar-md {
     min-height: 400px !important;
     height: 400px !important;
     max-height: 400px !important;
-}
-
+}*/
 
 #calendar-list {
     padding-top: 0px;
@@ -751,6 +820,20 @@ cl-paging {
     -o-transform: rotate(330deg);
     writing-mode: lr-tb;
 }
+.comming_soon_txt_speedzones{
+    color: #e6e6e6;
+    letter-spacing: 2px;
+    text-align: center;
+    font-size: 36px;
+    margin-top: 15%;
+    width: 80%;
+    margin-left: 10%;
+    font-variant: small-caps;
+    -webkit-transform: rotate(330deg);
+    -moz-transform: rotate(330deg);
+    -o-transform: rotate(330deg);
+    writing-mode: lr-tb;
+}
 .comming_soon_txt_sidenav{
     color: #e6e6e6;
     right: 0;
@@ -769,6 +852,10 @@ cl-paging {
     position: absolute;
     font-size: 10px;
     font-variant: small-caps;
+}
+
+.card-content{
+    position: relative;
 }
 
 #comming_soon {
@@ -830,9 +917,13 @@ cl-paging {
     }
 }
 
+#spatial_filter_dialog_map {
+    height: 300px;
+}
+
 #loader_spatial {
     width: 100%;
-    height: 388px;
+    height: 416px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -841,6 +932,112 @@ cl-paging {
     md-progress-circular {
         margin: auto;
         top: 100px;
+    }
+}
+
+#loader_login {
+    width: 100%;
+    height: 600px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: rgba(200,209,201,0.85);
+    md-progress-circular {
+        margin: auto;
+        top: 350px;
+    }
+}
+
+.loader_dashboard2 {
+    width: 100%;
+    margin: auto;
+}
+
+.rect_red {
+    background-color: #ffaaaa;
+    width:65%;
+    height:40px;
+    border-top :1px solid #000;
+    border-bottom :1px solid #000;
+    p{
+        font-size: 14px;
+        float:left;
+        padding-left: 8px;
+    }
+    img{
+        float: right;
+        width: 60px;
+        height: 40px;
+    }
+}
+
+.rect_yellow {
+    background-color: #ffffaa;
+    width:60%;
+    height:40px;
+    border-top :1px solid #000;
+    border-bottom :1px solid #000;
+    p{
+        font-size: 14px;
+        float:left;
+        padding-left: 8px;
+    }
+    img{
+        float: right;
+        width: 60px;
+        height: 40px;
+    }
+}
+
+.rect_green {
+    background-color: #aaffaa;
+    width:55%;
+    height:40px;
+    border-top :1px solid #000;
+    border-bottom :1px solid #000;
+    p{
+        font-size: 14px;
+        float:left;
+        padding-left: 8px;
+    }
+    img{
+        float: right;
+        width: 60px;
+        height: 40px;
+    }
+}
+
+.rect_white {
+    background-color: #aaaaaa;
+    width:50%;
+    height:40px;
+    border-top :1px solid #000;
+    border-bottom :1px solid #000;
+    p{
+        font-size: 14px;
+        float:left;
+        padding-left: 8px;
+    }
+    img{
+        float: right;
+        width: 60px;
+        height: 40px;
+    }
+}
+
+.speed-zones-content {
+    margin-left: 0px;
+    span {
+        color: #black;
+        i {
+            color: black;
+            height: 28px;
+            width: 28px;
+        }
+    }
+    .title_span{
+        color: #1A80C1;
     }
 }
 
@@ -860,4 +1057,26 @@ cl-paging {
 .error-span{
     color: red;
     margin: auto;
+}
+
+.success-span{
+    color: green;
+    margin: auto;
+}
+
+.profilepage {
+    md-input-container {
+        margin: 0px !important;
+        padding: 0px;
+    }
+}
+
+.community_chart {
+    padding-left: 0px;
+}
+
+.md-cancel-button {
+    left: 0px;
+    position: absolute;
+    bottom: 0px;
 }

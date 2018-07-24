@@ -17,7 +17,7 @@
             </div>
         </div>
         <div style="position: relative; height: 810px; width: 100%;">
-            <div class="no_tracks" ng-show="!tracksAvailable">
+            <div class="no_tracks" ng-show="!tracksAvailable && onload_tracks_timeline">
                 <div class="transparent-container">
                     <img src="app/components/assets/img_tracks.png">
                 </div>
@@ -26,12 +26,10 @@
                 </p>
             </div>
             <md-card-content class="text-color nopadding">
-                <md-progress-circular class="loader_dashboard" ng-if="!onload_tracks_timeline" md-diameter="156"></md-progress-circular>
+                <md-progress-circular class="loader_dashboard2" ng-if="!onload_tracks_timeline" md-diameter="56"></md-progress-circular>
                 <div class="card-body">
                     <div class="streamline b-l b-accent m-b">
                         <div class="sl-item" ng-show="onload_tracks_timeline" ng-repeat='event in events' ng-click="goToActivity(event.id)">
-                            <!--  <img class="md-avatar" src="{{event.url}}" style="width:80px;height:80px">
-                            </img> -->
                             <div class="sl-content" >
                                 <span >
                                     <span class="title_span"><b>{{event.begin| date:'medium'}}</b></span>
@@ -58,7 +56,7 @@
                                     <md-content >
                                         <p class="placeholder-p">.</p>
 
-                                        <img src={{event.url}} style="width:290px;height:184px;"></img>
+                                        <img src="{{event.url}}"/>
 
                                     </md-content>
                                 </md-tooltip>

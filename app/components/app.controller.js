@@ -2,10 +2,12 @@
     'use strict';
 
     function AppCtrl($scope, $mdMedia, UserCredentialsService, FilterStateService) {
+        "ngInject";
         $scope.message = 'Initial Setup';
         $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
         $scope.screenIsXS = $mdMedia('xs');
         $scope.screenIsSM = $mdMedia('sm');
+        $scope.screenIsGTSM = $mdMedia('gt-sm');
         $scope.screenIsMD = $mdMedia('md');
         $scope.screenIsGTMD = $mdMedia('gt-md');
 
@@ -24,6 +26,13 @@
         });
         
         $scope.$watch(function () {
+            return $mdMedia('gt-sm');
+        }, function (big) {
+            console.log("screen is gt-SM:" + big);
+            $scope.screenIsGTSM = big;
+        });
+        
+        $scope.$watch(function () {
             return $mdMedia('md');
         }, function (big) {
             console.log("screen is MD:" + big);
@@ -38,8 +47,7 @@
         });
 
         $scope.logout = function () {
-            UserCredentialsService.clearCredentials();
-            UserCredentialsService.clearCookies();
+            UserCredentialsService.logout();
             FilterStateService.resetFilterStates();
         };
 

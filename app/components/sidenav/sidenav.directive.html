@@ -22,13 +22,13 @@
     </md-toolbar>
     <md-content>
         <md-list>
-            <md-list-item  ng-repeat="item in vm.menuItems" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+            <md-list-item  ng-repeat="item in menuItems" ng-click="selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
                 <div id="comming_soon_light" ng-if="item.commingSoon">
                     <p ng-if="navExpanded" class="comming_soon_txt_sidenav">
                         <b>{{ 'COMMING_SOON' | translate}}</b>
                     </p>
                 </div>
-                <md-item-content layout="row" layout-align="start center" ng-click="vm.selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
+                <md-item-content layout="row" layout-align="start center" ng-click="selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
                     <span class="sidenav-element">
                         <md-icon ng-if="!item.commingSoon" class="material-icons md-avatar md-36 blue"  md-font-set="material-icons"> 
                             {{item.icon}} 
@@ -51,7 +51,7 @@
     </md-content>
 
     <div class="legal" ng-if="navExpanded">
-        <p class="copyright">EnviroCar &copy;2016</p>
+        <p class="copyright">EnviroCar &copy;2018</p>
         <ul layout='column'>
             <li>
                 <a ng-click="openFeedback();">
@@ -59,12 +59,12 @@
                 </a>
             </li>
             <li>
-                <a target="_blank" href='https://envirocar.org/imprint.php'>
+                <a target="_blank" href='{{"LINK_IMPRINT" | translate}}'>
                     {{'SITE_IMPRINT'| translate}}
                 </a>
             </li>
             <li>
-                <a target="_blank" href='https://envirocar.org/terms.php'>
+                <a target="_blank" href='{{"LINK_TERMS" | translate}}'>
                     {{'SITE_TERMS'| translate}}
                 </a>
             </li>

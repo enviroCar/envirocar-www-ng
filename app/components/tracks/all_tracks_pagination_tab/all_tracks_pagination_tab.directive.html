@@ -1,5 +1,5 @@
 <md-tab label="{{'ALL_TRACKS_TAB'| translate}}">
-    <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="156"></md-progress-circular>
+    <md-progress-circular class="loader_dashboard2" ng-if="!onload_pagination_tab" md-diameter="56"></md-progress-circular>
     <div layout-gt-sm="row">
         <md-card ng-if="onload_pagination_tab" flex  layout="column">
 
@@ -48,8 +48,7 @@
                     <md-tooltip popover-trigger="focus" class="trackpreview" md-direction="center">
                         <md-content>
                             <p class="placeholder-p">.</p>
-
-                            <img src={{event.url}} style="width:290px;height:184px;"></img>
+                            <img src={{event.url}}>
                         </md-content>
                     </md-tooltip>
                 </div>
