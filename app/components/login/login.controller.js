@@ -247,6 +247,7 @@
                 // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
 
                 UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
+                    console.log(status);
                     console.log(data);
                     console.log($scope.username);
                     console.log($scope.password);
@@ -263,11 +264,17 @@
                         }
                     } else {
                         $scope.error = true;
+                        $scope.error = true;
                     }
                     $scope.login_request_running = false;
                 }, function (err) {
-                    console.log(err);
+                    $scope.error = true;
+                    $scope.login_request_running = false;
                 });
+            }, function (err) {
+                console.log(err);
+                $scope.error = true;
+                $scope.login_request_running = false;
             });
         };
 //                        $scope.error = false;

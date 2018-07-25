@@ -144,6 +144,9 @@
                 method: 'PUT',
                 url: ecBaseUrl + '/users/' + username,
                 withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 data: userDetails
             }).then(function (res) {
                 return res;
@@ -283,7 +286,7 @@
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
+                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };
