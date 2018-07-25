@@ -4,10 +4,9 @@
     function config($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider) {
         "ngInject";
         console.log('run config');
-
         $stateProvider
                 .state('login', {
-                    url: '/login',
+                    url: '/login?username&code&user',
                     templateUrl: 'app/components/login/login.html',
                     controller: 'LoginCtrl',
                     authenticate: false

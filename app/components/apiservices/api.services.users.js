@@ -1,8 +1,7 @@
 (function () {
 
-    function UserService($http, ecBaseUrl) {
+    function UserService($http, ecBaseUrl, ecServerBase) {
         "ngInject";
-
         /**
          * Gets all tracks of a certain user, containing at least one measurement within the specified BoundingBox parameters.
          * @param {type} username username - username of the user
@@ -25,7 +24,6 @@
                 return error;
             });
         };
-
         /**
          * Gets the statistic of a certain user of a certain phenomenon
          * @param {String} username - username of the user
@@ -45,7 +43,6 @@
                 return error;
             });
         };
-
         /**
          * Gets all statistics for a certain user
          * @param {String} username - username of the user
@@ -93,13 +90,12 @@
                 cache: false // dont use cache here because of password changes --> bad user experience otherwise
             }).then(function (res) {
                 return res;
-            }, function(error) {
+            }, function (error) {
                 console.log(error);
                 return error;
             }
             );
         };
-
         /**
          * Test of local hosted application webapp
          * @param {type} username
@@ -118,7 +114,6 @@
                 return error;
             });
         };
-
         /**
          * Gets the total number of all enviroCar users.
          * @returns {unresolved}
@@ -138,7 +133,6 @@
                 return error;
             });
         };
-
         /**
          * Updates the properties of a certain user
          * @param {type} username
@@ -158,7 +152,6 @@
                 return error;
             });
         };
-
         /**
          * Gets a list off all users (TODO: pagination; currently limited to 100!)
          * @returns {unresolved}
@@ -177,7 +170,6 @@
                 return error;
             });
         };
-
         /**
          * Gets a certain friend from a certain user
          * @param {String} username - username of the user
@@ -197,7 +189,6 @@
                 return error;
             });
         };
-
         /**
          * Adds a user as a friend to user username
          * @param {String} username - username of the user
@@ -217,7 +208,6 @@
                 return error;
             });
         };
-
         /**
          * Creates a new user with optional userDetails (email is mandatory)
          * @param {jsondata} userDetails - jsonarray of user details after [{"name":"max","mail":"max@mustermann.com","token":"password123"}, ...]
@@ -225,19 +215,19 @@
          */
         this.postUser = function (userdata) {
             return $http({
+                headers: {
+                    "Content-Type": 'application/json'
+                },
                 method: 'POST',
-                url: ecBaseUrl + '/users/',
-                withCredentials: true,
+                url: ecServerBase + '/users',
                 data: userdata
-            }).then(function (res) {
-                return res;
-            }, function(error) {
-                console.log("ResponseError @POST: "+ ecBaseUrl + "/users/");
+            }).then(function (data) {
+                return data;
+            }, function (error) {
+                console.log("ResponseError @POST: " + ecServerBase + "/users");
                 return error;
             });
         };
-
-
         /**
          * Gets the total number of tracks driven by a certain user
          * @param {type} username   - name of the user
@@ -257,7 +247,6 @@
                 return error;
             });
         };
-
         this.getUserGroups = function (username) {
             return $http({
                 method: 'GET',
@@ -270,7 +259,6 @@
                 return error;
             });
         };
-
         this.getUserFriends = function (username) {
             return $http({
                 method: 'GET',
@@ -284,13 +272,12 @@
                 return error;
             });
         };
-
         this.getUserWithAuth = function (username, password) {
             return $http({
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username,
                 headers: {
-                    'Authorization': "Basic "+btoa(username+":"+password)
+                    'Authorization': "Basic " + btoa(username + ":" + password)
                 },
                 withCredentials: true
             }).then(function (res) {
@@ -300,7 +287,6 @@
                 return error;
             });
         };
-
         this.getUser = function (username) {
             return $http({
                 method: 'GET',
@@ -313,21 +299,42 @@
                 return error;
             });
         };
-
         this.postPasswordReset = function (userdata) {
             return $http({
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 method: 'POST',
-                url: ecBaseUrl + '/resetPassword',
-                withCredentials: true,
+                url: ecServerBase + '/resetPassword',
                 data: userdata
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @POST" + ecBaseUrl + "/resetPassword");
+                console.log("ResponseError @POST" + ecServerBase + "/resetPassword");
                 return error;
             });
         };
-
+        this.putPasswordReset = function (userName, userToken, code) {
+            return $http({
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                url: ecServerBase + '/resetPassword',
+                data: {
+                    "user": {
+                        "name": userName,
+                        "token": userToken
+                    },
+                    "code": code
+                }
+            }).then(function (res) {
+                return res;
+            }, function (error) {
+                console.log("ResponseError @PUT" + ecServerBase + "/resetPassword");
+                return error;
+            });
+        };
         this.deleteUser = function (username) {
             return $http({
                 method: 'DELETE',
@@ -340,10 +347,8 @@
                 return error;
             });
         };
-
     }
     ;
-
     angular.module('enviroCar.api')
             .service('UserService', UserService);
 })();

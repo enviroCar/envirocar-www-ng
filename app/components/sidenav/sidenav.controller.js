@@ -120,9 +120,9 @@
         $scope.toggleExpand = function () {
             if (!$scope.navExpanded) {
                 // Expanding:
-                sideNav.css("min-width", "280px")
-                sideNav.css("width", "280px")
-                sideNav.css("max-width", "280px")
+                sideNav.css("min-width", "280px");
+                sideNav.css("width", "280px");
+                sideNav.css("max-width", "280px");
                 sideNavTitlePadding.css("padding-left", "1.8em");
                 $scope.sideNavTitle = $translate.instant('WEBSITE-TITLE');
 
@@ -131,15 +131,15 @@
             } else {
                 // Collapsing:
                 if ($mdMedia('gt-xs')) {
-                    sideNav.css("min-width", "60px")
-                    sideNav.css("width", "60px")
-                    sideNav.css("max-width", "60px")
+                    sideNav.css("min-width", "60px");
+                    sideNav.css("width", "60px");
+                    sideNav.css("max-width", "60px");
                     sideNavTitlePadding.css("padding-left", "0em");
                     $scope.sideNavTitle = "  ";
                 } else {
-                    sideNav.css("min-width", "0px")
-                    sideNav.css("width", "0px")
-                    sideNav.css("max-width", "0px")
+                    sideNav.css("min-width", "0px");
+                    sideNav.css("width", "0px");
+                    sideNav.css("max-width", "0px");
                     sideNavTitlePadding.css("padding-left", "0em");
                     $scope.sideNavTitle = "  ";
                 }

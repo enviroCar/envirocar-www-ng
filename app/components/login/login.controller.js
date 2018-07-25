@@ -4,13 +4,26 @@
             $scope,
             $rootScope,
             $location,
+            $stateParams,
+            $state,
+            $timeout,
             UserCredentialsService,
             UserService,
             FilterStateService,
             ecBaseUrl) {
         "ngInject";
         console.log("LoginCtrl started.");
-        $scope.username = "";
+        console.log($stateParams);
+        if ($stateParams.username) {
+            $scope.username = $stateParams.username;
+        } else {
+            $scope.username = "";
+        }
+        if ($stateParams.user && $stateParams.code) {
+            $scope.new_password = true;
+            $scope.reset_password = false;
+        } else {
+        }
         $scope.password = "";
         $scope.error = false;
         $scope.login_active = true;
@@ -39,6 +52,9 @@
         $scope.login_request_running = false;
         $scope.register_request_running = false;
         $scope.passwordreset_request_running = false;
+        $scope.new_password_request_running = false;
+        $scope.set_new_pw_failed = false;
+
         $scope.resetPassword = function () {
             // init as: no errors:
             $scope.error_username_empty = false;
@@ -66,43 +82,78 @@
                     }
                 };
                 UserService.postPasswordReset(userData).then(
-                        function (data) {
-                            console.log(data);
-                            $scope.reset_success = true;
-                            $scope.error_username_empty = false;
-                            $scope.error_username_too_short = false;
-                            $scope.error_mail = false;
-                            $scope.error_usermail_not_exist = false;
-                            $scope.error_request_sent_alrdy = false;
-                            $scope.passwordreset_request_running = false;
-                        },
-                        function (error) {
-                            $scope.reset_success = false;
-                            console.log(error);
-                            if (error.status === 400) {
-                                if (error.data.errors["0"]) {
-                                    if (typeof error.data.errors["0"] === 'string' || error.data.errors["0"] instanceof String) {
-                                        if (error.data.errors["0"].startsWith("The given combination"))
-                                            $scope.error_usermail_not_exist = true;
-                                        if (error.data.errors["0"].startsWith("The given user already"))
-                                            $scope.error_request_sent_alrdy = true;
-                                        if (error.data.errors["0"].startsWith("instance failed"))
-                                            $scope.error_mail = true;
-                                    } else if (typeof error.data.errors["0"].message === 'string' || error.data.errors["0"].message instanceof String) {
-                                        if (error.data.errors["0"].message.startsWith("The given combination"))
-                                            $scope.error_usermail_not_exist = true;
-                                        if (error.data.errors["0"].message.startsWith("The given user already"))
-                                            $scope.error_request_sent_alrdy = true;
-                                        if (error.data.errors["0"].message.startsWith("instance failed"))
-                                            $scope.error_mail = true;
+                        function (res) {
+                            if (res.status < 300) {
+                                $scope.reset_success = true;
+                                $scope.error_username_empty = false;
+                                $scope.error_username_too_short = false;
+                                $scope.error_mail = false;
+                                $scope.error_usermail_not_exist = false;
+                                $scope.error_request_sent_alrdy = false;
+                                $scope.passwordreset_request_running = false;
+                            } else {
+                                $scope.reset_success = false;
+                                if (res.status === 400) {
+                                    if (res.data.errors["0"]) {
+                                        if (typeof res.data.errors["0"] === 'string' || res.data.errors["0"] instanceof String) {
+                                            if (res.data.errors["0"].startsWith("The given combination"))
+                                                $scope.error_usermail_not_exist = true;
+                                            if (res.data.errors["0"].startsWith("The given user already"))
+                                                $scope.error_request_sent_alrdy = true;
+                                            if (res.data.errors["0"].startsWith("instance failed"))
+                                                $scope.error_mail = true;
+                                        } else if (typeof res.data.errors["0"].message === 'string' || res.data.errors["0"].message instanceof String) {
+                                            if (res.data.errors["0"].message.startsWith("The given combination"))
+                                                $scope.error_usermail_not_exist = true;
+                                            if (res.data.errors["0"].message.startsWith("The given user already"))
+                                                $scope.error_request_sent_alrdy = true;
+                                            if (res.data.errors["0"].message.startsWith("instance failed"))
+                                                $scope.error_mail = true;
+                                        }
                                     }
                                 }
+                                $scope.passwordreset_request_running = false;
                             }
-                            $scope.passwordreset_request_running = false;
                         });
             }
-
         };
+
+        $scope.set_new_password = function () {
+            // init as no errors:
+            $scope.error_pw_not_match = false;
+            $scope.error_pw_empty = false;
+            $scope.error_pw_repeat_empty = false;
+            if ($scope.password_new_one === "")
+                $scope.error_pw_empty = true;
+            if ($scope.password_new_two === "")
+                $scope.error_pw_repeat_empty = true;
+            if (($scope.password_new_one !== $scope.password_new_two)
+                    && (!$scope.error_pw_empty) && (!$scope.error_pw_repeat_empty)) {
+                $scope.error_pw_not_match = true;
+            }
+            if (!$scope.error_pw_not_match
+                    && !$scope.error_pw_repeat_empty
+                    && !$scope.error_pw_empty) {
+                UserService.putPasswordReset(
+                        $stateParams.user,
+                        $scope.password_new_two,
+                        $stateParams.code)
+                        .then(function (res) {
+                            if (res.status === 204) {
+                                $scope.set_new_pw_failed = false;
+                                $state.go('dashboard', {});
+                            } else {
+                                $scope.set_new_pw_failed = true;
+                                $timeout(function () {
+                                    $state.go('dashboard', {});
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 8000);
+                            }
+                        });
+            }
+        }
+        ;
+
         $scope.register = function () {
             // init as: no errors:
             $scope.error_pw_not_match = false;
@@ -113,6 +164,7 @@
             $scope.error_name_too_short = false;
             $scope.error_name_in_use = false;
             $scope.name_in_use_alrdy = "";
+            $scope.mail_in_use_alrdy = "";
             $scope.register_success = false;
             // check for errors:
             if ($scope.username_register === "")
@@ -141,33 +193,36 @@
                     mail: $scope.email_register,
                     token: $scope.password_register
                 };
-                UserService.postUser($scope.username_register, userdata).then(
+                UserService.postUser(userdata).then(
                         function (res) {
-                            $scope.username = $scope.username_register;
-                            $scope.password = $scope.password_register;
-                            $scope.register_success = true;
-                            $scope.error = false;
-                            $scope.error_name_in_use = false;
-                            $scope.error_name_too_short = false;
-                            $scope.error_pw_not_match = false;
-                            $scope.error_pw_repeat_empty = false;
-                            $scope.error_pw_empty = false;
-                            $scope.error_mail = false;
-                            $scope.error_name = false;
-                            $scope.name_in_use_alrdy = "";
-                            $scope.register_request_running = false;
-                        },
-                        function (error) {
-                            console.log(error);
-                            if (error.status === 409) { // name or email alrdy in use
-                                $scope.error_name_in_use = true;
-                                $scope.name_in_use_alrdy = $scope.username_register;
+                            console.log(res);
+                            if (res.status < 300) {
+                                $scope.username = $scope.username_register;
+                                $scope.password = $scope.password_register;
+                                $scope.register_success = true;
+                                $scope.error = false;
+                                $scope.error_name_in_use = false;
+                                $scope.error_name_too_short = false;
+                                $scope.error_pw_not_match = false;
+                                $scope.error_pw_repeat_empty = false;
+                                $scope.error_pw_empty = false;
+                                $scope.error_mail = false;
+                                $scope.error_name = false;
+                                $scope.name_in_use_alrdy = "";
+                                $scope.mail_in_use_alrdy = "";
+                                $scope.register_request_running = false;
+                            } else {
+                                if (res.status === 409) { // name or email alrdy in use
+                                    $scope.error_name_in_use = true;
+                                    $scope.name_in_use_alrdy = $scope.username_register;
+                                    $scope.mail_in_use_alrdy = $scope.email_register;
+                                }
+                                if (res.status === 400) {
+                                    $scope.error_mail = true;
+                                }
+                                $scope.register_success = false;
+                                $scope.register_request_running = false;
                             }
-                            if (error.status === 400) {
-                                $scope.error_mail = true;
-                            }
-                            $scope.register_success = false;
-                            $scope.register_request_running = false;
                         });
             } else {
                 console.log("error in registration.");
@@ -178,7 +233,7 @@
             $scope.dataLoading = true;
             $scope.login_request_running = true;
             $.ajax({
-                url: ecBaseUrl+"/users",
+                url: ecBaseUrl + "/users",
                 beforeSend: function (request) {
                     request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));
                 },

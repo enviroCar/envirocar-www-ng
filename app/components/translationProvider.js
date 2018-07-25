@@ -11,7 +11,7 @@ angular.module('translations', [])
             'preferredLocale': 'en_EN'
         })
         .config(['$translateProvider', function ($translateProvider, ecWebsiteBase) {
-        "ngInject";
+                "ngInject";
                 console.log('translation configuration set up');
                 $translateProvider.translations('en', {
                     // defaults:
@@ -53,8 +53,9 @@ angular.module('translations', [])
                     'UNMATCHING_PASSWORDS': 'The passwords do not match.',
                     'EMPTY_PASSWORD': 'You must fill in both password fields.',
                     'INVALID_EMAIL': 'The email is invalid.',
-                    'USERNAME_IN_USE_1': 'The username ',
-                    'USERNAME_IN_USE_2': ' is already in use. Please choose a different username.',
+                    'USERNAME_IN_USE_1': "The username '",
+                    'USERNAME_IN_USE_2': "' or the e-mail '",
+                    'USERNAME_IN_USE_3': "' is already in use. Please choose a different username or e-mail.",
                     'EMPTY_USERNAME': 'Please choose a username.',
                     'LOGOUT': 'Logout',
                     'USERNAME_TOO_SHORT': 'The username must contain at least 4 characters.',
@@ -64,7 +65,11 @@ angular.module('translations', [])
                     'INVALID_USER': 'The given combination of username and email is invalid.',
                     'ALREADY_REQUESTED': 'The given user has already requested a reset of his password. Please check your emails.',
                     'RESET_PASSWORD_REQUESTED': 'An email has been sent to you. Please follow the instructions in the email to set a new password.',
-                    'REGISTERED': 'The registration process was successful.',
+                    'REGISTERED': "The registration process was successful. You received an e-mail with an activation link.",
+                    'SET_PASSWORD_NEW': 'Set new password',
+                    'SET_NEW_PASSWORD': "SET",
+                    'SET_NEW_PW_INFO': 'Set Your new password and repeat it to confirm.',
+                    'SET_NEW_PW_FAILED': 'You already set a new password. Try to login. You will be forwarded to the login page in seconds.',
 
                     // Dashboard:
                     'DISTANCE': 'Distance',
@@ -302,8 +307,8 @@ angular.module('translations', [])
                     'DIALOG_DELETE_CANCEL': 'cancel',
                     'DELETE_ALL_TRACKS_TOO_1': 'Also delete all my ',
                     'DELETE_ALL_TRACKS_TOO_2': ' enviroCar tracks',
-                    'WRONG_PASSWORD_ENTERED' : 'You entered a wrong password. Please correct the password and try again.',
-                    'CONFIRM_DELETE_PASSWORD_LABEL' : 'Confirm with your password:',
+                    'WRONG_PASSWORD_ENTERED': 'You entered a wrong password. Please correct the password and try again.',
+                    'CONFIRM_DELETE_PASSWORD_LABEL': 'Confirm with your password:',
                     'CONFIRM_DELETE_PASSWORD': 'Enter your password here',
 
                     // Community Analysis Page:
@@ -355,8 +360,9 @@ angular.module('translations', [])
                     'UNMATCHING_PASSWORDS': 'Die Passwörter stimmen nicht überein.',
                     'EMPTY_PASSWORD': 'Du musst beide Passwortfelder ausfüllen.',
                     'INVALID_EMAIL': 'Die Email ist ungültig.',
-                    'USERNAME_IN_USE_1': 'Der Nutzername ',
-                    'USERNAME_IN_USE_2': ' ist bereits vergeben. Bitte wähle einen anderen Nutzernamen.',
+                    'USERNAME_IN_USE_1': "Der Nutzername '",
+                    'USERNAME_IN_USE_2': "' oder die E-Mail '",
+                    'USERNAME_IN_USE_3': "' ist bereits vergeben. Bitte wähle einen anderen Nutzernamen oder E-Mail.",
                     'EMPTY_USERNAME': 'Du musst deinen Benutzernamen noch wählen.',
                     'LOGOUT': 'Ausloggen',
                     'USERNAME_TOO_SHORT': 'Der Benutzername muss mindestens 4 Zeichen enthalten.',
@@ -366,8 +372,12 @@ angular.module('translations', [])
                     'INVALID_USER': 'Die Kombination aus Benutzername und Email ist nicht gültig.',
                     'ALREADY_REQUESTED': 'Dieser Benutzer hat bereits ein Zurücksetzen seines Passworts angefordert. Bitte überprüfe deine Emails.',
                     'RESET_PASSWORD_REQUESTED': 'Eine Email wurde an dich versendet. Bitte folge den darin beschriebenen Instruktionen um ein neues Passwort zu setzen.',
-                    'REGISTERED': 'Die Registrierung war erfolgreich.',
-
+                    'REGISTERED': 'Die Registrierung war erfolgreich. Wir haben Dir eine E-Mail mit einem Aktivierungslink gesendet.',
+                    'SET_PASSWORD_NEW': 'Passwort Neusetzen',
+                    'SET_NEW_PASSWORD': "neusetzen",
+                    'SET_NEW_PW_INFO': 'Wähle Dein neues Passwort und wiederhole es zur Bestätigung.',
+                    'SET_NEW_PW_FAILED': 'Du hast bereits ein neues Passwort gesetzt. Versuche Dich einzuloggen. Du wirst in wenigen Sekunden zum Login weitergeleitet.',
+                    
                     // Dashboard:
                     'DISTANCE': 'Distanz',
                     'TT_DB_TRACKS': 'Anzahl deiner gefahrenen Fahrten',
@@ -608,8 +618,8 @@ angular.module('translations', [])
                     'DIALOG_DELETE_CANCEL': 'abbrechen',
                     'DELETE_ALL_TRACKS_TOO_1': 'Alle meine aufgenommenen ',
                     'DELETE_ALL_TRACKS_TOO_2': ' enviroCar Fahrten ebenfalls löschen.',
-                    'WRONG_PASSWORD_ENTERED' : 'Sie haben ein falsches Passwort eingegeben. Bitte korrigieren Sie ihr Passwort und versuchen Sie es erneut.',
-                    'CONFIRM_DELETE_PASSWORD_LABEL' : 'Bestätigen Sie den Löschvorgang mit ihrem Passwort.',
+                    'WRONG_PASSWORD_ENTERED': 'Sie haben ein falsches Passwort eingegeben. Bitte korrigieren Sie ihr Passwort und versuchen Sie es erneut.',
+                    'CONFIRM_DELETE_PASSWORD_LABEL': 'Bestätigen Sie den Löschvorgang mit ihrem Passwort.',
                     'CONFIRM_DELETE_PASSWORD': 'Ihr Passwort',
 
                     // Community Analysis Page:
