@@ -243,6 +243,8 @@
             }).then(function (data, status, jqxhr) {
                 console.log(data);
                 console.log(jqxhr);
+                console.log("STATUS:");
+                console.log(status);
                 // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
                 // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
 
@@ -267,14 +269,19 @@
                         $scope.error = true;
                     }
                     $scope.login_request_running = false;
+                    $scope.dataLoading = false;
                 }, function (err) {
                     $scope.error = true;
                     $scope.login_request_running = false;
+                    $scope.dataLoading = false;
                 });
             }, function (err) {
-                console.log(err);
                 $scope.error = true;
                 $scope.login_request_running = false;
+                $scope.dataLoading = false;
+                $timeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                }, 200);
             });
         };
 //                        $scope.error = false;
