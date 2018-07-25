@@ -488,6 +488,9 @@
                     // Erstelle eine Tagestabelle
                     $scope.date_count = [];
                     var tracks = data.data.tracks;
+                    if (tracks.length > 0) {
+                        $scope.tracksAvailable = true;
+                    }
                     var date_min = new Date(tracks[0].begin);
                     var date_max = new Date(tracks[0].begin);
                     var contains = function (array, obj) {

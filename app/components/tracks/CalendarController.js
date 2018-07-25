@@ -10,7 +10,8 @@
             $mdDialog,
             $translate,
             UserCredentialsService,
-            UserService) {
+            UserService,
+            TrackService) {
         "ngInject";
         $scope.onload_all_tracks_page = false;
         $scope.tracksAvailable = false;
@@ -23,7 +24,6 @@
         var credits = UserCredentialsService.getCredentials();
         if (credits) {
             username = credits.username;
-            token = credits.password;
         }
 
         // ask server for number user tracks:
@@ -42,7 +42,7 @@
 //                    console.log("error " + data)
 //                }
 //        );
-        $scope.tracksAvailable = true;
+//        $scope.tracksAvailable = true;
 
         $scope.showAlert = function (ev, title, description) {
             var dialog_title = $translate.instant(title);
@@ -103,6 +103,16 @@
                 }, 400);
             }
         });
+
+        TrackService.getUserTracks(username).then(
+                function (data) {
+                    console.log(data);
+                    var tracks = data.data.tracks;
+                    if (tracks.length > 0) {
+                        $scope.tracksAvailable = true;
+                    }
+                }
+        );
     }
     ;
 

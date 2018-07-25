@@ -141,17 +141,18 @@
          */
         this.putUserDetails = function (username, userDetails) {
             return $http({
-                method: 'PUT',
-                url: ecBaseUrl + '/users/' + username,
-                withCredentials: true,
                 headers: {
                     "Content-Type": "application/json"
                 },
+                method: 'PUT',
+                url: ecBaseUrl + '/users/' + username,
+                withCredentials: true,
                 data: userDetails
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecBaseUrl + "/users/");
+                console.log(error);
+                console.log("ResponseError @PUT" + ecBaseUrl + "/users/" +username);
                 return error;
             });
         };
