@@ -39,6 +39,12 @@
                     controller: 'ProfileCtrl',
                     templateUrl: 'app/components/profile/profile.html',
                     authenticate: true
+                })
+                .state('feedback', {
+                    url: '/feedback',
+                    controller: 'FeedbackCtrl',
+                    templateUrl: 'app/components/feedback/feedback.html',
+                    authenticate: false
                 });
 
         $urlRouterProvider.otherwise('/dashboard');

@@ -6,6 +6,8 @@
 
         console.log('ToolbarCtrl started.' + ecBaseUrl);
         $scope.title = 'enviroCar Webapp';
+        
+        
 //
 //        $timeout(function () {
 //

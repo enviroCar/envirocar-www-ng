@@ -16,6 +16,7 @@
         'enviroCar.tracks',
         'enviroCar.profile',
         'enviroCar.community',
+        'enviroCar.feedback',
         'materialCalendar',
         'cl.paging',
         'rzModule'])
@@ -55,6 +56,8 @@
     angular.module('enviroCar.profile', []);
 
     angular.module('enviroCar.community', []);
+    
+    angular.module('enviroCar.feedback', []);
 
     /*
      * The default legend directive of ui-leaflet is conflicting in the 

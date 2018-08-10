@@ -53,18 +53,19 @@
     <div class="legal" ng-if="navExpanded">
         <p class="copyright">EnviroCar &copy;2018</p>
         <ul layout='column'>
-            <li>
+            <li style="pointer-events:none;opacity:0.6;"> <!-- CURRENTLY DISABLED -->
                 <a ng-click="openFeedback();">
                     {{'SITE_FEEDBACK'| translate}}
                 </a>
+                <md-tooltip md-delay="200" md-direction="right">{{'CURRENTLY_DISABLED'| translate}}</md-tooltip>
             </li>
             <li>
-                <a target="_blank" href='{{"LINK_IMPRINT" | translate}}'>
+                <a target="_blank" href='{{"LINK_IMPRINT"| translate}}'>
                     {{'SITE_IMPRINT'| translate}}
                 </a>
             </li>
             <li>
-                <a target="_blank" href='{{"LINK_TERMS" | translate}}'>
+                <a target="_blank" href='{{"LINK_TERMS"| translate}}'>
                     {{'SITE_TERMS'| translate}}
                 </a>
             </li>

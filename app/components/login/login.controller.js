@@ -13,7 +13,6 @@
             ecBaseUrl) {
         "ngInject";
         console.log("LoginCtrl started.");
-        console.log($stateParams);
         if ($stateParams.username) {
             $scope.username = $stateParams.username;
         } else {

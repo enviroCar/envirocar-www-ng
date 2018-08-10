@@ -2,6 +2,13 @@
 
     LanguageMenuCtrl = function ($rootScope, $scope, $translate, $cookieStore) {
         "ngInject";
+        
+        
+        $scope.currOption = {
+            name: 'English',
+            shortcut: 'en',
+            image: 'app/components/assets/button_icons/engl-flag-40x30.jpg'
+        };
 
         $scope.optionsLanguage = [
             {
@@ -21,14 +28,15 @@
             'name': 'English',
             'shortcut': 'en',
         };
+//        $scope.image_loaded = true;
 
         language = $cookieStore.get('language');
         console.log(language);
-        
+
         $scope.saveLanguageSetting = function () {
             language = {
                 'name': $scope.currOption.name,
-                'shortcut': $scope.currOption.shortcut,
+                'shortcut': $scope.currOption.shortcut
             };
             $cookieStore.put('language', language);
         };

@@ -315,10 +315,18 @@ angular.module('translations', [])
                     'COMMUNITY_MAP_TITLE': 'Segment analysis map',
                     'COMMUNITY_MAP_DESCRIPTION_1': 'Click on the ',
                     'COMMUNITY_MAP_DESCRIPTION_2': '-button to create a polyline of segments. After final creation, statistics for each segment are presented on the right.',
-                    'COMMUNITY_MAP_DESCRIPTION': 'Statistics for segments by anonymous enviroCar community data.'
+                    'COMMUNITY_MAP_DESCRIPTION': 'Statistics for segments by anonymous enviroCar community data.',
 
-
-
+                    // Feedback Form Page:
+                    'FEEDBACK_FORM_TITLE' : 'Your feedback on the enviroCar WebApp',
+                    'FEEDBACK_FORM_TEXTAREA' : 'Describe your issue(s) or idea(s)',
+                    'FEEDBACK_BROWSER' : 'Which browser are you using?',
+                    'FEEDBACK_BROWSER_OTHER' : 'Another',
+                    'FEEDBACK_EMAIL': 'Enter your e-mail address if you wish to get a response',
+                    'FEEDBACK_SENDT_SUCCESS': 'Your feedback was successfully sendt. Thank you for your contribution!',
+                    'FEEDBACK_SENDT_FAILURE': 'Sending your feedback failed. Please try again later.',
+                    'FEEDBACK_FORM_SEND' : 'Send feedback',
+                    'CURRENTLY_DISABLED' : 'currently disabled'
                 });
                 $translateProvider.translations('de', {
                     // defaults:
@@ -626,8 +634,18 @@ angular.module('translations', [])
                     'COMMUNITY_MAP_TITLE': 'Abschnitt Analyse Karte',
                     'COMMUNITY_MAP_DESCRIPTION_1': 'Klicke auf den ',
                     'COMMUNITY_MAP_DESCRIPTION_2': '-Knopf um eine Polylinie von Segmenten zu erstellen. Nachdem die Polylinie erstellt ist, werden Statistiken zu den erstellten Segmenten rechts angezeigt.',
-                    'COMMUNITY_MAP_DESCRIPTION': 'Statistiken für ausgewählte Streckensegmente durch anonyme enviroCar Communitydaten.'
+                    'COMMUNITY_MAP_DESCRIPTION': 'Statistiken für ausgewählte Streckensegmente durch anonyme enviroCar Communitydaten.',
 
+                    // Feedback Form Page:
+                    'FEEDBACK_FORM_TITLE' : 'Dein Feedback zur enviroCar WebApp',
+                    'FEEDBACK_FORM_TEXTAREA' : 'Beschreibe Dein(e) Problem(e) oder Idee(n)',
+                    'FEEDBACK_BROWSER' : 'Welchen Internetbrowser benutzt du?',
+                    'FEEDBACK_BROWSER_OTHER' : 'einen Anderen',
+                    'FEEDBACK_EMAIL': 'Trage Deine E-mail Adresse ein, wenn du eine Antwort erwünscht',
+                    'FEEDBACK_SENDT_SUCCESS': 'Dein Feedback wurde erfolgreich versendet. Vielen Dank für Deine Mithilfe!',
+                    'FEEDBACK_SENDT_FAILURE': 'Oops! Da ist etwas beim Versenden schief gelaufen. Versuche es bitte später noch einmal.',
+                    'FEEDBACK_FORM_SEND' : 'Feedback absenden',
+                    'CURRENTLY_DISABLED' : 'vorübergehend deaktiviert'
                 });
                 $translateProvider.preferredLanguage('en');
 

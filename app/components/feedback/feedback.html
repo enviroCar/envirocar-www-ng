@@ -1,0 +1,52 @@
+<!-- Profile settings HTML content -->
+
+<div ng-cloak>
+    <div layout-gt-sm="row">
+        <md-card class="card card-4-50" flex>
+            <md-toolbar  style="color:black;background-color:white">
+                <div style="padding-left: 16px;">
+                    <h3 style="color:rgba(0,0,0,0.5)">
+                        <span>{{'FEEDBACK_FORM_TITLE'| translate}}</span>
+                    </h3>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <div layout="column" ng-cloak class="profilepage">
+
+                    <md-input-container class="md-block" style="margin-bottom: 64px !important;">
+                        <label>{{'FEEDBACK_FORM_TEXTAREA'| translate}}:</label>
+                        <textarea ng-model="feedback.freetext" md-maxlength="1000" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm style="margin-bottom: 64px !important;">
+                        <label>{{'FEEDBACK_BROWSER' | translate}}</label>
+                        <md-select ng-model="feedback.browser">
+                            <md-option ng-repeat="browser in browsers" value="{{browser.name}}">
+                                {{browser.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container style="margin-bottom: 64px !important;">
+                        <label>{{'FEEDBACK_EMAIL' | translate}}:</label>
+                        <input ng-model="feedback.email" type="email" ng-required="false">
+                    </md-input-container>
+
+                    <div ng-if="feedbackSubmissionSuccess" style="background-color:rgba(185,217,137,0.9);">
+                        <p>{{'FEEDBACK_SENDT_SUCCESS'| translate}}</p>
+                    </div>
+                    <div ng-if="feedbackSubmissionFailure" style="background-color:rgba(255, 59, 41, 0.4)">
+                        <p>{{'FEEDBACK_SENDT_FAILURE' | translate}}</p>
+                    </div>
+                    <div layout="row">
+                        <span flex></span>
+                        <md-button flex-xs="100" flex-gt-xs="40" flex-gt-sm="35" flex-gt-md="30"
+                                   class="md-raised md-primary" ng-click="sendUserFeedback()">
+                            {{'FEEDBACK_FORM_SEND'| translate}}
+                        </md-button>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
