@@ -31,7 +31,6 @@
 //        $scope.image_loaded = true;
 
         language = $cookieStore.get('language');
-        console.log(language);
 
         $scope.saveLanguageSetting = function () {
             language = {
@@ -69,7 +68,6 @@
                 // switch to EN:
                 $scope.currOption = $scope.optionsLanguage[1];
             }
-            console.log($scope.currOption);
             $scope.saveLanguageSetting();
             $translate.use($scope.currOption.shortcut);
             $rootScope.$broadcast('toolbar:language-changed', $scope.language);

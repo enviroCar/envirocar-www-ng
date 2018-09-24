@@ -21,7 +21,9 @@
         'cl.paging',
         'rzModule'])
             .value("ecBaseUrl", "https://envirocar.org/auth-proxy/api")
+//            .value("ecBaseUrl", "http://localhost:9999/api")
             .value("ecBase", "https://envirocar.org/auth-proxy")
+//            .value("ecBase", "http://localhost:9999")
             .value("ecWebsiteBase", "https://envirocar.org/")
             .value("ecServerBase", "https://envirocar.org/api/stable")
             .run(function ($rootScope, $state, $stateParams, $http, $cookies, UserCredentialsService) {
@@ -201,7 +203,6 @@
                             if (isDefined(leafletScope.legend.url) || !isDefined(legendData)) {
                                 return;
                             }
-
                             createLegend(map, legendData);
                         }, true);
                     });

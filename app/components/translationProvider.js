@@ -13,6 +13,7 @@ angular.module('translations', [])
         .config(['$translateProvider', function ($translateProvider, ecWebsiteBase) {
                 "ngInject";
                 console.log('translation configuration set up');
+                console.log('ecWebsiteBase in translationProvider: ' + ecWebsiteBase);
                 $translateProvider.translations('en', {
                     // defaults:
                     'WEBSITE-TITLE': 'EnviroCar Webapp',
@@ -38,8 +39,10 @@ angular.module('translations', [])
                     'SITE_FEEDBACK': 'Site feedback',
                     'SITE_IMPRINT': 'Imprint',
                     'SITE_TERMS': 'Terms',
-                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=en',
-                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=en',
+//                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=en',
+//                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=en',
+                    'LINK_IMPRINT': 'http://enviroCar.org/imprint.html?lng=en',
+                    'LINK_TERMS': 'http://enviroCar.org/conditions.html?lng=en',
 
                     // Login:
                     'USERNAME': 'Username',
@@ -344,7 +347,7 @@ angular.module('translations', [])
                     'TT_SIDENAV-CLOSE': 'schließt die Navigation',
                     'TT_SN_DASHBOARD_OPEN': 'öffnet das Dashboard',
                     'TT_SN_TRACKS_OPEN': 'öffnet die Fahrtansicht',
-                    'TT_SN_PROFILE_OPEN': 'öffnet deine Profileeinstellungen',
+                    'TT_SN_PROFILE_OPEN': 'öffnet deine Profileinstellungen',
                     'TT_SN_SEGMENT_OPEN': 'öffnet die Communitydatenanalyse',
                     'DASHBOARD': 'Dashboard',
                     'TRACKS': 'Fahrten',
@@ -353,8 +356,10 @@ angular.module('translations', [])
                     'SITE_FEEDBACK': 'Seitenfeedback',
                     'SITE_IMPRINT': 'Impressum',
                     'SITE_TERMS': 'Nutzungsbedingungen',
-                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=de',
-                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=de',
+//                    'LINK_IMPRINT': ecWebsiteBase + '/imprint.html?lng=de',
+//                    'LINK_TERMS': ecWebsiteBase + '/conditions.html?lng=de',
+                    'LINK_IMPRINT': 'http://enviroCar.org/imprint.html?lng=de',
+                    'LINK_TERMS': 'http://enviroCar.org/conditions.html?lng=de',
 
                     // Login:
                     'USERNAME': 'Benutzername',

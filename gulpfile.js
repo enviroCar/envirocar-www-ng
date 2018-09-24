@@ -87,7 +87,7 @@ gulp.task('ng-annotate', function () {
             .pipe(concat('release.js'))
             .pipe(ngAnnotate())
             .pipe(uglify())
-            .pipe(gulp.dest(''));ö
+            .pipe(gulp.dest(''));
 });
 
 gulp.task('minify', function () {

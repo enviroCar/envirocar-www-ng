@@ -205,9 +205,7 @@
             }, 500);
         });
 
-
-    }
-    ;
+};
     angular.module('enviroCar')
             .controller('HeatMapCtrl', HeatMapCtrl);
 })();

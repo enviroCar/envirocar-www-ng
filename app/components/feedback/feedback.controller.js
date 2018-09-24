@@ -38,7 +38,6 @@
         });
 
         $scope.sendUserFeedback = function () {
-
             $timeout(function () {
                 $scope.feedbackSubmissionFailure = true;
                 window.dispatchEvent(new Event('resize'));

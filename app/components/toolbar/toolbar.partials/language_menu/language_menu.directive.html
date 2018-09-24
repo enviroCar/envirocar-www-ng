@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <md-button ng-cloak ng-click="changeLanguage()" aria-label="language">
     <md-tooltip md-delay="500"> {{ 'CHANGE_LANGUAGE' | translate }} </md-tooltip>
-    <img ng-cloak src="{{currOption.image}}"/>
+    <img ng-if="currOption.shortcut=='en'" src="app/components/assets/button_icons/engl-flag-40x30.jpg"/>
+    <img ng-if="currOption.shortcut=='de'" src="app/components/assets/button_icons/germ-flag-40x30.jpg"/>
 </md-button>

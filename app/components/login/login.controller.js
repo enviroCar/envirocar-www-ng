@@ -194,7 +194,6 @@
                 };
                 UserService.postUser(userdata).then(
                         function (res) {
-                            console.log(res);
                             if (res.status < 300) {
                                 $scope.username = $scope.username_register;
                                 $scope.password = $scope.password_register;
@@ -240,18 +239,10 @@
                     withCredentials: true
                 }
             }).then(function (data, status, jqxhr) {
-                console.log(data);
-                console.log(jqxhr);
-                console.log("STATUS:");
-                console.log(status);
                 // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
                 // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
 
                 UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
-                    console.log(status);
-                    console.log(data);
-                    console.log($scope.username);
-                    console.log($scope.password);
                     if ($scope.username === data.data.name) {
                         $scope.error = false;
 
