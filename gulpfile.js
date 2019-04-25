@@ -56,7 +56,7 @@ gulp.task('index', function () {
             .pipe(gulp.dest(''));
 });
 
-gulp.task('index-release', function () {
+gulp.task('index-release', ['styles', 'ng-annotate'], function () {
     var target = gulp.src('./app/index.html');
     var sources = gulp.src(['release.js', './app/**/*.css'], {
         read: false
