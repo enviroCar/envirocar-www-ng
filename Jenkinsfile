@@ -6,7 +6,7 @@ node {
   }
 
   stage('Build image') {
-    app = docker.build("ec-components/webapp", "--no-cache")
+    app = docker.build("ec-components/webapp", "--no-cache .")
   }
 
   stage('Push image') {
