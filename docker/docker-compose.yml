@@ -1,0 +1,12 @@
+version: '3'
+services:
+  envirocar-ng:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        - SOURCES_DIR=./
+        - DEFAULT_SITE_CONF=./docker/default.conf
+    image: envirocar/webapp-ng
+    ports:
+      - 5000:80
