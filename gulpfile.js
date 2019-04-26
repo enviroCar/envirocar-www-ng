@@ -5,6 +5,8 @@ var inject = require('gulp-inject');
 var series = require('stream-series');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var gulpNgConfig = require('gulp-ng-config');
+
 var ngAnnotate = require('gulp-ng-annotate', {
     remove: false,
     add: true,
@@ -82,7 +84,7 @@ gulp.task('index-release', ['styles', 'ng-annotate'], function () {
             .pipe(gulp.dest(''));
 });
 
-gulp.task('ng-annotate', function () {
+gulp.task('ng-annotate', ['config'], function () {
     return gulp.src(['./app/**/*.js'])
             .pipe(concat('release.js'))
             .pipe(ngAnnotate())
@@ -103,9 +105,25 @@ gulp.task('watch', function () {
     gulp.watch('app//styles/**/*.scss', ['styles']);
 });
 
+var configSetup = {
+    createModule: false,
+    constants: {
+        ecBaseUrl: process.env.EC_BASE_URL,
+        ecBase: process.env.EC_BASE,
+        ecWebsiteBase: process.env.EC_WEBSITE_BASE,
+        ecServerBase: process.env.EC_SERVER_BASE
+    }
+};
+
+gulp.task('config', function() {
+    gulp.src('config.json')
+        .pipe(gulpNgConfig('enviroCar', configSetup))
+        .pipe(gulp.dest('app'))
+});
+
 gulp.task('browserify', function () {
 });
 
 gulp.task('default', ['styles', 'index', 'connect', 'watch']);
 
-gulp.task('release', ['styles', 'ng-annotate', 'index-release']);
+gulp.task('release', ['config', 'styles', 'ng-annotate', 'index-release']);
