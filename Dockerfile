@@ -26,6 +26,9 @@ COPY --from=BUILDER /app/release.js        /usr/share/nginx/html/release.js
 COPY --from=BUILDER /app/app               /usr/share/nginx/html/app
 COPY --from=BUILDER /app/bower_components/ /usr/share/nginx/html/bower_components
 
+HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
+  CMD wget http://localhost:80/ -q -O - > /dev/null 2>&1
+
 CMD ["sh", "-c",  "sed -i -e 's@https://envirocar.org/auth-proxy/api@'${EC_BASE_URL}'@g' /usr/share/nginx/html/app/config.js \ 
                 && sed -i -e 's@https://envirocar.org/auth-proxy@'${EC_BASE}'@g' /usr/share/nginx/html/app/config.js \
                 && sed -i -e 's@https://envirocar.org/@'${EC_WEBSITE_BASE}'@g' /usr/share/nginx/html/app/config.js \
