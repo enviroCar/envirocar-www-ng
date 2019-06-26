@@ -6,11 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "url": "https://github.com/enviroCar/envirocar-www-ng.git"
+  },
   "author": "Arne de Wall",
   "license": "MIT",
   "devDependencies": {
+    "acorn": "^6.1.1",
     "browserify": "^13.1.1",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^5.7.0",
     "gulp-inject": "^4.1.0",
@@ -24,10 +28,12 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "bower": "^1.8.8",
     "express": "^4.14.0",
     "morgan": "^1.9.1",
     "natives": "^1.1.6",
     "ng-annotate": "^1.2.2",
+    "node-sass": "^4.12.0",
     "path": "^0.12.7",
     "requirejs": "^2.3.2",
     "stream-series": "^0.1.1"
