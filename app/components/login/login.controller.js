@@ -53,6 +53,8 @@
         $scope.passwordreset_request_running = false;
         $scope.new_password_request_running = false;
         $scope.set_new_pw_failed = false;
+        $scope.acceptedTerms = false;
+        $scope.acceptedPrivacy = false;
 
         $scope.resetPassword = function () {
             // init as: no errors:
@@ -165,6 +167,8 @@
             $scope.name_in_use_alrdy = "";
             $scope.mail_in_use_alrdy = "";
             $scope.register_success = false;
+            $scope.error_terms = false;
+            $scope.error_privacy = false;
             // check for errors:
             if ($scope.username_register === "")
                 $scope.error_name = true;
@@ -179,18 +183,28 @@
             if (($scope.password_register !== $scope.password_repeat)
                     && (!$scope.error_pw_empty) && (!$scope.error_pw_repeat_empty))
                 $scope.error_pw_not_match = true;
+            if (!$scope.error_terms) {
+                $scope.error_terms = true;
+            }
+            if (!$scope.error_privacy) {
+                $scope.error_privacy = true;
+            }
             // if no error yet, send register request to server:
             if ((!$scope.error_pw_empty)
                     && (!$scope.error_pw_repeat_empty)
                     && (!$scope.error_pw_not_match)
                     && (!$scope.error_mail)
                     && (!$scope.error_name)
-                    && (!$scope.error_name_too_short)) {
+                    && (!$scope.error_name_too_short)
+                    && $scope.acceptedTerms
+                    && $scope.acceptedPrivacy) {
                 $scope.register_request_running = true;
                 var userdata = {
                     name: $scope.username_register,
                     mail: $scope.email_register,
-                    token: $scope.password_register
+                    token: $scope.password_register,
+                    acceptedTerms: $scope.acceptedTerms,
+                    acceptedPrivacy: $scope.acceptedPrivacy
                 };
                 UserService.postUser(userdata).then(
                         function (res) {
@@ -206,9 +220,13 @@
                                 $scope.error_pw_empty = false;
                                 $scope.error_mail = false;
                                 $scope.error_name = false;
+                                $scope.error_privacy = false;
+                                $scope.error_terms = false;
                                 $scope.name_in_use_alrdy = "";
                                 $scope.mail_in_use_alrdy = "";
                                 $scope.register_request_running = false;
+                                $scope.acceptedTerms = false;
+                                $scope.acceptedPrivacy = false;
                             } else {
                                 if (res.status === 409) { // name or email alrdy in use
                                     $scope.error_name_in_use = true;

@@ -12,8 +12,9 @@ angular.module('translations', [])
         })
         .config(['$translateProvider', function ($translateProvider, ecWebsiteBase) {
                 "ngInject";
-                console.log('translation configuration set up');
-                console.log('ecWebsiteBase in translationProvider: ' + ecWebsiteBase);
+
+                $translateProvider.preferredLanguage('en');
+                $translateProvider.useSanitizeValueStrategy('sanitize');
                 $translateProvider.translations('en', {
                     // defaults:
                     'WEBSITE-TITLE': 'EnviroCar Webapp',
@@ -73,6 +74,10 @@ angular.module('translations', [])
                     'SET_NEW_PASSWORD': "SET",
                     'SET_NEW_PW_INFO': 'Set Your new password and repeat it to confirm.',
                     'SET_NEW_PW_FAILED': 'You already set a new password. Try to login. You will be forwarded to the login page in seconds.',
+                    'ACCEPTED_TERMS': 'I accept the <a target="_blank" href="https://envirocar.org/conditions.html?lng=en">terms of use</a>.',
+                    'ACCEPTED_PRIVACY': 'I accept the <a target="_blank" href="https://envirocar.org/conditions.html?lng=en">privacy policy</a>.',
+                    'PRIVACY_NOT_ACCEPTED': 'You have to accept the privacy statement.',
+                    'TERMS_NOT_ACCEPTED': 'You have to accept the terms of use.',
 
                     // Dashboard:
                     'DISTANCE': 'Distance',
@@ -390,7 +395,11 @@ angular.module('translations', [])
                     'SET_NEW_PASSWORD': "neusetzen",
                     'SET_NEW_PW_INFO': 'Wähle Dein neues Passwort und wiederhole es zur Bestätigung.',
                     'SET_NEW_PW_FAILED': 'Du hast bereits ein neues Passwort gesetzt. Versuche Dich einzuloggen. Du wirst in wenigen Sekunden zum Login weitergeleitet.',
-                    
+                    'ACCEPTED_TERMS': 'Ich akzeptiere die <a target="_blank" href="https://envirocar.org/conditions.html?lng=de">Nutzungsbedingungen</a>.',
+                    'ACCEPTED_PRIVACY': 'Ich akzeptiere die <a target="_blank" href="https://envirocar.org/conditions.html?lng=de">Datenschutzerklärung</a>.',
+                    'PRIVACY_NOT_ACCEPTED': 'Du musst die Datenschutzerklärung akzeptieren.',
+                    'TERMS_NOT_ACCEPTED': 'Du musst die Nutzungsbedingungen akzeptieren.',
+
                     // Dashboard:
                     'DISTANCE': 'Distanz',
                     'TT_DB_TRACKS': 'Anzahl deiner gefahrenen Fahrten',
@@ -652,7 +661,5 @@ angular.module('translations', [])
                     'FEEDBACK_FORM_SEND' : 'Feedback absenden',
                     'CURRENTLY_DISABLED' : 'vorübergehend deaktiviert'
                 });
-                $translateProvider.preferredLanguage('en');
-
             }
         ]);

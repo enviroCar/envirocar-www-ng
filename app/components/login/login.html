@@ -6,7 +6,6 @@
                 <span ng-if='!login_active'>{{'REGISTER'| translate}}</span>
             </h3>
         </md-toolbar>
-        <!-- LOGIN STATE-->
         <md-content class="md-padding" layout="column">
             <div ng-show="login_active" ng-cloak layout="column">
                 <div ng-if="login_request_running" id="loader_login">
@@ -33,24 +32,40 @@
                     <label>{{'USERNAME'| translate}}</label>
                     <input type="text" ng-model="username_register" ng-required="true">
                 </md-input-container>
+                
                 <span ng-show='error_mail' class='error-span'>{{'INVALID_EMAIL'| translate}}</span>
                 <md-input-container>
                     <label>{{'EMAIL'| translate}}</label>
                     <input ng-model="email_register" type="text" ng-required="true">
                 </md-input-container>
+                
                 <span ng-show='error_pw_empty' class='error-span'>{{'EMPTY_PASSWORD'| translate}}</span>
                 <md-input-container>
                     <label>{{'PASSWORD'| translate}}</label>
                     <input ng-required="true" ng-model="password_register" type="password">
                 </md-input-container>
+                
                 <span ng-show='error_pw_repeat_empty' class='error-span'>{{'EMPTY_PASSWORD'| translate}}</span>
                 <span ng-show='error_pw_not_match' class='error-span'>{{'UNMATCHING_PASSWORDS'| translate}}</span>
                 <md-input-container>
                     <label>{{'PASSWORD_REPEAT'| translate}}</label>
                     <input ng-required="true" ng-model="password_repeat" type="password">
                 </md-input-container>
+                
+                <md-checkbox ng-required="true" ng-model="acceptedTerms">
+                    <translate>ACCEPTED_TERMS</translate>
+                    <br/>
+                    <span ng-show='error_terms' class='error-span' translate="TERMS_NOT_ACCEPTED" />
+                </md-checkbox>                
+                
+                <md-checkbox ng-required="true" ng-model="acceptedPrivacy">
+                    <translate>ACCEPTED_PRIVACY</translate>
+                    <br/>
+                    <span ng-show='error_privacy' class='error-span' translate="PRIVACY_NOT_ACCEPTED" />
+                </md-checkbox>
+
             </div>
-            <!-- LOGIN STATE -->
+            <!-- LOGIN STATE (ERROR) -->
             <div ng-show="login_active">
                 <span ng-show='error' class='error-span'>{{'INVALID_LOGIN'| translate}}</span>
                 <div layout-xs="column" layout="row" style="padding-top:20px;">
