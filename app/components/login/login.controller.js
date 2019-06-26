@@ -183,10 +183,10 @@
             if (($scope.password_register !== $scope.password_repeat)
                     && (!$scope.error_pw_empty) && (!$scope.error_pw_repeat_empty))
                 $scope.error_pw_not_match = true;
-            if (!$scope.error_terms) {
+            if (!$scope.acceptedTerms) {
                 $scope.error_terms = true;
             }
-            if (!$scope.error_privacy) {
+            if (!$scope.acceptedPrivacy) {
                 $scope.error_privacy = true;
             }
             // if no error yet, send register request to server:
@@ -236,6 +236,7 @@
                                 if (res.status === 400) {
                                     $scope.error_mail = true;
                                 }
+                                
                                 $scope.register_success = false;
                                 $scope.register_request_running = false;
                             }
