@@ -22,9 +22,7 @@ ENV EC_BASE_URL=https://envirocar.org/auth-proxy/api \
     EC_SERVER_BASE=https://envirocar.org/api/stable
 
 
-COPY --from=BUILDER /app/index.html /app/release.js /usr/share/nginx/html/
-COPY --from=BUILDER /app/app                        /usr/share/nginx/html/app
-COPY --from=BUILDER /app/bower_components           /usr/share/nginx/html/bower_components
+COPY --from=BUILDER /app/dist/ /usr/share/nginx/html/
 COPY ./docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
