@@ -15,7 +15,6 @@ var ngAnnotate = require("gulp-ng-annotate", {
   single_quotes: true
 });
 var bowerFiles = require("main-bower-files");
-
 var bowerOptions = {
   overrides: {
     "material-angular-paging": {
@@ -98,32 +97,31 @@ gulp.task("styles-min", function() {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("index", function() {
-  var target = gulp.src("app/index.html");
-  var sources = gulp.src(["app/**/*.js", "app/**/*.css"], { read: false });
-  var bowerSources = gulp.src(bowerFiles(bowerOptions), { read: false });
-
-  var othersBowerSources = gulp.src([
-    "bower_components/angular/angular.min.js"
-  ]);
-
-  return target
+gulp.task("index", gulp.series("assets"), function() {
+  return gulp
+    .src("./app/index.html")
     .pipe(
-      inject(series(othersBowerSources, sources), {
-        addRootSlash: false,
+      inject(gulp.src(["./app/**/*.js", "./app/**/*.css"], { read: false }), {
         relative: true,
-        ignorePath: "../dist/"
+        ignorePath: "dist/",
+        addPrefix: "../app"
       })
     )
     .pipe(
-      inject(bowerSources, {
-        name: "bower",
-        addRootSlash: false,
-        relative: true,
-        ignorePath: "../dist/"
-      })
+      inject(
+        series(
+          gulp.src(bowerFiles(bowerOptions), { read: false }),
+          gulp.src(["bower_components/angular/angular.min.js"], { read: false })
+        ),
+        {
+          name: "vendor",
+          relative: true,
+          ignorePath: "dist/",
+          addPrefix: ".."
+        }
+      )
     )
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest("./dist"));
 });
 
 gulp.task("vendor-js", function() {
@@ -182,7 +180,7 @@ gulp.task("watch", function() {
 
 gulp.task(
   "default",
-  gulp.series("config", "styles", "index", "connect", "watch")
+  gulp.series("config", "styles", "manifest", "index", "connect", "watch")
 );
 
 gulp.task(
