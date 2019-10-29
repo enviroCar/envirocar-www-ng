@@ -97,32 +97,37 @@ gulp.task("styles-min", function() {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("index", gulp.series("assets"), function() {
-  return gulp
-    .src("./app/index.html")
-    .pipe(
-      inject(gulp.src(["./app/**/*.js", "./app/**/*.css"], { read: false }), {
-        relative: true,
-        ignorePath: "dist/",
-        addPrefix: "../app"
-      })
-    )
-    .pipe(
-      inject(
-        series(
-          gulp.src(bowerFiles(bowerOptions), { read: false }),
-          gulp.src(["bower_components/angular/angular.min.js"], { read: false })
-        ),
-        {
-          name: "vendor",
+gulp.task(
+  "index",
+  gulp.series("assets", function() {
+    return gulp
+      .src("./app/index.html")
+      .pipe(
+        inject(gulp.src(["./app/**/*.js", "./app/**/*.css"], { read: false }), {
           relative: true,
           ignorePath: "dist/",
-          addPrefix: ".."
-        }
+          addPrefix: "../app"
+        })
       )
-    )
-    .pipe(gulp.dest("./dist"));
-});
+      .pipe(
+        inject(
+          series(
+            gulp.src(bowerFiles(bowerOptions), { read: false }),
+            gulp.src(["bower_components/angular/angular.min.js"], {
+              read: false
+            })
+          ),
+          {
+            name: "vendor",
+            relative: true,
+            ignorePath: "dist/",
+            addPrefix: ".."
+          }
+        )
+      )
+      .pipe(gulp.dest("./dist"));
+  })
+);
 
 gulp.task("vendor-js", function() {
   return gulp
@@ -152,15 +157,9 @@ gulp.task("index-release", function() {
     .pipe(
       inject(
         gulp
-          .src(
-            [
-              "dist/vendor.js",
-              "dist/app.js",
-              "dist/config.js",
-              "dist/**/*.css"
-            ],
-            { read: false }
-          )
+          .src(["dist/vendor.js", "dist/app.js", "dist/**/*.css"], {
+            read: false
+          })
           .pipe(debug({ title: "inject: " })),
         {
           addRootSlash: false,
