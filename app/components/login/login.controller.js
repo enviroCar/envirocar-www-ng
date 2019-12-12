@@ -275,7 +275,6 @@
                         }
                     } else {
                         $scope.error = true;
-                        $scope.error = true;
                     }
                     $scope.login_request_running = false;
                     $scope.dataLoading = false;

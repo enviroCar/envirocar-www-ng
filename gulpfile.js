@@ -172,9 +172,9 @@ gulp.task("index-release", function() {
 });
 
 gulp.task("watch", function() {
-  gulp.watch("app/**/*.js", ["index"]);
-  gulp.watch("app/**/*.html", ["index"]);
-  gulp.watch("app/**/*.scss", ["styles"]);
+  gulp.watch("app/**/*.js", gulp.series("index"));
+  gulp.watch("app/**/*.html", gulp.series("index"));
+  gulp.watch("app/**/*.scss", gulp.series("styles"));
 });
 
 gulp.task(

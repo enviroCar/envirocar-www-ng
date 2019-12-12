@@ -121,11 +121,11 @@
         this.getTotalUsers = function () {
             return $http({
                 method: 'GET',
-                url: ecBaseUrl + '/users?page=1&limit=10000',
+                url: ecBaseUrl + '/',
                 cache: false,
                 withCredentials: true
             }).then(function (data) {
-                var number = data.data.users.length;
+                var number = data.data.counts.users;
 //                        data.headers('Content-Range').split("/");
                 return number;
             }, function (error) {

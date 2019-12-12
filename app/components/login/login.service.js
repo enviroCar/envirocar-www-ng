@@ -14,8 +14,9 @@
     this.getCredentials = function() {
       return userCredentials;
     };
-
+    
     this.logout = function() {
+      userCredentials.username = "";
       $.ajax({
         type: "POST",
         url: ecBase + "/logout",
@@ -27,20 +28,12 @@
             type: "GET",
             url: ecBaseUrl + "/users",
             crossDomain: true,
-            beforeSend: function(request) {
-              // reset Browser's Basic Auth
-              request.setRequestHeader(
-                "Authorization",
-                "Basic " + btoa(userCredentials.username + ":out")
-              );
-            },
             success: function() {
               // 401 expected here
               console.log("logout failed!");
             },
             error: function(request) {
               if (request.status === 401) {
-                userCredentials.username = "";
                 $cookies.remove("JSESSIONID");
                 $cookieStore.remove("JSESSIONID");
                 document.cookie.split(";").forEach(function(c) {
