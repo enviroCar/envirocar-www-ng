@@ -14,7 +14,13 @@
         url: "/login?username&code&user",
         templateUrl: "app/components/login/login.html",
         controller: "LoginCtrl",
-        authenticate: false
+        authenticate: false // to view this page login not needed 
+      })
+      .state("tou", {
+        url: "/tou",
+        templateUrl: "app/components/dialogsModule/dialog.html",
+        controller: "TouCtrl",
+        authenticate: true
       })
       .state("dashboard", {
         url: "/dashboard",

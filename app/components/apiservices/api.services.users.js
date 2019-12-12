@@ -1,6 +1,7 @@
 (function () {
 
     function UserService($http, ecBaseUrl, ecServerBase) {
+        // the function UserService gets the built-in function http which takes a configuration object
         "ngInject";
         /**
          * Gets all tracks of a certain user, containing at least one measurement within the specified BoundingBox parameters.
@@ -251,6 +252,27 @@
                 return error;
             });
         };
+
+        // get the actual TOU Version:https://envirocar.org/api/stable/termsOfUse; most actual Version is first object in list
+        this.getTOUVersion = function(){
+            return $http({
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'GET',
+                url: ecServerBase + '/termsOfUse',
+                withCredentials: false
+            }).then(function (response){
+                let data = response.data['termsOfUse']
+                let termsofuse = data[0]['issuedDate']
+                console.log(termsofuse)
+                return termsofuse;//returns promise object   
+            }, function (error){
+                console.log(error)
+                return error;
+            });
+        };
+
         this.getUserGroups = function (username) {
             return $http({
                 method: 'GET',
@@ -292,17 +314,35 @@
             });
         };
         this.getUser = function (username) {
-            return $http({
+            // $http(...).then(...)
+            return $http({ // this function get a configuration object and returns a promise object
                 method: 'GET',
                 url: ecBaseUrl + '/users/' + username,
                 withCredentials: true
-            }).then(function (res) {
+            }).then(function (res) { // then is a method of the response object from the http angularjs service
                 return res;
             }, function (error) {
                 console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };
+
+// get the version of the TOU which was accepted by the user 
+        this.getAcceptedTOUVersion = function(username){
+            return $http({
+                method: 'GET', 
+                url:ecBaseUrl + '/users/' + username,
+                withCredentials:true
+            }).then(function(res) {
+                console.log(username)
+                return res;
+            }, function(error){
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
+                return error
+            });
+        };
+
+        
         this.postPasswordReset = function (userdata) {
             return $http({
                 headers: {
@@ -339,6 +379,24 @@
                 return error;
             });
         };
+
+        // Here, accepted TOU gets updated according to the newest TOU Version
+        this.putAcceptedTermsVersion = function(username, touVersionString){
+            return $http({
+                headers:{'Content-Type': 'application/json'
+                },
+                method: 'PUT',
+                url : ecBaseUrl + '/users/' + username,
+                withCredentials:true,
+                data: {"acceptedTermsOfUseVersion": touVersionString, 
+                }
+            }).then(function(res){
+                return res;
+            },  function(error){
+                return error
+            });
+        };
+
         this.deleteUser = function (username) {
             return $http({
                 method: 'DELETE',

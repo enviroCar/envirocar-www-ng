@@ -2,25 +2,29 @@
     <div class="loginBox md-whiteframe-z1" layout="column" ng-hide="reset_password || new_password">
         <md-toolbar>
             <h3 style="padding-left: 20px;">
-                <span ng-if='login_active'>{{'LOGIN'| translate}}</span>
-                <span ng-if='!login_active'>{{'REGISTER'| translate}}</span>
+                <span ng-if='login_active'>{{'LOGIN'| translate}}</span> <!--wenn login view active, dann display title as login -->
+                <span ng-if='!login_active'>{{'REGISTER'| translate}}</span> <!--wenn login view inactive which is the register view, dann display box title as 'register' -->
             </h3>
         </md-toolbar>
         <md-content class="md-padding" layout="column">
-            <div ng-show="login_active" ng-cloak layout="column">
+            <!--LOGIN View-->
+            <div ng-show="login_active" ng-cloak layout="column"> 
                 <div ng-if="login_request_running" id="loader_login">
                     <md-progress-circular md-diameter="56"></md-progress-circular>
                 </div>
+                <!--Container Username-->
                 <md-input-container>
                     <label>{{'USERNAME'| translate}}</label>
-                    <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username">
+                    <input ng-keyup="$event.keyCode == 13 && login()" ng-model="username"><!--13 is the enter key; if key is enter then login-->
                 </md-input-container>
+                <!--Container Password-->
                 <md-input-container>
                     <label>{{'PASSWORD'| translate}}</label>
                     <input ng-keyup="$event.keyCode == 13 && login()" ng-model="password" type="password">
                 </md-input-container>
             </div>
-            <!-- REGISTER STATE-->
+
+            <!-- REGISTER STATE View-->
             <div ng-show="!login_active" ng-cloak layout="column">
                 <div ng-if="register_request_running" id="loader_login">
                     <md-progress-circular md-diameter="56"></md-progress-circular>

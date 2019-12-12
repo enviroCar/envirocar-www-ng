@@ -46,7 +46,17 @@
 
             </div>
 
-            <div id="contentPane" ui-view flex style="overflow: hidden !important;"> <!-- Contentpage -->
+            
+            <!-- <div ng-if="!hasAccepted">
+                <p><h1>We have changed our terms of use</h1></p></br>
+                <p>To continue, please accept the new terms...</p>
+                <md-button ng-click="acceptTOU()" class="md-raised">
+                    Accept
+                </md-button>  
+            </div> -->
+
+            <!-- Contentpage: Show Login Box -->
+            <div ng-if="!hasAccepted" id="contentPane" ui-view flex style="overflow: hidden !important;"> 
             </div>
 
             <div id="placeholder-right" flex-gt-md="10" flex-gt-lg="20">

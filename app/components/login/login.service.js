@@ -1,16 +1,25 @@
+// Login Service is here defined: Here Business logic an the Restservice of enviroCar Api is integrated
+
+
 (function() {
   "use strict";
+  angular
+    .module("enviroCar.auth")
+    .service("UserCredentialsService", UserCredentialsService);
 
-  function UserCredentialsService($cookieStore, $cookies, ecBaseUrl, ecBase) {
+  // JS Object Constructor function for 'User Credentials', here an object type 'UserCredentialService' is created
+  function UserCredentialsService($cookieStore, $cookies, ecBaseUrl, ecBase) {    //$ = a jquery object, just for identification, definition ecBaseUrl steht in config.json
     "ngInject";
 
     console.log("UserCredentialsService started.");
+    //debugger;
     var userCredentials = { username: "" };
 
-    this.setCredentials = function(username) {
+    // the object UserCredentialService gets the  method setCredentials
+    this.setCredentials = function(username) { 
       userCredentials.username = username;
     };
-
+    // the object UserCredentialService gets the  method getCredentials
     this.getCredentials = function() {
       return userCredentials;
     };
@@ -20,7 +29,8 @@
         type: "POST",
         url: ecBase + "/logout",
         xhrFields: { withCredentials: true },
-        // log out at server
+
+        // SUCCESS FUNCTION, here to log out at server
         success: function(data, status, jqxhr) {
           userCredentials.username = "";
           $cookies.remove("JSESSIONID");
@@ -33,7 +43,7 @@
                 "=;expires=" + new Date().toUTCString() + ";path=/"
               );
           });
-        }
+        } // HERE Error Function
       });
     };
 
@@ -47,7 +57,5 @@
       });
     };
   }
-  angular
-    .module("enviroCar.auth")
-    .service("UserCredentialsService", UserCredentialsService);
+  
 })();

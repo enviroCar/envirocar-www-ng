@@ -1,8 +1,10 @@
 (function() {
   "use strict";
+  angular.module("enviroCar").controller("AppCtrl", AppCtrl);
 
   function AppCtrl(
-    $scope,
+    $scope,//binding part between the HTML (view) and the JavaScript (controller), it is the Model, which is the data available for the current view,  
+            //scope is a JavaScript object with properties and methods, which are available for both the view and the controller
     $mdMedia,
     UserCredentialsService,
     FilterStateService
@@ -15,6 +17,15 @@
     $scope.screenIsGTSM = $mdMedia("gt-sm");
     $scope.screenIsMD = $mdMedia("md");
     $scope.screenIsGTMD = $mdMedia("gt-md");
+
+    // $scope.hasAccepted = recv_acceptance_from_server();
+    $scope.hasAccepted = false; //
+
+    $scope.acceptTOU = function() { //
+      // send acceptance to server...
+
+      $scope.hasAccepted = true;
+    };
 
     $scope.$watch(
       function() {
@@ -75,5 +86,5 @@
       return $scope.loggedIn;
     };
   }
-  angular.module("enviroCar").controller("AppCtrl", AppCtrl);
+  
 })();
