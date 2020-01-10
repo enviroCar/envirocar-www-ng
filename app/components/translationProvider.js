@@ -17,7 +17,7 @@ angular
       "ngInject";
 
       $translateProvider.preferredLanguage("en");
-      $translateProvider.useSanitizeValueStrategy("sce");
+      $translateProvider.useSanitizeValueStrategy(null);
       $translateProvider.translations("en", {
         // defaults:
         "WEBSITE-TITLE": "EnviroCar Webapp",
