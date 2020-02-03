@@ -16,11 +16,11 @@
         controller: "LoginCtrl",
         authenticate: false // to view this page login not needed 
       })
-      .state("tou", {
+      .state("tou", { // this is for the TOU path 
         url: "/tou",
         templateUrl: "app/components/dialogsModule/dialog.html",
         controller: "TouCtrl",
-        authenticate: true
+        authenticate: false // to see the tou page, a user does not need to be authenticated --> this need to be working with 'true'
       })
       .state("dashboard", {
         url: "/dashboard",

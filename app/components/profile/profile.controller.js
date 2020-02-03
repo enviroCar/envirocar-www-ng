@@ -42,7 +42,6 @@
 // the method getUser of the service UserService is called and returns a promise object on which two methods can be applied
       function(data) { // the promise object is given to a function as 'data' ...
         console.log(data);
-        //debugger;
         var data = data.data; //...in which the data is bind to the variable 'data'.
         //auf die variable data wird die methode 'created' angwendet, die ein datenobject erstellt und das datenobject in ein string umwandelt und anschließend splitted by comma into several substrings and the first substring  
         $scope.created = new Date(data.created).toLocaleString().split(",")[0];

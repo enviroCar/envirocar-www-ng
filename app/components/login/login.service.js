@@ -10,9 +10,9 @@
   // JS Object Constructor function for 'User Credentials', here an object type 'UserCredentialService' is created
   function UserCredentialsService($cookieStore, $cookies, ecBaseUrl, ecBase) {    //$ = a jquery object, just for identification, definition ecBaseUrl steht in config.json
     "ngInject";
-
+    
     console.log("UserCredentialsService started.");
-    //debugger;
+    
     var userCredentials = { username: "" };
 
     // the object UserCredentialService gets the  method setCredentials

@@ -13,27 +13,71 @@
       $location, 
       UserService,
       UserCredentialsService,
+      ShareLocalDataService,
+      $stateParams,
+      ecBaseUrl,
       
     
       ) {
       "ngInject";
       console.log("TouController started.");
-      $scope.username = UserCredentialsService.getCredentials().username;
-      $scope.notAccpted = 'blabla'
-      $scope.TOUVersion = UserService.getTOUVersion()
+      
 
+      // Wie komme ich hier an username und pw die bereits auf der login Seite gegeben wurden?
+      
+
+
+      $scope.username = ShareLocalDataService.getUsername();
+      $scope.password = ShareLocalDataService.getPassword();
+
+     
+      $scope.TOUVersion = UserService.getTOUVersion();
+       
+      function login(user, pass) {
+        $.ajax({ 
+            url: ecBaseUrl + "/users/",
+            beforeSend: function (request) { 
+                request.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
+            },
+            xhrFields: {
+                withCredentials: true
+            }
+        }).then(function (data, status, jqxhr) {
+              UserService.getUserWithAuth(user, pass).then(function (data, status, jqxhr) {
+                  if (user === data.data.name) {
+                      UserCredentialsService.setCredentials(user);
+                      $location.path('/dashboard');
+                  }
+              }, function (err) {
+                  console.log(err);
+              });
+          }, 
+          function (err) {
+              console.log(err);
+          })
+      };
       
       //If user clicks'Accept', user profile is updated with a put request which updates the accepted TOU to the newest terms of use 
       $scope.acceptTou = function() {
+        console.log('scopeUser: '+ $scope.username);
+        console.log('scopePW: '+ $scope.password) ;
+
         $scope.TOUVersion.then(
           function(touString){
-            UserService.putAcceptedTermsVersion($scope.username, touString).then(
-              function(response) { $location.path('/dashboard'); return response },
-              function(error) { return error; }
+            console.log(touString);
+            UserService.putAcceptedTermsVersion($scope.username, $scope.password, touString).then(
+              function(response) {
+                login($scope.username, $scope.password);
+
+                //$location.path('/dashboard');
+                return response; 
+              },
+              function(error) {
+                console.log(error)
+                console.log('putAcceptedTermsVersion', error);
+                return error;
+              }
             );
-          }, 
-          function(error){
-            return error
           }
         )    
         return true          
