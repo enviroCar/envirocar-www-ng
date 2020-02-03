@@ -374,8 +374,8 @@
                 url: ecServerBase + '/termsOfUse',
                 withCredentials: false
             }).then(function (response){
-                let data = response.data['termsOfUse']
-                let termsofuse = data[0]['issuedDate']
+                var data = response.data['termsOfUse']
+                var termsofuse = data[0]['issuedDate']
                 console.log('actual Terms of Use: ' + termsofuse)
                 return termsofuse;//returns promise object   
             }, function (error){

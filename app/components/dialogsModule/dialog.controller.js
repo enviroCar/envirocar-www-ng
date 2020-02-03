@@ -3,9 +3,8 @@
     "use strict";
   
     angular
-     .module('enviroCar.tou', ['ngMaterial'])//Module name 
-     .controller('TouCtrl', TouController); // Kontroller, der für dieses Modul zuständig ist(wird hier definiert)
-
+     .module('enviroCar.tou', ['ngMaterial'])
+     .controller('TouCtrl', TouController);
   
     function TouController(
       $scope, 
@@ -15,17 +14,10 @@
       UserCredentialsService,
       ShareLocalDataService,
       $stateParams,
-      ecBaseUrl,
-      
-    
-      ) {
+      ecBaseUrl) {
       "ngInject";
       console.log("TouController started.");
       
-
-      // Wie komme ich hier an username und pw die bereits auf der login Seite gegeben wurden?
-      
-
 
       $scope.username = ShareLocalDataService.getUsername();
       $scope.password = ShareLocalDataService.getPassword();
@@ -62,24 +54,21 @@
         console.log('scopeUser: '+ $scope.username);
         console.log('scopePW: '+ $scope.password) ;
 
-        $scope.TOUVersion.then(
-          function(touString){
-            console.log(touString);
-            UserService.putAcceptedTermsVersion($scope.username, $scope.password, touString).then(
-              function(response) {
-                login($scope.username, $scope.password);
+        $scope.TOUVersion.then(function(touString){
+          console.log(touString);
+          UserService.putAcceptedTermsVersion($scope.username, $scope.password, touString)
+            .then(function(response) {
+              login($scope.username, $scope.password);
 
-                //$location.path('/dashboard');
-                return response; 
-              },
-              function(error) {
-                console.log(error)
-                console.log('putAcceptedTermsVersion', error);
-                return error;
-              }
-            );
-          }
-        )    
+              //$location.path('/dashboard');
+              return response; 
+            }, function(error) {
+              console.log(error)
+              console.log('putAcceptedTermsVersion', error);
+              return error;
+            }
+          );
+        })    
         return true          
       };
 
@@ -94,7 +83,7 @@
 
         
     }
-  })(angular);
+  })();
   
 
 
