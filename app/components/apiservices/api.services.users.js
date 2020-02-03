@@ -1,6 +1,7 @@
 (function () {
 
     function UserService($http, ecBaseUrl, ecServerBase) {
+        // the function UserService gets the built-in function http which takes a configuration object
         "ngInject";
         /**
          * Gets all tracks of a certain user, containing at least one measurement within the specified BoundingBox parameters.
@@ -24,6 +25,7 @@
                 return error;
             });
         };
+
         /**
          * Gets the statistic of a certain user of a certain phenomenon
          * @param {String} username - username of the user
@@ -43,6 +45,7 @@
                 return error;
             });
         };
+
         /**
          * Gets all statistics for a certain user
          * @param {String} username - username of the user
@@ -75,8 +78,6 @@
 //            );
 //        };
 
-
-
         /**
          * Gets all statistics for a certain user
          * @param {String} username - username of the user
@@ -96,6 +97,7 @@
             }
             );
         };
+        
         /**
          * Test of local hosted application webapp
          * @param {type} username
@@ -114,6 +116,7 @@
                 return error;
             });
         };
+        
         /**
          * Gets the total number of all enviroCar users.
          * @returns {unresolved}
@@ -133,6 +136,7 @@
                 return error;
             });
         };
+        
         /**
          * Updates the properties of a certain user
          * @param {type} username
@@ -156,6 +160,7 @@
                 return error;
             });
         };
+        
         /**
          * Gets a list off all users (TODO: pagination; currently limited to 100!)
          * @returns {unresolved}
@@ -174,6 +179,7 @@
                 return error;
             });
         };
+        
         /**
          * Gets a certain friend from a certain user
          * @param {String} username - username of the user
@@ -193,6 +199,7 @@
                 return error;
             });
         };
+        
         /**
          * Adds a user as a friend to user username
          * @param {String} username - username of the user
@@ -212,6 +219,7 @@
                 return error;
             });
         };
+        
         /**
          * Creates a new user with optional userDetails (email is mandatory)
          * @param {jsondata} userDetails - jsonarray of user details after [{"name":"max","mail":"max@mustermann.com","token":"password123"}, ...]
@@ -232,6 +240,7 @@
                 return error;
             });
         };
+        
         /**
          * Gets the total number of tracks driven by a certain user
          * @param {type} username   - name of the user
@@ -251,6 +260,7 @@
                 return error;
             });
         };
+
         this.getUserGroups = function (username) {
             return $http({
                 method: 'GET',
@@ -292,14 +302,27 @@
             });
         };
         this.getUser = function (username) {
-            return $http({
+            // $http(...).then(...)
+            return $http({ // this function gets a configuration object and returns a promise object
                 method: 'GET',
+                url: ecBaseUrl + '/users/' + username,
+                withCredentials: true
+            }).then(function (res) { // then is a method of the response object from the http angularjs service
+                return res;
+            }, function (error) {
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
+                return error;
+            });
+        };
+        this.deleteUser = function (username) {
+            return $http({
+                method: 'DELETE',
                 url: ecBaseUrl + '/users/' + username,
                 withCredentials: true
             }).then(function (res) {
                 return res;
             }, function (error) {
-                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
+                console.log("ResponseError @DELETE" + ecBaseUrl + "/users/" + username);
                 return error;
             });
         };
@@ -339,18 +362,65 @@
                 return error;
             });
         };
-        this.deleteUser = function (username) {
+
+
+        // Get the actual TOU Version:https://envirocar.org/api/stable/termsOfUse; most actual Version is first object in list
+        this.getTOUVersion = function(){
             return $http({
-                method: 'DELETE',
-                url: ecBaseUrl + '/users/' + username,
-                withCredentials: true
-            }).then(function (res) {
-                return res;
-            }, function (error) {
-                console.log("ResponseError @DELETE" + ecBaseUrl + "/users/" + username);
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'GET',
+                url: ecServerBase + '/termsOfUse',
+                withCredentials: false
+            }).then(function (response){
+                let data = response.data['termsOfUse']
+                let termsofuse = data[0]['issuedDate']
+                console.log('actual Terms of Use: ' + termsofuse)
+                return termsofuse;//returns promise object   
+            }, function (error){
+                console.log(error)
                 return error;
             });
         };
+
+        // Get the version of the TOU which was accepted by the user 
+        this.getAcceptedTOUVersion = function(username){
+            return $http({
+                method: 'GET', 
+                url:ecBaseUrl + '/users/' + username,
+                withCredentials:true
+            }).then(function(res) {
+                console.log(username)
+                return res;
+            }, function(error){
+                console.log("ResponseError @" + ecBaseUrl + "/users/" + username);
+                return error
+            });
+        };
+
+        // Accepted TOU gets updated according to the newest TOU Version, this needs to include the authentication base64
+        this.putAcceptedTermsVersion = function(username, password, touVersionString){
+            console.log('username: '+ username)
+            console.log('pw: '+ password)
+            return $http({
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic '+ btoa(username + ":" + password)
+                },
+                method: 'PUT',
+                url : ecServerBase + '/users/' + username,
+                withCredentials:true,
+                data: {"acceptedTermsOfUseVersion": touVersionString, 
+                }
+            }).then(function(res){
+                return res;
+            },  function(error){
+                console.log(error);
+                return error
+            });
+        };
+
     }
     ;
     angular.module('enviroCar.api')

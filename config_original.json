@@ -1,0 +1,6 @@
+{
+    "ecBaseUrl": "https://envirocar.org/auth-proxy/api",
+    "ecBase": "https://envirocar.org/auth-proxy",
+    "ecWebsiteBase": "https://envirocar.org/",
+    "ecServerBase": "https://envirocar.org/api/stable"
+}

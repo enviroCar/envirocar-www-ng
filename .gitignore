@@ -2,3 +2,5 @@ nbproject/
 bower_components/
 node_modules/
 dist/
+.vscode/
+npm-debug.log

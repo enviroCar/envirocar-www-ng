@@ -12,7 +12,8 @@
       "translations",
       "nvd3",
       "enviroCar.api",
-      "enviroCar.auth",
+      "enviroCar.auth", // login module
+      "enviroCar.tou", // tou module
       "enviroCar.track",
       "enviroCar.tracks",
       "enviroCar.profile",
@@ -55,6 +56,7 @@
 
   angular.module("enviroCar.api", []);
   angular.module("enviroCar.auth", ["enviroCar"]);
+  angular.module("enviroCar.tou", []);// HERE!!!!
   angular.module("enviroCar.track", []);
   angular.module("enviroCar.tracks", []);
   angular.module("enviroCar.profile", []);

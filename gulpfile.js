@@ -171,17 +171,17 @@ gulp.task("index-release", function() {
     .pipe(gulp.dest("dist"));
 });
 
-gulp.task("watch", function() {
+gulp.task(
+  "default",
+  gulp.series("config", "styles", "manifest", "index", "connect")// in dieser reihenfolge werden die tasks per default ausgeführt
+);
+
+gulp.task("watch", gulp.parallel("default", function() {
   gulp.watch("app/**/*.js", gulp.series("index"));
   gulp.watch("app/**/*.html", gulp.series("index"));
   gulp.watch("app/**/*.scss", gulp.series("styles"));
-});
-
-gulp.task(
-  "default",
-  gulp.series("config", "styles", "manifest", "index", "connect", "watch")
-);
-
+}));
+  
 gulp.task(
   "release",
   gulp.series(

@@ -1,8 +1,13 @@
-(function () {
+// What is a controller?
 
+
+(function () {
+    angular.module('enviroCar.auth')
+            .controller('LoginCtrl', LoginCtrl);
+            
     function LoginCtrl(
-            $scope,
-            $rootScope,
+            $scope, // built-in object, contains application data and methods
+            $rootScope, //
             $location,
             $stateParams,
             $state,
@@ -10,8 +15,9 @@
             UserCredentialsService,
             UserService,
             FilterStateService,
+            ShareLocalDataService,
             ecBaseUrl) {
-        "ngInject";
+        "ngInject"; //ngInject is needed for the application to work when minified once the app is deployed in production
         console.log("LoginCtrl started.");
         if ($stateParams.username) {
             $scope.username = $stateParams.username;
@@ -55,6 +61,7 @@
         $scope.set_new_pw_failed = false;
         $scope.acceptedTerms = false;
         $scope.acceptedPrivacy = false;
+        $scope.TOUVersion = UserService.getTOUVersion()
 
         $scope.resetPassword = function () {
             // init as: no errors:
@@ -247,49 +254,69 @@
         };
 
         $scope.login = function () {
-            $scope.dataLoading = true;
+            $scope.dataLoading = true; // this is just the cirling loading symbol
             $scope.login_request_running = true;
-            $.ajax({
-                url: ecBaseUrl + "/users",
-                beforeSend: function (request) {
-                    request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));
+            // here an ajax request is executed
+            $.ajax({ 
+                url: ecBaseUrl + "/users", // url of the api 
+                //beforeSend is used here to set custom headers
+                beforeSend: function (request) { 
+                    request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));// encode into base64 e.g. to guarantee ascii (what if username/password has ':')
                 },
                 xhrFields: {
                     withCredentials: true
                 }
-            }).then(function (data, status, jqxhr) {
+            }).then(function (data, status, jqxhr) { // data here holds all users and their stored information, including the date of the accepted terms of use
                 // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
                 // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
-
                 UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
-                    if ($scope.username === data.data.name) {
-                        $scope.error = false;
-
-                        // When the right credentials are provided.
+                    if ($scope.username === data.data.name) { //search in the data the username given by the user => // When the right credentials are provided.
+                        $scope.error = false;                      
                         UserCredentialsService.setCredentials($scope.username);
-                        if (typeof $rootScope.url_redirect_on_login !== "undefined") {
-//                        $location.path($rootScope.url_redirect_on_login);
-                        } else {
-                            // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
-                            $location.path('/dashboard');
+                        
+                        if (!(typeof $rootScope.url_redirect_on_login !== "undefined")) {
+                            $scope.TOUVersion.then(function(tou_string) {
+                                //Here first check if the accepted TOU Version is the same as the actual version, then send to relevant path (tou or dashboard). 
+                                if(data.data.acceptedTermsOfUseVersion !== tou_string){ 
+                                    $location.path('/tou');
+                                }
+                                else{
+                                    $location.path('/dashboard');
+                                }                
+                            });
                         }
-                    } else {
+                    } 
+                    else {
                         $scope.error = true;
                     }
                     $scope.login_request_running = false;
                     $scope.dataLoading = false;
                 }, function (err) {
+                    console.log(err);
                     $scope.error = true;
                     $scope.login_request_running = false;
                     $scope.dataLoading = false;
                 });
-            }, function (err) {
-                $scope.error = true;
-                $scope.login_request_running = false;
-                $scope.dataLoading = false;
-                $timeout(function () {
+            }, 
+            // If request returns NOT 200 but an error object, no list of user data is returned
+            function (err) {
+                console.log(err);
+                //console.log(status)
+                console.log('status code: '+ err['status']);
+                if (err['status'] === 451){ // Check if the return status is 451
+                    
+                    
+                    ShareLocalDataService.setUsername($scope.username);
+                    ShareLocalDataService.setPassword($scope.password);
+                    $scope.error = true;
+                    $scope.login_request_running = false;
+                    $scope.dataLoading = true;
+                    $timeout(function () {
                     window.dispatchEvent(new Event('resize'));
-                }, 200);
+                    }, 200);
+                    $location.path('/tou');
+                }
+                
             });
         };
 //                        $scope.error = false;
@@ -323,7 +350,7 @@
 //            );
 
         $scope.logout = function () {
-            //console.log("LOGGED OUT!!!!!!!!!!!!!");
+            console.log("LOGGED OUT!!!!!!!!!!!!!");
             $scope.error = false;
             UserCredentialsService.clearCredentials();
             UserCredentialsService.clearCookies();
@@ -331,10 +358,6 @@
             $scope.password = "";
             FilterStateService.resetFilterStates();
         };
-    }
-    ;
-
-    angular.module('enviroCar.auth')
-            .controller('LoginCtrl', LoginCtrl);
+    };
 }
 )();

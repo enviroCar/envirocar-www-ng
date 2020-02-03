@@ -6,8 +6,8 @@
     $translate,
     $mdDialog,
     $mdMedia,
-    UserCredentialsService,
-    UserService,
+    UserCredentialsService, // in 'login.service.js'
+    UserService, // in 'api.services.users.js'
     TrackService
   ) {
     "ngInject";
@@ -39,16 +39,16 @@
     $scope.dateBirthdayPicker = undefined;
     // ask server for current userinformation:
     UserService.getUser($scope.username).then(
-      function(data) {
+// the method getUser of the service UserService is called and returns a promise object on which two methods can be applied
+      function(data) { // the promise object is given to a function as 'data' ...
         console.log(data);
-        var data = data.data;
+        var data = data.data; //...in which the data is bind to the variable 'data'.
+        //auf die variable data wird die methode 'created' angwendet, die ein datenobject erstellt und das datenobject in ein string umwandelt und anschließend splitted by comma into several substrings and the first substring  
         $scope.created = new Date(data.created).toLocaleString().split(",")[0];
-        $scope.modified = new Date(data.modified)
-          .toLocaleString()
-          .split(",")[0];
-        $scope.termsOfUseVersion = new Date(data.acceptedTermsOfUseVersion)
-          .toLocaleString()
-          .split(",")[0];
+        //the selected substring is again transformed into a date object, then into string, split into substrings and again the first substring taken
+        $scope.modified = new Date(data.modified).toLocaleString().split(",")[0];// der erste substring
+        // 
+        $scope.termsOfUseVersion = new Date(data.acceptedTermsOfUseVersion).toLocaleString().split(",")[0];
         if (data.firstName !== undefined) {
           $scope.firstName = data.firstName;
         }
