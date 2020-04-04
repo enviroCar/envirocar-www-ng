@@ -12,7 +12,7 @@
   "author": "Arne de Wall",
   "license": "MIT",
   "devDependencies": {
-    "acorn": "^6.1.1",
+    "acorn": "^6.4.1",
     "browserify": "^13.1.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.0",
