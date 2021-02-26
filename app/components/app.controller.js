@@ -11,7 +11,6 @@
   ) {
     "ngInject";
     $scope.message = "Initial Setup";
-    $scope.loggedIn = UserCredentialsService.getCredentials().username !== "";
     $scope.screenIsXS = $mdMedia("xs");
     $scope.screenIsSM = $mdMedia("sm");
     $scope.screenIsGTSM = $mdMedia("gt-sm");
@@ -83,7 +82,7 @@
     };
 
     $scope.loggedIn = function() {
-      return $scope.loggedIn;
+      return UserCredentialsService.getCredentials().username !== "";
     };
   }
   
