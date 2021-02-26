@@ -52,7 +52,7 @@ angular
         USERNAME: "Username",
         PASSWORD: "Password",
         REGISTER: "Register",
-        LOGIN: "my enviroCar",
+        LOGIN: "Login",
         FORGOT_PASSWORD: "forgot password?",
         INVALID_LOGIN: "Invalid user credentials.",
         PASSWORD_REPEAT: "repeat the password",
