@@ -254,7 +254,7 @@
         };
 
         $scope.login = function () {
-            $scope.dataLoading = true; // this is just the cirling loading symbol
+            // $scope.dataLoading = true; // this is just the cirling loading symbol
             $scope.login_request_running = true;
             // here an ajax request is executed
             $.ajax({ 
@@ -290,32 +290,28 @@
                         $scope.error = true;
                     }
                     $scope.login_request_running = false;
-                    $scope.dataLoading = false;
                 }, function (err) {
                     console.log(err);
                     $scope.error = true;
                     $scope.login_request_running = false;
-                    $scope.dataLoading = false;
                 });
             }, 
             // If request returns NOT 200 but an error object, no list of user data is returned
             function (err) {
                 console.log(err);
-                //console.log(status)
                 console.log('status code: '+ err['status']);
                 if (err['status'] === 451){ // Check if the return status is 451
-                    
-                    
                     ShareLocalDataService.setUsername($scope.username);
                     ShareLocalDataService.setPassword($scope.password);
+                    $scope.$apply(function() {
+                        $scope.login_request_running = false;
+                        $location.path('/tou');
+                    });
+                }
+                $scope.$apply(function() {
                     $scope.error = true;
                     $scope.login_request_running = false;
-                    $scope.dataLoading = true;
-                    $timeout(function () {
-                    window.dispatchEvent(new Event('resize'));
-                    }, 200);
-                    $location.path('/tou');
-                }
+                  });
                 
             });
         };
