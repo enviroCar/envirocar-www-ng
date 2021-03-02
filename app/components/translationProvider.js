@@ -67,8 +67,8 @@ angular
         EMPTY_USERNAME: "Please choose a username.",
         LOGOUT: "Logout",
         USERNAME_TOO_SHORT: "The username must contain at least 4 characters.",
-        RESET_PASSWORD: "Passwordreset",
-        RESET_MY_PASSWORD: "Reset my password",
+        RESET_PASSWORD: "Reset password",
+        RESET_MY_PASSWORD: "Reset",
         EMPTY_NAME: "You must type in your username.",
         INVALID_USER: "The given combination of username and email is invalid.",
         ALREADY_REQUESTED:
@@ -432,7 +432,7 @@ angular
         LOGOUT: "Ausloggen",
         USERNAME_TOO_SHORT:
           "Der Benutzername muss mindestens 4 Zeichen enthalten.",
-        RESET_PASSWORD: "Passwort Zurücksetzen",
+        RESET_PASSWORD: "Passwort zurücksetzen",
         RESET_MY_PASSWORD: "Zurücksetzen",
         EMPTY_NAME: "Du musst deinen Benutzernamen eingeben.",
         INVALID_USER:
@@ -488,12 +488,12 @@ angular
           "Deine Durchschnittswerte im Vergleich mit den Durchschnittswerten, die die enviroCar Gemeinschaft gesammelt hat.",
 
         // Dashboard - LatestTracksChart:
-        TITLE_TRACKS: "Neuste Fahrten",
+        TITLE_TRACKS: "Neueste Fahrten",
         LATEST_TRACKS_CHART_DESCRIPTION:
-          "Deine neusten sechs Fahrten werden hier angezeigt. " +
+          "Deine sechs neuesten Fahrten werden hier angezeigt. " +
           "Dir werden das Datum, deine zurückgelegte Distanz, dein Fahrzeug sowie die Fahrtdauer angezeigt. " +
           "Bewege den Mauszeiger über die Fahrt um eine Kartenvorschau zu sehen. " +
-          "Klicke auf die Fahrt um zur Einzelfahrtanalyseseite weitergeleitet zu werden.",
+          "Klicke auf die Fahrt, um zur Einzelfahrtanalyseseite weitergeleitet zu werden.",
 
         // Dashboard - Heatmap:
         TITLE_HEATMAP: "Mein Einflussbereich",
@@ -700,7 +700,7 @@ angular
 
         // Profile Page - Bio expressions:
         BIO: "Profil",
-        EMAIL: "E-mail",
+        EMAIL: "E-Mail",
         COUNTRY: "Land",
         GENDER: "Geschlecht",
         MODIFIED: "geändert am",
@@ -709,7 +709,7 @@ angular
         LAST_NAME: "Nachname",
         ENTER_DATE: "Wähle ein Datum",
         HINT_EDIT_PASSWORD:
-          "Lasse diese Felder frei, wenn du dein Passwort nicht ändern willst.",
+          "Lasse diese Felder frei, wenn du dein Passwort nicht ändern möchtest.",
         OLD_PASSWORD: "Altes Passwort",
         NEW_PASSWORD: "Neues Passwort",
         NEW_PASSWORD_REPEAT: "Neues Passwort (wiederhole)",
