@@ -26,6 +26,18 @@
       $scope.TOUVersion = UserService.getTOUVersion();
        
       function login(user, pass) {
+        UserService.getUserWithAuth(user, pass).then(
+          function (response) {
+          if (user === response.data.name) {
+            UserCredentialsService.setCredentials(user);
+            $location.path('/dashboard');
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      };
+
+      function login2(user, pass) {
         $.ajax({ 
             url: ecBaseUrl + "/users/",
             beforeSend: function (request) { 
@@ -34,7 +46,8 @@
             xhrFields: {
                 withCredentials: true
             }
-        }).then(function (data, status, jqxhr) {
+        }).then(
+          function (data, status, jqxhr) {
               UserService.getUserWithAuth(user, pass).then(function (data, status, jqxhr) {
                   if (user === data.data.name) {
                       UserCredentialsService.setCredentials(user);

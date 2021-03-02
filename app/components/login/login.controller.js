@@ -254,97 +254,44 @@
         };
 
         $scope.login = function () {
-            // $scope.dataLoading = true; // this is just the cirling loading symbol
             $scope.login_request_running = true;
-            // here an ajax request is executed
-            $.ajax({ 
-                url: ecBaseUrl + "/users", // url of the api 
-                //beforeSend is used here to set custom headers
-                beforeSend: function (request) { 
-                    request.setRequestHeader("Authorization", "Basic " + btoa($scope.username + ":" + $scope.password));// encode into base64 e.g. to guarantee ascii (what if username/password has ':')
-                },
-                xhrFields: {
-                    withCredentials: true
-                }
-            }).then(function (data, status, jqxhr) { // data here holds all users and their stored information, including the date of the accepted terms of use
-                // https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
-                // http://dontpanic.42.nl/2015/04/cors-with-spring-mvc.html
-                UserService.getUserWithAuth($scope.username, $scope.password).then(function (data, status, jqxhr) {
-                    if ($scope.username === data.data.name) { //search in the data the username given by the user => // When the right credentials are provided.
-                        $scope.error = false;                      
+
+            UserService.getUserWithAuth($scope.username, $scope.password).then(
+                function (response) {
+                    if ($scope.username === response.data.name) { //search in the data the username given by the user => // When the right credentials are provided.
+                        $scope.error = false;
                         UserCredentialsService.setCredentials($scope.username);
-                        
+
                         if (!(typeof $rootScope.url_redirect_on_login !== "undefined")) {
-                            $scope.TOUVersion.then(function(tou_string) {
+                            $scope.TOUVersion.then(function (tou_string) {
                                 //Here first check if the accepted TOU Version is the same as the actual version, then send to relevant path (tou or dashboard). 
-                                if(data.data.acceptedTermsOfUseVersion !== tou_string){ 
+                                if (response.data.acceptedTermsOfUseVersion !== tou_string) {
                                     $location.path('/tou');
                                 }
-                                else{
+                                else {
                                     $location.path('/dashboard');
-                                }                
+                                }
                             });
                         }
-                    } 
+                    }
                     else {
                         $scope.error = true;
                     }
                     $scope.login_request_running = false;
                 }, function (err) {
                     console.log(err);
+                    console.log('status code: ' + err['status']);
+                    if (err['status'] === 401) { // Check if the return status is 451
+                        ShareLocalDataService.setUsername($scope.username);
+                        ShareLocalDataService.setPassword($scope.password);
+                        $scope.login_request_running = false;
+                        $location.path('/tou');
+                    }
                     $scope.error = true;
                     $scope.login_request_running = false;
                 });
-            }, 
-            // If request returns NOT 200 but an error object, no list of user data is returned
-            function (err) {
-                console.log(err);
-                console.log('status code: '+ err['status']);
-                if (err['status'] === 451){ // Check if the return status is 451
-                    ShareLocalDataService.setUsername($scope.username);
-                    ShareLocalDataService.setPassword($scope.password);
-                    $scope.$apply(function() {
-                        $scope.login_request_running = false;
-                        $location.path('/tou');
-                    });
-                }
-                $scope.$apply(function() {
-                    $scope.error = true;
-                    $scope.login_request_running = false;
-                  });
-                
-            });
         };
-//                        $scope.error = false;
-//                        console.log(res);
-//                        // When the right credentials are provided.
-//                        UserCredentialsService.setCredentials($scope.username, $scope.password);
-//                        if (typeof $rootScope.url_redirect_on_login !== "undefined") {
-//                            // Used to redirect the user to the single track page.
-//                            // When a unlogged user accesses the single track page anonymously and then
-//                            // goes through our login flow, the user will be redirected back to the single track page
-//                            $location.path($rootScope.url_redirect_on_login);
-//                        } else {
-//                            // If the user logged in straight without visiting the single track page anonymously, then redirect to home.
-//                            $location.path('/home');
-//                        }
-//
-//                        UserCredentialsService.setCredentials($scope.username, $scope.password);
-//                        $scope.login_request_running = false;
-//                    },
-//                    function (error) { // error response
-//                        console.log(error);
-//                        console.log("getUser error: " + error);
-//                        // If wrong credentials are provided
-//                        $scope.error = true;
-//                        $scope.login_request_running = false;
-//                        $scope.dataLoading = false;
-//                        UserCredentialsService.clearCredentials();
-//                        UserCredentialsService.clearCookies();
-//                        $scope.login_request_running = false;
-//                    }
-//            );
-
+        
         $scope.logout = function () {
             console.log("LOGGED OUT!!!!!!!!!!!!!");
             $scope.error = false;
