@@ -281,7 +281,7 @@
                 }, function (err) {
                     console.log(err);
                     console.log('status code: ' + err['status']);
-                    if (err['status'] === 401) { // Check if the return status is 451
+                    if (err['status'] === 451) { // Check if the return status is 451
                         ShareLocalDataService.setUsername($scope.username);
                         ShareLocalDataService.setPassword($scope.password);
                         $scope.login_request_running = false;
