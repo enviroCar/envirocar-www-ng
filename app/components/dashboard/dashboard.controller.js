@@ -55,7 +55,9 @@
                     var globalStats = data.data;
                     $scope.distance_driven = globalStats.distance.toFixed(1) + "km";
                     $scope.duration_driven = decimalHoursToHHMM(globalStats.duration) + "h";
-                    $scope.track_number = globalStats.trackSummaries.length;
+                    if(globalStats.trackSummaries) {
+                        $scope.track_number = globalStats.trackSummaries.length;
+                    }
                     if ($scope.track_number === 0)
                         $scope.tracksAvailable = false;
                 }
