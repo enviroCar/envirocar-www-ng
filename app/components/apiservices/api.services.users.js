@@ -286,6 +286,7 @@
                 return error;
             });
         };
+        
         this.getUserWithAuth = function (username, password) {
             return $http({
                 method: 'GET',
@@ -294,13 +295,9 @@
                     'Authorization': "Basic " + btoa(username + ":" + password)
                 },
                 withCredentials: true
-            }).then(function (res) {
-                return res;
-            }, function (error) {
-                console.log("ResponseError @GET" + ecBaseUrl + "/users/" + username);
-                return error;
             });
         };
+
         this.getUser = function (username) {
             // $http(...).then(...)
             return $http({ // this function gets a configuration object and returns a promise object
