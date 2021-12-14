@@ -178,6 +178,11 @@
                     key: $translate.instant('GPS_SPEED'),
                     values: [
                     ]
+                },
+                {
+                    key: $translate.instant('Minimum_Acceleration'),
+                    values: [
+                    ]
                 }
             ];
             for (var phenomIndex = 0; phenomIndex < 6; phenomIndex++) {
@@ -436,6 +441,22 @@
                     ' ' + ($scope.yellow_break[5] + $scope.red_break[5]) / 2 + ' km/h',
                     ' ' + $scope.red_break[5] + ' km/h',
                     ' ' + ($scope.red_break[5] + $scope.max_values[5]) / 2 + ' km/h']
+            },
+            {
+                // Minimum Acceleration:
+                position: 'bottomright',
+                colors: ['#00ff00',
+                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6] / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6], 1),
+                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.yellow_break[6] + $scope.red_break[6]) / 2, 1),
+                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.red_break[6], 1),
+                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.red_break[6] + $scope.max_values[6]) / 2, 1)],
+                labels: ['  0 km/h',
+                    ' ' + $scope.yellow_break[6] / 2 + ' m/s²',
+                    ' ' + $scope.yellow_break[6] + ' m/s²',
+                    ' ' + ($scope.yellow_break[6] + $scope.red_break[6]) / 2 + ' m/s²',
+                    ' ' + $scope.red_break[6] + ' m/s²',
+                    ' ' + ($scope.red_break[6] + $scope.max_values[6]) / 2 + ' m/s²']
             }
         ];
 
@@ -504,6 +525,7 @@
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
             $scope.data_all[5].key = $translate.instant('GPS_SPEED');
+            $scope.data_all[5].key = $translate.instant('Minimum_Acceleration');
             //2. set previous selected phenomenon
             $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
             //3. set previous selected selection range
@@ -705,6 +727,13 @@
                     $scope.currentPhenomenonIndex = 5;
                     PhenomenonService.setPhenomenon('GPS Speed', 5);
                     break;
+                case 'Minimum Acceleration':
+                    $scope.dataTrackChart[0] = $scope.data_all[6];
+                    $scope.paths = $scope.paths_all[6];
+                    $scope.legend = legend_all[6];
+                    $scope.currentPhenomenonIndex = 6;
+                    PhenomenonService.setPhenomenon('Minimum Acceleration"', 6);
+                    break;
             }
             lastInterval = 5;
             $scope.highlightedInterval = false;
@@ -852,9 +881,15 @@
                 key: $translate.instant('GPS_SPEED'),
                 values: [
                 ]
+            },
+            {
+                key: $translate.instant('Minimum Acceleration"'),
+                values: [
+                ]
             }
         ];
         $scope.paths_all = [
+            {p1: 0},
             {p1: 0},
             {p1: 0},
             {p1: 0},
@@ -1012,6 +1047,8 @@
                         phenomsJSON['Engine Load'] = true;
                     if (data_global.data.features[0].properties.phenomenons['GPS Speed'])
                         phenomsJSON['GPS Speed'] = true;
+                    if (data_global.data.features[0].properties.phenomenons['Minimum Acceleration'])
+                        phenomsJSON['Minimum Acceleration'] = true;
                     $scope.name = data.data.properties.name;
                     $scope.created = data.data.properties.created;
                     // max bounds of the track:
@@ -1144,6 +1181,16 @@
                             gpsSpeedMeasurement = {x: index, y: undefined, z: index};
                         }
 
+                        if (data_global.data.features[index].properties.phenomenons["Minimum Acceleration"]) {
+                            var value_MinimumAcceleration = data_global.data.features[index].properties.phenomenons["Minimum Acceleration"].value;
+                            phenomsJSON['GPS Speed'] = true;
+                            pathObjMinimum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MinimumAcceleration, 1);    //more information at percentToRGB().
+                            gpsMinimumAcceleration = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value, z: index};
+                        } else {
+                            pathObjMinimum_Acceleration['color'] = $scope.errorColor;
+                            gpsMinimumAcceleration = {x: index, y: undefined, z: index};
+                        }
+
                         // enqueue pathObjects for each phenomenon to phenomPath:
                         if (index > 0) {
                             $scope.paths_all[0]['p' + (index)] = pathObjSpeed;
@@ -1152,6 +1199,7 @@
                             $scope.paths_all[3]['p' + (index)] = pathObjRPM;
                             $scope.paths_all[4]['p' + (index)] = pathObjEngine_load;
                             $scope.paths_all[5]['p' + (index)] = pathObjGPS_Speed;
+                            $scope.paths_all[6]['p' + (index)] = pathObjMinimum_Acceleration;
                             // add 'speed'-path as default overlay to leaflet map:
                             // FIXME: speed is not always available and the default phenomenon must be choosen differently.
                             $scope.paths['p' + (index)] = pathObjSpeed;
@@ -1163,6 +1211,7 @@
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
+                        $scope.data_all[6].values.push(gpsMinimumAcceleration);
                     }
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
 
