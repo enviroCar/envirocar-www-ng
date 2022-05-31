@@ -380,7 +380,13 @@ angular
         FEEDBACK_SENDT_FAILURE:
           "Sending your feedback failed. Please try again later.",
         FEEDBACK_FORM_SEND: "Send feedback",
-        CURRENTLY_DISABLED: "currently disabled"
+        CURRENTLY_DISABLED: "currently disabled",
+        TOU_PAGE_TITLE: "New Terms of Use",
+        TOU_DESCRIPTION: "We have changed our Terms of Use. Please review the latest",
+        TOU_TOU: "Terms of Use",
+        TOU_KEEP: "To keep using enviroCar you need to accept the new Terms of Use. You can also delete your profile without accepting the terms.",
+        TOU_ACCEPT: "Accept",
+        TOU_DENY: "Deny"
       });
       $translateProvider.translations("de", {
         // defaults:
@@ -704,7 +710,7 @@ angular
         COUNTRY: "Land",
         GENDER: "Geschlecht",
         MODIFIED: "geändert am",
-        TERMS_OF_USE: "Version der Nutzungsregeln",
+        TERMS_OF_USE: "Version der Nutzungsbedingungen",
         FIRST_NAME: "Vorname",
         LAST_NAME: "Nachname",
         ENTER_DATE: "Wähle ein Datum",
@@ -755,7 +761,13 @@ angular
         FEEDBACK_SENDT_FAILURE:
           "Oops! Da ist etwas beim Versenden schief gelaufen. Versuche es bitte später noch einmal.",
         FEEDBACK_FORM_SEND: "Feedback absenden",
-        CURRENTLY_DISABLED: "vorübergehend deaktiviert"
+        CURRENTLY_DISABLED: "vorübergehend deaktiviert",
+        TOU_PAGE_TITLE: "Neue Nutzungsbedingungen",
+        TOU_DESCRIPTION: "Wir haben unsere Nutzungsbedingungen geändert. Bitte überprüfen Sie die neuesten",
+        TOU_TOU: "Nutzungsbedingungen",
+        TOU_KEEP: "Um enviroCar weiterhin nutzen zu können, müssen Sie die neuen Nutzungsbedingungen akzeptieren. Sie können auch ohne Akzeptieren Ihren Account löschen.",
+        TOU_ACCEPT: "Annehmen",
+        TOU_DENY: "Ablehnen"
       });
     }
   ]);

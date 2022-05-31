@@ -10,6 +10,7 @@
       $scope, 
       $mdDialog, 
       $location, 
+      $mdMedia,
       UserService,
       UserCredentialsService,
       ShareLocalDataService,
@@ -21,7 +22,7 @@
 
       $scope.username = ShareLocalDataService.getUsername();
       $scope.password = ShareLocalDataService.getPassword();
-
+      $scope.username = "ha";
      
       $scope.TOUVersion = UserService.getTOUVersion();
        
@@ -112,12 +113,12 @@
         };
         $mdDialog.show(showObject).then(function(deleteContent) {
           // 2. finally delete the user:
-          UserService.deleteUser($scope.username, deleteContent).then(
+          UserService.deleteUserBasicAuth($scope.username, $scope.password, deleteContent).then(
             function(data) {
               console.log(data);
               // log out from page:
-              UserCredentialsService.clearCredentials();
-              UserCredentialsService.clearCookies();
+              ShareLocalDataService.setUsername("");
+              ShareLocalDataService.setPassword("");
             },
             function(error) {
               console.log(error);

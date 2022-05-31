@@ -14,6 +14,7 @@
         url: "/login?username&code&user",
         templateUrl: "app/components/login/login.html",
         controller: "LoginCtrl",
+        reloadOnSearch:false,
         authenticate: false // to view this page login not needed 
       })
       .state("tou", { // this is for the TOU path 
@@ -50,7 +51,8 @@
         url: "/profile",
         controller: "ProfileCtrl",
         templateUrl: "app/components/profile/profile.html",
-        authenticate: true
+        authenticate: true,
+        reloadOnSearch:false
       })
       .state("feedback", {
         url: "/feedback",

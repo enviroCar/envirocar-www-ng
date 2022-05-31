@@ -311,7 +311,7 @@
                 return error;
             });
         };
-        this.deleteUser = function (username, deleteContent = false) {
+        this.deleteUser = function (username, deleteContent) {
             var targetUrl = ecBaseUrl + '/users/' + username;
             if (deleteContent) {
                 targetUrl = targetUrl + '?deleteContent=true'
@@ -319,6 +319,25 @@
             return $http({
                 method: 'DELETE',
                 url: targetUrl,
+                withCredentials: true
+            }).then(function (res) {
+                return res;
+            }, function (error) {
+                console.log("ResponseError @DELETE" + ecBaseUrl + "/users/" + username);
+                return error;
+            });
+        };
+        this.deleteUserBasicAuth = function (username, password, deleteContent) {
+            var targetUrl = ecBaseUrl + '/users/' + username;
+            if (deleteContent) {
+                targetUrl = targetUrl + '?deleteContent=true'
+            }
+            return $http({
+                method: 'DELETE',
+                url: targetUrl,
+                headers: {
+                    'Authorization': "Basic " + btoa(username + ":" + password)
+                },
                 withCredentials: true
             }).then(function (res) {
                 return res;

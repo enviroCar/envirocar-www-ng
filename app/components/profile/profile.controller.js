@@ -157,8 +157,8 @@
           function(data) {
             console.log(data);
             // log out from page:
-            UserCredentialsService.clearCredentials();
-            UserCredentialsService.clearCookies();
+            // UserCredentialsService.clearCredentials();
+            UserCredentialsService.deleteCookies();
           },
           function(error) {
             console.log(error);

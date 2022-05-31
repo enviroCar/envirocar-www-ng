@@ -269,7 +269,13 @@
                                     $location.path('/tou');
                                 }
                                 else {
-                                    $location.path('/dashboard');
+                                    var queryParams = $location.search()
+                                    if (queryParams.afterLogin) {
+                                        $location.url($location.path())
+                                        $location.path(queryParams.afterLogin);
+                                    } else {
+                                        $location.path('/dashboard');
+                                    }
                                 }
                             });
                         }
@@ -285,7 +291,19 @@
                         ShareLocalDataService.setUsername($scope.username);
                         ShareLocalDataService.setPassword($scope.password);
                         $scope.login_request_running = false;
-                        $location.path('/tou');
+                        var queryParams = $location.search()
+                        if (queryParams.afterLogin) {
+                            $location.url($location.path())
+                            $location.path(queryParams.afterLogin);
+                        } else {
+                            $location.path('/tou');
+                        }
+                    } else {
+                        var queryParams = $location.search()
+                        if (queryParams.afterLogin) {
+                            $location.url($location.path())
+                            $location.path(queryParams.afterLogin);
+                        }
                     }
                     $scope.error = true;
                     $scope.login_request_running = false;

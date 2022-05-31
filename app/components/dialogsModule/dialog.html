@@ -1,19 +1,18 @@
 <div>
-    <h1>New Terms of Use</h1>
+    <h1>{{'TOU_PAGE_TITLE' | translate}}</h1>
 
-    <p> We have changed our Terms of Use according to the General Data Protection Regulation. 
-        See the new <a href="https://envirocar.org/TermsOfUse.html" target="_blank">Terms of Use 2019</a></p>
-    <p>To keep using enviroCar you need to accept the new Terms of Use.</p>
+    <p>{{'TOU_DESCRIPTION' | translate}} <a href="https://envirocar.org/TermsOfUse.html" target="_blank">{{'TOU_TOU' | translate}}</a></p>
+    <p>{{'TOU_KEEP' | translate}}</p>
 
+    <div ng-if="username">
+        <!--If clicked on button 'Accept', function acceptTou() is executed-->
+        <md-button ng-click="acceptTou()" class="md-raised md-primary">{{'TOU_ACCEPT' | translate}}</md-button>
+            
+        <!--If clicked on button deny then function dontAcceptTou() is executed-->
+        <md-button ng-click="dontAcceptTou()" class="md-primary md-hue-1">{{'TOU_DENY' | translate}}</md-button>    
 
-
-    <!--If clicked on button 'Accept', function acceptTou() is executed-->
-    <md-button ng-click="acceptTou()" class="md-raised md-primary">Accept</md-button>
-        
-    <!--If clicked on button deny then function dontAcceptTou() is executed-->
-    <md-button ng-click="dontAcceptTou()" class="md-primary md-hue-1">Deny</md-button>    
-
-    <!--If clicked on button deny then function dontAcceptTou() is executed-->
-    <md-button ng-click="deleteAccount()" class="md-primary md-hue-1">{{'BUTTON_DELETE_PROFILE'| translate}}</md-button>    
+        <!--If clicked on button delete then function deleteAccount() is executed-->
+        <md-button ng-click="deleteAccount()" class="md-raised md-warn">{{'BUTTON_DELETE_PROFILE'| translate}}</md-button>    
+    </div>
 </div>
 
