@@ -94,6 +94,52 @@
         return true
       };
 
+      $scope.deleteAccount = function(ev) {
+        $scope.deleteUserDialog();
+      };
+
+      $scope.deleteUserDialog = function() {
+        var showObject = {};
+        var useFullScreen =
+          ($mdMedia("sm") || $mdMedia("xs")) && $scope.customFullscreen;
+        showObject = {
+          controller: "DeleteUserCtrl",
+          templateUrl: "app/components/profile/delete/delete_confirm_dialog.html",
+          parent: angular.element(document.body),
+          scope: $scope.$new(),
+          clickOutsideToClose: false,
+          fullscreen: useFullScreen
+        };
+        $mdDialog.show(showObject).then(function(deleteContent) {
+          // 2. finally delete the user:
+          UserService.deleteUser($scope.username, deleteContent).then(
+            function(data) {
+              console.log(data);
+              // log out from page:
+              UserCredentialsService.clearCredentials();
+              UserCredentialsService.clearCookies();
+            },
+            function(error) {
+              console.log(error);
+              //                        });
+              console.log("dialog confirmed with deleteContent answer: " + deleteContent);
+              $scope.status = 'You said the information was "' + deleteContent + '".';
+            },
+            function() {
+              console.log("dialog canceled without deleteContent answer");
+              $scope.status = "You cancelled the dialog.";
+            }
+          );
+          $scope.$watch(
+            function() {
+              return $mdMedia("xs") || $mdMedia("sm");
+            },
+            function(wantsFullScreen) {
+              $scope.customFullscreen = wantsFullScreen === true;
+            }
+          );
+        });
+      };
         
     }
   })();
