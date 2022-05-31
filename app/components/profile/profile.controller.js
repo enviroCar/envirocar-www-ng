@@ -151,39 +151,9 @@
         clickOutsideToClose: false,
         fullscreen: useFullScreen
       };
-      $mdDialog.show(showObject).then(function(answer) {
-        // delete tracks too?
-        if (answer) {
-          TrackService.getUserTracks($scope.username).then(
-            function(data) {
-              var tracks = data.data.tracks;
-              var currentTrack;
-              for (currentTrack in tracks) {
-                // delete track:
-                TrackService.deleteTrack(
-                  $scope.username,
-                  tracks[currentTrack].id
-                ).then(
-                  function(data) {
-                    console.log("Track '" + data + "' has been deleted.");
-                  },
-                  function(error) {
-                    console.log("Error deleting track '" + error + "'.");
-                  }
-                );
-              }
-            },
-            function(error) {
-              console.log(
-                "Error getting user tracks -> unsecure user profile deletion. Aborting mission...  Please try again later."
-              );
-              // TODO: abort mission
-            }
-          );
-        }
-
+      $mdDialog.show(showObject).then(function(deleteContent) {
         // 2. finally delete the user:
-        UserService.deleteUser($scope.username).then(
+        UserService.deleteUser($scope.username, deleteContent).then(
           function(data) {
             console.log(data);
             // log out from page:
@@ -193,11 +163,11 @@
           function(error) {
             console.log(error);
             //                        });
-            console.log("dialog confirmed with answer: " + answer);
-            $scope.status = 'You said the information was "' + answer + '".';
+            console.log("dialog confirmed with deleteContent answer: " + deleteContent);
+            $scope.status = 'You said the information was "' + deleteContent + '".';
           },
           function() {
-            console.log("dialog canceled without answer");
+            console.log("dialog canceled without deleteContent answer");
             $scope.status = "You cancelled the dialog.";
           }
         );

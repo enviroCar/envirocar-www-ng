@@ -311,10 +311,14 @@
                 return error;
             });
         };
-        this.deleteUser = function (username) {
+        this.deleteUser = function (username, deleteContent = false) {
+            var targetUrl = ecBaseUrl + '/users/' + username;
+            if (deleteContent) {
+                targetUrl = targetUrl + '?deleteContent=true'
+            }
             return $http({
                 method: 'DELETE',
-                url: ecBaseUrl + '/users/' + username,
+                url: targetUrl,
                 withCredentials: true
             }).then(function (res) {
                 return res;
