@@ -22,7 +22,6 @@
 
       $scope.username = ShareLocalDataService.getUsername();
       $scope.password = ShareLocalDataService.getPassword();
-      $scope.username = "ha";
      
       $scope.TOUVersion = UserService.getTOUVersion();
        
