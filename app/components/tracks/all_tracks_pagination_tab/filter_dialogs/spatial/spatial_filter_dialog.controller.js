@@ -124,24 +124,27 @@
                                         lng_max = trackSummaries[0].endPosition.geometry.coordinates[0];
                                     }
                                     for (var i = 1; i < trackSummaries.length; i++) {
-                                        var curr_start = trackSummaries[i].startPosition.geometry.coordinates;
-                                        var curr_end = trackSummaries[i].endPosition.geometry.coordinates;
-                                        if (lat_min > curr_start[1])
-                                            lat_min = curr_start[1];
-                                        if (lat_min > curr_end[1])
-                                            lat_min = curr_end[1];
-                                        if (lng_min > curr_start[0])
-                                            lng_min = curr_start[0];
-                                        if (lng_min > curr_end[0])
-                                            lng_min = curr_end[0];
-                                        if (lat_max < curr_start[1])
-                                            lat_max = curr_start[1];
-                                        if (lat_max < curr_end[1])
-                                            lat_max = curr_end[1];
-                                        if (lng_max < curr_start[0])
-                                            lng_max = curr_start[0];
-                                        if (lng_max < curr_end[0])
-                                            lng_max = curr_end[0];
+                                        if (trackSummaries[i].startPosition && trackSummaries[i].endPosition) {
+                                            var curr_start = trackSummaries[i].startPosition.geometry.coordinates;
+                                            var curr_end = trackSummaries[i].endPosition.geometry.coordinates;
+                                            if (lat_min > curr_start[1])
+                                                lat_min = curr_start[1];
+                                            if (lat_min > curr_end[1])
+                                                lat_min = curr_end[1];
+                                            if (lng_min > curr_start[0])
+                                                lng_min = curr_start[0];
+                                            if (lng_min > curr_end[0])
+                                                lng_min = curr_end[0];
+                                            if (lat_max < curr_start[1])
+                                                lat_max = curr_start[1];
+                                            if (lat_max < curr_end[1])
+                                                lat_max = curr_end[1];
+                                            if (lng_max < curr_start[0])
+                                                lng_max = curr_start[0];
+                                            if (lng_max < curr_end[0])
+                                                lng_max = curr_end[0];
+                                        }
+                                        
                                     }
                                     var southWest = new L.LatLng(lat_min, lng_min),
                                             northEast = new L.LatLng(lat_max, lng_max),
