@@ -10,7 +10,8 @@
             15, // co2
             2000, // rpm
             44,      // engine load
-            60  // GPS Speed
+            60,  // GPS Speed
+            3, // Acceleration
         ],
         red_break: [// 100% pure red break point;
             130, // speed
@@ -18,7 +19,8 @@
             30, // co2
             3500, // rpm
             80,     // engine load
-            130 // GPS Speed
+            130, // GPS Speed
+            5, // Acceleration
         ],
         max_values: [// 100% black break point;
             255, // speed
@@ -26,7 +28,8 @@
             45, // co2
             5000, // rpm
             110,     // engine load
-            310
+            310, // GPS Speed
+            15, // Acceleration
         ],
         opacity: 0.35,
         errorColorTransparent: 'rgba(0,0,255,' + 0.35 + ')',
