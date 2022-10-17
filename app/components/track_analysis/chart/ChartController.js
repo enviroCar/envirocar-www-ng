@@ -1228,10 +1228,10 @@
                             var value_MaximumAcceleration = data_global.data.features[index].properties.phenomenons["Maximum Acceleration"].value;
                             phenomsJSON['Maximum Acceleration'] = true;
                             pathObjMaximum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MaximumAcceleration, 1);    //more information at percentToRGB().
-                            gpsMinimumAcceleration = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value, z: index};
+                            gpsMaximumAcceleration = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value, z: index};
                         } else {
                             pathObjMaximum_Acceleration['color'] = $scope.errorColor;
-                            gpsMinimumAcceleration = {x: index, y: undefined, z: index};
+                            gpsMaximumAcceleration = {x: index, y: undefined, z: index};
                         }
 
                         // enqueue pathObjects for each phenomenon to phenomPath:
@@ -1256,6 +1256,7 @@
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
                         $scope.data_all[6].values.push(gpsMinimumAcceleration);
+                        $scope.data_all[7].values.push(gpsMaximumAcceleration);
                     }
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
 

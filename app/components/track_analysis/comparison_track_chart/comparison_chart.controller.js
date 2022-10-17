@@ -468,6 +468,16 @@
                 key: 'GPS Speed',
                 values: [
                 ]
+            },
+            {
+                key: 'Minimum Acceleration',
+                values: [
+                ]
+            },
+            {
+                key: 'Maximum Acceleration',
+                values: [
+                ]
             }
         ];
         var data_global = {};

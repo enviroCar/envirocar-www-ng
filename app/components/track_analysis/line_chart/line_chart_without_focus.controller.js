@@ -163,6 +163,16 @@
                 key: $translate.instant('GPS_SPEED'),
                 values: [
                 ]
+            },
+            {
+                key: 'Minimum Acceleration',
+                values: [
+                ]
+            },
+            {
+                key: 'Maximum Acceleration',
+                values: [
+                ]
             }
         ];
 

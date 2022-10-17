@@ -10,7 +10,9 @@
             'CO2',
             'RPM',
             'ENGINE_LOAD',
-            'GPS_SPEED'
+            'GPS_SPEED',
+            'Minimum Acceleration',
+            'Maximum Acceleration'
         ];
         $scope.phenomenonNamesEnglish = [
             'Speed',
@@ -18,7 +20,9 @@
             'CO2',
             'Rpm',
             'Engine Load',
-            'GPS Speed'
+            'GPS Speed',
+            'Minimum Acceleration',
+            'Maximum Acceleration'
         ];
         $scope.phenomenonNames = [
             $translate.instant('SPEED'),
@@ -26,7 +30,9 @@
             $translate.instant('CO2'),
             $translate.instant('RPM'),
             $translate.instant('ENGINE_LOAD'),
-            $translate.instant('GPS_SPEED')
+            $translate.instant('GPS_SPEED'),
+            $translate.instant('Minimum Acceleration'),
+            $translate.instant('Maximum Acceleration')
         ];
         $scope.currentPhenomenonDisplayName = $scope.phenomenon;
         $scope.changePhenomenon = function (selectedPhenom) {
@@ -78,6 +84,17 @@
                 $scope.phenomenonNames.push($translate.instant('GPS_SPEED'));
                 $scope.phenomsIDs.push('GPS_SPEED');
             }
+            if (args['Minimum Acceleration']) {
+                $scope.phenomenonNamesEnglish.push('Minimum Acceleration');
+                $scope.phenomenonNames.push($translate.instant('Minimum Acceleration'));
+                $scope.phenomsIDs.push('Minimum Acceleration');
+            }
+            if (args['Maximum Acceleration']) {
+                $scope.phenomenonNamesEnglish.push('Maximum Acceleration');
+                $scope.phenomenonNames.push($translate.instant('Maximum Acceleration'));
+                $scope.phenomsIDs.push('Maximum Acceleration');
+            }
+            
         });
 
         $scope.$on('toolbar:language-changed', function (event, args) {
