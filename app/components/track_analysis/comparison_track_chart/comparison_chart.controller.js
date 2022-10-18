@@ -10,6 +10,8 @@
         $scope.onload_engine = false;
         $scope.onload_RPM = false;
         $scope.onload_GPSSpeed = false;
+        $scope.onload_MinimumAcceleration = false;
+        $scope.onload_MaximumAcceleration = false;
         $scope.loading = true;
         $scope.selectedPhenom = 'Speed';
         $scope.trackid = $stateParams.trackid;
@@ -56,7 +58,9 @@
                 'CO2': 0,
                 'Rpm': 0,
                 'Engine Load': 0,
-                'GPS Speed': 0
+                'GPS Speed': 0,
+                'Minimum Acceleration': 0,
+                'Maximum Acceleration': 0
             };
 
             var sums = {
@@ -65,7 +69,9 @@
                 'CO2': 0,
                 'Rpm': 0,
                 'Engine Load': 0,
-                'GPS Speed': 0
+                'GPS Speed': 0,
+                'Minimum Acceleration': 0,
+                'Maximum Acceleration': 0
             };
 
             var data_exist = {
@@ -74,7 +80,9 @@
                 'CO2': false,
                 'Rpm': false,
                 'Engine Load': false,
-                'GPS Speed': false
+                'GPS Speed': false,
+                'Minimum Acceleration': false,
+                'Maximum Acceleration': false
             };
             if ($scope.data_all[0].values[0] !== undefined)
                 data_exist['Speed'] = true;
@@ -88,6 +96,10 @@
                 data_exist['Engine Load'] = true;
             if ($scope.data_all[5].values[0] !== undefined)
                 data_exist['GPS Speed'] = true;
+            if ($scope.data_all[6].values[0] !== undefined)
+                data_exist['Minimum Acceleration'] = true;
+            if ($scope.data_all[7].values[0] !== undefined)
+                data_exist['Maximum Acceleration'] = true;
 
             // calculate sums for min...max for each phenom:
             for (var index = a; index < b; index++) {
@@ -115,6 +127,15 @@
                     sums['GPS Speed'] += $scope.data_all[5].values[index].y;
                     flawlessMeasurements ['GPS Speed'] += 1;
                 }
+                if ((data_exist['Minimum Acceleration']) & ($scope.data_all[6].values[index].y !== undefined)) {
+                    sums['Minimum Acceleration'] += $scope.data_all[6].values[index].y;
+                    flawlessMeasurements ['Minimum Acceleration'] += 1;
+                }
+                if ((data_exist['Maximum Acceleration']) & ($scope.data_all[7].values[index].y !== undefined)) {
+                    sums['Maximum Acceleration'] += $scope.data_all[7].values[index].y;
+                    flawlessMeasurements ['Maximum Acceleration'] += 1;
+                }
+                
             }
 
             // calculate track avg speed:
@@ -137,6 +158,12 @@
             if (sums['GPS Speed'] !== undefined) {
                 track_avgs['GPS Speed'] = sums['GPS Speed'] / flawlessMeasurements ['GPS Speed'];
             }
+            if (sums['Minimum Acceleration'] !== undefined) {
+                track_avgs['Minimum Acceleration'] = sums['Minimum Acceleration'] / flawlessMeasurements ['Minimum Acceleration'];
+            }
+            if (sums['Maximum Acceleration'] !== undefined) {
+                track_avgs['Maximum Acceleration'] = sums['Maximum Acceleration'] / flawlessMeasurements ['Maximum Acceleration'];
+            }
 
             $scope.dataSpeed[0].values[0].value = track_avgs['Speed'];
             $scope.dataConsumption[0].values[0].value = track_avgs['Consumption'];
@@ -144,6 +171,8 @@
             $scope.dataRPM[0].values[0].value = track_avgs['Rpm'];
             $scope.dataEngineLoad[0].values[0].value = track_avgs['Engine Load'];
             $scope.dataGPSSpeed[0].values[0].value = track_avgs['GPS Speed'];
+            $scope.dataMinimumAcceleration[0].values[0].value = track_avgs['Minimum Acceleration'];
+            $scope.dataMaximumAcceleration[0].values[0].value = track_avgs['Maximum Acceleration'];
 
             // update bar colors:
             $scope.dataSpeed[0].values[0].color =
@@ -192,6 +221,22 @@
                             $scope.red_break[5],
                             $scope.max_values[5],
                             track_avgs['GPS Speed'],
+                            1);
+            
+            $scope.dataMinimumAcceleration[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[6],
+                            $scope.red_break[6],
+                            $scope.max_values[6],
+                            track_avgs['Minimum Acceleration'],
+                            1);
+
+            $scope.dataMaximumAcceleration[0].values[0].color =
+                    $scope.percentToRGB(
+                            $scope.yellow_break[6],
+                            $scope.red_break[6],
+                            $scope.max_values[6],
+                            track_avgs['Maximum Acceleration'],
                             1);
         };
 
@@ -492,7 +537,9 @@
                         'CO2': 0,
                         'Rpm': 0,
                         'Engine Load': 0,
-                        'GPS Speed': 0
+                        'GPS Speed': 0,
+                        'Minimum Acceleration': 0,
+                        'Maximum Acceleration': 0
                     };
 
                     var value_speed;
@@ -501,6 +548,8 @@
                     var value_RPM;
                     var value_EngineLoad;
                     var value_GPSSpeed;
+                    var value_MinimumAcceleration;
+                    var value_MaximumAcceleration;
                     // save measurements for each phenomenon:
                     var speedMeasurement;
                     var consumptionMeasurement;
@@ -508,6 +557,8 @@
                     var rpmMeasurement;
                     var engineLoadMeasurement;
                     var gpsSpeedMeasurement;
+                    var minimumAccelerationMeasurement;
+                    var maximumAccelerationMeasurement;
 
                     var data_exist = {
                         'Speed': false,
@@ -515,7 +566,9 @@
                         'CO2': false,
                         'Rpm': false,
                         'Engine Load': false,
-                        'GPS Speed': false
+                        'GPS Speed': false,
+                        'Minimum Acceleration': false,
+                        'Maximum Acceleration': false
                     };
 
                     // iterating through each measurement:
@@ -575,6 +628,24 @@
                             gpsSpeedMeasurement = {x: index, y: undefined};
                         }
 
+                        if (data_global.data.features[index].properties.phenomenons["Minimum Acceleration"]) {
+                            value_MinimumAcceleration = data_global.data.features[index].properties.phenomenons["Minimum Acceleration"].value;
+                            sums['Minimum Acceleration'] += value_MinimumAcceleration;
+                            minimumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value};
+                        } else {
+                            value_MinimumAcceleration = 0;
+                            minimumAccelerationMeasurement = {x: index, y: undefined};
+                        }
+
+                        if (data_global.data.features[index].properties.phenomenons["Maximum Acceleration"]) {
+                            value_MaximumAcceleration = data_global.data.features[index].properties.phenomenons["Maximum Acceleration"].value;
+                            sums['Maximum Acceleration'] += value_MaximumAcceleration;
+                            maximumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value};
+                        } else {
+                            value_MaximumAcceleration = 0;
+                            maximumAccelerationMeasurement = {x: index, y: undefined};
+                        }
+
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);
@@ -582,6 +653,8 @@
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
+                        $scope.data_all[6].values.push(minimumAccelerationMeasurement);
+                        $scope.data_all[7].values.push(maximumAccelerationMeasurement);
                     }
 
                     // calculate track avg speed:
@@ -603,6 +676,12 @@
                     }
                     if (sums['GPS Speed']) {
                         track_avgs['GPS Speed'] = sums['GPS Speed'] / track_length;
+                    }
+                    if (sums['Minimum Acceleration']) {
+                        track_avgs['Minimum Acceleration'] = sums['Minimum Acceleration'] / track_length;
+                    }
+                    if (sums['Maximum Acceleration']) {
+                        track_avgs['Maximum Acceleration'] = sums['Maximum Acceleration'] / track_length;
                     }
                     // ask for enviroCar averages:
                     // Speed:
@@ -818,6 +897,78 @@
                                             }]
                                     }];
                                 $scope.onload_GPSSpeed = true;
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
+                            }, function (data) {
+                        console.log("error " + data);
+                    });
+                    // Minimum Acceleration:
+                    StatisticsService.getPhenomenonStatistics("Minimum Acceleration").then(
+                            function (data) {
+                                var store = data.data;
+                                $scope.dataMinimumAcceleration = [{
+                                        key: "Cumulative Return",
+                                        values: [{
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Minimum Acceleration'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[6],
+                                                        $scope.red_break[6],
+                                                        $scope.max_values[6],
+                                                        track_avgs['Minimum Acceleration'],
+                                                        1)
+                                            }, {
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": store.avg,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[6],
+                                                        $scope.red_break[6],
+                                                        $scope.max_values[6],
+                                                        store.avg,
+                                                        1)
+                                            }]
+                                    }];
+                                $scope.onload_MinimumAcceleration = true;
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 300);
+                                $timeout(function () {
+                                    window.dispatchEvent(new Event('resize'));
+                                }, 500);
+                            }, function (data) {
+                        console.log("error " + data);
+                    });
+                    // Maximum Acceleration:
+                    StatisticsService.getPhenomenonStatistics("Maximum Acceleration").then(
+                            function (data) {
+                                var store = data.data;
+                                $scope.dataMaximumAcceleration = [{
+                                        key: "Cumulative Return",
+                                        values: [{
+                                                "label": "TRACK_LABEL_USER",
+                                                "value": track_avgs['Maximum Acceleration'],
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[6],
+                                                        $scope.red_break[6],
+                                                        $scope.max_values[6],
+                                                        track_avgs['Maximum Acceleration'],
+                                                        1)
+                                            }, {
+                                                "label": "TRACK_LABEL_PUBLIC",
+                                                "value": store.avg,
+                                                "color": $scope.percentToRGB(
+                                                        $scope.yellow_break[6],
+                                                        $scope.red_break[6],
+                                                        $scope.max_values[6],
+                                                        store.avg,
+                                                        1)
+                                            }]
+                                    }];
+                                $scope.onload_MinimumAcceleration = true;
                                 $timeout(function () {
                                     window.dispatchEvent(new Event('resize'));
                                 }, 300);

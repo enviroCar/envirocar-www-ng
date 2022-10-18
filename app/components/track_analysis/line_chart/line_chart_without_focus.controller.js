@@ -66,6 +66,16 @@
                     $scope.paths = $scope.paths_all[5];
                     $scope.currentPhenomenonIndex = 5;
                     break;
+                case 'Minimum Acceleration':
+                    $scope.dataTrackChart[0] = $scope.data_all[6];
+                    $scope.paths = $scope.paths_all[6];
+                    $scope.currentPhenomenonIndex = 6;
+                    break;
+                case 'Maximum Acceleration':
+                    $scope.dataTrackChart[0] = $scope.data_all[7];
+                    $scope.paths = $scope.paths_all[7];
+                    $scope.currentPhenomenonIndex = 7;
+                    break;
             }
         });
 
@@ -165,12 +175,12 @@
                 ]
             },
             {
-                key: 'Minimum Acceleration',
+                key: $translate.instant('MINIMUM_ACCELERATION'),
                 values: [
                 ]
             },
             {
-                key: 'Maximum Acceleration',
+                key: $translate.instant('MAXIMUM_ACCELERATION'),
                 values: [
                 ]
             }
@@ -198,6 +208,12 @@
             case 5:
                 label = $translate.instant('GPS_SPEED');
                 break;
+            case 6:
+                label = $translate.instant('MINIMUM_ACCELERATION');
+                break;
+            case 7:
+                label = $translate.instant('MAXIMUM_ACCELERATION');
+                break;
         }
         ;
         $scope.dataTrackChart = [
@@ -216,6 +232,8 @@
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
             $scope.data_all[5].key = $translate.instant('GPS_SPEED');
+            $scope.data_all[6].key = $translate.instant('MINIMUM_ACCELERATION');
+            $scope.data_all[7].key = $translate.instant('MAXIMUM_ACCELERATION');
 
             //2. set to current selected phenomenon
             var phenom = PhenomenonService.getPhenomenon();
@@ -366,6 +384,8 @@
                     var rpmMeasurement;
                     var engineLoadMeasurement;
                     var gpsSpeedMeasurement;
+                    var minimumAccelerationMeasurement;
+                    var maximumAccelerationMeasurement;
                     // iterating through each measurement:
                     for (var index = 0; index < data_global.data.features.length; index++) {
 
@@ -400,6 +420,16 @@
                         else
                             gpsSpeedMeasurement = {x: index, y: undefined};
 
+                        if (data_global.data.features[index].properties.phenomenons['Minimum Acceleration'])
+                            minimumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value};
+                        else
+                        minimumAccelerationMeasurement = {x: index, y: undefined};
+
+                        if (data_global.data.features[index].properties.phenomenons['Maximum Acceleration'])
+                            maximumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value};
+                        else
+                        maximumAccelerationMeasurement = {x: index, y: undefined};
+
                         // save all data:
                         $scope.data_all[0].values.push(speedMeasurement);
                         $scope.data_all[1].values.push(consumptionMeasurement);
@@ -407,6 +437,8 @@
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
+                        $scope.data_all[6].values.push(minimumAccelerationMeasurement);
+                        $scope.data_all[7].values.push(maximumAccelerationMeasurement);
                     }
 
 

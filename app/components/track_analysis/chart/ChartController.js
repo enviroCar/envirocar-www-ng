@@ -180,17 +180,17 @@
                     ]
                 },
                 {
-                    key: $translate.instant('Minimum_Acceleration'),
+                    key: $translate.instant('MINIMUM_ACCELERATION'),
                     values: [
                     ]
                 }
             ];
-            for (var phenomIndex = 0; phenomIndex < 6; phenomIndex++) {
+            for (var phenomIndex = 0; phenomIndex < 7; phenomIndex++) {
                 for (var index = 0; index < $scope.data_all[phenomIndex].values.length; index++) {
                     temp_data_array[phenomIndex].values[index] = $scope.data_all[phenomIndex].values[index];
                 }
             }
-            for (var index = 0; index < 6; index++) {
+            for (var index = 0; index < 7; index++) {
                 temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) + 1);
             }
 
@@ -541,7 +541,8 @@
             $scope.data_all[3].key = $translate.instant('RPM');
             $scope.data_all[4].key = $translate.instant('ENGINE_LOAD');
             $scope.data_all[5].key = $translate.instant('GPS_SPEED');
-            $scope.data_all[5].key = $translate.instant('Minimum_Acceleration');
+            $scope.data_all[6].key = $translate.instant('MINIMUM_ACCELERATION');
+            $scope.data_all[7].key = $translate.instant('MAXIMUM_ACCELERATION');
             //2. set previous selected phenomenon
             $scope.dataTrackChart[0] = $scope.data_all[$scope.currentPhenomenonIndex];
             //3. set previous selected selection range
@@ -651,8 +652,15 @@
                     low = $scope.red_break[$scope.currentPhenomenonIndex];
                     high = $scope.max_values[$scope.currentPhenomenonIndex];
                     break;
-            }
-            ;
+                case 6:
+                    low = $scope.red_break[$scope.currentPhenomenonIndex];
+                    high = $scope.max_values[$scope.currentPhenomenonIndex];
+                    break;
+                case 7:
+                    low = $scope.red_break[$scope.currentPhenomenonIndex];
+                    high = $scope.max_values[$scope.currentPhenomenonIndex];
+                    break;
+            };
 
             if (lastInterval === args) {
                 $scope.highlightedInterval = !$scope.highlightedInterval;
@@ -906,12 +914,12 @@
                 ]
             },
             {
-                key: $translate.instant('Minimum Acceleration'),
+                key: $translate.instant('MINIMUM_ACCELERATION'),
                 values: [
                 ]
             },
             {
-                key: $translate.instant('Maximum Acceleration'),
+                key: $translate.instant('MAXIMUM_ACCELERATION'),
                 values: [
                 ]
             }
@@ -1100,6 +1108,8 @@
                     var rpmMeasurement;
                     var engineLoadMeasurement;
                     var gpsSpeedMeasurement;
+                    var minimumAccelerationMeasurement;
+                    var maximumAccelerationMeasurement;
                     $scope.timestamps = [
                     ];
 
@@ -1131,6 +1141,8 @@
                         pathObjRPM['weight'] = 8;
                         pathObjEngine_load['weight'] = 8;
                         pathObjGPS_Speed['weight'] = 8;
+                        pathObjMinimum_Acceleration['weight'] = 8;
+                        pathObjMaximum_Acceleration['weight'] = 8;
                         // path coordinates:
                         if (index > 0)
                             pathObjSpeed['latlngs'] = [{
@@ -1145,6 +1157,8 @@
                         pathObjRPM['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjEngine_load['latlngs'] = pathObjSpeed['latlngs'];
                         pathObjGPS_Speed['latlngs'] = pathObjSpeed['latlngs'];
+                        pathObjMinimum_Acceleration['latlngs'] = pathObjSpeed['latlngs'];
+                        pathObjMaximum_Acceleration['latlngs'] = pathObjSpeed['latlngs'];
 
                         // get timestamp:
                         var time1 = data_global.data.features[index].properties.time;
@@ -1218,20 +1232,20 @@
                             var value_MinimumAcceleration = data_global.data.features[index].properties.phenomenons["Minimum Acceleration"].value;
                             phenomsJSON['Minimum Acceleration'] = true;
                             pathObjMinimum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MinimumAcceleration, 1);    //more information at percentToRGB().
-                            gpsMinimumAcceleration = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value, z: index};
+                            minimumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value, z: index};
                         } else {
                             pathObjMinimum_Acceleration['color'] = $scope.errorColor;
-                            gpsMinimumAcceleration = {x: index, y: undefined, z: index};
+                            minimumAccelerationMeasurement = {x: index, y: undefined, z: index};
                         }
 
                         if (data_global.data.features[index].properties.phenomenons["Maximum Acceleration"]) {
                             var value_MaximumAcceleration = data_global.data.features[index].properties.phenomenons["Maximum Acceleration"].value;
                             phenomsJSON['Maximum Acceleration'] = true;
                             pathObjMaximum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MaximumAcceleration, 1);    //more information at percentToRGB().
-                            gpsMaximumAcceleration = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value, z: index};
+                            maximumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value, z: index};
                         } else {
                             pathObjMaximum_Acceleration['color'] = $scope.errorColor;
-                            gpsMaximumAcceleration = {x: index, y: undefined, z: index};
+                            maximumAccelerationMeasurement = {x: index, y: undefined, z: index};
                         }
 
                         // enqueue pathObjects for each phenomenon to phenomPath:
@@ -1255,8 +1269,8 @@
                         $scope.data_all[3].values.push(rpmMeasurement);
                         $scope.data_all[4].values.push(engineLoadMeasurement);
                         $scope.data_all[5].values.push(gpsSpeedMeasurement);
-                        $scope.data_all[6].values.push(gpsMinimumAcceleration);
-                        $scope.data_all[7].values.push(gpsMaximumAcceleration);
+                        $scope.data_all[6].values.push(minimumAccelerationMeasurement);
+                        $scope.data_all[7].values.push(maximumAccelerationMeasurement);
                     }
                     $rootScope.$broadcast('single_track_page:phenomenons-available', phenomsJSON);
 
