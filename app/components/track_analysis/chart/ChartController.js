@@ -451,7 +451,7 @@
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.yellow_break[6] + $scope.red_break[6]) / 2, 1),
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.red_break[6], 1),
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.red_break[6] + $scope.max_values[6]) / 2, 1)],
-                labels: ['  0 km/h',
+                labels: ['  0 m/s²',
                     ' ' + $scope.yellow_break[6] / 2 + ' m/s²',
                     ' ' + $scope.yellow_break[6] + ' m/s²',
                     ' ' + ($scope.yellow_break[6] + $scope.red_break[6]) / 2 + ' m/s²',
@@ -467,7 +467,7 @@
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.yellow_break[6] + $scope.red_break[6]) / 2, 1),
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.red_break[6], 1),
                     $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.red_break[6] + $scope.max_values[6]) / 2, 1)],
-                labels: ['  0 km/h',
+                labels: ['  0 m/s²',
                     ' ' + $scope.yellow_break[6] / 2 + ' m/s²',
                     ' ' + $scope.yellow_break[6] + ' m/s²',
                     ' ' + ($scope.yellow_break[6] + $scope.red_break[6]) / 2 + ' m/s²',
@@ -753,17 +753,19 @@
                     break;
                 case 'Minimum Acceleration':
                     $scope.dataTrackChart[0] = $scope.data_all[6];
+                    $scope.optionsTrackChart = $scope.createChartOptions('m/s²');
                     $scope.paths = $scope.paths_all[6];
                     $scope.legend = legend_all[6];
                     $scope.currentPhenomenonIndex = 6;
-                    PhenomenonService.setPhenomenon('Minimum Acceleration"', 6);
+                    PhenomenonService.setPhenomenon('Minimum Acceleration', 6);
                     break;
                 case 'Maximum Acceleration':
                     $scope.dataTrackChart[0] = $scope.data_all[7];
+                    $scope.optionsTrackChart = $scope.createChartOptions('m/s²');
                     $scope.paths = $scope.paths_all[7];
                     $scope.legend = legend_all[7];
                     $scope.currentPhenomenonIndex = 7;
-                    PhenomenonService.setPhenomenon('Maximum Acceleration"', 7);
+                    PhenomenonService.setPhenomenon('Maximum Acceleration', 7);
                     break;
             }
             lastInterval = 5;
@@ -782,82 +784,90 @@
         // chart options for the nvd3 line with focus chart:
         $scope.clickedXPoint = 0;
         $scope.hoveredXPoint = 0;
-        $scope.optionsTrackChart = {
-            chart: {
-                type: 'lineWithFocusChart',
-                height: 480,
-                margin: {
-                    top: 20,
-                    right: 20,
-                    bottom: 20,
-                    left: 40
-                },
-                useInteractiveGuideline: true,
-                duration: 50,
-                xAxis: {
-                    axisLabel: "",
-                    tickFormat: function (d) {
-                        return $scope.timestamps[d];
+        $scope.configTrackChart = {
+            refreshDataOnly: false
+        };
+        
+        $scope.createChartOptions = function(yAxisUnit) {
+            return {
+                chart: {
+                    type: 'lineWithFocusChart',
+                    height: 480,
+                    margin: {
+                        top: 20,
+                        right: 20,
+                        bottom: 20,
+                        left: 40
                     },
-                    staggerLabels: true,
-                    showMaxMin: false
-                },
-                x2Axis: {
-                    tickFormat: function (d) {
-                        return $scope.timestamps[d];
-                    }
-                },
-                yAxis: {
-                    axisLabel: 'Y Axis',
-                    tickFormat: function (d) {
-                        var y;
-                        if ($scope.currentPhenomenonIndex === 3) {
-                            y = d.toFixed(0);
-                        } else {
-                            y = d3.format(',.2f')(d);
-                        }
-                        return y;
-                    },
-                    rotateYLabel: false
-                },
-                y2Axis: {
-                    tickFormat: function (d) {
-                        var y;
-                        if ($scope.currentPhenomenonIndex === 3) {
-                            y = d.toFixed(0);
-                        } else {
-                            y = d3.format(',.2f')(d);
-                        }
-                        return y;
-                    }
-                },
-                interactiveLayer: {
-                    dispatch: {
-                        elementClick: function (e) {
-                            $scope.clickedXPoint = Math.round(e.pointXValue);
-                            $scope.showMeasurementX();
-                            $scope.removeHoveredPointInChart();
-                            $scope.showMeasurementXInChart();
+                    useInteractiveGuideline: true,
+                    duration: 50,
+                    xAxis: {
+                        axisLabel: "",
+                        tickFormat: function (d) {
+                            return $scope.timestamps[d];
                         },
-                        elementMousemove: function (e) {
-                            if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
-                                $scope.removeHoveredPointInChart();
-                                $scope.hoveredXPoint = Math.round(e.pointXValue);
-                                $scope.showHoveredX();
+                        staggerLabels: true,
+                        showMaxMin: false
+                    },
+                    x2Axis: {
+                        tickFormat: function (d) {
+                            return $scope.timestamps[d];
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: yAxisUnit,
+                        tickFormat: function (d) {
+                            var y;
+                            if ($scope.currentPhenomenonIndex === 3) {
+                                y = d.toFixed(0);
+                            } else {
+                                y = d3.format(',.2f')(d);
                             }
+                            return y;
                         },
-                        elementMouseout: function (e) {
-                            $scope.removeHoveredPointInChart();
-                            $scope.hoveredXPoint = 0;
-                            $scope.removeHoverMarker();
-                        },
-                        onBrush: function (e) {
-                            console.log(e);
+                        rotateYLabel: false
+                    },
+                    y2Axis: {
+                        tickFormat: function (d) {
+                            var y;
+                            if ($scope.currentPhenomenonIndex === 3) {
+                                y = d.toFixed(0);
+                            } else {
+                                y = d3.format(',.2f')(d);
+                            }
+                            return y;
+                        }
+                    },
+                    interactiveLayer: {
+                        dispatch: {
+                            elementClick: function (e) {
+                                $scope.clickedXPoint = Math.round(e.pointXValue);
+                                $scope.showMeasurementX();
+                                $scope.removeHoveredPointInChart();
+                                $scope.showMeasurementXInChart();
+                            },
+                            elementMousemove: function (e) {
+                                if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
+                                    $scope.removeHoveredPointInChart();
+                                    $scope.hoveredXPoint = Math.round(e.pointXValue);
+                                    $scope.showHoveredX();
+                                }
+                            },
+                            elementMouseout: function (e) {
+                                $scope.removeHoveredPointInChart();
+                                $scope.hoveredXPoint = 0;
+                                $scope.removeHoverMarker();
+                            },
+                            onBrush: function (e) {
+                                console.log(e);
+                            }
                         }
                     }
                 }
-            }
+            };
         };
+
+        $scope.optionsTrackChart = $scope.createChartOptions('');
 
         // toggle Segment analysis:
         $scope.toggleSegmentAnalysis = function (model) {

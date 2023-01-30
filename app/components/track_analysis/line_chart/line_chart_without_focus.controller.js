@@ -40,41 +40,49 @@
                     $scope.dataTrackChart[0] = $scope.data_all[0];
                     $scope.paths = $scope.paths_all[0];
                     $scope.currentPhenomenonIndex = 0;
+                    $scope.optionsTrackChart = $scope.createChartOptions('km/h');
                     break;
                 case 'Consumption':
                     $scope.dataTrackChart[0] = $scope.data_all[1];
                     $scope.paths = $scope.paths_all[1];
                     $scope.currentPhenomenonIndex = 1;
+                    $scope.optionsTrackChart = $scope.createChartOptions('l/100km');
                     break;
                 case 'CO2':
                     $scope.paths = $scope.paths_all[2];
                     $scope.dataTrackChart[0] = $scope.data_all[2];
                     $scope.currentPhenomenonIndex = 2;
+                    $scope.optionsTrackChart = $scope.createChartOptions('kg');
                     break;
                 case 'Rpm':
                     $scope.dataTrackChart[0] = $scope.data_all[3];
                     $scope.paths = $scope.paths_all[3];
                     $scope.currentPhenomenonIndex = 3;
+                    $scope.optionsTrackChart = $scope.createChartOptions('r/min');
                     break;
                 case 'Engine Load':
                     $scope.dataTrackChart[0] = $scope.data_all[4];
                     $scope.paths = $scope.paths_all[4];
                     $scope.currentPhenomenonIndex = 4;
+                    $scope.optionsTrackChart = $scope.createChartOptions('%');
                     break;
                 case 'GPS Speed':
                     $scope.dataTrackChart[0] = $scope.data_all[5];
                     $scope.paths = $scope.paths_all[5];
                     $scope.currentPhenomenonIndex = 5;
+                    $scope.optionsTrackChart = $scope.createChartOptions('km/h');
                     break;
                 case 'Minimum Acceleration':
                     $scope.dataTrackChart[0] = $scope.data_all[6];
                     $scope.paths = $scope.paths_all[6];
                     $scope.currentPhenomenonIndex = 6;
+                    $scope.optionsTrackChart = $scope.createChartOptions('m/s²');
                     break;
                 case 'Maximum Acceleration':
                     $scope.dataTrackChart[0] = $scope.data_all[7];
                     $scope.paths = $scope.paths_all[7];
                     $scope.currentPhenomenonIndex = 7;
+                    $scope.optionsTrackChart = $scope.createChartOptions('m/s²');
                     break;
             }
         });
@@ -83,64 +91,68 @@
         $scope.clickedXPoint = 0;
         $scope.hoveredXPoint = 0;
 
-        $scope.optionsTrackChart = {
-            chart: {
-                type: 'lineChart',
-                height: 450,
-                margin: {
-                    top: 20,
-                    right: 20,
-                    bottom: 60,
-                    left: 40
-                },
-                useInteractiveGuideline: true,
-                duration: 50,
-                xAxis: {
-                    axisLabel: "",
-                    tickFormat: function (d) {
-                        return $scope.timestamps[d];
-                    }
-                },
-                yAxis: {
-                    axisLabel: 'Y Axis',
-                    tickFormat: function (d) {
-                        var y;
-                        if ($scope.currentPhenomenonIndex === 3) {
-                            y = d.toFixed(0);
-                        } else {
-                            y = d3.format(',.2f')(d);
-                        }
-                        return y;
+        $scope.createChartOptions = function(yAxisUnit) {
+            return {
+                chart: {
+                    type: 'lineChart',
+                    height: 450,
+                    margin: {
+                        top: 20,
+                        right: 20,
+                        bottom: 60,
+                        left: 40
                     },
-                    rotateYLabel: false
-                },
-                interactiveLayer: {
-                    dispatch: {
-                        elementClick: function (e) {
-                            $scope.clickedXPoint = Math.round(e.pointXValue);
-                            $scope.showMeasurementX();
-                            $scope.removeHoveredPointInChart();
-                            $scope.showMeasurementXInChart();
-                        },
-                        elementMousemove: function (e) {
-                            if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
-                                $scope.removeHoveredPointInChart();
-                                $scope.hoveredXPoint = Math.round(e.pointXValue);
-                                $scope.showHoveredX();
+                    useInteractiveGuideline: true,
+                    duration: 50,
+                    xAxis: {
+                        axisLabel: "",
+                        tickFormat: function (d) {
+                            return $scope.timestamps[d];
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: yAxisUnit,
+                        tickFormat: function (d) {
+                            var y;
+                            if ($scope.currentPhenomenonIndex === 3) {
+                                y = d.toFixed(0);
+                            } else {
+                                y = d3.format(',.2f')(d);
                             }
+                            return y;
                         },
-                        elementMouseout: function (e) {
-                            $scope.removeHoveredPointInChart();
-                            $scope.hoveredXPoint = 0;
-                            $scope.removeHoverMarker();
-                        },
-                        onBrush: function (e) {
-                            console.log(e);
+                        rotateYLabel: false
+                    },
+                    interactiveLayer: {
+                        dispatch: {
+                            elementClick: function (e) {
+                                $scope.clickedXPoint = Math.round(e.pointXValue);
+                                $scope.showMeasurementX();
+                                $scope.removeHoveredPointInChart();
+                                $scope.showMeasurementXInChart();
+                            },
+                            elementMousemove: function (e) {
+                                if ($scope.hoveredXPoint !== Math.round(e.pointXValue)) {
+                                    $scope.removeHoveredPointInChart();
+                                    $scope.hoveredXPoint = Math.round(e.pointXValue);
+                                    $scope.showHoveredX();
+                                }
+                            },
+                            elementMouseout: function (e) {
+                                $scope.removeHoveredPointInChart();
+                                $scope.hoveredXPoint = 0;
+                                $scope.removeHoverMarker();
+                            },
+                            onBrush: function (e) {
+                                console.log(e);
+                            }
                         }
                     }
                 }
-            }
+            };
         };
+
+        $scope.optionsTrackChart = $scope.createChartOptions('');
 
         // to be filled with server query:
         $scope.data_all = [

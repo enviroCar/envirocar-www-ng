@@ -485,6 +485,8 @@ angular
         CONSUMPTION: "Treibstoffverbrauch",
         CO2_EMISSION: "CO2 Emissionen",
         GPS_SPEED: "GPS Geschwindigkeit",
+        MINIMUM_ACCELERATION: "Minimale Beschleunigung",
+        MAXIMUM_ACCELERATION: "Maximale Beschleunigung",
 
         // Dashboard - ComparisonChart:
         COMPARISON_CHART_TITLE: "Ich im Vergleich zur enviroCar Gemeinschaft",

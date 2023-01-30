@@ -482,14 +482,14 @@ md-sidenav {
 .download-track {
   position: absolute;
   color: #fff;
-  right: 35px;
-  top: 10px; }
+  /* right: 35px;
+  top: 10px; } */
 
 .delete-track {
   position: absolute;
   color: #fff;
-  right: 35px;
-  top: 70px; }
+  /* right: 35px;
+  top: 70px; } */
 
 toolbar-card {
   font-size: 16px; }

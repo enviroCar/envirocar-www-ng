@@ -6,7 +6,7 @@
                         '#0065A0'
             }" style="height:235px">
         <div class="cover">
-            <div class="profile-pic absolute" flex="100" style="height:40%;display:inline-block;width: 100% !important;">
+            <div class="profile-pic absolute" flex="100" style="display:inline-block;width: 100% !important;">
                 <div layout="row">
                     <div style="width:30%;text-align:center">
                         <img class="img-circle" src="https://secure.gravatar.com/avatar/cf17f9ff1e0a237ab76046d5aca84e0e?size=240" style="height:100px;width:100px">
@@ -20,20 +20,22 @@
                     </div>
                 </div>
             </div>
-            <md-button class="md-raised md-primary download-track" target="_blank" href='{{ecServerBase}}/tracks/{{trackid}}.csv'>
-                <i class="material-icons">file_download</i>
-                {{'DOWNLOAD_TRACK'| translate }}
-                <md-tooltip md-direction="bottom">
-                    {{'DOWNLOAD_TRACK_TOOLTIP'| translate}}
-                </md-tooltip>
-            </md-button>
-            <md-button class="md-raised md-warn delete-track" ng-click="deleteTrack($event)">
-                <i class="material-icons">delete_forever</i>
-                {{'DELETE_TRACK'| translate }}
-                <md-tooltip md-direction="top">
-                    {{'DELETE_TRACK_TOOLTIP'| translate}}
-                </md-tooltip>
-            </md-button>
+            <div>
+                <md-button class="md-raised md-primary download-track" target="_blank" href='{{ecServerBase}}/tracks/{{trackid}}.csv'>
+                    <i class="material-icons">file_download</i>
+                    {{'DOWNLOAD_TRACK'| translate }}
+                    <md-tooltip md-direction="bottom">
+                        {{'DOWNLOAD_TRACK_TOOLTIP'| translate}}
+                    </md-tooltip>
+                </md-button>
+                <md-button class="md-raised md-warn delete-track" ng-click="deleteTrack($event)">
+                    <i class="material-icons">delete_forever</i>
+                    {{'DELETE_TRACK'| translate }}
+                    <md-tooltip md-direction="top">
+                        {{'DELETE_TRACK_TOOLTIP'| translate}}
+                    </md-tooltip>
+                </md-button>
+            </div>
         </div>
     </div>
     <md-toolbar flex id="track_toolbar" class="track_toolbar" ng-show="onload_track_chart">
@@ -98,7 +100,7 @@
                 <md-card-content flex>
                     <md-progress-circular layout-aling="center center" class="loader_dashboard2" ng-if="!onload_track_chart" md-diameter="56"></md-progress-circular>
                     <div ng-if="segmentActivated && onload_track_chart" flex>
-                        <nvd3 options="optionsTrackChart" data="dataTrackChart" flex></nvd3>
+                        <nvd3 options="optionsTrackChart" data="dataTrackChart" config="configTrackChart" flex></nvd3>
                     </div>
                     <div ng-if="!segmentActivated && onload_track_chart" flex>
                         <line-chart-without-focus flex> </line-chart-without-focus>
