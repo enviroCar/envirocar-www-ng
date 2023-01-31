@@ -134,7 +134,6 @@ html, body {
     min-width: 36px !important; }
   .md-toolbar-tools .logo-icon {
     margin-left: 30px;
-    width: 90px;
     height: 25px; }
 
 .track_toolbar {
@@ -390,6 +389,8 @@ md-sidenav {
 .profiletab .cover {
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 0;
   left: 0;
   width: 100%;
@@ -478,6 +479,10 @@ md-sidenav {
 
 .container_header {
   color: #ffffff; }
+
+.container_header p.title {
+  margin-top: 0.25em;
+  margin-bottom: 0.5em; }
 
 .download-track {
   position: absolute;
