@@ -69,4 +69,10 @@
             <nvd3 options="optionsGPSSpeed" data="dataGPSSpeed" api="api" flex></nvd3>
         </div>
     </md-card-content>
+    
+    <!-- on Acceleration Selected -->
+    <md-card-content flex="100" ng-if="selectedPhenom==='Minimum Acceleration' || selectedPhenom==='Maximum Acceleration'">
+        <p class='comparison-title'> {{'PHENOMENON_NOT_SUPPORTED'| translate}}</p>
+        
+    </md-card-content>
 </md-card>

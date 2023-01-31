@@ -29,8 +29,8 @@
                 <md-progress-circular class="loader_dashboard2" ng-if="!onload_tracks_timeline" md-diameter="56"></md-progress-circular>
                 <div class="card-body">
                     <div class="streamline b-l b-accent m-b">
-                        <div class="sl-item" ng-show="onload_tracks_timeline" ng-repeat='event in events' ng-click="goToActivity(event.id)">
-                            <div class="sl-content" >
+                        <div class="sl-item" ng-show="onload_tracks_timeline" ng-repeat='event in events'>
+                            <div class="sl-content"  ng-click="goToActivity(event.id)">
                                 <span >
                                     <span class="title_span"><b>{{event.begin| date:'medium'}}</b></span>
                                 </span>

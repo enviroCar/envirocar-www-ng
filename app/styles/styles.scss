@@ -200,7 +200,6 @@ html, body{
 }
 
 .sl-item {
-    cursor: pointer; cursor: hand;
     position: relative;
     padding-bottom: 20px;
 }
@@ -215,7 +214,7 @@ html, body{
 
 .sl-content
 {
-
+    cursor: pointer;
     margin-left: 37px;
     span {
         color: #black;

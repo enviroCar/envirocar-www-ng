@@ -190,8 +190,6 @@ html, body {
   border-color: #8cbf3f; }
 
 .sl-item {
-  cursor: pointer;
-  cursor: hand;
   position: relative;
   padding-bottom: 20px; }
 
@@ -202,6 +200,7 @@ html, body {
   box-sizing: border-box; }
 
 .sl-content {
+  cursor: pointer;
   margin-left: 37px; }
   .sl-content span {
     color: #black; }

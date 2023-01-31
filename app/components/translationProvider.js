@@ -197,6 +197,7 @@ angular
         TRACK_LABEL_PUBLIC: "enviroCar Ø",
         TT_TRACK_LABEL_USER: "track's average",
         TT_TRACK_LABEL_PUBLIC: "enviroCar community average",
+        PHENOMENON_NOT_SUPPORTED: "... not supported for this phenomenon",
 
         // Track Analysis - Track Summary:
         TRACK_SUMMARY_TITLE: "Track Summary",
@@ -577,6 +578,7 @@ angular
         TRACK_LABEL_PUBLIC: "enviroCar Ø",
         TT_TRACK_LABEL_USER: "Fahrtdurchschnittswert",
         TT_TRACK_LABEL_PUBLIC: "enviroCar Durchschnittswert",
+        PHENOMENON_NOT_SUPPORTED: "... für diesen Messwert nicht unterstützt.",
 
         // Track Analysis - Track Summary:
         TRACK_SUMMARY_TITLE: "Fahrtüberblick",
