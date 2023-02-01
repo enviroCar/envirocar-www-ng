@@ -20,7 +20,7 @@
 
         </div>
     </md-toolbar>
-    <md-content>
+    <md-content style="overflow:hidden">
         <md-list>
             <md-list-item  ng-repeat="item in menuItems" ng-click="selectItem(item)" ui-sref="{{item.sref}}" ui-sref-active="md-primary">
                 <div id="comming_soon_light" ng-if="item.commingSoon">
