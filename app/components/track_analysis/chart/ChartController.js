@@ -183,14 +183,19 @@
                     key: $translate.instant('MINIMUM_ACCELERATION'),
                     values: [
                     ]
+                },
+                {
+                    key: $translate.instant('MAXIMUM_ACCELERATION'),
+                    values: [
+                    ]
                 }
             ];
-            for (var phenomIndex = 0; phenomIndex < 7; phenomIndex++) {
+            for (var phenomIndex = 0; phenomIndex < 8; phenomIndex++) {
                 for (var index = 0; index < $scope.data_all[phenomIndex].values.length; index++) {
                     temp_data_array[phenomIndex].values[index] = $scope.data_all[phenomIndex].values[index];
                 }
             }
-            for (var index = 0; index < 7; index++) {
+            for (var index = 0; index < 8; index++) {
                 temp_data_array[index].values = temp_data_array[index].values.slice(start, start + (end - start) + 1);
             }
 
