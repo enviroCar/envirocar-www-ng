@@ -88,6 +88,46 @@
         $scope.intervalStart;
         $scope.intervalEnd;
 
+        $scope.resolveColorForPhenomenonValue = function(phenomenonIndex, value, opacity) {
+            if (phenomenonIndex === 6) {
+                if (value >= 0) {
+                    return 'rgba(0,255,0,1.0)';
+                } else if (value >= -1) {
+                    return 'rgba(50,205,0,1.0)';
+                } else if (value >= -2) {
+                    return 'rgba(100,155,0,1.0)';
+                } else if (value >= -3) {
+                    return 'rgba(150,105,0,1.0)';
+                } else if (value >= -4) {
+                    return 'rgba(200,55,0,1.0)';
+                } else {
+                    return 'rgba(255,0,0,1.0)';
+                }
+            } else if (phenomenonIndex === 7) {
+                // maximum accelereation
+                if (value <= 0) {
+                    return 'rgba(0,255,0,1.0)';
+                } else if (value <= 0.6) {
+                    return 'rgba(50,205,0,1.0)';
+                } else if (value <= 1.3) {
+                    return 'rgba(100,155,0,1.0)';
+                } else if (value <= 1.9) {
+                    return 'rgba(150,105,0,1.0)';
+                } else if (value <= 2.5) {
+                    return 'rgba(200,55,0,1.0)';
+                } else {
+                    return 'rgba(255,0,0,1.0)';
+                }
+            } else {
+                return $scope.percentToRGB(
+                    $scope.yellow_break[phenomenonIndex],
+                    $scope.red_break[phenomenonIndex],
+                    $scope.max_values[phenomenonIndex],
+                    value, opacity);
+            }
+            
+        };
+
         // on Range selection change:
         $scope.changeSelectionRange = function (start, end) {
             if (start === 0)
@@ -108,19 +148,11 @@
                     if ((value < $scope.intervalStart) || (value > $scope.intervalEnd)) {
                         // set other color::
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                                = $scope.percentToRGB(
-                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
-                                        $scope.red_break[$scope.currentPhenomenonIndex],
-                                        $scope.max_values[$scope.currentPhenomenonIndex],
-                                        value, $scope.opacity);
+                                = $scope.resolveColorForPhenomenonValue($scope.currentPhenomenonIndex, value, $scope.opacity);
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
                     } else {
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                                = $scope.percentToRGB(
-                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
-                                        $scope.red_break[$scope.currentPhenomenonIndex],
-                                        $scope.max_values[$scope.currentPhenomenonIndex],
-                                        value, 1);
+                                = $scope.resolveColorForPhenomenonValue($scope.currentPhenomenonIndex, value, 1);
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
                     }
                 } else {
@@ -445,34 +477,36 @@
             {
                 // Minimum Acceleration:
                 position: 'bottomright',
-                colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6] / 2, 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6], 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.yellow_break[6] + $scope.red_break[6]) / 2, 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.red_break[6], 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.red_break[6] + $scope.max_values[6]) / 2, 1)],
-                labels: ['  0 m/s²',
-                    ' ' + $scope.yellow_break[6] / 2 + ' m/s²',
-                    ' ' + $scope.yellow_break[6] + ' m/s²',
-                    ' ' + ($scope.yellow_break[6] + $scope.red_break[6]) / 2 + ' m/s²',
-                    ' ' + $scope.red_break[6] + ' m/s²',
-                    ' ' + ($scope.red_break[6] + $scope.max_values[6]) / 2 + ' m/s²']
+                colors: ['rgba(0,255,0,1.0)',
+                        'rgba(50,205,0,1.0)',
+                        'rgba(100,155,0,1.0)',
+                        'rgba(150,105,0,1.0)',
+                        'rgba(200,55,0,1.0)',
+                        'rgba(255,0,0,1.0)',
+                ],
+                labels: [' >= 0 m/s²',
+                    ' -1 m/s²',
+                    ' -2 m/s²',
+                    ' -3 m/s²',
+                    ' -4 m/s²',
+                    ' <= 5 m/s²']
             },
             {
                 // Maximum Acceleration:
                 position: 'bottomright',
-                colors: ['#00ff00',
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6] / 2, 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.yellow_break[6], 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.yellow_break[6] + $scope.red_break[6]) / 2, 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], $scope.red_break[6], 1),
-                    $scope.percentToRGB($scope.yellow_break[6], $scope.red_break[6], $scope.max_values[6], ($scope.red_break[6] + $scope.max_values[6]) / 2, 1)],
-                labels: ['  0 m/s²',
-                    ' ' + $scope.yellow_break[6] / 2 + ' m/s²',
-                    ' ' + $scope.yellow_break[6] + ' m/s²',
-                    ' ' + ($scope.yellow_break[6] + $scope.red_break[6]) / 2 + ' m/s²',
-                    ' ' + $scope.red_break[6] + ' m/s²',
-                    ' ' + ($scope.red_break[6] + $scope.max_values[6]) / 2 + ' m/s²']
+                colors: ['rgba(0,255,0,1.0)',
+                        'rgba(50,205,0,1.0)',
+                        'rgba(100,155,0,1.0)',
+                        'rgba(150,105,0,1.0)',
+                        'rgba(200,55,0,1.0)',
+                        'rgba(255,0,0,1.0)',
+                ],
+                labels: [' <= 0 m/s²',
+                    ' 0.6 m/s²',
+                    ' 1.3 m/s²',
+                    ' 1.9 m/s²',
+                    ' 2.5 m/s²',
+                    ' >= 3 m/s²']
             }
         ];
 
@@ -584,21 +618,11 @@
                     if ((value < interval_low) || (value > interval_high)) {
                         // set other color::
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                                = $scope.percentToRGB(
-                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
-                                        $scope.red_break[$scope.currentPhenomenonIndex],
-                                        $scope.max_values[$scope.currentPhenomenonIndex],
-                                        value,
-                                        $scope.opacity);
+                                = $scope.resolveColorForPhenomenonValue($scope.currentPhenomenonIndex, value, $scope.opacity);
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 5;
                     } else {
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['color']
-                                = $scope.percentToRGB(
-                                        $scope.yellow_break[$scope.currentPhenomenonIndex],
-                                        $scope.red_break[$scope.currentPhenomenonIndex],
-                                        $scope.max_values[$scope.currentPhenomenonIndex],
-                                        value,
-                                        1);
+                                = $scope.resolveColorForPhenomenonValue($scope.currentPhenomenonIndex, value, 1);
                         $scope.paths_all[$scope.currentPhenomenonIndex]['p' + (index) ]['weight'] = 8;
                     }
                 } else {
@@ -1241,7 +1265,7 @@
                         if (data_global.data.features[index].properties.phenomenons["Minimum Acceleration"]) {
                             var value_MinimumAcceleration = data_global.data.features[index].properties.phenomenons["Minimum Acceleration"].value;
                             phenomsJSON['Minimum Acceleration'] = true;
-                            pathObjMinimum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MinimumAcceleration, 1);    //more information at percentToRGB().
+                            pathObjMinimum_Acceleration['color'] = $scope.resolveColorForPhenomenonValue(6, value_MinimumAcceleration, 1);
                             minimumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Minimum Acceleration'].value, z: index};
                         } else {
                             pathObjMinimum_Acceleration['color'] = $scope.errorColor;
@@ -1251,7 +1275,7 @@
                         if (data_global.data.features[index].properties.phenomenons["Maximum Acceleration"]) {
                             var value_MaximumAcceleration = data_global.data.features[index].properties.phenomenons["Maximum Acceleration"].value;
                             phenomsJSON['Maximum Acceleration'] = true;
-                            pathObjMaximum_Acceleration['color'] = $scope.percentToRGB($scope.yellow_break[5], $scope.red_break[5], $scope.max_values[5], value_MaximumAcceleration, 1);    //more information at percentToRGB().
+                            pathObjMaximum_Acceleration['color'] = $scope.resolveColorForPhenomenonValue(7, value_MaximumAcceleration, 1);
                             maximumAccelerationMeasurement = {x: index, y: data_global.data.features[index].properties.phenomenons['Maximum Acceleration'].value, z: index};
                         } else {
                             pathObjMaximum_Acceleration['color'] = $scope.errorColor;
