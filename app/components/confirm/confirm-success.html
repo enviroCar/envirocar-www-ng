@@ -1,0 +1,24 @@
+<!-- Profile settings HTML content -->
+
+<div ng-cloak>
+    <div layout-gt-sm="row">
+        <md-card class="card card-4-50" flex>
+            <md-toolbar  style="color:black;background-color:white">
+                <div style="padding-left: 16px;">
+                    <h3 style="color:rgba(0,0,0,0.5)">
+                        <span>{{'CONFIRM_TITLE'| translate}}</span>
+                    </h3>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <div layout="column" ng-cloak class="profilepage">
+
+                    <div ng-if="feedbackSubmissionSuccess" style="background-color:rgba(185,217,137,0.9);">
+                        <p>{{'CONFIRM_SUCCESS'| translate}}</p>
+                    </div>
+
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

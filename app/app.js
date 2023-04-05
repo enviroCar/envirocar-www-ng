@@ -19,6 +19,7 @@
       "enviroCar.profile",
       "enviroCar.community",
       "enviroCar.feedback",
+      "enviroCar.confirm",
       "materialCalendar",
       "cl.paging",
       "rzModule"
@@ -62,6 +63,7 @@
   angular.module("enviroCar.profile", []);
   angular.module("enviroCar.community", []);
   angular.module("enviroCar.feedback", []);
+  angular.module("enviroCar.confirm", []);
 
   /*
    * The default legend directive of ui-leaflet is conflicting in the

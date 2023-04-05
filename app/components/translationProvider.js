@@ -389,7 +389,12 @@ angular
         TOU_TOU: "Terms of Use",
         TOU_KEEP: "To keep using enviroCar you need to accept the new Terms of Use. You can also delete your profile without accepting the terms.",
         TOU_ACCEPT: "Accept",
-        TOU_DENY: "Deny"
+        TOU_DENY: "Deny",
+
+        // EMAIL Confirm
+        CONFIRM_TITLE: "Email confirmation",
+        CONFIRM_SUCCESS: "Your email has been confirmed and your account is now active. You can now log in to the app.",
+        CONFIRM_FAIL: "The email could not be confirmed. Possibly the confirmation code is incorrect or has expired."
       });
       $translateProvider.translations("de", {
         // defaults:
@@ -773,7 +778,12 @@ angular
         TOU_TOU: "Nutzungsbedingungen",
         TOU_KEEP: "Um enviroCar weiterhin nutzen zu können, müssen Sie die neuen Nutzungsbedingungen akzeptieren. Sie können auch ohne Akzeptieren Ihren Account löschen.",
         TOU_ACCEPT: "Annehmen",
-        TOU_DENY: "Ablehnen"
+        TOU_DENY: "Ablehnen",
+
+        // EMAIL Confirm
+        CONFIRM_TITLE: "Email-Bestätigung",
+        CONFIRM_SUCCESS: "Ihre Email wurde bestätigt und Ihr Account ist nun aktive. Sie können sich in der App nun anmelden.",
+        CONFIRM_FAIL: "Die Email konnte nicht bestätigt werden. Möglicherweise ist der Freischaltcode inkorrekt oder abgelaufen."
       });
     }
   ]);

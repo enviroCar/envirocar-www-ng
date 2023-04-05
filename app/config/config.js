@@ -59,6 +59,18 @@
         controller: "FeedbackCtrl",
         templateUrl: "app/components/feedback/feedback.html",
         authenticate: false
+      })
+      .state("confirmSuccess", {
+        url: "/confirmSuccess",
+        controller: "ConfirmCtrl",
+        templateUrl: "app/components/confirm/confirm-success.html",
+        authenticate: false
+      })
+      .state("confirmFailed", {
+        url: "/confirmFailed",
+        controller: "ConfirmCtrl",
+        templateUrl: "app/components/confirm/confirm-failed.html",
+        authenticate: false
       });
 
     $urlRouterProvider.otherwise("/dashboard");
