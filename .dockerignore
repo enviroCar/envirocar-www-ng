@@ -2,3 +2,4 @@ bower_components/
 node_modules/
 Dockerfile
 docker-compose.yml
+.git

@@ -1,20 +1,21 @@
-FROM node:11-alpine AS BUILDER
+FROM node:22-alpine AS builder
 
-RUN apk --no-cache add make g++ python git
+# git is required by bower to fetch packages
+RUN apk --no-cache add git
 
 WORKDIR /app
 
-COPY package.json bower.json /app/
+COPY package.json package-lock.json bower.json /app/
 
-RUN npm install \
- && npm install bower \
+# install exactly what is in the lockfile and do not run any dependency install scripts
+RUN npm ci --ignore-scripts --no-audit --no-fund \
  && ./node_modules/.bin/bower --allow-root install
 
 COPY ./ /app/
 
 RUN ./node_modules/.bin/gulp release
 
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
 ENV EC_BASE_URL=https://envirocar.org/auth-proxy/api \
     EC_BASE=https://envirocar.org/auth-proxy \
@@ -22,7 +23,7 @@ ENV EC_BASE_URL=https://envirocar.org/auth-proxy/api \
     EC_SERVER_BASE=https://envirocar.org/api/stable
 
 
-COPY --from=BUILDER /app/dist/ /usr/share/nginx/html/
+COPY --from=builder /app/dist/ /usr/share/nginx/html/
 COPY ./docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 \

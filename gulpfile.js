@@ -1,5 +1,5 @@
 var gulp = require("gulp");
-var sass = require("gulp-sass");
+var sass = require("gulp-sass")(require("sass"));
 var cssmin = require("gulp-cssmin");
 var connect = require("gulp-connect");
 var inject = require("gulp-inject");
